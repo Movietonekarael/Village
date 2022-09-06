@@ -1,0 +1,16 @@
+{
+    "name": "Core.Shaders",
+    "rootNamespace": "GameCore.Shaders",
+    "references": [
+        "GUID:6d6637d57feef60449e5885740c34e68"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
