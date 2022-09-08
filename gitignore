@@ -20,6 +20,10 @@ sysinfo.txt
 /*.unityproj
 /*.booproj
 
+.vs/
+.vscode/
+.vsconfig
+
 # ============ #
 # OS generated #
 # ============ #
