@@ -23,7 +23,7 @@ sysinfo.txt
 .vs/
 .vscode/
 .vsconfig
-.Logs/
+Logs/
 
 # ============ #
 # OS generated #
