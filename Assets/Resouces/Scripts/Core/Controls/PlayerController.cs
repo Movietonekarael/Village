@@ -11,11 +11,7 @@ using GameCore.GameMovement;
 namespace GameCore.GameControls
 {
     [RequireComponent(typeof(PlayerMovement))]
-#if MONOCACHE
-    public class PlayerController : MonoCache
-#else
     public class PlayerController : MonoBehaviour
-#endif
     {
         public static PlayerController instance { get; private set; }
 
@@ -74,11 +70,7 @@ namespace GameCore.GameControls
         }
 
 
-#if MONOCACHE
-        protected override void OnEnabled()
-#else
         private void OnEnable()
-#endif
         {
             _playerInput.PlayerControl.Enable();
             _playerInput.PlayerControl.Movement.started += StartMoving;
@@ -122,11 +114,7 @@ namespace GameCore.GameControls
         }
 
 
-#if MONOCACHE
-        protected override void OnDisabled()
-#else
         private void OnDisable()
-#endif
         {
             _playerInput.PlayerControl.Disable();
             _playerInput.PlayerControl.Movement.started -= StartMoving;
@@ -375,11 +363,7 @@ namespace GameCore.GameControls
 
         //-------------------------------------------------------Update---------------------------------------------------------//
 
-#if MONOCACHE
-        protected override void FixedRun()
-#else
         private void FixedUpdate()
-#endif
         {
             _gamepadCameraRotation.OnUpdate();
             _gamepadCameraZoom.OnUpdate();

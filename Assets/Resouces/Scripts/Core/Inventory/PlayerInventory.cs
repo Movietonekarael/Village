@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine; 
 using GameCore.GameControls;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -9,11 +9,11 @@ namespace GameCore.Inventory
 {
     public struct UIItem
     {
+        public event UIntHandler OnNumberChanged;
         public event IntHandler OnImageChanged;
         public event IntHandler OnItemNumberChanged;
         public InventoryItem inventoryItem;
         public Image image { private get; set; }
-        public InventoryButton inventoryButton;
         public int xCoordinate;
 
         public Sprite imageSprite
@@ -37,15 +37,17 @@ namespace GameCore.Inventory
             }
         }
 
+        private uint _number;
         public uint number
         {
             get
             {
-                return inventoryButton.number;
+                return _number;
             }
-            private set
+            set
             {
-                inventoryButton.number = value;
+                _number = value;
+                OnNumberChanged?.Invoke(_number);
             }
         }
 
@@ -76,46 +78,18 @@ namespace GameCore.Inventory
     {
         public Vector2Int inventorySize;
         public UIItem[,] inventory;
-        public GameObject[] fastUIGameObjects;
-        public Image[] fastUIImages;
-        public InventoryButton[] fastInventoryButtons;
         public int holdingItem;
 
         public PlayerUIItemMatrix(int x, int y)
         {
             inventorySize = new Vector2Int(x, y);
             inventory = new UIItem[x, y];
-            fastUIGameObjects = new GameObject[x];
-            fastUIImages = new Image[x];
-            fastInventoryButtons = new InventoryButton[x];
-            holdingItem = 0;
 
             for (var i = 0; i < x; i++)
-            {
-                inventory[i, 0].xCoordinate = i;
-                inventory[i, 0].OnImageChanged += ChangeFastImage;
-                inventory[i, 0].OnItemNumberChanged += ChangeNumber;
-            }
-        }
+                for (var j = 0; j < y; j++)
+                    inventory[i, j].number = 0;
 
-        private void ChangeFastImage(int x)
-        {
-            var sprite = inventory[x, 0].imageSprite;
-            if (fastUIImages[x] is not null)
-            {
-                fastUIImages[x].sprite = sprite;
-                if (sprite is null)
-                    fastUIImages[x].gameObject.SetActive(false);
-                else
-                    fastUIImages[x].gameObject.SetActive(true);
-            }
-
-        }
-
-        private void ChangeNumber(int x)
-        {
-            if (fastInventoryButtons[x] is not null)
-                fastInventoryButtons[x].number = inventory[x, 0].number;
+            holdingItem = 0;
         }
     }
 
@@ -131,7 +105,6 @@ namespace GameCore.Inventory
         [SerializeField] private PlayerHoldItem _holdItem;
 
 
-
         private void Awake()
         {
             SetUpInventory();
@@ -142,7 +115,7 @@ namespace GameCore.Inventory
             _fullInventory = new(_inventorySize.x, _inventorySize.y);
         }
 
-        public bool Pull(InventoryItem item)
+        public bool Push(InventoryItem item)
         {
             bool isPulled = false;
             for (var j = 0; j < _inventorySize.y; j++)
@@ -172,7 +145,7 @@ namespace GameCore.Inventory
             return false;
         }
 
-        public bool Pull(InventoryItem item, int i, int j)
+        public bool Push(InventoryItem item, int i, int j)
         {
             if (item is null)
             {
@@ -200,7 +173,7 @@ namespace GameCore.Inventory
             return false;
         }
 
-        public InventoryItem Push(int i, int j)
+        public InventoryItem Pull(int i, int j)
         {
             var item = _fullInventory.inventory[i, j].inventoryItem;
             if (item is not null)

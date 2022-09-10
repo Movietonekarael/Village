@@ -9,11 +9,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace GameCore.LOD
 {
     [RequireComponent(typeof(SkinnedMeshRenderer))]
-#if MONOCACHE
-    public class LoadOnLOD : MonoCache
-#else
     public class LoadOnLOD : MonoBehaviour
-#endif
     {
         private SkinnedMeshRenderer _renderer;
 
@@ -30,11 +26,7 @@ namespace GameCore.LOD
             _renderer.sharedMaterial = _defaultMaterial;
         }
 
-#if MONOCACHE
-        protected override void FixedRun()
-#else
         private void FixedUpdate()
-#endif
         {
             if (_renderer.isVisible && !_isVisible)
             {

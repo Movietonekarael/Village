@@ -4,6 +4,7 @@ using UnityEngine;
 using GameCore.GameControls;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Video;
 
 namespace GameCore.Inventory
 {
@@ -14,19 +15,18 @@ namespace GameCore.Inventory
 
         public GameObject _playerInventoryCanvas;
         [SerializeField] private GameObject _inventoryButtonPrefab;
+        private InventoryButton[,] inventoryButton;
+
 
         [SerializeField] private Vector2Int _itemIndent = new(80, -80);
         [SerializeField] private Vector2Int _itemDelta = new(100, -100);
 
 
-
         private GameObject _dragAndDropPullInventoryItem;
         private DragObject _dragObject;
-
         [SerializeField] private GameObject _dragAndDropUIPrefab;
 
         private RectTransform _playerInventoryRectTransform;
-
 
 
         [SerializeField] private GameObject _uiEventSystem;
@@ -44,7 +44,7 @@ namespace GameCore.Inventory
 
         private void SetUpInventoryGrid()
         {
-
+            inventoryButton = new InventoryButton[_playerInventory._inventorySize.x, _playerInventory._inventorySize.y];
 
 
             for (var i = 0; i < _playerInventory._inventorySize.x; i++)
@@ -55,15 +55,15 @@ namespace GameCore.Inventory
                     var itemRect = item.GetComponent<RectTransform>();
                     itemRect.anchoredPosition = new Vector2(_itemIndent.x + i * _itemDelta.x, _itemIndent.y + j * _itemDelta.y);
 
-                    _playerInventory._fullInventory.inventory[i, j].inventoryButton = item.GetComponent<InventoryButton>();
-                    _playerInventory._fullInventory.inventory[i, j].image = 
-                        _playerInventory._fullInventory.inventory[i, j].inventoryButton.GetComponent<InventoryButton>().itemImage;
+                    inventoryButton[i, j] = item.GetComponent<InventoryButton>();
+                    _playerInventory._fullInventory.inventory[i, j].image = inventoryButton[i, j].itemImage;
 
+                    _playerInventory._fullInventory.inventory[i, j].OnNumberChanged += inventoryButton[i, j].SetNumber;
 
-                    var coordinates = new Vector2Int(i, j);//зачем так делать не понятно, но по-другому не работает
+                    var coordinates = new Vector2Int(i, j);
                     item.GetComponent<Button>().onClick.AddListener(() => InventoryItemClick(coordinates.x, coordinates.y));
 
-                    _playerInventory._fullInventory.inventory[i, j].inventoryButton.SetUpButton(this, i, j);
+                    inventoryButton[i, j].SetUpButton(this, i, j);
                 }
             }
         }
@@ -71,7 +71,6 @@ namespace GameCore.Inventory
         private void SetUpEventSystem()
         {
             _eventSystem = _uiEventSystem.GetComponent<EventSystem>();
-            _eventSystem.firstSelectedGameObject = _playerInventory._fullInventory.fastUIGameObjects[0];
         }
 
         private void SetUpDragAndDropInventoryItem()
@@ -103,6 +102,7 @@ namespace GameCore.Inventory
                 _isDragging = true;
                 _isStartDragging = true;
             }
+            _eventSystem.SetSelectedGameObject(null);
         }
 
         public void ButtonPointerUp()
@@ -123,7 +123,7 @@ namespace GameCore.Inventory
                 {
                     for (var count = _playerInventory._fullInventory.inventory[_currentDraggingInventoryItem.Value.x, _currentDraggingInventoryItem.Value.y].number; count > 0; count--)
                     {
-                        var item = _playerInventory.Push(_currentDraggingInventoryItem.Value.x, _currentDraggingInventoryItem.Value.y);
+                        var item = _playerInventory.Pull(_currentDraggingInventoryItem.Value.x, _currentDraggingInventoryItem.Value.y);
                         Instantiate(item.prefab, transform.forward * 0.7f + Vector3.up + transform.position, new Quaternion());
                     }
 
@@ -135,8 +135,6 @@ namespace GameCore.Inventory
                 _isDragging = false;
                 _isStartDragging = false;
             }
-
-            _eventSystem.SetSelectedGameObject(_playerInventory._fullInventory.fastUIGameObjects[_playerInventory._fullInventory.holdingItem]);
         }
 
         public void SetCurrentSelectedInventoryItem(Vector2Int position)

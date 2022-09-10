@@ -19,7 +19,7 @@ namespace GameCore.Interactions
             var inventory = interactor.inventory;
 
             if (inventory is not null)
-                if (inventory.Pull(inventoryItem))
+                if (inventory.Push(inventoryItem))
                     Destroy(this.gameObject);
                 else
                     return false;

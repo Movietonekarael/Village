@@ -5,11 +5,7 @@ using UnityEngine;
 
 namespace GameCore
 {
-#if MONOCACHE
-    public class GlobalSettings : MonoCache
-#else
     public class GlobalSettings : MonoBehaviour
-#endif
     {
         [Header("StartUp Settings: ")]
         [SerializeField] private bool _cursorVisible = false;

@@ -17,11 +17,7 @@ namespace GameCore.GameMovement
         [SerializeField] private Transform cameraTarget;
 
 
-#if MONOCACHE
-        protected override void OnEnabled()
-#else
         protected override void OnEnable()
-#endif
         {
             _playerController.OnMovementStart += OnMovementStart;
             _playerController.OnMovementFinish += OnMovementFinish;
@@ -29,18 +25,11 @@ namespace GameCore.GameMovement
             _playerController.OnRunningChanged += OnRunningStateChanged;
             _playerController.OnDashed += OnDashed;
             _playerController.OnJumpPressed += OnJump;
-#if MONOCACHE
-            base.OnEnabled();
-#else
+
             base.OnEnable();
-#endif
         }
 
-#if MONOCACHE
-        protected override void OnDisabled()
-#else
         protected override void OnDisable()
-#endif
         {
             _playerController.OnMovementStart -= OnMovementStart;
             _playerController.OnMovementFinish -= OnMovementFinish;
@@ -48,11 +37,8 @@ namespace GameCore.GameMovement
             _playerController.OnRunningChanged -= OnRunningStateChanged;
             _playerController.OnDashed -= OnDashed;
             _playerController.OnJumpPressed -= OnJump;
-#if MONOCACHE
-            base.OnDisabled();
-#else
+
             base.OnDisable();
-#endif
         }
 
         protected override void Awake()
@@ -64,15 +50,9 @@ namespace GameCore.GameMovement
                 Debug.LogWarning("There is not PlayerController in the scene to attach to PlayerMovement script.");
         }
 
-#if MONOCACHE
-        protected override void Run()
-        {
-            base.Run();
-#else
         protected override void Update()
         {
             base.Update();
-#endif
         }
 
         protected override void LocalDirectionOfMovingChanged()

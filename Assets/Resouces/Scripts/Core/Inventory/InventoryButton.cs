@@ -16,19 +16,17 @@ namespace GameCore.Inventory
         public Image itemImage;
         public Text itemCountText;
 
-        [SerializeField] private uint _number = 0;
+        private uint _number = 0;
 
-        public uint number
+        public uint GetNumber()
         {
-            get
-            {
-                return _number;
-            }
-            set
-            {
-                _number = value;
-                ChangeItemNumberInTextUI();
-            }
+            return _number;
+        }
+
+        public void SetNumber(uint value)
+        {
+            _number = value;
+            ChangeItemNumberInTextUI();
         }
 
         private void Awake()

@@ -5,21 +5,12 @@ using Lightbug.CharacterControllerPro.Core;
 
 namespace GameCore.GameControls
 {
-    //[DefaultExecutionOrder(ExecutionOrder.CharacterActorOrder + 100)]
-#if MONOCACHE
-    public class FollowByObject : MonoCache
-#else
     public class FollowByObject : MonoBehaviour
-#endif
     {
         [SerializeField] private Transform _target;
         [SerializeField] private bool _isOnlyXZ = false;
 
-#if MONOCACHE
-        protected override void LateRun()
-#else
         private void Update()
-#endif
         {
             if (_isOnlyXZ)
             {

@@ -64,7 +64,6 @@ namespace GameCore.GUI
 
             _closedInventoryUIState = new(this, _fastInventoryPanelUI);
             _openedPlayerInventoryUIState = new(this, _playerInventoryPanelUI);
-            //_playerController.FreezeControlForInteraction(false);
         }
 
         private void Start()

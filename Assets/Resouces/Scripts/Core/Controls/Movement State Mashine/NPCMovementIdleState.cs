@@ -58,9 +58,9 @@ namespace GameCore.GameMovement
                 };
 
                 characterActor.PlanarVelocity = Vector3.MoveTowards(characterActor.PlanarVelocity,
-                                                    Vector3.zero,
-                                                    deceleration *
-                                                    Time.deltaTime);
+                                                                    Vector3.zero,
+                                                                    deceleration *
+                                                                    Time.deltaTime);
             }
         }
     }

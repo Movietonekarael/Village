@@ -17,4 +17,6 @@ namespace GameCore
     public delegate void BoolHandler(bool value);
     public delegate void IntHandler(int value);
     public delegate void UIntHandler(uint value);
+
+    public delegate uint UIntReturnVoidHandler();
 }

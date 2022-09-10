@@ -11,31 +11,20 @@ namespace GameCore.GameControls
     {
         private PlayerController _playerController;
 
-        /// <summary>
-        /// Object that camera follows
-        /// </summary>
         [SerializeField] private Transform _cameraTargetObjectTransform;
 
-        /// Parameters
+
         [SerializeField] private float _mouseCensivity = 0.5f;
         [SerializeField] private float _cameraZoomStep = 0.5f;
         [SerializeField] private float _cameraDistance = 6;
         [SerializeField] private float _maxCameraDistance = 15;
         [SerializeField] private float _minCameraDistance = 1;
 
-        /// <summary>
-        /// Needs for creation of multiple virtualCameras
-        /// </summary>
+
         private int _cameraNumber;
         private int _maxCameraNumber;
 
-        /// <summary>
-        /// Basic virtual camera object
-        /// </summary>
         [SerializeField] private GameObject _virtualCameraObjectSample;
-        /// <summary>
-        /// Array to store created virtual cameras
-        /// </summary>
         private GameObject[] _virtualCamerasObjects;
 
         private void Awake()
@@ -71,9 +60,6 @@ namespace GameCore.GameControls
         }
 
 
-        /// <summary>
-        /// Creates virtual cameras for zooming
-        /// </summary>
         private void CreateVirtualCameras()
         {
             int camerasCountLeft = (int)((_cameraDistance - _minCameraDistance) / _cameraZoomStep);
@@ -114,17 +100,12 @@ namespace GameCore.GameControls
             _virtualCameraObjectSample.SetActive(true);
         }
 
-        /// <summary>
-        /// Rotates camera and target object
-        /// </summary>
-        /// <param name="vec">Vector2 of rotation values</param>
         public void RotateCam(Vector2 vec)
         {
-            /// Rotates camera and target objects
             _cameraTargetObjectTransform.transform.rotation *= Quaternion.AngleAxis(vec.x * _mouseCensivity, Vector3.up * _mouseCensivity);
             transform.rotation *= Quaternion.AngleAxis(-vec.y * _mouseCensivity, Vector3.right * _mouseCensivity);//Сделать процентный просчёт
 
-            /// Checks if camera crossed it's borders
+
             Vector3 rotationValue = transform.rotation.eulerAngles;
             if (rotationValue.x > 85.0f && rotationValue.x < 100.0f)
             {
@@ -136,13 +117,8 @@ namespace GameCore.GameControls
             }
         }
 
-        /// <summary>
-        /// Zooms camera to targer object
-        /// </summary>
-        /// <param name="f">Value of zoom direction</param>
         public void ZoomCam(float f)
         {
-            /// Deactivates old camera and activates new camera
             _virtualCamerasObjects[_cameraNumber].SetActive(false);
 
             if (f < 0 && _cameraNumber < _maxCameraNumber)
