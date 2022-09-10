@@ -8,7 +8,18 @@ namespace GameCore.GameControls
     public class FollowAndRotateByObject : MonoBehaviour
     {
         [SerializeField] private Transform _target;
+
+        private void Awake()
+        {
+            UpdatePositionAndRotation();
+        }
+
         private void Update()
+        {
+            UpdatePositionAndRotation();
+        }
+
+        private void UpdatePositionAndRotation()
         {
             transform.position = _target.position;
 

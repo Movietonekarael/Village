@@ -4,8 +4,6 @@ using UnityEngine;
 using GameCore.GameControls;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEditor.XR;
-using Codice.CM.Common;
 using System;
 
 namespace GameCore.Inventory

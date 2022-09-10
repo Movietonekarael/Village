@@ -10,7 +10,17 @@ namespace GameCore.GameControls
         [SerializeField] private Transform _target;
         [SerializeField] private bool _isOnlyXZ = false;
 
+        private void Awake()
+        {
+            UpdatePosition();
+        }
+
         private void Update()
+        {
+            UpdatePosition();
+        }
+
+        private void UpdatePosition()
         {
             if (_isOnlyXZ)
             {

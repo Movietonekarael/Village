@@ -8,7 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Rock2
-  m_Shader: {fileID: -6465566751694194690, guid: c8a161d147d13054dba3c7da5b3930c2, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: c8a161d147d13054dba3c7da5b3930c2,
+    type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -127,13 +128,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _ADDITIONAL_LIGHT_SHADOWS: 1
-    - _AO_Power: 2
+    - _AO_Power: 1
     - _AlphaClip: 0
     - _BaseTiling: 0.25
     - _Blend: 0
     - _BlendOp: 0
-    - _BlendScale: 1
-    - _Blend_Thickness: 0.58
+    - _BlendScale: 17.1
+    - _Blend_Thickness: 1.52
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -143,7 +144,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _Falloff: 2.13
+    - _Falloff: 0.22
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossinessSource: 0
@@ -152,7 +153,7 @@ Material:
     - _MAIN_LIGHT_SHADOWS_CASCADE: 1
     - _Metallic: 0
     - _Mul: 4.77
-    - _Noise_Scale: 1
+    - _Noise_Scale: 58
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0

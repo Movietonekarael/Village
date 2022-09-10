@@ -25,6 +25,7 @@ namespace GameCore.GameControls
         private int _maxCameraNumber;
 
         [SerializeField] private GameObject _virtualCameraObjectSample;
+        [SerializeField] private GameObject _camera;
         private GameObject[] _virtualCamerasObjects;
 
         private void Awake()

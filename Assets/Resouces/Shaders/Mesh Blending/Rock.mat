@@ -21,7 +21,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Rock
-  m_Shader: {fileID: -6465566751694194690, guid: 8145d1a51168f464aa7cdfd499fd234b, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 8145d1a51168f464aa7cdfd499fd234b,
+    type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 1
@@ -167,7 +168,7 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Contrast: 3
+    - _Contrast: 1
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -180,17 +181,17 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _Noise_Scale: 1
-    - _ObjectScaleMod: 0.06
+    - _ObjectScaleMod: 0.1
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _PrimaryTiling: 2.93
+    - _PrimaryTiling: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.421
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Spread: 0.468
+    - _Spread: 1
     - _SrcBlend: 1
     - _Surface: 0
     - _TB_FARCLIP: -13.43
@@ -199,7 +200,7 @@ Material:
     - _TB_OFFSET_Z: -35.59
     - _TB_SCALE: -80.6
     - _WorkflowMode: 1
-    - _WorldSpaceOffsetMod: 1.71
+    - _WorldSpaceOffsetMod: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
