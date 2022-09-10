@@ -8,10 +8,6 @@ using Lightbug.CharacterControllerPro.Core;
 
 namespace GameCore.GameMovement
 {
-    /// <summary>
-    /// Basic class for moving npc
-    /// </summary>
-    //[RequireComponent(typeof(Rigidbody))]
     public abstract partial class NPCMovement : MonoBehaviour
     {
         public struct MotionParameters
@@ -64,7 +60,6 @@ namespace GameCore.GameMovement
         private bool _isJumping = false;
 
 
-        //IDs of animator parameters
         private readonly int _isWalkingBoolHash = Animator.StringToHash("isWalking");
         private readonly int _isRunningBoolHash = Animator.StringToHash("isRunning");
         private readonly int _dashTriggerHash = Animator.StringToHash("Dash");
@@ -94,9 +89,6 @@ namespace GameCore.GameMovement
         private Vector2 _privateLocalDirectionOfMoving;
 
 
-        /// <summary>
-        /// Local direction of moving
-        /// </summary>
         protected Vector2 _localDirectionOfMoving
         {
             get
