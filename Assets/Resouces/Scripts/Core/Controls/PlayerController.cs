@@ -457,7 +457,7 @@ namespace GameCore.GameControls
 
             public void SetMouseScroll(float val)
             {
-                _playerController.OnMouseScrolled?.Invoke(val);
+                InvokeMouseScroll(val);
             }
 
             public void Perform(Vector2 direction)
@@ -471,13 +471,22 @@ namespace GameCore.GameControls
                 {
                     if(_zoomIn)
                     {
-                        _playerController.OnMouseScrolled?.Invoke(1);
+                        InvokeMouseScroll(1);
                     } 
                     else if(_zoomOut)
                     {
-                        _playerController.OnMouseScrolled?.Invoke(-1);
+                        InvokeMouseScroll(-1);
                     }
                 }
+            }
+
+            private void InvokeMouseScroll(float val)
+            {
+#if (UNITY_STANDALONE_LINUX && !UNITY_EDITOR)
+                _playerController.OnMouseScrolled?.Invoke(-val);
+#else
+                _playerController.OnMouseScrolled?.Invoke(val);
+#endif
             }
         }
     }
