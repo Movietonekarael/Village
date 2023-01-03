@@ -9,18 +9,18 @@ using Lightbug.CharacterControllerPro.Implementation;
 
 namespace GameCore.GameMovement
 {
-    public abstract partial class NPCMovement
+    public abstract partial class NPCMovementStateMachine
     {
         public class NPCMovementIdleState : NPCMovementBaseState
         {
-            public NPCMovementIdleState(NPCMovement currentStateMachine) 
+            public NPCMovementIdleState(NPCMovementStateMachine currentStateMachine) 
             : base(currentStateMachine) {}
 
             public override void EnterState()
             {
                 StateMachine._animatorController.SetBool(StateMachine._isWalkingBoolHash, false);
                 
-                StateMachine.OnMovementStartEvent += StartMovement;
+                StateMachine.OnMovementStart += StartMovement;
             }
 
             public override void UpdateState() { }
@@ -32,7 +32,7 @@ namespace GameCore.GameMovement
 
             public override void ExitState()
             {
-                StateMachine.OnMovementStartEvent -= StartMovement;
+                StateMachine.OnMovementStart -= StartMovement;
             }
 
             //-------------------------------------------------------Local methods-----------------------------------------------------------//

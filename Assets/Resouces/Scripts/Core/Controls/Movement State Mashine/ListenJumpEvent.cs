@@ -4,13 +4,16 @@ using UnityEngine;
 using GameCore;
 using GameCore.GameMovement;
 
-#if MONOCACHE
-public class ListenJumpEvent : MonoCache
-#else
 public class ListenJumpEvent : MonoBehaviour
-#endif
 {
-    [SerializeField] private NPCMovement _npc;
+    [SerializeField] private NPCMovementStateMachine _npc;
+    public NPCMovementStateMachine NPC
+    {
+        set
+        {
+            _npc = value;
+        }
+    }
 
     public void JumpEnded()
     {

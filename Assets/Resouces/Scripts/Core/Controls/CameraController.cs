@@ -9,7 +9,7 @@ namespace GameCore.GameControls
 {
     public class CameraController : MonoBehaviour
     {
-        private PlayerController _playerController;
+        private InputHandler _inputHandler;
 
         [SerializeField] private Transform _cameraTargetObjectTransform;
 
@@ -30,33 +30,33 @@ namespace GameCore.GameControls
 
         private void Awake()
         {
-            _playerController = PlayerController.instance;
-            if (_playerController is null)
-                Debug.LogWarning("There is not PlayerController in the scene to attach to CameraController script.");
+            _inputHandler = InputHandler.Instance;
+            if (_inputHandler is null)
+                Debug.LogWarning("There is not InputHandler in the scene to attach to CameraController script.");
         }
 
         private void Start()
         {
-            _playerController.OnCameraMoved += RotateCam;
-            _playerController.OnMouseScrolled += ZoomCam;
+            _inputHandler.OnCameraMoved += RotateCam;
+            _inputHandler.OnMouseScrolled += ZoomCam;
             CreateVirtualCameras();
         }
 
         private void OnEnable()
         {
-            if (_playerController is not null)
+            if (_inputHandler is not null)
             {
-                _playerController.OnCameraMoved += RotateCam;
-                _playerController.OnMouseScrolled += ZoomCam;
+                _inputHandler.OnCameraMoved += RotateCam;
+                _inputHandler.OnMouseScrolled += ZoomCam;
             }
         }
 
         private void OnDisable()
         {
-            if (_playerController is not null)
+            if (_inputHandler is not null)
             {
-                _playerController.OnCameraMoved -= RotateCam;
-                _playerController.OnMouseScrolled -= ZoomCam;
+                _inputHandler.OnCameraMoved -= RotateCam;
+                _inputHandler.OnMouseScrolled -= ZoomCam;
             }
         }
 
@@ -104,7 +104,7 @@ namespace GameCore.GameControls
         public void RotateCam(Vector2 vec)
         {
             _cameraTargetObjectTransform.transform.rotation *= Quaternion.AngleAxis(vec.x * _mouseCensivity, Vector3.up * _mouseCensivity);
-            transform.rotation *= Quaternion.AngleAxis(-vec.y * _mouseCensivity, Vector3.right * _mouseCensivity);//Сделать процентный просчёт
+            transform.rotation *= Quaternion.AngleAxis(-vec.y * _mouseCensivity, Vector3.right * _mouseCensivity);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 
             Vector3 rotationValue = transform.rotation.eulerAngles;

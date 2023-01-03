@@ -8,7 +8,7 @@ namespace GameCore.GUI
 {
     public partial class UIStateMachine : MonoBehaviour
     {
-        private PlayerController _playerController;
+        private InputHandler _inputHandler;
 
         [SerializeField] private FastInventoryPanelUI _fastInventoryPanelUI;
         [SerializeField] private PlayerInventoryPanelUI _playerInventoryPanelUI;
@@ -31,8 +31,8 @@ namespace GameCore.GUI
 
         private void RegisterHandlers()
         {
-            _playerController.OnOpenCloseInventory += OnOpenCloseInventory;
-            _playerController.OnInventoryKeyPressed += OnSwitchSelectedItem;
+            _inputHandler.OnOpenCloseInventory += OnOpenCloseInventory;
+            _inputHandler.OnInventoryKeyPressed += OnSwitchSelectedItem;
         }
 
         private void OnDisable()
@@ -42,8 +42,8 @@ namespace GameCore.GUI
 
         private void UnRegisterHandlers()
         {
-            _playerController.OnOpenCloseInventory -= OnOpenCloseInventory;
-            _playerController.OnInventoryKeyPressed -= OnSwitchSelectedItem;
+            _inputHandler.OnOpenCloseInventory -= OnOpenCloseInventory;
+            _inputHandler.OnInventoryKeyPressed -= OnSwitchSelectedItem;
         }
 
         private void OnOpenCloseInventory()
@@ -58,9 +58,9 @@ namespace GameCore.GUI
 
         private void Awake()
         {
-            _playerController = PlayerController.instance;
-            if (_playerController is null)
-                Debug.LogWarning("There is not PlayerController in the scene to attach to PlayerInventory script.");
+            _inputHandler = InputHandler.Instance;
+            if (_inputHandler is null)
+                Debug.LogWarning("There is not InputHandler in the scene to attach to PlayerInventory script.");
 
             _closedInventoryUIState = new(this, _fastInventoryPanelUI);
             _openedPlayerInventoryUIState = new(this, _playerInventoryPanelUI);

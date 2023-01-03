@@ -15,7 +15,7 @@ namespace GameCore.Interactions
         [SerializeField] private Transform _interactionPoint;
         [SerializeField] private float _interactionPointRadius = .5f;
         [SerializeField] private LayerMask _interactableMask;
-        [SerializeField] private PlayerController _playerController;
+        [SerializeField] private InputHandler _inputHandler;
 
         [SerializeField] private InteractionPromptUI _interactionPromptUI;
 
@@ -29,9 +29,9 @@ namespace GameCore.Interactions
 
         private void Awake()
         {
-            _playerController = PlayerController.instance;
-            if (_playerController is null)
-                Debug.LogWarning("There is not PlayerController in the scene to attach to Interactor script.");
+            _inputHandler = InputHandler.Instance;
+            if (_inputHandler is null)
+                Debug.LogWarning("There is not InputHandler in the scene to attach to Interactor script.");
 
             _interactionPromptUI.DisablePrompt();
         }
@@ -58,7 +58,7 @@ namespace GameCore.Interactions
                 _currentCollider = _colliders[0];
 
 
-                if (_playerController.IfInteractWasPerformed())
+                if (_inputHandler.IfInteractWasPerformed())
                 {
                     if (!interactable.Interact(this))
                     {

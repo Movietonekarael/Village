@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace GameCore.GameMovement
 {
-    partial class NPCMovement
+    partial class NPCMovementStateMachine
     {
         public class NPCMovementJumpState : NPCMovementBaseState, IRootState
         {
-            public NPCMovementJumpState(NPCMovement currentStateMachine) 
+            public NPCMovementJumpState(NPCMovementStateMachine currentStateMachine) 
             : base(currentStateMachine) { }
 
             public override void EnterState()
             {
-                StateMachine.OnJumpStartEndedEvent += JumpStartEnded;
-                StateMachine.OnJumpEndedEvent += JumpEnded;
+                StateMachine.OnJumpStartEnded += JumpStartEnded;
+                StateMachine.OnJumpEnded += JumpEnded;
 
                 StateMachine._animatorController.SetBool(StateMachine._isJumpingBoolHash, true);
                 HandleJump();
@@ -30,10 +30,11 @@ namespace GameCore.GameMovement
             {
                 HandleGravity();
             }
+
             public override void ExitState()
             {
-                StateMachine.OnJumpStartEndedEvent -= JumpStartEnded;
-                StateMachine.OnJumpEndedEvent -= JumpEnded;
+                StateMachine.OnJumpStartEnded -= JumpStartEnded;
+                StateMachine.OnJumpEnded -= JumpEnded;
 
                 StateMachine._animatorController.SetBool(StateMachine._isJumpingBoolHash, false);
                 StateMachine._animatorController.SetBool(StateMachine._isJumpingEndBoolHash, false); 

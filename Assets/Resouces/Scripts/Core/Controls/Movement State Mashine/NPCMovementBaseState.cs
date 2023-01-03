@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace GameCore.GameMovement
 {
-    partial class NPCMovement
+    partial class NPCMovementStateMachine
     {
         public abstract class NPCMovementBaseState
         {
-            private NPCMovement _stateMachine;
+            private NPCMovementStateMachine _stateMachine;
             private NPCMovementBaseState _currentSuperState;
             private NPCMovementBaseState _currentSubState;
 
-            protected NPCMovement StateMachine { get { return _stateMachine; } }
+            protected NPCMovementStateMachine StateMachine { get { return _stateMachine; } }
 
-            public NPCMovementBaseState(NPCMovement currentStateMachine)
+            public NPCMovementBaseState(NPCMovementStateMachine currentStateMachine)
             {
                 _stateMachine = currentStateMachine;
             }

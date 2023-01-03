@@ -4,20 +4,20 @@ using UnityEngine;
 
 namespace GameCore.GameMovement
 {
-    public abstract partial class NPCMovement
+    public abstract partial class NPCMovementStateMachine
     {
         public class NPCMovementRunState : NPCMovementAnyMoveState
         {
             private bool _dashed = false;
 
-            public NPCMovementRunState(NPCMovement currentStateMachine) 
+            public NPCMovementRunState(NPCMovementStateMachine currentStateMachine) 
             : base(currentStateMachine) { }
 
             public override void EnterState()
             {
                 base.EnterState();
 
-                StateMachine.OnDashedEvent += Dash;
+                StateMachine.OnDashed += Dash;
             }
 
             public override void UpdateState()
@@ -33,7 +33,7 @@ namespace GameCore.GameMovement
                 base.ExitState();
 
                 _dashed = false;
-                StateMachine.OnDashedEvent -= Dash;
+                StateMachine.OnDashed -= Dash;
             }
 
             //----------------------------------------------------------Local methods------------------------------------------------------//

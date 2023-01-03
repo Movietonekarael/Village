@@ -10,40 +10,36 @@ using GameCore.GameMovement;
 
 namespace GameCore.GameControls
 {
-    [RequireComponent(typeof(PlayerMovement))]
-    public class PlayerController : MonoBehaviour
+    public class InputHandler : MonoBehaviour
     {
-        public static PlayerController instance { get; private set; }
+        public static InputHandler Instance { get; private set; }
 
         private PlayerInputScheme _playerInput;
 
-        public event VoidHandler OnMovementStart;
-        public event VoidHandler OnMovementFinish;
-        public event Vector2Handler OnMovement;
-        public event Vector2Handler OnCameraMoved;
-        public event FloatHandler OnMouseScrolled;
-        public event VoidHandler OnRunningChanged;
-        public event VoidHandler OnDashed;
-        public event VoidHandler OnJumpPressed;
+        public event Action OnMovementStart;
+        public event Action OnMovementFinish;
+        public event Action<Vector2> OnMovement;
+        public event Action<Vector2> OnCameraMoved;
+        public event Action<float> OnMouseScrolled;
+        public event Action OnRunningChanged;
+        public event Action OnDashed;
+        public event Action OnJumpPressed;
 
-        public event VoidHandler OnOpenCloseInventory;
-        public event IntHandler OnInventoryKeyPressed;
+        public event Action OnOpenCloseInventory;
+        public event Action<int> OnInventoryKeyPressed;
 
-        public event VoidHandler OnLeftClickStarted;
-        public event VoidHandler OnLeftClickCanceled;
+        public event Action OnLeftClickStarted;
+        public event Action OnLeftClickCanceled;
 
 
         private GamepadCameraRotation _gamepadCameraRotation;
         private GamepadCameraZoom _gamepadCameraZoom;
         [SerializeField] private float _cameraRotationKoefficient = 25.0f;
 
-        /// <summary>
-        /// Костыль для предотвращения прокрутки на первом кадре
-        /// </summary>
         private bool _firstFrameUpdateFlag = true;
 
         private Vector2 _mousePosition = Vector2.zero;
-        public Vector2 mousePosition
+        public Vector2 MousePosition
         {
             get
             {
@@ -54,14 +50,14 @@ namespace GameCore.GameControls
 
         private void Awake()
         {
-            if (instance != null && instance != this)
+            if (Instance != null && Instance != this)
             {
-                Debug.LogWarning("There are more than one PlayerController in the scene.");
+                Debug.LogWarning("There are more than one InputHandler in the scene.");
                 Destroy(this);
             }
             else
             {
-                instance = this;
+                Instance = this;
                 _playerInput = new PlayerInputScheme();
 
                 _gamepadCameraRotation = new(this, _cameraRotationKoefficient);
@@ -69,18 +65,16 @@ namespace GameCore.GameControls
             }
         }
 
-
         private void OnEnable()
         {
-            _playerInput.PlayerControl.Enable();
             _playerInput.PlayerControl.Movement.started += StartMoving;
             _playerInput.PlayerControl.Movement.canceled += StopMoving;
             _playerInput.PlayerControl.Movement.performed += Moving;
             _playerInput.PlayerControl.isRunning.started += SwitchRunState;
             _playerInput.PlayerControl.Dash.started += Dash;
             _playerInput.PlayerControl.Jump.performed += PerformJump;
+            _playerInput.PlayerControl.Enable();
 
-            _playerInput.CameraControl.Enable();
             _playerInput.CameraControl.Rotation.performed += MouseMoved;
             _playerInput.CameraControl.Zoom.performed += MouseScrolled;
             _playerInput.CameraControl.RotationSticks.started += RightStickStartMoving;
@@ -92,8 +86,8 @@ namespace GameCore.GameControls
             _playerInput.CameraControl.ZoomIn.canceled += StopZoomingIn;
             _playerInput.CameraControl.ZoomOut.started += StartZommingOut;
             _playerInput.CameraControl.ZoomOut.canceled += StopZoomingOut;
+            _playerInput.CameraControl.Enable();
 
-            _playerInput.InventoryControl.Enable();
             _playerInput.InventoryControl.OpenCloseInventory.performed += OpenClosePlayerInventory;
             _playerInput.InventoryControl._1Key1.performed += Inventory1KeyPressed;
             _playerInput.InventoryControl._2Key1.performed += Inventory2KeyPressed;
@@ -103,58 +97,25 @@ namespace GameCore.GameControls
             _playerInput.InventoryControl._6Key.performed += Inventory6KeyPressed;
             _playerInput.InventoryControl._7Key.performed += Inventory7KeyPressed;
             _playerInput.InventoryControl._8Key.performed += Inventory8KeyPressed;
+            _playerInput.InventoryControl.Enable();
 
-            _playerInput.UI.Enable();
             _playerInput.UI.Point.performed += MousePositionChanged;
             _playerInput.UI.Click.started += UILeftClickStared;
             _playerInput.UI.Click.canceled += UILeftClickCanceled;
+            _playerInput.UI.Enable();
 
-            _playerInput.ApplicationControl.Enable();
             _playerInput.ApplicationControl.Quit.performed += QuitApplication;
+            _playerInput.ApplicationControl.Enable();
         }
 
 
         private void OnDisable()
         {
             _playerInput.PlayerControl.Disable();
-            _playerInput.PlayerControl.Movement.started -= StartMoving;
-            _playerInput.PlayerControl.Movement.canceled -= StopMoving;
-            _playerInput.PlayerControl.Movement.performed -= Moving;
-            _playerInput.PlayerControl.isRunning.started -= SwitchRunState;
-            _playerInput.PlayerControl.Dash.started -= Dash;
-            _playerInput.PlayerControl.Jump.performed -= PerformJump;
-
             _playerInput.CameraControl.Disable();
-            _playerInput.CameraControl.Rotation.performed -= MouseMoved;
-            _playerInput.CameraControl.Zoom.performed -= MouseScrolled;
-            _playerInput.CameraControl.RotationSticks.started -= RightStickStartMoving;
-            _playerInput.CameraControl.RotationSticks.canceled -= RightStickStopMoving;
-            _playerInput.CameraControl.RotationSticks.performed -= RightStickPerformedMoving;
-            _playerInput.CameraControl.ReadyToZoomButton.started -= ReadyToZoomCamera;
-            _playerInput.CameraControl.ReadyToZoomButton.canceled -= NotReadyToZoomCamera;
-            _playerInput.CameraControl.ZoomIn.started -= StartZoomingIn;
-            _playerInput.CameraControl.ZoomIn.canceled -= StopZoomingIn;
-            _playerInput.CameraControl.ZoomOut.started -= StartZommingOut;
-            _playerInput.CameraControl.ZoomOut.canceled -= StopZoomingOut;
-
             _playerInput.InventoryControl.Disable();
-            _playerInput.InventoryControl.OpenCloseInventory.performed -= OpenClosePlayerInventory;
-            _playerInput.InventoryControl._1Key1.performed -= Inventory1KeyPressed;
-            _playerInput.InventoryControl._2Key1.performed -= Inventory2KeyPressed;
-            _playerInput.InventoryControl._3Key.performed -= Inventory3KeyPressed;
-            _playerInput.InventoryControl._4Key1.performed -= Inventory4KeyPressed;
-            _playerInput.InventoryControl._5Key.performed -= Inventory5KeyPressed;
-            _playerInput.InventoryControl._6Key.performed -= Inventory6KeyPressed;
-            _playerInput.InventoryControl._7Key.performed -= Inventory7KeyPressed;
-            _playerInput.InventoryControl._8Key.performed -= Inventory8KeyPressed;
-
             _playerInput.UI.Disable();
-            _playerInput.UI.Point.performed -= MousePositionChanged;
-            _playerInput.UI.Click.started -= UILeftClickStared;
-            _playerInput.UI.Click.canceled -= UILeftClickCanceled;
-
             _playerInput.ApplicationControl.Disable();
-            _playerInput.ApplicationControl.Quit.performed -= QuitApplication;
         }
 
         public bool IfInteractWasPerformed()
@@ -271,14 +232,6 @@ namespace GameCore.GameControls
                 _playerInput.CameraControl.Disable();
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                _playerInput.InventoryControl._1Key1.performed -= Inventory1KeyPressed;
-                _playerInput.InventoryControl._2Key1.performed -= Inventory2KeyPressed;
-                _playerInput.InventoryControl._3Key.performed -= Inventory3KeyPressed;
-                _playerInput.InventoryControl._4Key1.performed -= Inventory4KeyPressed;
-                _playerInput.InventoryControl._5Key.performed -= Inventory5KeyPressed;
-                _playerInput.InventoryControl._6Key.performed -= Inventory6KeyPressed;
-                _playerInput.InventoryControl._7Key.performed -= Inventory7KeyPressed;
-                _playerInput.InventoryControl._8Key.performed -= Inventory8KeyPressed;
             }
             else
             {
@@ -384,17 +337,17 @@ namespace GameCore.GameControls
             private bool _rotationEnabled = false;
             private Vector2 _direction = Vector2.zero;
             private readonly float _cameraRotationKoefficient;
-            private readonly PlayerController _playerController;
+            private readonly InputHandler _inputHandler;
 
-            public GamepadCameraRotation(PlayerController playerController, float cameraRotationKoefficient)
+            public GamepadCameraRotation(InputHandler inputHandler, float cameraRotationKoefficient)
             {
-                _playerController = playerController;
+                _inputHandler = inputHandler;
                 _cameraRotationKoefficient = cameraRotationKoefficient;
             }
 
             public void SetMouseRotationDirection(Vector2 vec)
             {
-                _playerController.OnCameraMoved?.Invoke(vec);
+                _inputHandler.OnCameraMoved?.Invoke(vec);
             }
 
             public void SetEnable()
@@ -416,7 +369,7 @@ namespace GameCore.GameControls
             {
                 if (_rotationEnabled)
                 {
-                    _playerController.OnCameraMoved?.Invoke(_direction * _cameraRotationKoefficient);
+                    _inputHandler.OnCameraMoved?.Invoke(_direction * _cameraRotationKoefficient);
                 }
             }
         }
@@ -427,12 +380,12 @@ namespace GameCore.GameControls
             private bool _zoomIn = false;
             private bool _zoomOut = false;
 
-            private readonly PlayerController _playerController;
+            private readonly InputHandler _inputHandler;
 
 
-            public GamepadCameraZoom(PlayerController playerController)
+            public GamepadCameraZoom(InputHandler inputHandler)
             {
-                _playerController= playerController;
+                _inputHandler= inputHandler;
             }
 
             public void SetEnable()
@@ -483,9 +436,9 @@ namespace GameCore.GameControls
             private void InvokeMouseScroll(float val)
             {
 #if (UNITY_STANDALONE_LINUX && !UNITY_EDITOR)
-                _playerController.OnMouseScrolled?.Invoke(-val);
+                _inputHandler.OnMouseScrolled?.Invoke(-val);
 #else
-                _playerController.OnMouseScrolled?.Invoke(val);
+                _inputHandler.OnMouseScrolled?.Invoke(val);
 #endif
             }
         }

@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace GameCore.GameMovement
 {
-    public abstract partial class NPCMovement
+    public abstract partial class NPCMovementStateMachine
     {
         public class NPCMovementWalkState : NPCMovementAnyMoveState
         {
-            public NPCMovementWalkState(NPCMovement currentStateMachine) 
+            public NPCMovementWalkState(NPCMovementStateMachine currentStateMachine) 
             : base(currentStateMachine) {}
 
             public override void UpdateState()

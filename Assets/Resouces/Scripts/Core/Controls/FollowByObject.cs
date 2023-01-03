@@ -31,7 +31,10 @@ namespace GameCore.GameControls
                 transform.position = objectPosition;
             }
             else
+            {
                 transform.position = _target.position;
+            }
+                
         }
     }
 }

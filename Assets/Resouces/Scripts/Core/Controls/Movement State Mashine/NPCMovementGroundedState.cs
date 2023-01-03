@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace GameCore.GameMovement
 {
-    partial class NPCMovement
+    partial class NPCMovementStateMachine
     {
         public class NPCMovementGroundedState : NPCMovementBaseState, IRootState
         {
-            public NPCMovementGroundedState(NPCMovement currentStateMachine)
+            public NPCMovementGroundedState(NPCMovementStateMachine currentStateMachine)
             : base(currentStateMachine)
             {
                 var state = StateMachine._idleState;
@@ -18,8 +18,8 @@ namespace GameCore.GameMovement
 
             public override void EnterState()
             {
-                StateMachine.OnRunningStateChangedEvent += ChangeRunState;
-                StateMachine.OnJumpEvent += HandleJump;
+                StateMachine.OnRunningStateChanged += ChangeRunState;
+                StateMachine.OnJump += HandleJump;
 
                 StateMachine._characterActor.alwaysNotGrounded = false;
             }
@@ -33,8 +33,8 @@ namespace GameCore.GameMovement
 
             public override void ExitState()
             {
-                StateMachine.OnRunningStateChangedEvent -= ChangeRunState;
-                StateMachine.OnJumpEvent -= HandleJump;
+                StateMachine.OnRunningStateChanged -= ChangeRunState;
+                StateMachine.OnJump -= HandleJump;
             }
 
 

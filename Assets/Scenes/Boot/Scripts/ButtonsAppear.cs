@@ -6,11 +6,7 @@ using UnityEngine.UI;
 
 namespace GameCore.Boot
 {
-#if MONOCACHE
-    public class ButtonsAppear : MonoCache
-#else
     public class ButtonsAppear : MonoBehaviour
-#endif
     {
         private Animator _animator;
 

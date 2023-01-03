@@ -7,11 +7,11 @@ using Lightbug.CharacterControllerPro.Implementation;
 
 namespace GameCore.GameMovement
 {
-    public abstract partial class NPCMovement
+    public abstract partial class NPCMovementStateMachine
     {
         public abstract class NPCMovementAnyMoveState : NPCMovementBaseState
         {
-            public NPCMovementAnyMoveState(NPCMovement currentStateMachine) 
+            public NPCMovementAnyMoveState(NPCMovementStateMachine currentStateMachine) 
             : base(currentStateMachine) {}
 
             protected MotionParameters currentMotionParameters = new();
@@ -20,8 +20,8 @@ namespace GameCore.GameMovement
             {
                 StateMachine._animatorController.SetBool(StateMachine._isWalkingBoolHash, true);
                 
-                StateMachine.OnMovementFinishEvent += SetIdleState;
-                StateMachine.OnMovementEvent += Move;
+                StateMachine.OnMovementFinish += SetIdleState;
+                StateMachine.OnMovement += Move;
             }
 
             public override void UpdateState() { }
@@ -36,9 +36,9 @@ namespace GameCore.GameMovement
             {
                 StateMachine.LocalDirectionOfMovingChanged();
 
-                var globalDirection = new Vector3(StateMachine._globalDirectionOfMoving.x,
+                var globalDirection = new Vector3(StateMachine._GlobalDirectionOfMoving.x,
                                                   .0f,
-                                                  StateMachine._globalDirectionOfMoving.y);
+                                                  StateMachine._GlobalDirectionOfMoving.y);
 
                 var targetVelocity = SetLimitedTargetVelocity(globalDirection);
                 var characterActor = StateMachine._characterActor;
@@ -63,8 +63,8 @@ namespace GameCore.GameMovement
                 characterActor.PlanarVelocity = Vector3.MoveTowards(characterActor.PlanarVelocity, 
                                                                     targetVelocity, 
                                                                     (needToAccelerate ? 
-                                                                    currentMotionParameters.acceleration : 
-                                                                    currentMotionParameters.deceleration) * 
+                                                                    currentMotionParameters.Acceleration : 
+                                                                    currentMotionParameters.Deceleration) * 
                                                                     Time.deltaTime);
 
             }
@@ -74,16 +74,16 @@ namespace GameCore.GameMovement
                 switch (characterActor.CurrentState)
                 {
                     case CharacterActorState.StableGrounded:
-                        currentMotionParameters.acceleration = StateMachine._stableGroundedAcceleration;
-                        currentMotionParameters.deceleration = StateMachine._stableGroundedDeceleration;
+                        currentMotionParameters.Acceleration = StateMachine._stableGroundedAcceleration;
+                        currentMotionParameters.Deceleration = StateMachine._stableGroundedDeceleration;
                         break;
                     case CharacterActorState.UnstableGrounded:
-                        currentMotionParameters.acceleration = StateMachine._unstableGroundedAcceleration;
-                        currentMotionParameters.deceleration = StateMachine._unstableGroundedDeceleration;
+                        currentMotionParameters.Acceleration = StateMachine._unstableGroundedAcceleration;
+                        currentMotionParameters.Deceleration = StateMachine._unstableGroundedDeceleration;
                         break;
                     case CharacterActorState.NotGrounded:
-                        currentMotionParameters.acceleration = StateMachine._notGroundedAcceleration;
-                        currentMotionParameters.deceleration = StateMachine._notGroundedDeceleration;
+                        currentMotionParameters.Acceleration = StateMachine._notGroundedAcceleration;
+                        currentMotionParameters.Deceleration = StateMachine._notGroundedDeceleration;
                         break;
                 }
             }
@@ -97,8 +97,8 @@ namespace GameCore.GameMovement
             {
                 StateMachine._characterActor.Rotation = 
                     Quaternion.Lerp(StateMachine.transform.rotation, 
-                    StateMachine.neededRotation, 
-                    Time.deltaTime * StateMachine.rotationSpeed);
+                    StateMachine._NeededRotation, 
+                    Time.deltaTime * StateMachine._RotationSpeed);
             }
 
             private void Move(Vector2 dir)
@@ -113,8 +113,8 @@ namespace GameCore.GameMovement
             
             public override void ExitState()
             {
-                StateMachine.OnMovementFinishEvent -= SetIdleState;
-                StateMachine.OnMovementEvent -= Move;
+                StateMachine.OnMovementFinish -= SetIdleState;
+                StateMachine.OnMovement -= Move;
             }
 
         }

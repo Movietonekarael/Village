@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameCore.GameMovement
 {
-    partial class NPCMovement
+    partial class NPCMovementStateMachine
     {
         public interface IRootState
         {

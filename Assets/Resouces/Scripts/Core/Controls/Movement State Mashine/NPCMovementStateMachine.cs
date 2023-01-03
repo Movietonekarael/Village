@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,12 @@ using Lightbug.CharacterControllerPro.Core;
 
 namespace GameCore.GameMovement
 {
-    public abstract partial class NPCMovement : MonoBehaviour
+    public abstract partial class NPCMovementStateMachine : MonoBehaviour
     {
         public struct MotionParameters
         {
-            public float acceleration;
-            public float deceleration;
+            public float Acceleration;
+            public float Deceleration;
         }
 
        
@@ -38,8 +39,8 @@ namespace GameCore.GameMovement
         [SerializeField] private float _fastRunSpeedLimit = 6f;
 
         [Header("Rotation: ")]
-        [SerializeField] protected float rotationSpeed = 13.5f;
-        protected Quaternion neededRotation;
+        [SerializeField] protected float _RotationSpeed = 13.5f;
+        protected Quaternion _NeededRotation;
 
         [Header("Jump Speed: ")]
         [SerializeField] private float _jumpSpeed = 5f;
@@ -68,24 +69,17 @@ namespace GameCore.GameMovement
         private readonly int _interruptJumpTriggerHash = Animator.StringToHash("InterruptJump");
 
 
-        public VoidHandler OnMovementStart;
-        public VoidHandler OnMovementFinish;
-        public Vector2Handler OnMovement;
-        public VoidHandler OnRunningStateChanged;
-        public VoidHandler OnDashed;
-        public VoidHandler OnJump;
-
-        private event VoidHandler OnMovementStartEvent;
-        private event VoidHandler OnMovementFinishEvent;
-        private event Vector2Handler OnMovementEvent;
-        private event VoidHandler OnRunningStateChangedEvent;
-        private event VoidHandler OnDashedEvent;
-        private event VoidHandler OnJumpEvent;
-        private event VoidHandler OnJumpEndedEvent;
-        private event VoidHandler OnJumpStartEndedEvent;
+        public Action OnMovementStart;
+        public Action OnMovementFinish;
+        public Action<Vector2> OnMovement;
+        public Action OnRunningStateChanged;
+        public Action OnDashed;
+        public Action OnJump;
+        public Action OnJumpEnded;
+        public Action OnJumpStartEnded;
 
 
-        protected Vector2 _globalDirectionOfMoving;
+        protected Vector2 _GlobalDirectionOfMoving;
         private Vector2 _privateLocalDirectionOfMoving;
 
 
@@ -108,10 +102,16 @@ namespace GameCore.GameMovement
 
         protected virtual void Awake()
         {
-            RegisterHandlers();
+            SetUpJumpListener();
             SetRotationZero();
         }
 
+        private void SetUpJumpListener()
+        {
+            var animatorObject = _animatorController.gameObject;
+            var listner = animatorObject.AddComponent<ListenJumpEvent>();
+            listner.NPC = this;
+        }
 
         private void Start()
         {
@@ -141,95 +141,33 @@ namespace GameCore.GameMovement
             _currentState.UpdateStates();
         }
 
-
-
         private void FixedUpdate()
         {
             _currentState.FixedUpdateStates();
         }
 
-        protected virtual void OnEnable()
-        {
-            RegisterHandlers();
-        }
-
-        protected virtual void OnDisable()
-        {
-            UnRegisterHandlers();
-        }
-
-        private void RegisterHandlers()
-        {
-            OnMovementStart += SetMovementStartHandler;
-            OnMovementFinish += SetMovementFinishHandler;
-            OnMovement += SetMovementHandler;
-            OnRunningStateChanged += RunningStateChangedHandler;
-            OnDashed += DashedHandler;
-            OnJump += JumpHandler;
-        }
-
-        private void UnRegisterHandlers()
-        {
-            OnMovementStart -= SetMovementStartHandler;
-            OnMovementFinish -= SetMovementFinishHandler;
-            OnMovement -= SetMovementHandler;
-            OnRunningStateChanged -= RunningStateChangedHandler;
-            OnDashed -= DashedHandler;
-            OnJump -= JumpHandler;
-        }
-
         private void SetRotationZero()
         {
-            neededRotation = new()
+            _NeededRotation = new()
             {
                 eulerAngles = Vector3.forward
             };
         }
 
-        private void SetMovementStartHandler()
-        {
-            OnMovementStartEvent?.Invoke();
-        }
-
-        private void SetMovementFinishHandler()
-        {
-            OnMovementFinishEvent?.Invoke();
-        }
-
-        private void SetMovementHandler(Vector2 vec)
-        {
-            OnMovementEvent?.Invoke(vec);
-        }
-
-        private void RunningStateChangedHandler()
-        {
-            OnRunningStateChangedEvent?.Invoke();
-        }
-
-        private void DashedHandler()
-        {
-            OnDashedEvent?.Invoke();
-        }
-
-        private void JumpHandler()
-        {
-            OnJumpEvent?.Invoke();
-        }
-
         public void StartJumpingEnd()
         {
-            OnJumpStartEndedEvent?.Invoke();
+            OnJumpStartEnded?.Invoke();
         }
 
         public void EndJump()
         {
-            OnJumpEndedEvent?.Invoke();
+            OnJumpEnded?.Invoke();
         }
 
         protected virtual void LocalDirectionOfMovingChanged()
         {
             if(_localDirectionOfMoving != Vector2.zero) 
-                _globalDirectionOfMoving = _localDirectionOfMoving;
+                _GlobalDirectionOfMoving = _localDirectionOfMoving;
         }
 
     }

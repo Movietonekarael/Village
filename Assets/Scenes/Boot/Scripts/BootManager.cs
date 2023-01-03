@@ -6,12 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace GameCore.Boot
 {
-#if MONOCACHE
-    public class BootManager : MonoCache
-#else
     public class BootManager : MonoBehaviour
-#endif
-
     {
 
         public void LoadTestLevel()

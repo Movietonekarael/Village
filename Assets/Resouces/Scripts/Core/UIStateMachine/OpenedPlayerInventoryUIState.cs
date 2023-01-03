@@ -17,7 +17,7 @@ namespace GameCore.GUI
                 {
                     _playerInventoryUI = playerInventoryUI;
                     _playerInventoryUI._playerInventoryCanvas.SetActive(false);
-                    StateMachine._playerController.FreezeControlForInteraction(false);
+                    StateMachine._inputHandler.FreezeControlForInteraction(false);
                 }
             }
 
@@ -26,7 +26,7 @@ namespace GameCore.GUI
                 if (_playerInventoryUI is not null)
                 {
                     _playerInventoryUI._playerInventoryCanvas.SetActive(true);
-                    StateMachine._playerController.FreezeControlForInteraction(true);
+                    StateMachine._inputHandler.FreezeControlForInteraction(true);
                 }
                 
                 StateMachine.OnOpenCloseInventoryEvent += ClosePlayerInventory;
@@ -37,7 +37,7 @@ namespace GameCore.GUI
                 if (_playerInventoryUI is not null)
                 {
                     _playerInventoryUI._playerInventoryCanvas.SetActive(false);
-                    StateMachine._playerController.FreezeControlForInteraction(false);
+                    StateMachine._inputHandler.FreezeControlForInteraction(false);
                 }
                 
                 StateMachine.OnOpenCloseInventoryEvent -= ClosePlayerInventory;

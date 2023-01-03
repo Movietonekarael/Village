@@ -8,7 +8,7 @@ namespace GameCore.Inventory
 {
     public class DragObject : MonoBehaviour
     {
-        private PlayerController _playerController;
+        private InputHandler _inputHandler;
         private Sprite _sprite;
         private RectTransform _canvasRectTransform;
 
@@ -18,9 +18,9 @@ namespace GameCore.Inventory
 
         private void Awake()
         {
-            _playerController = PlayerController.instance;
-            if (_playerController is null)
-                Debug.LogWarning("There is not PlayerController in the scene to attach to PlayerInventory script.");
+            _inputHandler = InputHandler.Instance;
+            if (_inputHandler is null)
+                Debug.LogWarning("There is not InputHandler in the scene to attach to PlayerInventory script.");
 
             _image = GetComponent<Image>();
             _rectTransform = GetComponent<RectTransform>();
@@ -59,7 +59,7 @@ namespace GameCore.Inventory
                 var screenSize = new Vector2(Screen.width, Screen.height);
                 var positionCoefficients = canvasSize / screenSize;
 
-                _rectTransform.anchoredPosition = _playerController.mousePosition * positionCoefficients;
+                _rectTransform.anchoredPosition = _inputHandler.MousePosition * positionCoefficients;
             }
         }
 
