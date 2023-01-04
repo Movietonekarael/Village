@@ -48957,7 +48957,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraTargetObjectTransform: {fileID: 556510335892165092}
-  _mouseCensivity: 0.05
+  _degreesPerSecond: 60
+  _mouseSensitivity: 0.05
   _cameraZoomStep: 0.5
   _cameraDistance: 6
   _maxCameraDistance: 15
@@ -58319,7 +58320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e59a7f69c96544d8645891cd2685bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraRotationKoefficient: 25
 --- !u!1 &556510337136478042
 GameObject:
   m_ObjectHideFlags: 0

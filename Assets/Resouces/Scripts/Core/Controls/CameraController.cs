@@ -14,7 +14,8 @@ namespace GameCore.GameControls
         [SerializeField] private Transform _cameraTargetObjectTransform;
 
 
-        [SerializeField] private float _mouseCensivity = 0.5f;
+        [SerializeField] private float _degreesPerSecond = 60f;
+        [SerializeField] private float _mouseSensitivity = 0.05f;
         [SerializeField] private float _cameraZoomStep = 0.5f;
         [SerializeField] private float _cameraDistance = 6;
         [SerializeField] private float _maxCameraDistance = 15;
@@ -37,8 +38,8 @@ namespace GameCore.GameControls
 
         private void Start()
         {
-            _inputHandler.OnCameraMoved += RotateCam;
-            _inputHandler.OnMouseScrolled += ZoomCam;
+            _inputHandler.OnCameraRotated += RotateCam;
+            _inputHandler.OnCameraZoomed += ZoomCam;
             CreateVirtualCameras();
         }
 
@@ -46,8 +47,8 @@ namespace GameCore.GameControls
         {
             if (_inputHandler is not null)
             {
-                _inputHandler.OnCameraMoved += RotateCam;
-                _inputHandler.OnMouseScrolled += ZoomCam;
+                _inputHandler.OnCameraRotated += RotateCam;
+                _inputHandler.OnCameraZoomed += ZoomCam;
             }
         }
 
@@ -55,8 +56,8 @@ namespace GameCore.GameControls
         {
             if (_inputHandler is not null)
             {
-                _inputHandler.OnCameraMoved -= RotateCam;
-                _inputHandler.OnMouseScrolled -= ZoomCam;
+                _inputHandler.OnCameraRotated -= RotateCam;
+                _inputHandler.OnCameraZoomed -= ZoomCam;
             }
         }
 
@@ -101,10 +102,12 @@ namespace GameCore.GameControls
             _virtualCameraObjectSample.SetActive(true);
         }
 
-        public void RotateCam(Vector2 vec)
+        public void RotateCam(Vector2 vec, bool isGamepad)
         {
-            _cameraTargetObjectTransform.transform.rotation *= Quaternion.AngleAxis(vec.x * _mouseCensivity, Vector3.up * _mouseCensivity);
-            transform.rotation *= Quaternion.AngleAxis(-vec.y * _mouseCensivity, Vector3.right * _mouseCensivity);//������� ���������� �������
+            var rotationModifier = isGamepad ? _degreesPerSecond : _mouseSensitivity;
+
+            _cameraTargetObjectTransform.transform.rotation *= Quaternion.AngleAxis(vec.x * rotationModifier, Vector3.up);
+            transform.rotation *= Quaternion.AngleAxis(-vec.y * rotationModifier, Vector3.right);
 
 
             Vector3 rotationValue = transform.rotation.eulerAngles;

@@ -292,7 +292,7 @@ namespace PlayerInput
             ""id"": ""519ad543-3c08-42e8-bed4-9e13fdbfc92c"",
             ""actions"": [
                 {
-                    ""name"": ""Rotation"",
+                    ""name"": ""MouseMovement"",
                     ""type"": ""Value"",
                     ""id"": ""a924b1df-0007-406d-a26e-0f7a574f22c2"",
                     ""expectedControlType"": ""Vector2"",
@@ -319,7 +319,7 @@ namespace PlayerInput
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""ReadyToZoomButton"",
+                    ""name"": ""ReadyToZoom"",
                     ""type"": ""Button"",
                     ""id"": ""cf767db0-447b-49e7-9d2a-845eb5b64c2b"",
                     ""expectedControlType"": ""Button"",
@@ -354,7 +354,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Rotation"",
+                    ""action"": ""MouseMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -387,7 +387,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ReadyToZoomButton"",
+                    ""action"": ""ReadyToZoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -468,7 +468,7 @@ namespace PlayerInput
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""1Key1"",
+                    ""name"": ""Key1"",
                     ""type"": ""Button"",
                     ""id"": ""219db42c-fd51-4806-99d4-f34613161ce0"",
                     ""expectedControlType"": ""Button"",
@@ -477,7 +477,7 @@ namespace PlayerInput
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""2Key1"",
+                    ""name"": ""Key2"",
                     ""type"": ""Button"",
                     ""id"": ""490e6fe9-8d90-4b3c-87b2-566ecdc18590"",
                     ""expectedControlType"": ""Button"",
@@ -486,7 +486,7 @@ namespace PlayerInput
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""3Key"",
+                    ""name"": ""Key3"",
                     ""type"": ""Button"",
                     ""id"": ""6ce549b3-706d-475f-9185-4a505cd7b73f"",
                     ""expectedControlType"": ""Button"",
@@ -495,7 +495,7 @@ namespace PlayerInput
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""4Key1"",
+                    ""name"": ""Key4"",
                     ""type"": ""Button"",
                     ""id"": ""893f5a99-fa51-4fe7-8d1e-11e829d84aba"",
                     ""expectedControlType"": ""Button"",
@@ -504,7 +504,7 @@ namespace PlayerInput
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""5Key"",
+                    ""name"": ""Key5"",
                     ""type"": ""Button"",
                     ""id"": ""3299c4ec-aa91-4e89-8c1e-f4b369d90a1f"",
                     ""expectedControlType"": ""Button"",
@@ -513,7 +513,7 @@ namespace PlayerInput
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""6Key"",
+                    ""name"": ""Key6"",
                     ""type"": ""Button"",
                     ""id"": ""b689bbdd-c73f-454b-adce-b1904c9511a9"",
                     ""expectedControlType"": ""Button"",
@@ -522,7 +522,7 @@ namespace PlayerInput
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""7Key"",
+                    ""name"": ""Key7"",
                     ""type"": ""Button"",
                     ""id"": ""0ff6e13f-4ffb-4de9-97b3-8636906dcfbf"",
                     ""expectedControlType"": ""Button"",
@@ -531,7 +531,7 @@ namespace PlayerInput
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""8Key"",
+                    ""name"": ""Key8"",
                     ""type"": ""Button"",
                     ""id"": ""fc05cce8-606b-4592-8c78-b995bbcf9c3e"",
                     ""expectedControlType"": ""Button"",
@@ -570,7 +570,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""1Key1"",
+                    ""action"": ""Key1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -581,7 +581,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""2Key1"",
+                    ""action"": ""Key2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -592,7 +592,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""3Key"",
+                    ""action"": ""Key3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -603,7 +603,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""4Key1"",
+                    ""action"": ""Key4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -614,7 +614,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""5Key"",
+                    ""action"": ""Key5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -625,7 +625,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""6Key"",
+                    ""action"": ""Key6"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -636,7 +636,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""7Key"",
+                    ""action"": ""Key7"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -647,7 +647,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""8Key"",
+                    ""action"": ""Key8"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -751,10 +751,10 @@ namespace PlayerInput
             m_PlayerControl_Intaract = m_PlayerControl.FindAction("Intaract", throwIfNotFound: true);
             // CameraControl
             m_CameraControl = asset.FindActionMap("CameraControl", throwIfNotFound: true);
-            m_CameraControl_Rotation = m_CameraControl.FindAction("Rotation", throwIfNotFound: true);
+            m_CameraControl_MouseMovement = m_CameraControl.FindAction("MouseMovement", throwIfNotFound: true);
             m_CameraControl_Zoom = m_CameraControl.FindAction("Zoom", throwIfNotFound: true);
             m_CameraControl_RotationSticks = m_CameraControl.FindAction("RotationSticks", throwIfNotFound: true);
-            m_CameraControl_ReadyToZoomButton = m_CameraControl.FindAction("ReadyToZoomButton", throwIfNotFound: true);
+            m_CameraControl_ReadyToZoom = m_CameraControl.FindAction("ReadyToZoom", throwIfNotFound: true);
             m_CameraControl_ZoomIn = m_CameraControl.FindAction("ZoomIn", throwIfNotFound: true);
             m_CameraControl_ZoomOut = m_CameraControl.FindAction("ZoomOut", throwIfNotFound: true);
             // ApplicationControl
@@ -763,14 +763,14 @@ namespace PlayerInput
             // InventoryControl
             m_InventoryControl = asset.FindActionMap("InventoryControl", throwIfNotFound: true);
             m_InventoryControl_OpenCloseInventory = m_InventoryControl.FindAction("OpenCloseInventory", throwIfNotFound: true);
-            m_InventoryControl__1Key1 = m_InventoryControl.FindAction("1Key1", throwIfNotFound: true);
-            m_InventoryControl__2Key1 = m_InventoryControl.FindAction("2Key1", throwIfNotFound: true);
-            m_InventoryControl__3Key = m_InventoryControl.FindAction("3Key", throwIfNotFound: true);
-            m_InventoryControl__4Key1 = m_InventoryControl.FindAction("4Key1", throwIfNotFound: true);
-            m_InventoryControl__5Key = m_InventoryControl.FindAction("5Key", throwIfNotFound: true);
-            m_InventoryControl__6Key = m_InventoryControl.FindAction("6Key", throwIfNotFound: true);
-            m_InventoryControl__7Key = m_InventoryControl.FindAction("7Key", throwIfNotFound: true);
-            m_InventoryControl__8Key = m_InventoryControl.FindAction("8Key", throwIfNotFound: true);
+            m_InventoryControl_Key1 = m_InventoryControl.FindAction("Key1", throwIfNotFound: true);
+            m_InventoryControl_Key2 = m_InventoryControl.FindAction("Key2", throwIfNotFound: true);
+            m_InventoryControl_Key3 = m_InventoryControl.FindAction("Key3", throwIfNotFound: true);
+            m_InventoryControl_Key4 = m_InventoryControl.FindAction("Key4", throwIfNotFound: true);
+            m_InventoryControl_Key5 = m_InventoryControl.FindAction("Key5", throwIfNotFound: true);
+            m_InventoryControl_Key6 = m_InventoryControl.FindAction("Key6", throwIfNotFound: true);
+            m_InventoryControl_Key7 = m_InventoryControl.FindAction("Key7", throwIfNotFound: true);
+            m_InventoryControl_Key8 = m_InventoryControl.FindAction("Key8", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
@@ -899,20 +899,20 @@ namespace PlayerInput
         // CameraControl
         private readonly InputActionMap m_CameraControl;
         private ICameraControlActions m_CameraControlActionsCallbackInterface;
-        private readonly InputAction m_CameraControl_Rotation;
+        private readonly InputAction m_CameraControl_MouseMovement;
         private readonly InputAction m_CameraControl_Zoom;
         private readonly InputAction m_CameraControl_RotationSticks;
-        private readonly InputAction m_CameraControl_ReadyToZoomButton;
+        private readonly InputAction m_CameraControl_ReadyToZoom;
         private readonly InputAction m_CameraControl_ZoomIn;
         private readonly InputAction m_CameraControl_ZoomOut;
         public struct CameraControlActions
         {
             private @PlayerInputScheme m_Wrapper;
             public CameraControlActions(@PlayerInputScheme wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Rotation => m_Wrapper.m_CameraControl_Rotation;
+            public InputAction @MouseMovement => m_Wrapper.m_CameraControl_MouseMovement;
             public InputAction @Zoom => m_Wrapper.m_CameraControl_Zoom;
             public InputAction @RotationSticks => m_Wrapper.m_CameraControl_RotationSticks;
-            public InputAction @ReadyToZoomButton => m_Wrapper.m_CameraControl_ReadyToZoomButton;
+            public InputAction @ReadyToZoom => m_Wrapper.m_CameraControl_ReadyToZoom;
             public InputAction @ZoomIn => m_Wrapper.m_CameraControl_ZoomIn;
             public InputAction @ZoomOut => m_Wrapper.m_CameraControl_ZoomOut;
             public InputActionMap Get() { return m_Wrapper.m_CameraControl; }
@@ -924,18 +924,18 @@ namespace PlayerInput
             {
                 if (m_Wrapper.m_CameraControlActionsCallbackInterface != null)
                 {
-                    @Rotation.started -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnRotation;
-                    @Rotation.performed -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnRotation;
-                    @Rotation.canceled -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnRotation;
+                    @MouseMovement.started -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnMouseMovement;
+                    @MouseMovement.performed -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnMouseMovement;
+                    @MouseMovement.canceled -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnMouseMovement;
                     @Zoom.started -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnZoom;
                     @Zoom.performed -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnZoom;
                     @Zoom.canceled -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnZoom;
                     @RotationSticks.started -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnRotationSticks;
                     @RotationSticks.performed -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnRotationSticks;
                     @RotationSticks.canceled -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnRotationSticks;
-                    @ReadyToZoomButton.started -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnReadyToZoomButton;
-                    @ReadyToZoomButton.performed -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnReadyToZoomButton;
-                    @ReadyToZoomButton.canceled -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnReadyToZoomButton;
+                    @ReadyToZoom.started -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnReadyToZoom;
+                    @ReadyToZoom.performed -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnReadyToZoom;
+                    @ReadyToZoom.canceled -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnReadyToZoom;
                     @ZoomIn.started -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnZoomIn;
                     @ZoomIn.performed -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnZoomIn;
                     @ZoomIn.canceled -= m_Wrapper.m_CameraControlActionsCallbackInterface.OnZoomIn;
@@ -946,18 +946,18 @@ namespace PlayerInput
                 m_Wrapper.m_CameraControlActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @Rotation.started += instance.OnRotation;
-                    @Rotation.performed += instance.OnRotation;
-                    @Rotation.canceled += instance.OnRotation;
+                    @MouseMovement.started += instance.OnMouseMovement;
+                    @MouseMovement.performed += instance.OnMouseMovement;
+                    @MouseMovement.canceled += instance.OnMouseMovement;
                     @Zoom.started += instance.OnZoom;
                     @Zoom.performed += instance.OnZoom;
                     @Zoom.canceled += instance.OnZoom;
                     @RotationSticks.started += instance.OnRotationSticks;
                     @RotationSticks.performed += instance.OnRotationSticks;
                     @RotationSticks.canceled += instance.OnRotationSticks;
-                    @ReadyToZoomButton.started += instance.OnReadyToZoomButton;
-                    @ReadyToZoomButton.performed += instance.OnReadyToZoomButton;
-                    @ReadyToZoomButton.canceled += instance.OnReadyToZoomButton;
+                    @ReadyToZoom.started += instance.OnReadyToZoom;
+                    @ReadyToZoom.performed += instance.OnReadyToZoom;
+                    @ReadyToZoom.canceled += instance.OnReadyToZoom;
                     @ZoomIn.started += instance.OnZoomIn;
                     @ZoomIn.performed += instance.OnZoomIn;
                     @ZoomIn.canceled += instance.OnZoomIn;
@@ -1006,27 +1006,27 @@ namespace PlayerInput
         private readonly InputActionMap m_InventoryControl;
         private IInventoryControlActions m_InventoryControlActionsCallbackInterface;
         private readonly InputAction m_InventoryControl_OpenCloseInventory;
-        private readonly InputAction m_InventoryControl__1Key1;
-        private readonly InputAction m_InventoryControl__2Key1;
-        private readonly InputAction m_InventoryControl__3Key;
-        private readonly InputAction m_InventoryControl__4Key1;
-        private readonly InputAction m_InventoryControl__5Key;
-        private readonly InputAction m_InventoryControl__6Key;
-        private readonly InputAction m_InventoryControl__7Key;
-        private readonly InputAction m_InventoryControl__8Key;
+        private readonly InputAction m_InventoryControl_Key1;
+        private readonly InputAction m_InventoryControl_Key2;
+        private readonly InputAction m_InventoryControl_Key3;
+        private readonly InputAction m_InventoryControl_Key4;
+        private readonly InputAction m_InventoryControl_Key5;
+        private readonly InputAction m_InventoryControl_Key6;
+        private readonly InputAction m_InventoryControl_Key7;
+        private readonly InputAction m_InventoryControl_Key8;
         public struct InventoryControlActions
         {
             private @PlayerInputScheme m_Wrapper;
             public InventoryControlActions(@PlayerInputScheme wrapper) { m_Wrapper = wrapper; }
             public InputAction @OpenCloseInventory => m_Wrapper.m_InventoryControl_OpenCloseInventory;
-            public InputAction @_1Key1 => m_Wrapper.m_InventoryControl__1Key1;
-            public InputAction @_2Key1 => m_Wrapper.m_InventoryControl__2Key1;
-            public InputAction @_3Key => m_Wrapper.m_InventoryControl__3Key;
-            public InputAction @_4Key1 => m_Wrapper.m_InventoryControl__4Key1;
-            public InputAction @_5Key => m_Wrapper.m_InventoryControl__5Key;
-            public InputAction @_6Key => m_Wrapper.m_InventoryControl__6Key;
-            public InputAction @_7Key => m_Wrapper.m_InventoryControl__7Key;
-            public InputAction @_8Key => m_Wrapper.m_InventoryControl__8Key;
+            public InputAction @Key1 => m_Wrapper.m_InventoryControl_Key1;
+            public InputAction @Key2 => m_Wrapper.m_InventoryControl_Key2;
+            public InputAction @Key3 => m_Wrapper.m_InventoryControl_Key3;
+            public InputAction @Key4 => m_Wrapper.m_InventoryControl_Key4;
+            public InputAction @Key5 => m_Wrapper.m_InventoryControl_Key5;
+            public InputAction @Key6 => m_Wrapper.m_InventoryControl_Key6;
+            public InputAction @Key7 => m_Wrapper.m_InventoryControl_Key7;
+            public InputAction @Key8 => m_Wrapper.m_InventoryControl_Key8;
             public InputActionMap Get() { return m_Wrapper.m_InventoryControl; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1039,30 +1039,30 @@ namespace PlayerInput
                     @OpenCloseInventory.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnOpenCloseInventory;
                     @OpenCloseInventory.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnOpenCloseInventory;
                     @OpenCloseInventory.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnOpenCloseInventory;
-                    @_1Key1.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_1Key1;
-                    @_1Key1.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_1Key1;
-                    @_1Key1.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_1Key1;
-                    @_2Key1.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_2Key1;
-                    @_2Key1.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_2Key1;
-                    @_2Key1.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_2Key1;
-                    @_3Key.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_3Key;
-                    @_3Key.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_3Key;
-                    @_3Key.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_3Key;
-                    @_4Key1.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_4Key1;
-                    @_4Key1.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_4Key1;
-                    @_4Key1.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_4Key1;
-                    @_5Key.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_5Key;
-                    @_5Key.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_5Key;
-                    @_5Key.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_5Key;
-                    @_6Key.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_6Key;
-                    @_6Key.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_6Key;
-                    @_6Key.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_6Key;
-                    @_7Key.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_7Key;
-                    @_7Key.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_7Key;
-                    @_7Key.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_7Key;
-                    @_8Key.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_8Key;
-                    @_8Key.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_8Key;
-                    @_8Key.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.On_8Key;
+                    @Key1.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey1;
+                    @Key1.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey1;
+                    @Key1.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey1;
+                    @Key2.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey2;
+                    @Key2.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey2;
+                    @Key2.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey2;
+                    @Key3.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey3;
+                    @Key3.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey3;
+                    @Key3.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey3;
+                    @Key4.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey4;
+                    @Key4.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey4;
+                    @Key4.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey4;
+                    @Key5.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey5;
+                    @Key5.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey5;
+                    @Key5.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey5;
+                    @Key6.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey6;
+                    @Key6.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey6;
+                    @Key6.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey6;
+                    @Key7.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey7;
+                    @Key7.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey7;
+                    @Key7.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey7;
+                    @Key8.started -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey8;
+                    @Key8.performed -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey8;
+                    @Key8.canceled -= m_Wrapper.m_InventoryControlActionsCallbackInterface.OnKey8;
                 }
                 m_Wrapper.m_InventoryControlActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1070,30 +1070,30 @@ namespace PlayerInput
                     @OpenCloseInventory.started += instance.OnOpenCloseInventory;
                     @OpenCloseInventory.performed += instance.OnOpenCloseInventory;
                     @OpenCloseInventory.canceled += instance.OnOpenCloseInventory;
-                    @_1Key1.started += instance.On_1Key1;
-                    @_1Key1.performed += instance.On_1Key1;
-                    @_1Key1.canceled += instance.On_1Key1;
-                    @_2Key1.started += instance.On_2Key1;
-                    @_2Key1.performed += instance.On_2Key1;
-                    @_2Key1.canceled += instance.On_2Key1;
-                    @_3Key.started += instance.On_3Key;
-                    @_3Key.performed += instance.On_3Key;
-                    @_3Key.canceled += instance.On_3Key;
-                    @_4Key1.started += instance.On_4Key1;
-                    @_4Key1.performed += instance.On_4Key1;
-                    @_4Key1.canceled += instance.On_4Key1;
-                    @_5Key.started += instance.On_5Key;
-                    @_5Key.performed += instance.On_5Key;
-                    @_5Key.canceled += instance.On_5Key;
-                    @_6Key.started += instance.On_6Key;
-                    @_6Key.performed += instance.On_6Key;
-                    @_6Key.canceled += instance.On_6Key;
-                    @_7Key.started += instance.On_7Key;
-                    @_7Key.performed += instance.On_7Key;
-                    @_7Key.canceled += instance.On_7Key;
-                    @_8Key.started += instance.On_8Key;
-                    @_8Key.performed += instance.On_8Key;
-                    @_8Key.canceled += instance.On_8Key;
+                    @Key1.started += instance.OnKey1;
+                    @Key1.performed += instance.OnKey1;
+                    @Key1.canceled += instance.OnKey1;
+                    @Key2.started += instance.OnKey2;
+                    @Key2.performed += instance.OnKey2;
+                    @Key2.canceled += instance.OnKey2;
+                    @Key3.started += instance.OnKey3;
+                    @Key3.performed += instance.OnKey3;
+                    @Key3.canceled += instance.OnKey3;
+                    @Key4.started += instance.OnKey4;
+                    @Key4.performed += instance.OnKey4;
+                    @Key4.canceled += instance.OnKey4;
+                    @Key5.started += instance.OnKey5;
+                    @Key5.performed += instance.OnKey5;
+                    @Key5.canceled += instance.OnKey5;
+                    @Key6.started += instance.OnKey6;
+                    @Key6.performed += instance.OnKey6;
+                    @Key6.canceled += instance.OnKey6;
+                    @Key7.started += instance.OnKey7;
+                    @Key7.performed += instance.OnKey7;
+                    @Key7.canceled += instance.OnKey7;
+                    @Key8.started += instance.OnKey8;
+                    @Key8.performed += instance.OnKey8;
+                    @Key8.canceled += instance.OnKey8;
                 }
             }
         }
@@ -1167,10 +1167,10 @@ namespace PlayerInput
         }
         public interface ICameraControlActions
         {
-            void OnRotation(InputAction.CallbackContext context);
+            void OnMouseMovement(InputAction.CallbackContext context);
             void OnZoom(InputAction.CallbackContext context);
             void OnRotationSticks(InputAction.CallbackContext context);
-            void OnReadyToZoomButton(InputAction.CallbackContext context);
+            void OnReadyToZoom(InputAction.CallbackContext context);
             void OnZoomIn(InputAction.CallbackContext context);
             void OnZoomOut(InputAction.CallbackContext context);
         }
@@ -1181,14 +1181,14 @@ namespace PlayerInput
         public interface IInventoryControlActions
         {
             void OnOpenCloseInventory(InputAction.CallbackContext context);
-            void On_1Key1(InputAction.CallbackContext context);
-            void On_2Key1(InputAction.CallbackContext context);
-            void On_3Key(InputAction.CallbackContext context);
-            void On_4Key1(InputAction.CallbackContext context);
-            void On_5Key(InputAction.CallbackContext context);
-            void On_6Key(InputAction.CallbackContext context);
-            void On_7Key(InputAction.CallbackContext context);
-            void On_8Key(InputAction.CallbackContext context);
+            void OnKey1(InputAction.CallbackContext context);
+            void OnKey2(InputAction.CallbackContext context);
+            void OnKey3(InputAction.CallbackContext context);
+            void OnKey4(InputAction.CallbackContext context);
+            void OnKey5(InputAction.CallbackContext context);
+            void OnKey6(InputAction.CallbackContext context);
+            void OnKey7(InputAction.CallbackContext context);
+            void OnKey8(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

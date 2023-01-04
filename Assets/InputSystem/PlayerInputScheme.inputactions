@@ -268,7 +268,7 @@
             "id": "519ad543-3c08-42e8-bed4-9e13fdbfc92c",
             "actions": [
                 {
-                    "name": "Rotation",
+                    "name": "MouseMovement",
                     "type": "Value",
                     "id": "a924b1df-0007-406d-a26e-0f7a574f22c2",
                     "expectedControlType": "Vector2",
@@ -295,7 +295,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "ReadyToZoomButton",
+                    "name": "ReadyToZoom",
                     "type": "Button",
                     "id": "cf767db0-447b-49e7-9d2a-845eb5b64c2b",
                     "expectedControlType": "Button",
@@ -330,7 +330,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Rotation",
+                    "action": "MouseMovement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -363,7 +363,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ReadyToZoomButton",
+                    "action": "ReadyToZoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -444,7 +444,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "1Key1",
+                    "name": "Key1",
                     "type": "Button",
                     "id": "219db42c-fd51-4806-99d4-f34613161ce0",
                     "expectedControlType": "Button",
@@ -453,7 +453,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "2Key1",
+                    "name": "Key2",
                     "type": "Button",
                     "id": "490e6fe9-8d90-4b3c-87b2-566ecdc18590",
                     "expectedControlType": "Button",
@@ -462,7 +462,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "3Key",
+                    "name": "Key3",
                     "type": "Button",
                     "id": "6ce549b3-706d-475f-9185-4a505cd7b73f",
                     "expectedControlType": "Button",
@@ -471,7 +471,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "4Key1",
+                    "name": "Key4",
                     "type": "Button",
                     "id": "893f5a99-fa51-4fe7-8d1e-11e829d84aba",
                     "expectedControlType": "Button",
@@ -480,7 +480,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "5Key",
+                    "name": "Key5",
                     "type": "Button",
                     "id": "3299c4ec-aa91-4e89-8c1e-f4b369d90a1f",
                     "expectedControlType": "Button",
@@ -489,7 +489,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "6Key",
+                    "name": "Key6",
                     "type": "Button",
                     "id": "b689bbdd-c73f-454b-adce-b1904c9511a9",
                     "expectedControlType": "Button",
@@ -498,7 +498,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "7Key",
+                    "name": "Key7",
                     "type": "Button",
                     "id": "0ff6e13f-4ffb-4de9-97b3-8636906dcfbf",
                     "expectedControlType": "Button",
@@ -507,7 +507,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "8Key",
+                    "name": "Key8",
                     "type": "Button",
                     "id": "fc05cce8-606b-4592-8c78-b995bbcf9c3e",
                     "expectedControlType": "Button",
@@ -546,7 +546,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "1Key1",
+                    "action": "Key1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -557,7 +557,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "2Key1",
+                    "action": "Key2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -568,7 +568,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "3Key",
+                    "action": "Key3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -579,7 +579,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "4Key1",
+                    "action": "Key4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -590,7 +590,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "5Key",
+                    "action": "Key5",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -601,7 +601,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "6Key",
+                    "action": "Key6",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -612,7 +612,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "7Key",
+                    "action": "Key7",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -623,7 +623,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "8Key",
+                    "action": "Key8",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

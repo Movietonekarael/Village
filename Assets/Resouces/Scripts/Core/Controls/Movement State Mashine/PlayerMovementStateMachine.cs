@@ -23,7 +23,7 @@ namespace GameCore.GameMovement
             _inputHandler.OnMovement += (Vector2 val) => OnMovement?.Invoke(val);
             _inputHandler.OnRunningChanged += delegate { OnRunningStateChanged?.Invoke(); };
             _inputHandler.OnDashed += delegate { OnDashed?.Invoke(); };
-            _inputHandler.OnJumpPressed += delegate { OnJump?.Invoke(); };
+            _inputHandler.OnJumped += delegate { OnJump?.Invoke(); };
         }
 
         private void OnDisable()
@@ -33,7 +33,7 @@ namespace GameCore.GameMovement
             _inputHandler.OnMovement -= (Vector2 val) => OnMovement?.Invoke(val);
             _inputHandler.OnRunningChanged -= delegate { OnRunningStateChanged?.Invoke(); };
             _inputHandler.OnDashed -= delegate { OnDashed?.Invoke(); };
-            _inputHandler.OnJumpPressed -= delegate { OnJump?.Invoke(); };
+            _inputHandler.OnJumped -= delegate { OnJump?.Invoke(); };
         }
 
         protected override void Awake()
