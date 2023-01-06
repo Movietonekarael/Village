@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MovietoneMath;
 using GameCore.GameControls;
-
-
+using UnityEngine.U2D;
 
 namespace GameCore.GameMovement
 {
@@ -13,7 +12,6 @@ namespace GameCore.GameMovement
     {
         private InputHandler _inputHandler;
 
-        [SerializeField] private Transform _camera;
         [SerializeField] private Transform _cameraTarget;
 
 
@@ -46,8 +44,7 @@ namespace GameCore.GameMovement
         protected override void LocalDirectionOfMovingChanged()
         {
             var localMovingDirection = GetAngleOfLocalMovingDirection();
-            var cameraDirection = GetCameraDirecton();
-            var cameraDirectionAngle = GetAngleOfGlobalcameraDirection(cameraDirection);
+            var cameraDirectionAngle = GetAngleOfGlobalcameraDirection();
             var angleRotation = CalculateGlobalMovingDirectionAngle(localMovingDirection, cameraDirectionAngle);
             _GlobalDirectionOfMoving = CalculateGlobalMovingDirection(angleRotation);
             _NeededRotation.eulerAngles = SetNeededRotationDependingOnGlobalMovingVector(angleRotation);
@@ -58,15 +55,12 @@ namespace GameCore.GameMovement
             return MathM.Vector.GetAngleOfVector2(_localDirectionOfMoving);
         }
 
-        private Vector2 GetCameraDirecton()
+        private float GetAngleOfGlobalcameraDirection()
         {
-            return new(_cameraTarget.position.x - _camera.position.x,
-                       _cameraTarget.position.z - _camera.position.z);
-        }
-
-        private float GetAngleOfGlobalcameraDirection(Vector2 cameraDirection)
-        {
-            return MathM.Vector.GetAngleOfVector2(cameraDirection);
+            var angle = _cameraTarget.rotation.eulerAngles.y;
+            if (angle > 180)
+                angle -= 360;
+            return angle;
         }
 
         private float CalculateGlobalMovingDirectionAngle(float angle1, float angle2)

@@ -22,7 +22,7 @@ ____
 
 ____
 
-Скрипты инвенторя хранятся в [Inventory](https://bitbucket.org/movietoneofficial/village/src/master/Assets/Resouces/Scripts/Core/Inventory/).
+Скрипты инвентаря хранятся в [Inventory](https://bitbucket.org/movietoneofficial/village/src/master/Assets/Resouces/Scripts/Core/Inventory/).
 Все объекты, имеющие инвентарь, реализуют интерфейс [IInventory](https://bitbucket.org/movietoneofficial/village/src/master/Assets/Resouces/Scripts/Core/Inventory/IInventory.cs).
 Инвентарь игрока описывает класс [PlayerInventory](https://bitbucket.org/movietoneofficial/village/src/master/Assets/Resouces/Scripts/Core/Inventory/PlayerInventory.cs). Игровой интерфейс открытого инвентаря управляется классом [PlayerInventoryPanelUI](https://bitbucket.org/movietoneofficial/village/src/master/Assets/Resouces/Scripts/Core/Inventory/PlayerInventoryPanelUI.cs). Панель снизу, отображающая быстродоступные элементы инвентаря, управляется классом [FastInventoryPanelUI](https://bitbucket.org/movietoneofficial/village/src/master/Assets/Resouces/Scripts/Core/Inventory/FastInventoryPanelUI.cs).
 

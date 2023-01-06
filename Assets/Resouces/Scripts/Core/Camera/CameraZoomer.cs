@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using System;
-using Codice.Client.Common.GameUI;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -20,16 +19,12 @@ namespace GameCore.GameControls
         [SerializeField] private float _maxCameraDistance = 15;
         [SerializeField] private float _startingCameraDistance = 6;
         [SerializeField] private float _cameraZoomStep = 0.5f;
+        [SerializeField] private float _cameraZoomStepTime = 1f;
 
-        private float _currentDistance;
         private float _currentMixing;
 
-
-        private float _distanceFrom;
-        private float _distanceTo;
-        private float _part;
-
-        [SerializeField] private AnimationCurve _curve;
+        [SerializeField] private AnimationCurve _stepCurve;
+        [SerializeField] private AnimationCurve _fullCurve;
 
 
         private void Awake()
@@ -50,32 +45,26 @@ namespace GameCore.GameControls
 
         private void InitializeCameraDistance()
         {
-            _currentDistance = _startingCameraDistance;
-            ApplyCameraDistance();
-        }
-
-        private void ApplyCameraDistance()
-        {
             CheckDistanceLimits();
-            _currentMixing = CalculateMixing();
+            _currentMixing = CalculateMixing(_startingCameraDistance);
             ApplyCameraMixing();
         }
 
         private void CheckDistanceLimits() 
         {
-            if (_currentDistance < _minCameraDistance)
+            if (_startingCameraDistance < _minCameraDistance)
             {
-                _currentDistance = _minCameraDistance;
+                _startingCameraDistance = _minCameraDistance;
             }
-            else if (_currentDistance > _maxCameraDistance)
+            else if (_startingCameraDistance > _maxCameraDistance)
             {
-                _currentDistance = _maxCameraDistance;
+                _startingCameraDistance = _maxCameraDistance;
             }
         }
 
-        private float CalculateMixing()
+        private float CalculateMixing(float distance)
         {
-            return (_currentDistance - _minCameraDistance) / (_maxCameraDistance - _minCameraDistance);
+            return (distance - _minCameraDistance) / (_maxCameraDistance - _minCameraDistance);
         }
 
         private void ApplyCameraMixing()
@@ -94,50 +83,31 @@ namespace GameCore.GameControls
             _inputHandler.OnCameraZoomed -= ZoomCamera;
         }
 
-        private void ZoomCamera(float zoomDirection)
+        private async void ZoomCamera(float zoomDirection)
         {
-            if (zoomDirection < 0)
+            var deltaMixing = CalculateMixing(_cameraZoomStep) * (zoomDirection > 0 ? 1f : -1f);
+            var newTime = 0f;
+
+            while (newTime <= _cameraZoomStepTime)
             {
-                _currentDistance -= _cameraZoomStep;
-            }
-            else if (zoomDirection > 0)
-            {
-                _currentDistance += _cameraZoomStep;
-            }
-
-            HandleDistance();
-        }
-
-        private Task _mixingHandler;
-        private CancellationTokenSource tokenSource;
-        private async void HandleDistance()
-        {
-            CheckDistanceLimits();
-            var targetMixing = CalculateMixing();
-
-            if (_mixingHandler != null && _mixingHandler.IsCompleted != true)
-            {
-                tokenSource.Cancel();
-            }
-
-            tokenSource = new();
-
-            _mixingHandler = HandleMixing(_currentMixing, targetMixing, tokenSource.Token);
-            await Task.WhenAll(_mixingHandler);
-        }
-
-        private async Task HandleMixing(float fromMixing, float toMixing, CancellationToken token)
-        {
-            float time = Time.deltaTime;
-
-            while (time <= 1)
-            {
-                if (token.IsCancellationRequested) { return; }
-                time += Time.deltaTime;
-                _currentMixing = Mathf.Lerp(fromMixing, toMixing, time);
+                var lastTime = newTime;
+                newTime += Time.deltaTime;
+                newTime = newTime > 1f ? 1f : newTime;
+                _currentMixing -= deltaMixing
+                                  * (_stepCurve.Evaluate(newTime) - _stepCurve.Evaluate(lastTime))
+                                  * _fullCurve.Evaluate(_currentMixing);
+                CheckMixing();
                 ApplyCameraMixing();
                 await Task.Yield();
             }
+        }
+
+        private void CheckMixing()
+        {
+            if (_currentMixing < 0)
+                _currentMixing = 0;
+            else if (_currentMixing > 1)
+                _currentMixing = 1;
         }
     }
 }
