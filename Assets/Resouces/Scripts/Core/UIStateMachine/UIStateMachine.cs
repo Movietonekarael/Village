@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,8 +22,8 @@ namespace GameCore.GUI
 
 
 
-        private event VoidHandler OnOpenCloseInventoryEvent;
-        private event IntHandler OnSwitchSelectedItemEvent;
+        private event Action OnOpenCloseInventoryEvent;
+        private event Action<int> OnSwitchSelectedItemEvent;
 
         private void OnEnable()
         {
@@ -58,9 +59,7 @@ namespace GameCore.GUI
 
         private void Awake()
         {
-            _inputHandler = InputHandler.Instance;
-            if (_inputHandler is null)
-                Debug.LogWarning("There is not InputHandler in the scene to attach to PlayerInventory script.");
+            _inputHandler = InputHandler.GetInstance("PlayerInventory");
 
             _closedInventoryUIState = new(this, _fastInventoryPanelUI);
             _openedPlayerInventoryUIState = new(this, _playerInventoryPanelUI);

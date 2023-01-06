@@ -46,6 +46,5 @@ namespace MovietoneMath
                 return vec;
             }
         }
-
     }
 }

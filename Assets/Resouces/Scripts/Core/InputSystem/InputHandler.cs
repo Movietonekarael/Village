@@ -10,7 +10,7 @@ namespace GameCore.GameControls
 {
     public sealed partial class InputHandler : MonoBehaviour
     {
-        public static InputHandler Instance { get; private set; }
+        private static InputHandler _instance;
 
         private PlayerInputScheme _inputScheme;
 
@@ -56,14 +56,14 @@ namespace GameCore.GameControls
 
         private void CheckForInstanceExistance()
         {
-            if (Instance != null && Instance != this)
+            if (_instance != null && _instance != this)
             {
                 Debug.LogWarning("There are more than one InputHandler in the scene.");
                 Destroy(this);
             }
             else
             {
-                Instance = this;
+                _instance = this;
             }
         }
 
@@ -149,6 +149,14 @@ namespace GameCore.GameControls
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
             }
+        }
+
+        public static InputHandler GetInstance(string senderName)
+        {
+            if (_instance is null)
+                throw new Exception($"There is no InputHandler in the scene to attach to {senderName} script.");
+
+            return _instance;
         }
     }
 }

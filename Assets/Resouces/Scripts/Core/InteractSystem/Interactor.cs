@@ -29,9 +29,7 @@ namespace GameCore.Interactions
 
         private void Awake()
         {
-            _inputHandler = InputHandler.Instance;
-            if (_inputHandler is null)
-                Debug.LogWarning("There is not InputHandler in the scene to attach to Interactor script.");
+            _inputHandler = InputHandler.GetInstance("Interactor");
 
             _interactionPromptUI.DisablePrompt();
         }

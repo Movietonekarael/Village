@@ -213,7 +213,7 @@ public abstract class PhysicsActor : MonoBehaviour
     protected virtual void Start()
     {
 		RigidbodyComponent.ContinuousCollisionDetection = useContinuousCollisionDetection; 
-		RigidbodyComponent.UseInterpolation = false;
+		RigidbodyComponent.UseInterpolation = true;
 
         // Interpolation
 		targetPosition = startingPosition = transform.position;		

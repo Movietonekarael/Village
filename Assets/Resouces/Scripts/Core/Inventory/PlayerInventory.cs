@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine; 
@@ -9,9 +10,9 @@ namespace GameCore.Inventory
 {
     public struct UIItem
     {
-        public event UIntHandler OnNumberChanged;
-        public event IntHandler OnImageChanged;
-        public event IntHandler OnItemNumberChanged;
+        public event Action<uint> OnNumberChanged;
+        public event Action<int> OnImageChanged;
+        public event Action<int> OnItemNumberChanged;
         public InventoryItem inventoryItem;
         public Image image { private get; set; }
         public int xCoordinate;

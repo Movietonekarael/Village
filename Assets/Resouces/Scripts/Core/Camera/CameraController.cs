@@ -11,8 +11,6 @@ namespace GameCore.GameControls
     {
         private InputHandler _inputHandler;
 
-        [SerializeField] private Transform _cameraTargetObjectTransform;
-
 
         [SerializeField] private float _degreesPerSecond = 60f;
         [SerializeField] private float _mouseSensitivity = 0.05f;
@@ -29,11 +27,11 @@ namespace GameCore.GameControls
         [SerializeField] private GameObject _camera;
         private GameObject[] _virtualCamerasObjects;
 
+        [SerializeField] private CameraFollowTargetRotator _cameraFollowTarget;
+
         private void Awake()
         {
-            _inputHandler = InputHandler.Instance;
-            if (_inputHandler is null)
-                Debug.LogWarning("There is not InputHandler in the scene to attach to CameraController script.");
+            _inputHandler = InputHandler.GetInstance("CameraController");
         }
 
         private void Start()
@@ -105,20 +103,7 @@ namespace GameCore.GameControls
         public void RotateCam(Vector2 vec, bool isGamepad)
         {
             var rotationModifier = isGamepad ? _degreesPerSecond : _mouseSensitivity;
-
-            _cameraTargetObjectTransform.transform.rotation *= Quaternion.AngleAxis(vec.x * rotationModifier, Vector3.up);
-            transform.rotation *= Quaternion.AngleAxis(-vec.y * rotationModifier, Vector3.right);
-
-
-            Vector3 rotationValue = transform.rotation.eulerAngles;
-            if (rotationValue.x > 85.0f && rotationValue.x < 100.0f)
-            {
-                transform.rotation = Quaternion.Euler(85.0f, rotationValue.y, rotationValue.z);
-            }
-            else if (rotationValue.x > 260.0f && rotationValue.x < 275.0f)
-            {
-                transform.rotation = Quaternion.Euler(275.0f, rotationValue.y, rotationValue.z);
-            }
+            _cameraFollowTarget.InvokeRotation(new Vector2(-vec.y, vec.x) * rotationModifier);
         }
 
         public void ZoomCam(float f)

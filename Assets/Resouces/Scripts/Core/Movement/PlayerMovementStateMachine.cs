@@ -8,6 +8,7 @@ using GameCore.GameControls;
 
 namespace GameCore.GameMovement
 {
+    [RequireComponent(typeof(InputHandler))]
     public class PlayerMovementStateMachine : NPCMovementStateMachine
     {
         private InputHandler _inputHandler;
@@ -39,19 +40,7 @@ namespace GameCore.GameMovement
         protected override void Awake()
         {
             base.Awake();
-            TryAttachInputHandler();
-        }
-
-        private void TryAttachInputHandler()
-        {
-            _inputHandler = InputHandler.Instance;
-            LogWarningIfInputHandlerIsNull();
-        }
-
-        private void LogWarningIfInputHandlerIsNull()
-        {
-            if (_inputHandler is null)
-                Debug.LogWarning("There is no InputHandler in the scene to attach to PlayerMovement script.");
+            _inputHandler = InputHandler.GetInstance("PlayerMovement");
         }
 
         protected override void LocalDirectionOfMovingChanged()

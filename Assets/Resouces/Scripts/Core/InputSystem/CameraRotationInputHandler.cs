@@ -58,7 +58,6 @@ namespace GameCore.GameControls
             public void Perform(Vector2 forceVector)
             {
                 _forceVector = forceVector;
-                //Debug.Log($"ForceVector: {_forceVector}");
             }
 
             public void Update()

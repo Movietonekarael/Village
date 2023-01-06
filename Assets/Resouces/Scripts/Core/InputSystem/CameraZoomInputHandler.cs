@@ -1,4 +1,8 @@
+using System.Diagnostics;
+using System.Threading.Tasks;
 using UnityEngine.InputSystem;
+using UnityEditor;
+using UnityEngine;
 
 
 namespace GameCore.GameControls
@@ -86,19 +90,30 @@ namespace GameCore.GameControls
                 InvokeCameraZoomEvent(val);
             }
 
+            private Task _gamepadZoomDelay;
+
             public void Update()
             {
-                if(_isZoomEnabled && !(_isZoomingIn && _isZoomingOut))
+                if (_isZoomEnabled && !(_isZoomingIn && _isZoomingOut))
                 {
-                    if(_isZoomingIn)
+                    if ((_gamepadZoomDelay != null && _gamepadZoomDelay.IsCompleted) || _gamepadZoomDelay == null)
                     {
-                        InvokeCameraZoomEvent(1);
-                    } 
-                    else if(_isZoomingOut)
-                    {
-                        InvokeCameraZoomEvent(-1);
+                        _gamepadZoomDelay = DelayZoom();
                     }
                 }
+            }
+
+            private async Task DelayZoom()
+            {
+                if (_isZoomingIn)
+                {
+                    InvokeCameraZoomEvent(1);
+                }
+                else if (_isZoomingOut)
+                {
+                    InvokeCameraZoomEvent(-1);
+                }
+                await Task.Delay(100);
             }
 
             private void InvokeCameraZoomEvent(float val)

@@ -18,9 +18,7 @@ namespace GameCore.Inventory
 
         private void Awake()
         {
-            _inputHandler = InputHandler.Instance;
-            if (_inputHandler is null)
-                Debug.LogWarning("There is not InputHandler in the scene to attach to PlayerInventory script.");
+            _inputHandler = InputHandler.GetInstance("DragObject");
 
             _image = GetComponent<Image>();
             _rectTransform = GetComponent<RectTransform>();
