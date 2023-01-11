@@ -10,28 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Shaders
+  m_Name: InventorySprites
   m_EditorClassIdentifier: 
-  m_GroupName: Shaders
+  m_GroupName: InventorySprites
   m_Data:
     m_SerializedData: []
-  m_GUID: 62427ef2a9f266d4982686ace52e34cd
+  m_GUID: f25439d30250f6748a2a600d21a370f8
   m_SerializeEntries:
-  - m_GUID: 61488fbfb56237547903227c5ac75ef3
-    m_Address: Assets/Resouces/Shaders/Outline/Outline.shadergraph
+  - m_GUID: 533328d968b3d9a47a332a33f3612a2e
+    m_Address: Assets/Resouces/Sprites/Food
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 270394d34d3e7884bb52c23f0d087627
-    m_Address: Assets/Resouces/Shaders/Toon/ToonShader.shadergraph
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de722faee6fbe2040921fb0fae303f91
+    m_Address: Assets/Resouces/Sprites/Inventory
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 51ecdcd724d309041bf3a99bd4dd87fb
-    m_Address: Assets/Resouces/Shaders/Toon/Textures/GrayScale.bmp
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: af7dd5313caad5449b010856fc43e813, type: 2}
-    - {fileID: 11400000, guid: a04ec4d6898f4464e88f4bb08442cbfd, type: 2}
+    - {fileID: 11400000, guid: 9abd15dd2f68e91419943c215b8c35a7, type: 2}
+    - {fileID: 11400000, guid: 6b8fc3900e253cb498b755f1baad3af2, type: 2}

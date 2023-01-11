@@ -5,6 +5,7 @@ using UnityEngine;
 using GameCore.GameControls;
 using GameCore.Inventory;
 
+
 namespace GameCore.GUI
 {
     public partial class UIStateMachine : MonoBehaviour
@@ -13,6 +14,7 @@ namespace GameCore.GUI
 
         [SerializeField] private FastInventoryPanelUI _fastInventoryPanelUI;
         [SerializeField] private PlayerInventoryPanelUI _playerInventoryPanelUI;
+        [SerializeField] private CurcularMenuController _curcularMenuController;
 
 
         private BaseUIState _currentState;

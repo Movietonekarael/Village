@@ -15,11 +15,16 @@ MonoBehaviour:
   m_GroupName: Packed Assets
   m_Data:
     m_SerializedData: []
-  m_GUID: de060cdfd640d644eb9f6b44271e014d
-  m_SerializeEntries: []
+  m_GUID: 9783770697bd3854da451d76ed5e366f
+  m_SerializeEntries:
+  - m_GUID: 4801c9e648774254faf1d64c38bac56a
+    m_Address: CurcularMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 1db0389e620977e4e95837aabe3b1bc1, type: 2}
-    - {fileID: 11400000, guid: 4f70e14939f23014ca5c7d78da0fdd1d, type: 2}
+    - {fileID: 11400000, guid: 550df21dbecdc3e488ac9931dd3c8f74, type: 2}
+    - {fileID: 11400000, guid: c464914bdbff68b47b46a6ff29a59852, type: 2}

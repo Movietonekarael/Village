@@ -188,10 +188,10 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c35ff02f-a2ed-4b12-bac3-2962f623c748"",
+                    ""id"": ""3cb74bc9-c1f0-41a8-95c2-406afd4ee19a"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": ""StickDeadzone"",
+                    ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
@@ -210,7 +210,7 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a8ef62e2-a0ec-4eb7-89be-1187002c5c95"",
+                    ""id"": ""d3ad1d3f-3c84-490b-bb35-74cc4f418cbd"",
                     ""path"": ""<Gamepad>/rightStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -232,7 +232,7 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""65d1fe9c-2081-49e2-93f9-927017016cfc"",
+                    ""id"": ""e2fc881e-5295-41cd-bc5c-1e4776c594d0"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -254,7 +254,7 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c6784d01-0170-4e6d-a39f-918b2f973ea7"",
+                    ""id"": ""76a1388c-9a82-4ca4-b71a-07971263474f"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -276,7 +276,7 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""63bbc159-a479-42d5-b913-8d29120d1bb8"",
+                    ""id"": ""9ada5b00-10cb-4a28-a29d-4f74b2a47390"",
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -371,7 +371,7 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""87137cf6-6854-46d2-a9ed-fe5665f9798d"",
+                    ""id"": ""06a2288f-d82c-4182-89ad-4140a81c6bee"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -382,7 +382,7 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f4ef6717-3324-4cd2-ba31-308fc92d498e"",
+                    ""id"": ""61964aee-780e-4d49-8531-7c03f2aa5100"",
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -393,7 +393,7 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3ddd0031-1f96-4729-a754-e84acf40aa79"",
+                    ""id"": ""efaf7461-0513-477a-a7fc-d8ebe3608ae6"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -404,7 +404,7 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6e34d9b5-de0d-480b-a4c9-230665de6f8b"",
+                    ""id"": ""da051119-0aea-47d2-ada0-84c4b60b1431"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -443,7 +443,7 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c3f19c5d-aacb-42a7-8b79-d98602fccaea"",
+                    ""id"": ""502961b9-dd2e-4dbb-b448-fa143201f2ae"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -554,7 +554,7 @@ namespace PlayerInput
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6f609cc6-cdc0-470f-9792-57166b327af1"",
+                    ""id"": ""e140362f-3b23-414f-9203-233f6cb41382"",
                     ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -729,12 +729,7 @@ namespace PlayerInput
                     ""isOR"": false
                 },
                 {
-                    ""devicePath"": ""<DualShockGamepad>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<XInputController>"",
+                    ""devicePath"": ""<DualSenseGamepadHID>"",
                     ""isOptional"": true,
                     ""isOR"": false
                 }

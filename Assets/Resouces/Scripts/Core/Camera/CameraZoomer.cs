@@ -12,13 +12,16 @@ namespace GameCore.GameControls
     public sealed class CameraZoomer : MonoBehaviour
     {
         private InputHandler _inputHandler;
-        [SerializeField] private CinemachineMixingCamera _mixingCamera;
+
+        [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+        private Cinemachine3rdPersonFollow _followComponent;
 
         [Header("Parameters:")]
         [SerializeField] private float _minCameraDistance = 1;
         [SerializeField] private float _maxCameraDistance = 15;
         [SerializeField] private float _startingCameraDistance = 6;
         [SerializeField] private float _cameraZoomStep = 0.5f;
+        private float _mixingZoomStep;
         [SerializeField] private float _cameraZoomStepTime = 1f;
 
         private float _currentMixing;
@@ -30,17 +33,20 @@ namespace GameCore.GameControls
         private void Awake()
         {
             _inputHandler = InputHandler.GetInstance("CameraZoomer");
-            CheckMixingCameraChildrenCount();
 
+            Initialize3rdPersonCameraFollow();
+            InitializeMixingZoomStep();
             InitializeCameraDistance();
         }
 
-        private void CheckMixingCameraChildrenCount()
+        private void Initialize3rdPersonCameraFollow()
         {
-            if (_mixingCamera.ChildCameras.Length != 2)
-            {
-                throw new Exception("CameraZoomer need MixingCamera with 2 child cameras.");
-            }
+            _followComponent = _virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+        }
+
+        private void InitializeMixingZoomStep()
+        {
+            _mixingZoomStep = CalculateMixing(_cameraZoomStep);
         }
 
         private void InitializeCameraDistance()
@@ -69,8 +75,9 @@ namespace GameCore.GameControls
 
         private void ApplyCameraMixing()
         {
-            _mixingCamera.SetWeight(0, _currentMixing);
-            _mixingCamera.SetWeight(1, 1f - _currentMixing);
+            _followComponent.CameraDistance = _currentMixing 
+                                              * (_maxCameraDistance - _minCameraDistance) 
+                                              + _minCameraDistance;
         }
 
         private void OnEnable()
@@ -85,7 +92,7 @@ namespace GameCore.GameControls
 
         private async void ZoomCamera(float zoomDirection)
         {
-            var deltaMixing = CalculateMixing(_cameraZoomStep) * (zoomDirection > 0 ? 1f : -1f);
+            var deltaMixing = _mixingZoomStep * (zoomDirection > 0 ? 1f : -1f);
             var newTime = 0f;
 
             while (newTime <= _cameraZoomStepTime)
@@ -93,7 +100,7 @@ namespace GameCore.GameControls
                 var lastTime = newTime;
                 newTime += Time.deltaTime;
                 newTime = newTime > 1f ? 1f : newTime;
-                _currentMixing -= deltaMixing
+                _currentMixing += deltaMixing
                                   * (_stepCurve.Evaluate(newTime) - _stepCurve.Evaluate(lastTime))
                                   * _fullCurve.Evaluate(_currentMixing);
                 CheckMixing();
