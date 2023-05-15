@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d0117a4c03f5e439c073433d808af7, type: 3}
   m_Name: Onion
   m_EditorClassIdentifier: 
-  name: Onion
-  prefab: {fileID: 1500203809658142, guid: 67791c4ce16c99442ac667f6e8c08792, type: 3}
-  image: {fileID: 21300000, guid: 6a58ecf62bdf48c49805fae39db8a60b, type: 3}
-  maxStackNumber: 60
+  Name: Onion
+  Prefab: {fileID: 1500203809658142, guid: 67791c4ce16c99442ac667f6e8c08792, type: 3}
+  Image: {fileID: 21300000, guid: 6a58ecf62bdf48c49805fae39db8a60b, type: 3}
+  MaxStackNumber: 5

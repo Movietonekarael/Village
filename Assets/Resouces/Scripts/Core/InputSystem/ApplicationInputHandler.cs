@@ -14,8 +14,14 @@ namespace GameCore.GameControls
 
             protected override void RegisterForInputEvents()
             {
-                CheckForInputHandler("ApplicationInputHandler");
+                CheckForInputHandler(this.GetType().Name);
                 _InputHandler._inputScheme.ApplicationControl.Quit.performed += QuitApplication;
+            }
+
+            protected override void UnregisterForInputEvents() 
+            {
+                CheckForInputHandler(this.GetType().Name);
+                _InputHandler._inputScheme.ApplicationControl.Quit.performed -= QuitApplication;
             }
 
             private void QuitApplication(InputAction.CallbackContext context)

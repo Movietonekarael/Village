@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 namespace GameCore.Inventory
 {
-    public class DragObject : MonoBehaviour
+    public sealed class DragObject : MonoBehaviour
     {
         private InputHandler _inputHandler;
         private Sprite _sprite;
-        private RectTransform _canvasRectTransform;
+        public RectTransform CanvasRectTransform;
 
         private Image _image;
         private RectTransform _rectTransform;
@@ -18,17 +18,15 @@ namespace GameCore.Inventory
 
         private void Awake()
         {
-            _inputHandler = InputHandler.GetInstance("DragObject");
+            _inputHandler = InputHandler.GetInstance(this.GetType().Name);
 
             _image = GetComponent<Image>();
             _rectTransform = GetComponent<RectTransform>();
         }
 
-        public void Activate(Sprite sprite, RectTransform canvasRectTransform)
+        public void Activate(Sprite sprite)
         {
             _sprite = sprite;
-            _canvasRectTransform = canvasRectTransform;
-
             _isDragging = true;
 
             _image.sprite = _sprite;
@@ -53,11 +51,7 @@ namespace GameCore.Inventory
         {
             if (_isDragging && _rectTransform is not null)
             {
-                var canvasSize = _canvasRectTransform.sizeDelta;
-                var screenSize = new Vector2(Screen.width, Screen.height);
-                var positionCoefficients = canvasSize / screenSize;
-
-                _rectTransform.anchoredPosition = _inputHandler.MousePosition * positionCoefficients;
+                _rectTransform.anchoredPosition = _inputHandler.AnchorPosition(_inputHandler.MousePosition);
             }
         }
 

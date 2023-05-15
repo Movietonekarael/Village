@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace GameCore.Interactions
 {
-    public class InteractionPromptUI : MonoBehaviour
+    public sealed class InteractionPromptUI : MonoBehaviour
     {
         [SerializeField] private Image _canvasImage;
         [SerializeField] private Text _itemNameText;
@@ -14,9 +14,9 @@ namespace GameCore.Interactions
         [Header("Colors")]
         private const float _textColorAmount = 50f / 255f;
 
-        [SerializeField] private Color _visiblePanelColor = new Color(1f, 1f, 1f, 100f / 255f);
-        [SerializeField] private Color _textColor = new Color(_textColorAmount, _textColorAmount, _textColorAmount, 1f);
-        private Color _invisibleColor = new Color(0f, 0f, 0f, 0f);
+        [SerializeField] private Color _visiblePanelColor = new(1f, 1f, 1f, 100f / 255f);
+        [SerializeField] private Color _textColor = new(_textColorAmount, _textColorAmount, _textColorAmount, 1f);
+        private Color _invisibleColor = new(0f, 0f, 0f, 0f);
 
 
         public void SetPrompt(string message)

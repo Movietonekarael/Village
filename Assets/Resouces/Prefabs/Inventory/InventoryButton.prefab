@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1773133697210422144}
   - component: {fileID: 1773133697210422175}
   - component: {fileID: 1773133697210422174}
-  - component: {fileID: 4866982871081477762}
+  - component: {fileID: 3444975561650434540}
   m_Layer: 5
   m_Name: InventoryButton
   m_TagString: Untagged
@@ -35,7 +35,7 @@ RectTransform:
   - {fileID: 1773133698937341003}
   - {fileID: 6738727611189179967}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4866982871081477762
+--- !u!114 &3444975561650434540
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,11 +133,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1773133697210422172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8543dcf7a6b9a4a408403f825d506f11, type: 3}
+  m_Script: {fileID: 11500000, guid: ce2a5299360ee784cb4200fe84a5e627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 1773133698937341004}
   itemCountText: {fileID: 7350766646253864032}
+  Position: {x: 0, y: 0}
 --- !u!1 &1773133698937341002
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +227,7 @@ GameObject:
   - component: {fileID: 5941303566866327897}
   - component: {fileID: 7350766646253864032}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: ItemCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

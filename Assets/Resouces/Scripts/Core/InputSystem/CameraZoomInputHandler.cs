@@ -19,7 +19,7 @@ namespace GameCore.GameControls
 
             protected override void RegisterForInputEvents()
             {
-                CheckForInputHandler("CameraZoomInputHandler");
+                CheckForInputHandler(this.GetType().Name);
                 var inputAction = _InputHandler._inputScheme.CameraControl;
                 inputAction.Zoom.performed += ScrollMouse;
                 inputAction.ReadyToZoom.started += SetReadyToZoomCamera;
@@ -28,6 +28,19 @@ namespace GameCore.GameControls
                 inputAction.ZoomIn.canceled += StopZoomingIn;
                 inputAction.ZoomOut.started += StartZommingOut;
                 inputAction.ZoomOut.canceled += StopZoomingOut;
+            }
+
+            protected override void UnregisterForInputEvents() 
+            {
+                CheckForInputHandler(this.GetType().Name);
+                var inputAction = _InputHandler._inputScheme.CameraControl;
+                inputAction.Zoom.performed -= ScrollMouse;
+                inputAction.ReadyToZoom.started -= SetReadyToZoomCamera;
+                inputAction.ReadyToZoom.canceled -= SetNotReadyToZoomCamera;
+                inputAction.ZoomIn.started -= StartZoomingIn;
+                inputAction.ZoomIn.canceled -= StopZoomingIn;
+                inputAction.ZoomOut.started -= StartZommingOut;
+                inputAction.ZoomOut.canceled -= StopZoomingOut;
             }
 
             private void ScrollMouse(InputAction.CallbackContext context)
@@ -118,11 +131,7 @@ namespace GameCore.GameControls
 
             private void InvokeCameraZoomEvent(float val)
             {
-#if (UNITY_STANDALONE_LINUX && !UNITY_EDITOR)
-                _InputHandler.OnCameraZoomed?.Invoke(-val);
-#else
                 _InputHandler.OnCameraZoomed?.Invoke(val);
-#endif
             }
         }
     }

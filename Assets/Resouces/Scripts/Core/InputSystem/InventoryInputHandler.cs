@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 
@@ -12,19 +14,63 @@ namespace GameCore.GameControls
         {
             public InventoryInputHandler(InputHandler inputHandler) : base(inputHandler) { }
 
+            private Action<InputAction.CallbackContext>[] _keyActions;
+
             protected override void RegisterForInputEvents()
             {
-                CheckForInputHandler("InventoryInputHandler");
+                InitializeKeyActions();
+
+                CheckForInputHandler(this.GetType().Name);
                 var inputAction = _InputHandler._inputScheme.InventoryControl;
                 inputAction.OpenCloseInventory.performed += OpenClosePlayerInventory;
-                inputAction.Key1.performed += delegate { InventoryKeyPressed(1); };
-                inputAction.Key2.performed += delegate { InventoryKeyPressed(2); };
-                inputAction.Key3.performed += delegate { InventoryKeyPressed(3); };
-                inputAction.Key4.performed += delegate { InventoryKeyPressed(4); };
-                inputAction.Key5.performed += delegate { InventoryKeyPressed(5); };
-                inputAction.Key6.performed += delegate { InventoryKeyPressed(6); };
-                inputAction.Key7.performed += delegate { InventoryKeyPressed(7); };
-                inputAction.Key8.performed += delegate { InventoryKeyPressed(8); };
+                inputAction.LeftArrow.performed += LeftKeyPressed;
+                inputAction.RightArrow.performed += RightKeyPressed;
+                inputAction.Key1.performed += _keyActions[0];
+                inputAction.Key2.performed += _keyActions[1];
+                inputAction.Key3.performed += _keyActions[2];
+                inputAction.Key4.performed += _keyActions[3];
+                inputAction.Key5.performed += _keyActions[4];
+                inputAction.Key6.performed += _keyActions[5];
+                inputAction.Key7.performed += _keyActions[6];
+                inputAction.Key8.performed += _keyActions[7];
+            }
+
+            protected override void UnregisterForInputEvents()
+            {
+                CheckForInputHandler(this.GetType().Name);
+                var inputAction = _InputHandler._inputScheme.InventoryControl;
+                inputAction.OpenCloseInventory.performed -= OpenClosePlayerInventory;
+                inputAction.LeftArrow.performed -= LeftKeyPressed;
+                inputAction.RightArrow.performed -= RightKeyPressed;
+                inputAction.Key1.performed -= _keyActions[0];
+                inputAction.Key2.performed -= _keyActions[1];
+                inputAction.Key3.performed -= _keyActions[2];
+                inputAction.Key4.performed -= _keyActions[3];
+                inputAction.Key5.performed -= _keyActions[4];
+                inputAction.Key6.performed -= _keyActions[5];
+                inputAction.Key7.performed -= _keyActions[6];
+                inputAction.Key8.performed -= _keyActions[7];
+
+                DeinitializeKeyActions();
+            }
+
+            private void InitializeKeyActions()
+            {
+                _keyActions = new Action<InputAction.CallbackContext>[8];
+
+                _keyActions[0] = delegate { InventoryKeyPressed(0); };
+                _keyActions[1] = delegate { InventoryKeyPressed(1); };
+                _keyActions[2] = delegate { InventoryKeyPressed(2); };
+                _keyActions[3] = delegate { InventoryKeyPressed(3); };
+                _keyActions[4] = delegate { InventoryKeyPressed(4); };
+                _keyActions[5] = delegate { InventoryKeyPressed(5); };
+                _keyActions[6] = delegate { InventoryKeyPressed(6); };
+                _keyActions[7] = delegate { InventoryKeyPressed(7); };
+            }
+
+            private void DeinitializeKeyActions()
+            {
+                _keyActions = null;
             }
 
             private void OpenClosePlayerInventory(InputAction.CallbackContext context)
@@ -35,6 +81,16 @@ namespace GameCore.GameControls
             private void InventoryKeyPressed(int number)
             {
                 _InputHandler.OnInventoryKeyPressed?.Invoke(number);
+            }
+
+            private void LeftKeyPressed(InputAction.CallbackContext context)
+            {
+                _InputHandler.OnInventoryArrowPressed?.Invoke(-1);
+            }
+
+            private void RightKeyPressed(InputAction.CallbackContext context)
+            {
+                _InputHandler.OnInventoryArrowPressed?.Invoke(+1);
             }
         }
     }

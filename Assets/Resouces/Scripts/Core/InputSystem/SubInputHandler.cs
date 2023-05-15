@@ -5,7 +5,8 @@ using UnityEngine;
 using PlayerInput;
 using UnityEngine.InputSystem;
 using GameCore.GameMovement;
-
+using Lightbug.CharacterControllerPro.Implementation;
+using System.Runtime.CompilerServices;
 
 namespace GameCore.GameControls
 {
@@ -21,7 +22,13 @@ namespace GameCore.GameControls
                 RegisterForInputEvents();
             }
 
+            public void DestroyAllReferences()
+            {
+                UnregisterForInputEvents();
+            }
+            
             protected abstract void RegisterForInputEvents();
+            protected abstract void UnregisterForInputEvents();
 
             protected void CheckForInputHandler(string handlerName)
             {
@@ -31,7 +38,6 @@ namespace GameCore.GameControls
                                         handlerName + ".");
                 }
             }
-
         }
     }
 }

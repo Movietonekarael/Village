@@ -1,3 +1,4 @@
+using GameCore.GameControls;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,31 +6,33 @@ using UnityEngine;
 
 namespace GameCore.GUI
 {
-    public partial class UIStateMachine
+    [RequireComponent(typeof(UIStateMachine))]
+    public abstract class BaseUIState : MonoBehaviour
     {
-        public abstract class BaseUIState
+        protected InputHandler _InputHandler;
+        private UIStateMachine _stateMachine;
+        protected UIStateMachine _StateMachine { get { return _stateMachine; } }
+
+        private void Awake()
         {
-            private readonly UIStateMachine _stateMachine;
-            protected UIStateMachine StateMachine { get { return _stateMachine; } }
+            _InputHandler = InputHandler.GetInstance(this.GetType().Name);
+        }
 
+        protected virtual void Start()
+        {
+            _stateMachine = GetComponent<UIStateMachine>();
+        }
 
-            public BaseUIState(UIStateMachine stateMachine)
-            {
-                _stateMachine = stateMachine;
-            }
+        public abstract void EnterState();
+        public abstract void ExitState();
 
+        protected void SwitchState(BaseUIState newState)
+        {
+            ExitState();
 
-            public abstract void EnterState();
-            public abstract void ExitState();
+            newState.EnterState();
 
-            protected void SwitchState(BaseUIState newState)
-            {
-                ExitState();
-
-                newState.EnterState();
-
-                _stateMachine._currentState = newState;
-            }
+            _stateMachine.CurrentState = newState;
         }
     }
 }

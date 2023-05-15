@@ -10,9 +10,9 @@ namespace GameCore.Inventory
         [SerializeField] private MeshFilter _meshFilter;
         [SerializeField] private MeshRenderer _meshRenderer;
 
-        private InventoryItem _item;
+        private GameItem _item;
 
-        public InventoryItem item
+        public GameItem Item
         {
             set
             {
@@ -27,11 +27,11 @@ namespace GameCore.Inventory
 
             if (_item is not null)
             {
-                var meshInfo = _item.prefab.GetComponent<InventoryItemMeshInfo>();
+                var meshInfo = _item.Prefab.GetComponent<InventoryItemMeshInfo>();
 
                 if (meshInfo is null)
                 {
-                    Debug.LogError("No InventoryItemMeshInfo on Storable prefab. Name: " + _item.name);
+                    Debug.LogError("No InventoryItemMeshInfo on Storable prefab. Name: " + _item.Name);
                     return;
                 }
 
@@ -41,7 +41,7 @@ namespace GameCore.Inventory
                 _meshRenderer.sharedMaterial = meshInfo.meshRenderer.sharedMaterial;
 
 
-                _holdPoint.localScale = _item.prefab.transform.localScale;
+                _holdPoint.localScale = _item.Prefab.transform.localScale;
                 _holdPoint.localScale *= .01f;
             }
             else

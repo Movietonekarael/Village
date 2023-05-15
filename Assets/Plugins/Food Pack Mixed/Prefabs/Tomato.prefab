@@ -9,11 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4583810448758580}
-  - component: {fileID: 95955473941943554}
-  - component: {fileID: 1468531364405955130}
-  - component: {fileID: 1809611646361813756}
   - component: {fileID: 6653811898007787567}
-  - component: {fileID: 7470014852955272496}
+  - component: {fileID: 1809611646361813756}
+  - component: {fileID: 2885254405224396295}
   - component: {fileID: 1801409402822270361}
   m_Layer: 8
   m_Name: Tomato
@@ -37,57 +35,8 @@ Transform:
   - {fileID: 4689113781459790}
   - {fileID: 4020449748568856}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &95955473941943554
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1004846731592950}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 02fece05d50850b4581df192f6bc3df8, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1468531364405955130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1004846731592950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2b104bd25154f54d9b3aff9b3f7b522, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scaleKoef: 1.05
---- !u!54 &1809611646361813756
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1004846731592950}
-  serializedVersion: 2
-  m_Mass: 0.3
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!135 &6653811898007787567
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -96,12 +45,47 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004846731592950}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7470014852955272496
+--- !u!54 &1809611646361813756
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004846731592950}
+  serializedVersion: 4
+  m_Mass: 0.3
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &2885254405224396295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,11 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1004846731592950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ade6097bbc17368468df5767fa6a44e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b126d9763da9d44ea53f7d233537675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Tomato
-  _inventoryItem: {fileID: 11400000, guid: cfea0c0beb1c59c449be6503d254fb9d, type: 2}
+  _data: {fileID: 11400000, guid: cfea0c0beb1c59c449be6503d254fb9d, type: 2}
+  _number: 1
 --- !u!114 &1801409402822270361
 MonoBehaviour:
   m_ObjectHideFlags: 0

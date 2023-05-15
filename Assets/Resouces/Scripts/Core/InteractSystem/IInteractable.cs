@@ -7,9 +7,10 @@ namespace GameCore.Interactions
 {
     public interface IInteractable
     {
-        public string interactionMessage { get; }
+        public string InteractionMessage { get; }
 
         public bool Interact(Interactor interactor);
     }
 }
 
+ 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4455026889930626}
   - component: {fileID: 2440158931388828521}
   - component: {fileID: 5999084108760780094}
-  - component: {fileID: 4961915874347766999}
+  - component: {fileID: 4014755994313451808}
   - component: {fileID: 942047629286417716}
   m_Layer: 8
   m_Name: Onion
@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 4235522712695776}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &2440158931388828521
 SphereCollider:
@@ -44,9 +44,17 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500203809658142}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.12
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5999084108760780094
@@ -56,16 +64,27 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500203809658142}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 0.2
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &4961915874347766999
+--- !u!114 &4014755994313451808
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,11 +93,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1500203809658142}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ade6097bbc17368468df5767fa6a44e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b126d9763da9d44ea53f7d233537675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Onion
-  _inventoryItem: {fileID: 11400000, guid: 644f530224c01a54f907773c0c66725a, type: 2}
+  _data: {fileID: 11400000, guid: 644f530224c01a54f907773c0c66725a, type: 2}
+  _number: 1
 --- !u!114 &942047629286417716
 MonoBehaviour:
   m_ObjectHideFlags: 0

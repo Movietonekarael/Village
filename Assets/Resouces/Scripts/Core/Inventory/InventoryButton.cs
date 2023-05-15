@@ -1,91 +1,56 @@
+using GameCore.GameControls;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using GameCore.Inventory;
-using UnityEngine.UI;
-
 
 namespace GameCore.Inventory
 {
-    public class InventoryButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
+    public sealed class InventoryButton : ItemCell, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        private PlayerInventoryPanelUI _playerInventoryPanelUI;
-        private Vector2Int _position;
+        public Vector2Int Position;
 
-        public Image itemImage;
-        public Text itemCountText;
+        public event Action OnPointerDownEvent;
+        public event Action OnPointerUpEvent;
+        public event Action<Vector2Int> OnPointerEnterEvent;
+        public event Action OnPointerExitEvent;
 
-        private uint _number = 0;
-
-        public uint GetNumber()
+        protected override void Awake()
         {
-            return _number;
-        }
-
-        public void SetNumber(uint value)
-        {
-            _number = value;
-            ChangeItemNumberInTextUI();
-        }
-
-        private void Awake()
-        {
-            ChangeItemNumberInTextUI();
-        }
-
-        public void SetUpButton(PlayerInventoryPanelUI playerInventoryPanelUI, Vector2Int position)
-        {
-            _playerInventoryPanelUI = playerInventoryPanelUI;
-            _position = position;
-        }
-
-        public void SetUpButton(PlayerInventoryPanelUI playerInventoryPanelUI, int x, int y)
-        {
-            _playerInventoryPanelUI = playerInventoryPanelUI;
-            _position = new Vector2Int(x, y);
+            base.Awake();
+            InputHandler.GetInstance(this.GetType().Name).OnControlSchemeChanged += OnControlsChanged;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (_playerInventoryPanelUI == null) return;
+            OnPointerDownEvent?.Invoke();
+        }
 
-            _playerInventoryPanelUI.ButtonPointerDown();
+        private void OnControlsChanged(ControlScheme controlScheme)
+        {
+            UpPointer();
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (_playerInventoryPanelUI == null) return;
+            UpPointer();
+        }
 
-            _playerInventoryPanelUI.ButtonPointerUp();
+        private void UpPointer()
+        {
+            OnPointerUpEvent?.Invoke();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_playerInventoryPanelUI == null) return;
-
-            _playerInventoryPanelUI.SetCurrentSelectedInventoryItem(_position.x, _position.y);
+            OnPointerEnterEvent?.Invoke(Position);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (_playerInventoryPanelUI == null) return;
-
-            _playerInventoryPanelUI.SetCurrentSelectedInventoryItem(-1, -1);
-        }
-
-        private void ChangeItemNumberInTextUI()
-        {
-            if (itemCountText is null)
-            {
-                Debug.LogWarning("Text reference is not assigned to InventoryButton");
-                return;
-            }
-
-            if (_number > 0)
-                itemCountText.text = _number.ToString();
-            else
-                itemCountText.text = "";
+            OnPointerExitEvent?.Invoke();
         }
     }
 }

@@ -17,12 +17,22 @@ namespace GameCore.GameControls
 
             protected override void RegisterForInputEvents()
             {
-                CheckForInputHandler("CameraRotationInputHandler");
+                CheckForInputHandler(this.GetType().Name);
                 var inputAction = _InputHandler._inputScheme.CameraControl;
                 inputAction.MouseMovement.performed += MoveMouse;
                 inputAction.RotationSticks.started += StartRightStickMoving;
                 inputAction.RotationSticks.canceled += StopRightStickMoving;
-                inputAction.RotationSticks.performed += PerformedRightStickMoving;
+                inputAction.RotationSticks.performed += PerformRightStickMoving;
+            }
+
+            protected override void UnregisterForInputEvents() 
+            {
+                CheckForInputHandler(this.GetType().Name);
+                var inputAction = _InputHandler._inputScheme.CameraControl;
+                inputAction.MouseMovement.performed -= MoveMouse;
+                inputAction.RotationSticks.started -= StartRightStickMoving;
+                inputAction.RotationSticks.canceled -= StopRightStickMoving;
+                inputAction.RotationSticks.performed -= PerformRightStickMoving;
             }
 
             private void MoveMouse(InputAction.CallbackContext context)
@@ -40,7 +50,7 @@ namespace GameCore.GameControls
                 SetDisable();
             }
 
-            private void PerformedRightStickMoving(InputAction.CallbackContext context)
+            private void PerformRightStickMoving(InputAction.CallbackContext context)
             {
                 Perform(context.ReadValue<Vector2>());
             }

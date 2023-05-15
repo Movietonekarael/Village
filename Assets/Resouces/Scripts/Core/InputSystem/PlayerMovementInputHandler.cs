@@ -1,3 +1,5 @@
+using PlayerInput;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,14 +16,26 @@ namespace GameCore.GameControls
 
             protected override void RegisterForInputEvents()
             {
-                CheckForInputHandler("PlayerMovementInputHandler");
-                var inputAction = _InputHandler._inputScheme.PlayerControl;
-                inputAction.Movement.started += StartMoving;
-                inputAction.Movement.canceled += StopMoving;
-                inputAction.Movement.performed += Move;
-                inputAction.isRunning.started += SwitchRunState;
-                inputAction.Dash.started += Dash;
-                inputAction.Jump.performed += Jump;
+                CheckForInputHandler(this.GetType().Name);
+                var inputActions = _InputHandler._inputScheme.PlayerControl;
+                inputActions.Movement.started += StartMoving;
+                inputActions.Movement.canceled += StopMoving;
+                inputActions.Movement.performed += Move;
+                inputActions.isRunning.started += SwitchRunState;
+                inputActions.Dash.started += Dash;
+                inputActions.Jump.performed += Jump;
+            }
+
+            protected override void UnregisterForInputEvents()
+            {
+                CheckForInputHandler(this.GetType().Name);
+                var inputActions = _InputHandler._inputScheme.PlayerControl;
+                inputActions.Movement.started -= StartMoving;
+                inputActions.Movement.canceled -= StopMoving;
+                inputActions.Movement.performed -= Move;
+                inputActions.isRunning.started -= SwitchRunState;
+                inputActions.Dash.started -= Dash;
+                inputActions.Jump.performed -= Jump;
             }
 
             private void StartMoving(InputAction.CallbackContext context)

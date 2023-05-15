@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Control Hints
+  m_EditorClassIdentifier: 
+  m_GroupName: Control Hints
+  m_Data:
+    m_SerializedData: []
+  m_GUID: e1874c1ea0b661c409122c81469ac953
+  m_SerializeEntries:
+  - m_GUID: 9150ea29ab68aab4f8d81ebc5621e031
+    m_Address: Assets/Resouces/Sprites/Control Hints
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b262ba381bf3ce04c8cccfa37570588e, type: 2}
+    - {fileID: 11400000, guid: ea8fce23188da52489c95a26040b34f3, type: 2}

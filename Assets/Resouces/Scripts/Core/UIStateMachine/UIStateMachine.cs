@@ -4,73 +4,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameCore.GameControls;
 using GameCore.Inventory;
-
+using UnityEngine.EventSystems;
 
 namespace GameCore.GUI
 {
-    public partial class UIStateMachine : MonoBehaviour
+    public sealed class UIStateMachine : MonoBehaviour
     {
-        private InputHandler _inputHandler;
+        [SerializeField] private BaseUIState _firstState;
 
-        [SerializeField] private FastInventoryPanelUI _fastInventoryPanelUI;
-        [SerializeField] private PlayerInventoryPanelUI _playerInventoryPanelUI;
-        [SerializeField] private CurcularMenuController _curcularMenuController;
+        [SerializeField] private GameObject _eventSystemObject;
+        [HideInInspector] public EventSystem EventSystem;
 
-
-        private BaseUIState _currentState;
-
-        private ClosedInventoryUIState _closedInventoryUIState;
-        private OpenedPlayerInventoryUIState _openedPlayerInventoryUIState;
-
-
-
-        private event Action OnOpenCloseInventoryEvent;
-        private event Action<int> OnSwitchSelectedItemEvent;
+        [SerializeField] private GameObject _uiCameraObject;
+        [HideInInspector] public Camera UiCamera;
+        
+        public BaseUIState CurrentState { private get; set; }
 
         private void OnEnable()
         {
-            RegisterHandlers();
+            SetupUiCamera();
         }
 
-        private void RegisterHandlers()
+        private void SetupUiCamera()
         {
-            _inputHandler.OnOpenCloseInventory += OnOpenCloseInventory;
-            _inputHandler.OnInventoryKeyPressed += OnSwitchSelectedItem;
-        }
-
-        private void OnDisable()
-        {
-            UnRegisterHandlers();
-        }
-
-        private void UnRegisterHandlers()
-        {
-            _inputHandler.OnOpenCloseInventory -= OnOpenCloseInventory;
-            _inputHandler.OnInventoryKeyPressed -= OnSwitchSelectedItem;
-        }
-
-        private void OnOpenCloseInventory()
-        {
-            OnOpenCloseInventoryEvent?.Invoke();
-        }
-
-        private void OnSwitchSelectedItem(int value)
-        {
-            OnSwitchSelectedItemEvent?.Invoke(value);
+            UiCamera = _uiCameraObject.GetComponent<Camera>();
         }
 
         private void Awake()
         {
-            _inputHandler = InputHandler.GetInstance("PlayerInventory");
-
-            _closedInventoryUIState = new(this, _fastInventoryPanelUI);
-            _openedPlayerInventoryUIState = new(this, _playerInventoryPanelUI);
+            EventSystem = _eventSystemObject.GetComponent<EventSystem>();
         }
 
         private void Start()
         {
-            _currentState = _closedInventoryUIState;
-            _currentState.EnterState();
+            CurrentState = _firstState;
+            CurrentState.EnterState();
         }
     }
 

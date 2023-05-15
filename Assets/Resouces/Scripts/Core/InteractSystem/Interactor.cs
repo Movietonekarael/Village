@@ -7,74 +7,72 @@ using UnityEngine.UI;
 using System;
 
 
-
 namespace GameCore.Interactions
 {
     public class Interactor : MonoBehaviour
     {
+        [Header("IInteraction performer")]
+        [SerializeField]
+        [RequireInterface(typeof(IInteractionPerformer))]
+        private UnityEngine.Object _interactionPerformerBase;
+        private IInteractionPerformer _interactionPerformer => _interactionPerformerBase as IInteractionPerformer;
+
+        [Header("Overlap sphere parameters")]
         [SerializeField] private Transform _interactionPoint;
         [SerializeField] private float _interactionPointRadius = .5f;
         [SerializeField] private LayerMask _interactableMask;
-        [SerializeField] private InputHandler _inputHandler;
 
-        [SerializeField] private InteractionPromptUI _interactionPromptUI;
+        [Header("IInventory component")]
+        [SerializeField]
+        [RequireInterface(typeof(IInventory))]
+        private UnityEngine.Object _inventoryBase;
+        public IInventory Inventory { get => _inventoryBase as IInventory; }
 
-        public PlayerInventory inventory;
-
-        private readonly Collider[] _colliders = new Collider[5];
-        private int _numFound;
-
-        private Collider _currentCollider = null;
-        private bool _isShowingPrompt = false;
-
-        private void Awake()
-        {
-            _inputHandler = InputHandler.GetInstance("Interactor");
-
-            _interactionPromptUI.DisablePrompt();
-        }
+        private const int MAX_COLLIDERS = 1;
 
 
         private void Update()
         {
-            _numFound = Physics.OverlapSphereNonAlloc(_interactionPoint.position, _interactionPointRadius, _colliders, _interactableMask);
+            InteractWithInteractables();
+        }
 
-            if (_numFound > 0)
+        private void InteractWithInteractables()
+        {
+            var collider = GetCollider();
+
+            if (collider != null && CheckInteractible(collider, out IInteractable interactable))
             {
-                var interactable = _colliders[0].GetComponent<IInteractable>();
-
-                if (interactable is null)
-                {
-                    return;
-                }
-
-                _isShowingPrompt = true;
-                if (_colliders[0] != _currentCollider)
-                {
-                    _interactionPromptUI.SetPrompt(interactable.interactionMessage);
-                }
-                _currentCollider = _colliders[0];
-
-
-                if (_inputHandler.IfInteractWasPerformed())
-                {
-                    if (!interactable.Interact(this))
-                    {
-                        Debug.Log("Inventory is full");
-                    }
-                }
-
+                InteractIfInteractionPerformed(interactable);
             }
+        }
+
+        private Collider GetCollider()
+        {
+            var hitColliders = new Collider[MAX_COLLIDERS];
+            Physics.OverlapSphereNonAlloc(_interactionPoint.position, _interactionPointRadius, hitColliders, _interactableMask);
+
+            if (hitColliders[0] != null)
+                return hitColliders[0];
             else
-            {
-                if (_isShowingPrompt == true)
-                {
-                    _currentCollider = null;
-                    _isShowingPrompt = false;
-                    _interactionPromptUI.DisablePrompt();
-                }
-            }
+                return null;
+        }
 
+        private bool CheckInteractible(Collider collider, out IInteractable interactable)
+        {
+            interactable = collider.GetComponent<IInteractable>();
+
+            if (interactable != null)
+                return true;
+            else
+                return false;
+        }
+
+        private void InteractIfInteractionPerformed(IInteractable interactable)
+        {
+            if (_interactionPerformer.IfInteractionWasPerformed())
+            {
+                interactable.Interact(this);
+            }
         }
 
         private void OnDrawGizmos()
@@ -82,9 +80,5 @@ namespace GameCore.Interactions
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(_interactionPoint.position, _interactionPointRadius);
         }
-
-
-
     }
-
 }
