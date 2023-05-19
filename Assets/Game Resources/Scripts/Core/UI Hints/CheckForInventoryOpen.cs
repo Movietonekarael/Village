@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Zenject;
+
+namespace GameCore.GameControls
+{
+    public class CheckForInventoryOpen : MonoBehaviour, ISubscribable
+    {
+        [Inject] private readonly InputHandler _inputHandler;
+        private bool _isClosed = true;
+
+        private void Start()
+        {
+            Subscribe();
+            SetObjectState();
+        }
+
+        public void Subscribe()
+        {
+            _inputHandler.OnOpenCloseInventory += InventoryWasOpenedClosed;
+        }
+
+        public void Unsubscribe()
+        {
+            _inputHandler.OnOpenCloseInventory -= InventoryWasOpenedClosed;
+        }
+
+        public void InventoryWasOpenedClosed()
+        {
+            _isClosed = !_isClosed;
+            SetObjectState();
+        }
+
+        private void SetObjectState()
+        {
+            this.gameObject.SetActive(!_isClosed);
+        }
+
+        private void OnDestroy()
+        {
+            Unsubscribe();
+        }
+    }
+}
+

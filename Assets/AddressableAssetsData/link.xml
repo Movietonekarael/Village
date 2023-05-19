@@ -20,6 +20,8 @@
     <type fullname="Lightbug.CharacterControllerPro.Core.CharacterBody" preserve="all" />
   </assembly>
   <assembly fullname="Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="GameCore.Audio.AudioSourceRandomizer" preserve="all" />
+    <type fullname="GameCore.Audio.AudioSourceRandomizerReference" preserve="all" />
     <type fullname="GameCore.GameControls.CameraFollowTargetRotator" preserve="all" />
     <type fullname="GameCore.GameControls.CameraRotator" preserve="all" />
     <type fullname="GameCore.GameControls.CameraZoomer" preserve="all" />
@@ -33,7 +35,18 @@
     <type fullname="GameCore.GUI.MainScreenUIState" preserve="all" />
     <type fullname="GameCore.GUI.OpenedPlayerInventoryUIState" preserve="all" />
     <type fullname="GameCore.GUI.UIStateMachine" preserve="all" />
-    <type fullname="GameCore.InstantiateManager" preserve="all" />
+    <type fullname="GameCore.Injectors.InjectorForHintsCanvas" preserve="all" />
+    <type fullname="GameCore.Injectors.InjectorForPlayerInput" preserve="all" />
+    <type fullname="GameCore.Installers.EventSystemInstaller" preserve="all" />
+    <type fullname="GameCore.Installers.HintsCanvasInstaller" preserve="all" />
+    <type fullname="GameCore.Installers.InputHandlerInstaller" preserve="all" />
+    <type fullname="GameCore.Installers.InstantiateManagerInstaller" preserve="all" />
+    <type fullname="GameCore.Installers.MainScreenInstaller" preserve="all" />
+    <type fullname="GameCore.Installers.OpenedPlayerInventoryInstaller" preserve="all" />
+    <type fullname="GameCore.Installers.PlayerInputInstaller" preserve="all" />
+    <type fullname="GameCore.Installers.PlayerInstaller" preserve="all" />
+    <type fullname="GameCore.Installers.UICameraInstaller" preserve="all" />
+    <type fullname="GameCore.Installers.VirtualPointerInstaller" preserve="all" />
     <type fullname="GameCore.Interactions.Interactor" preserve="all" />
     <type fullname="GameCore.Inventory.DragObject" preserve="all" />
     <type fullname="GameCore.Inventory.GameItemData" preserve="all" />
@@ -46,6 +59,7 @@
     <type fullname="GameCore.Inventory.PlayerInventory" preserve="all" />
     <type fullname="MainScreenViewParameters" preserve="all" />
     <type fullname="OpenedPlayerInventoryViewParameters" preserve="all" />
+    <type fullname="PlayerSpawnPoint" preserve="all" />
   </assembly>
   <assembly fullname="Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
     <type fullname="UnityEngine.AddressableAssets.Addressables" preserve="all" />
@@ -94,7 +108,9 @@
     <type fullname="UnityEngine.RuntimeAnimatorController" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.AudioClip" preserve="all" />
     <type fullname="UnityEngine.AudioListener" preserve="all" />
+    <type fullname="UnityEngine.AudioSource" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.Camera" preserve="all" />
@@ -120,6 +136,7 @@
     <type fullname="UnityEngine.Events.ArgumentCache" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.Events.PersistentCallGroup" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.Events.PersistentListenerMode" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.Events.UnityEvent" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.BoxCollider" preserve="all" />
@@ -158,6 +175,9 @@
   <assembly fullname="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.Canvas" preserve="all" />
     <type fullname="UnityEngine.CanvasRenderer" preserve="all" />
+  </assembly>
+  <assembly fullname="Zenject, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="Zenject.SceneContext" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.TextCoreFontEngineModule">
     <type fullname="UnityEngine.TextCore.FaceInfo" preserve="nothing" serialized="true" />

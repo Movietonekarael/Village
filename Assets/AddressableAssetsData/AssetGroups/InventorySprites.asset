@@ -18,12 +18,12 @@ MonoBehaviour:
   m_GUID: f25439d30250f6748a2a600d21a370f8
   m_SerializeEntries:
   - m_GUID: 533328d968b3d9a47a332a33f3612a2e
-    m_Address: Assets/Resouces/Sprites/Food
+    m_Address: Food
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: de722faee6fbe2040921fb0fae303f91
-    m_Address: Assets/Resouces/Sprites/Inventory
+    m_Address: Inventory
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

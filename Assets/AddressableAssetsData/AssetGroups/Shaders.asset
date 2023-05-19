@@ -18,17 +18,17 @@ MonoBehaviour:
   m_GUID: 4dde6ddc3f69f05419d906cebbacf1ab
   m_SerializeEntries:
   - m_GUID: 51ecdcd724d309041bf3a99bd4dd87fb
-    m_Address: Assets/Resouces/Shaders/Toon/Textures/GrayScale.bmp
+    m_Address: GrayScale
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 270394d34d3e7884bb52c23f0d087627
-    m_Address: Assets/Resouces/Shaders/Toon/ToonShader.shadergraph
+    m_Address: ToonShader
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 61488fbfb56237547903227c5ac75ef3
-    m_Address: Assets/Resouces/Shaders/Outline/Outline.shadergraph
+    m_Address: Outline
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -16,7 +16,12 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 65562e02ba65bec43bd589aac472a19f
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 5cbd9d6849380b747960ea35d2c5aac7
+    m_Address: Assets/Game Resources/Prefabs/Inventory
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
   m_SchemaSet:

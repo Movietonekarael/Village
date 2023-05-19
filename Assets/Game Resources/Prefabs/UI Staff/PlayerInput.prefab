@@ -1,0 +1,170 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3175367794389005581
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8459551934592766568}
+  - component: {fileID: 6241476896536675278}
+  - component: {fileID: -8569040340930388983}
+  m_Layer: 0
+  m_Name: PlayerInput
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8459551934592766568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3175367794389005581}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6241476896536675278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3175367794389005581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 5dc7be7c02c02ab4a94c6fb4dd454985,
+    type: 3}
+  m_NotificationBehavior: 3
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ff765002-f552-4459-b2cb-e0f63fecae32
+    m_ActionName: PlayerControl/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/DualSenseGamepadHID/leftStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9800ac08-f74e-49ee-85b7-a2815440a346
+    m_ActionName: PlayerControl/isRunning[/Keyboard/capsLock,/DualSenseGamepadHID/rightStickPress]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 450b748e-6c33-4ef0-abb8-df716b82cf3e
+    m_ActionName: PlayerControl/Dash[/Keyboard/leftShift,/DualSenseGamepadHID/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 78d90272-9e2a-43f8-978d-98592c14a7ed
+    m_ActionName: PlayerControl/Jump[/Keyboard/space,/DualSenseGamepadHID/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 19837682-50f2-4c81-9ea7-a204e21ee52e
+    m_ActionName: PlayerControl/Intaract[/Keyboard/e,/DualSenseGamepadHID/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a924b1df-0007-406d-a26e-0f7a574f22c2
+    m_ActionName: CameraControl/MouseMovement[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9bcc3278-679d-4b9c-815e-7a96c4da801b
+    m_ActionName: CameraControl/Zoom[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b405d617-6d48-408a-a066-c8f7e0ba0ee6
+    m_ActionName: CameraControl/RotationSticks[/DualSenseGamepadHID/rightStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cf767db0-447b-49e7-9d2a-845eb5b64c2b
+    m_ActionName: CameraControl/ReadyToZoom[/DualSenseGamepadHID/leftShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b95482fe-018e-45a2-a711-a017ef07f90e
+    m_ActionName: CameraControl/ZoomIn[/DualSenseGamepadHID/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ea6121d9-1646-4f83-a77f-f16c08a6afcc
+    m_ActionName: CameraControl/ZoomOut[/DualSenseGamepadHID/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 36d7a0b9-f66b-4da4-985e-ca871ac90791
+    m_ActionName: ApplicationControl/Quit[/Keyboard/escape,/DualSenseGamepadHID/start]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 13bfbd15-35dc-4065-a98b-dbce81aea80f
+    m_ActionName: InventoryControl/OpenCloseInventory[/Keyboard/tab,/DualSenseGamepadHID/select]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 219db42c-fd51-4806-99d4-f34613161ce0
+    m_ActionName: InventoryControl/Key1[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 490e6fe9-8d90-4b3c-87b2-566ecdc18590
+    m_ActionName: InventoryControl/Key2[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6ce549b3-706d-475f-9185-4a505cd7b73f
+    m_ActionName: InventoryControl/Key3[/Keyboard/3]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 893f5a99-fa51-4fe7-8d1e-11e829d84aba
+    m_ActionName: InventoryControl/Key4[/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3299c4ec-aa91-4e89-8c1e-f4b369d90a1f
+    m_ActionName: InventoryControl/Key5[/Keyboard/5]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b689bbdd-c73f-454b-adce-b1904c9511a9
+    m_ActionName: InventoryControl/Key6[/Keyboard/6]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0ff6e13f-4ffb-4de9-97b3-8636906dcfbf
+    m_ActionName: InventoryControl/Key7[/Keyboard/7]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fc05cce8-606b-4592-8c78-b995bbcf9c3e
+    m_ActionName: InventoryControl/Key8[/Keyboard/8]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1286ea09-4e27-4136-b386-a7dc7e93d9c8
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e59e4a22-a27e-445e-8f5d-8e409e2def20
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Keyboard
+  m_DefaultActionMap: PlayerControl
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &-8569040340930388983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3175367794389005581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b538b62c574c94d8d34139e3f563e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

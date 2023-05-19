@@ -18,57 +18,70 @@ MonoBehaviour:
   m_GUID: e8a1bb04e6e365c41a9fbc3e26845647
   m_SerializeEntries:
   - m_GUID: b625b4cca12433642b6877f76136dd85
-    m_Address: Assets/Resouces/Materials/MediumGirl/Sneakers.mat
+    m_Address: Sneakers
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 21fad506cd853dd48ad3ab2cfbbf90ae
-    m_Address: Assets/Resouces/Materials/MediumGirl/Outline/Sneakers_Outline.mat
+    m_Address: Sneakers_Outline
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1e3f498e24039184c936bbf7a6b00ac4
-    m_Address: Assets/Resouces/Materials/MediumGirl/LowRes/Sneakers_Low.mat
+    m_Address: Sneakers_Low
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 698cacff79914974cb25f6ff2805317e
-    m_Address: Assets/Resouces/Materials/MediumGirl/HighRes/Sneakers_High.mat
+    m_Address: Sneakers_High
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a77e7ed528614084bad46bf1ca8c9f3b
-    m_Address: Assets/Resouces/Textures/Medium Girl/Sneakers_Base Color.tga
+    m_Address: Sneakers_Base Color
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9496005b8e5a1454c82dbfad81b06cac
-    m_Address: Assets/Resouces/Textures/Medium Girl/Sneakers_Opacity.tga
+    m_Address: Sneakers_Opacity
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 187acc706f06e4c4f8437ea5e5b37783
-    m_Address: Assets/Resouces/Textures/Medium Girl/Sneakers_Specular.tga
+    m_Address: Sneakers_Specular
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 52ad4c62ae644ce429f9ab20fdbf9f3f
-    m_Address: Assets/Resouces/Textures/Medium Girl/LowRes/Sneakers_Base Color.tga
+    m_Address: Sneakers_Base Color
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b67bfd5f69af0784b92df206733ff924
-    m_Address: Assets/Resouces/Textures/Medium Girl/LowRes/Sneakers_Opacity.tga
+    m_Address: Sneakers_Opacity
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9ab1c2cfbb019464c9f5b2477d643e12
-    m_Address: Assets/Resouces/Textures/Medium Girl/LowRes/Sneakers_Specular.tga
+    m_Address: Sneakers_Specular
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 935ff1c731bb83047a10504bda968df8
-    m_Address: Assets/Resouces/Textures/Medium Girl/HighRes/Sneakers_Base Color.tga
+    m_Address: Sneakers_Base Color
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 97a29f55871f3504ea0c4381cc2e4508
-    m_Address: Assets/Resouces/Textures/Medium Girl/HighRes/Sneakers_Opacity.tga
+    m_Address: Sneakers_Opacity
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c975f45816e6013419a13f303143bb6f
-    m_Address: Assets/Resouces/Textures/Medium Girl/HighRes/Sneakers_Specular.tga
+    m_Address: Sneakers_Specular
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
   m_SchemaSet:

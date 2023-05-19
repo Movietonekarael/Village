@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: e1874c1ea0b661c409122c81469ac953
   m_SerializeEntries:
   - m_GUID: 9150ea29ab68aab4f8d81ebc5621e031
-    m_Address: Assets/Resouces/Sprites/Control Hints
+    m_Address: Control Hints
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

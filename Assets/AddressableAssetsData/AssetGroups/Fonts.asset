@@ -18,9 +18,10 @@ MonoBehaviour:
   m_GUID: 8c7f55b89452b4842b2493a681f1011a
   m_SerializeEntries:
   - m_GUID: e62502a1897242e47895c56aa01e2e0e
-    m_Address: Assets/Resouces/Font
+    m_Address: Font
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
   m_SchemaSet:

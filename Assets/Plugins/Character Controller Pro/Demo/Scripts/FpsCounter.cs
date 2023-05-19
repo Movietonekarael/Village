@@ -45,12 +45,13 @@ public class FpsCounter : MonoBehaviour
     void Awake()
     {
         style.fontSize = 20;
-        style.normal.textColor = Color.white;   
+        style.normal.textColor = Color.white;
 
-        fps = Screen.currentResolution.refreshRate;     
+        fps = (float)Screen.currentResolution.refreshRateRatio.value;
+
     }
-	
-	void Update() 
+
+        void Update() 
     {
                 
 		if( time > 0 )
@@ -64,7 +65,7 @@ public class FpsCounter : MonoBehaviour
         	fps = result / samples;
 
             if( limitToRefreshRate && QualitySettings.vSyncCount != 0 )
-                fps = Mathf.Min( fps , Screen.currentResolution.refreshRate );
+                fps = Mathf.Min( fps , (float)Screen.currentResolution.refreshRateRatio.value );
             
             //  
 

@@ -80,11 +80,11 @@ public class DemoSceneManager : MonoBehaviour
 
             if( QualitySettings.vSyncCount == 1 )
             {
-                targetFrameRateText.text = "Target frame rate = " + (Screen.currentResolution.refreshRate ) + " fps ( Full Vsync )";
+                targetFrameRateText.text = "Target frame rate = " + ((float)Screen.currentResolution.refreshRateRatio.value ) + " fps ( Full Vsync )";
             }
             else if( QualitySettings.vSyncCount == 2 )
             {
-                targetFrameRateText.text = "Target frame rate = " + (Screen.currentResolution.refreshRate / 2 ) + " fps ( Half Vsync )"; // "Target frame rate = Vsync ( " + ( Screen.currentResolution.refreshRate / 2 ).ToString() + " Hz )";
+                targetFrameRateText.text = "Target frame rate = " + ((float)Screen.currentResolution.refreshRateRatio.value / 2 ) + " fps ( Half Vsync )"; // "Target frame rate = Vsync ( " + ( Screen.currentResolution.refreshRate / 2 ).ToString() + " Hz )";
             }
             else if( QualitySettings.vSyncCount == 0 )
             {
