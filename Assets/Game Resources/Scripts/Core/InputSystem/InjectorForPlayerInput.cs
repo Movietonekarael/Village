@@ -18,6 +18,7 @@ namespace GameCore.Injectors
             var playerInput = GetPlayerInput();
             InjectUiCamera(playerInput);
             InjectUiInputModule(playerInput);
+            DestroyThisInjector();
         }
 
         private UnityEngine.InputSystem.PlayerInput GetPlayerInput()
@@ -34,6 +35,11 @@ namespace GameCore.Injectors
         {
             var uiInputModule = FindFirstObjectByType<InputSystemUIInputModule>();
             playerInput.uiInputModule = uiInputModule;
+        }
+
+        private void DestroyThisInjector()
+        {
+            Destroy(this);
         }
     }
 }

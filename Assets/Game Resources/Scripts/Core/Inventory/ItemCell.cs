@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using GameCore.Inventory;
 using UnityEngine.UI;
-using Sirenix.OdinInspector;
 
 
 namespace GameCore.Inventory
@@ -13,7 +12,7 @@ namespace GameCore.Inventory
     {
         public Image itemImage;
         public Text itemCountText;
-        [InfoBox("Put if necessary", InfoMessageType.Info)]
+        [Header("Put if necessary")]
         [SerializeField] private ImageColor _imageColor;
 
         private uint _number = 0;

@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.InputSystem.LowLevel;
 using Zenject;
-using Sirenix.OdinInspector;
 using UnityEngine.Rendering;
 using UnityEngine.Experimental.Rendering.Universal;
 
@@ -15,6 +14,9 @@ namespace GameCore.GameControls
 {
     public sealed partial class InputHandler : MonoBehaviour, IInteractionPerformer
     {
+        private const string _GAMEPAD_SCHEME = "Gamepad";
+        private const string _KEYBOADR_SCHEME = "Keyboard";
+
         [Inject(Id = "VirtualPointer")] private readonly RectTransform _pointerTransform;
         [Inject(Id = "HintsCanvas")] private readonly RectTransform _canvasTransform;
         [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
@@ -63,9 +65,6 @@ namespace GameCore.GameControls
         public ControlScheme CurrentControlScheme { get { return _currentControlScheme; } }
 
         public bool canUiChange = true;
-
-        private const string _GAMEPAD_SCHEME = "Gamepad";
-        private const string _KEYBOADR_SCHEME = "Keyboard";
 
         private void Awake()
         {

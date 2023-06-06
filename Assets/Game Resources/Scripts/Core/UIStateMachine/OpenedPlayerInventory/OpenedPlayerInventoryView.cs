@@ -10,7 +10,6 @@ namespace GameCore.GUI
 {
     public sealed class OpenedPlayerInventoryView : IOpenedPlayerInventoryView, IActivatable, IDeinitializable
     {
-        [Inject] private readonly InstantiateManager _instantiateManager;
         private OpenedPlayerInventoryViewParameters _parameters;
         private OpenedPlayerInventoryController _controller;
 
@@ -65,7 +64,7 @@ namespace GameCore.GUI
 
         private void InstantiateCanvas()
         {
-            _canvasObject = _instantiateManager.InstantiateObject(_canvasPrefab);
+            _canvasObject = InstantiateService.InstantiateObject(_canvasPrefab);
             _canvasObject.name = _CANVAS_NAME;
             var canvas = _canvasObject.GetComponent<Canvas>();
             canvas.worldCamera = _uiCamera;
@@ -97,7 +96,7 @@ namespace GameCore.GUI
             {
                 for (var j = 0; j < buttons[i].Length; j++)
                 {
-                    var itemButton = _instantiateManager.InstantiateObjectWithInjections(_buttonPrefab, _canvasObject.transform);
+                    var itemButton = InstantiateService.InstantiateObjectWithInjections(_buttonPrefab, _canvasObject.transform);
                     SetButtonAnchoredPosition(itemButton, i, j);
                     buttons[i][j] = itemButton;
                 }
@@ -175,7 +174,7 @@ namespace GameCore.GUI
 
         private void InstantiateDragAndDropObject()
         {
-            _dragAndDropObject = _instantiateManager.InstantiateObjectWithInjections(_dragAndDropPrefab, _canvasObject.transform).GetComponent<DragObject>();
+            _dragAndDropObject = InstantiateService.InstantiateObjectWithInjections(_dragAndDropPrefab, _canvasObject.transform).GetComponent<DragObject>();
             _dragAndDropObject.CanvasRectTransform = _canvasObject.GetComponent<RectTransform>();
             DeactivateDragAndDropObject();
         }
@@ -266,7 +265,7 @@ namespace GameCore.GUI
         public void Deinitialize()
         {
             UnsubscribeButtonsEvents();
-            _instantiateManager.DestroyObject(_canvasObject);
+            InstantiateService.DestroyObject(_canvasObject);
         }
 
         public void SetItemInformation(int position, GameItem item)

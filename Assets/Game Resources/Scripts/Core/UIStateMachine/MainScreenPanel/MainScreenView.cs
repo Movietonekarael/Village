@@ -11,7 +11,6 @@ namespace GameCore.GUI
 {
     public sealed class MainScreenView : IMainScreenView, IActivatable, IDeinitializable
     {
-        [Inject] private readonly InstantiateManager _instantiateManager;
         private MainScreenViewParameters _parameters;
         private MainScreenController _controller;
 
@@ -52,7 +51,7 @@ namespace GameCore.GUI
 
         private void InstantiateCanvas()
         {
-            _canvasObject = _instantiateManager.InstantiateObject(_canvasPrefab);
+            _canvasObject = InstantiateService.InstantiateObject(_canvasPrefab);
             _canvasObject.name = _CANVAS_NAME;
             var canvas = _canvasObject.GetComponent<Canvas>();
             canvas.worldCamera = _uiCamera;
@@ -63,7 +62,7 @@ namespace GameCore.GUI
             var buttons = new GameObject[_numberOfItemsToShow];
             for (var i = 0; i < _numberOfItemsToShow; i++) 
             {
-                var itemButton = _instantiateManager.InstantiateObject(_itemCellPrefab, _canvasObject.transform);
+                var itemButton = InstantiateService.InstantiateObject(_itemCellPrefab, _canvasObject.transform);
                 SetButtonAnchoredPosition(itemButton, i);
                 buttons[i] = itemButton;
             }
@@ -166,7 +165,7 @@ namespace GameCore.GUI
 
         public void Deinitialize()
         {
-            _instantiateManager.DestroyObject(_canvasObject);
+            InstantiateService.DestroyObject(_canvasObject);
         }
 
         public void SetItemInformation(int position, GameItem item)

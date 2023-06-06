@@ -6,7 +6,6 @@ using GameCore.GameControls;
 using GameCore.Inventory;
 using UnityEngine.EventSystems;
 using Zenject;
-using Sirenix.OdinInspector;
 
 namespace GameCore.GUI
 {
