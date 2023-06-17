@@ -14,13 +14,15 @@ namespace GameCore.GUI
         protected UIStateMachine _StateMachine { get { return _stateMachine; } }
 
 
-        protected virtual void Awake()
+        private void Awake()
         {
             _stateMachine = GetComponent<UIStateMachine>();
+            OnAwake();
         }
 
+        protected abstract void OnAwake();
         public abstract void EnterState();
-        public abstract void ExitState();
+        protected abstract void ExitState();
 
         protected void SwitchState(BaseUIState newState)
         {

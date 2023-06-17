@@ -29,7 +29,7 @@ namespace GameCore.Inventory
             {
                 var meshInfo = _item.Prefab.GetComponent<InventoryItemMeshInfo>();
 
-                if (meshInfo is null)
+                if (meshInfo == null)
                 {
                     Debug.LogError("No InventoryItemMeshInfo on Storable prefab. Name: " + _item.Name);
                     return;

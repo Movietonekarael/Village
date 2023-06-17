@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Medium Girl Model
+  m_EditorClassIdentifier: 
+  m_GroupName: Medium Girl Model
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 32ff5b5cda020a64385cbc22d98f3ad4
+  m_SerializeEntries:
+  - m_GUID: c0d15d1cbe6f2454b89e8f7803e1dcb2
+    m_Address: Medium Girl
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c3eacd446f64f0b418abfdd665b81ed2, type: 2}
+    - {fileID: 11400000, guid: 5231be2f767e3324fa9dc636772c58e9, type: 2}

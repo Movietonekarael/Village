@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Standart Materials
+  m_EditorClassIdentifier: 
+  m_GroupName: Standart Materials
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 2d10b0ffc1ab4cb4f87f214df6fd744e
+  m_SerializeEntries:
+  - m_GUID: d1fd3b926754fa84db23e0925c607ca7
+    m_Address: Standart Materials
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 583813ebff3368c498e60b0b99424a3a
+    m_Address: daytime
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed3b255bf1f8a6044980090c1ad8e1f6
+    m_Address: Error_Texture
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1fbce6a92c5057e46afa1bb596da0a9d, type: 2}
+    - {fileID: 11400000, guid: 9ff5197c6f520dc4c85b8e3c39009971, type: 2}

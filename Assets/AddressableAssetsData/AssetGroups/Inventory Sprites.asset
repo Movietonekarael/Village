@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Inventory Sprites
+  m_EditorClassIdentifier: 
+  m_GroupName: Inventory Sprites
+  m_Data:
+    m_SerializedData: []
+  m_GUID: f25439d30250f6748a2a600d21a370f8
+  m_SerializeEntries:
+  - m_GUID: a556743313a55074888b0122be737957
+    m_Address: Assets/Game Resources/Sprites/Food/Food.spriteatlasv2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a27f30a2ee347445929aa8d47c89796
+    m_Address: Assets/Game Resources/Sprites/Inventory/Inventory.spriteatlasv2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 9abd15dd2f68e91419943c215b8c35a7, type: 2}
+    - {fileID: 11400000, guid: 6b8fc3900e253cb498b755f1baad3af2, type: 2}

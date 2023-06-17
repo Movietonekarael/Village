@@ -17,8 +17,23 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: e1874c1ea0b661c409122c81469ac953
   m_SerializeEntries:
-  - m_GUID: 9150ea29ab68aab4f8d81ebc5621e031
-    m_Address: Control Hints
+  - m_GUID: 852941b30b3ba584fb97ccce55f48d11
+    m_Address: Assets/Game Resources/Sprites/Control Hints/Blank.spriteatlasv2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad3af4909901f1146a15a3134caab972
+    m_Address: Assets/Game Resources/Sprites/Control Hints/Dark.spriteatlasv2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef70317a290a92349b43c010c49eaedd
+    m_Address: Assets/Game Resources/Sprites/Control Hints/LIght.spriteatlasv2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db70e0c9c57c271408b8837b1f0bb72d
+    m_Address: Assets/Game Resources/Sprites/Control Hints/PS5.spriteatlasv2
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

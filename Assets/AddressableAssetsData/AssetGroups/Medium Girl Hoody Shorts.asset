@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Medium Girl Hoody Shorts
+  m_EditorClassIdentifier: 
+  m_GroupName: Medium Girl Hoody Shorts
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 78571f1ce9ee1864680e3e1901fd2e04
+  m_SerializeEntries:
+  - m_GUID: 65537d729ba0ae2449f9b7ca726ac3ac
+    m_Address: Medium_Girl_Shorts_Hoody_High
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75886c89b67358c48993c4e1f5341ded
+    m_Address: Assets/Resouces/Textures/Medium Girl/HighRes/ShortsHoody_Base Color.tga
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df7e65d2a6b65624a9d3f2267f376e19
+    m_Address: Assets/Resouces/Textures/Medium Girl/HighRes/ShortsHoody_Specular.tga
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff57310a0d3075545aeff30283ad535b
+    m_Address: Assets/Resouces/Materials/MediumGirl/Outline/Hoody_Outline.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 84107a4e4a2ee0340a1e356c4592e8bf, type: 2}
+    - {fileID: 11400000, guid: a3a067b86e2bd404880f371014f380ca, type: 2}

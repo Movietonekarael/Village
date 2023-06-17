@@ -20,10 +20,8 @@ namespace GameCore.GUI
         [Inject(Id = typeof(MainScreenController))] private readonly IDeinitializable _mainScreenControllerDeinitializator;
         [Inject(Id = typeof(MainScreenController))] private readonly IActivatable _mainScreenControllerActivator;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
-
             InitializeController();
         }
 
@@ -44,7 +42,7 @@ namespace GameCore.GUI
             _InputHandler.OnOpenCloseInventory += OpenPlayerInventory;
         }
 
-        public override void ExitState()
+        protected override void ExitState()
         {
             _mainScreenControllerActivator.Deactivate();
 

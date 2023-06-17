@@ -19,10 +19,8 @@ namespace GameCore.GUI
         [Inject(Id = typeof(OpenedPlayerInventoryController))] private readonly IDeinitializable _openedPlayerInventoryControllerDeinitializator;
         [Inject(Id = typeof(OpenedPlayerInventoryController))] private readonly IActivatable _openedPlayerInventoryControllerActivator;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
-
             InitializeController();
         }
 
@@ -43,7 +41,7 @@ namespace GameCore.GUI
             _InputHandler.OnOpenCloseInventory += ClosePlayerInventory;
         }
 
-        public override void ExitState()
+        protected override void ExitState()
         {
             _openedPlayerInventoryControllerActivator.Deactivate();
 
