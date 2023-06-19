@@ -149,7 +149,7 @@ namespace JiggleBones
             }
         }
 
-        //[BurstCompile]
+        [BurstCompile]
         public struct JiggleRigJob : IJobParallelForTransform, IJob
         {
             [NativeDisableContainerSafetyRestriction] public NativeArray<JiggleBone> Bones;
@@ -162,30 +162,11 @@ namespace JiggleBones
 
             [NativeDisableContainerSafetyRestriction] public NativeArray<int> pass;
             [NativeDisableContainerSafetyRestriction] public NativeArray<double> accumulationArray;
+            [NativeDisableContainerSafetyRestriction] public NativeArray<Vector3> offsetArray;
 
-            public int PassValue
-            {
-                get
-                {
-                    return pass[0];
-                }
-                set
-                {
-                    pass[0] = value;
-                }
-            }
-
-            public double Accumulation
-            {
-                get
-                {
-                    return accumulationArray[0];
-                }
-                set
-                {
-                    accumulationArray[0] = value;
-                }
-            }
+            public int PassValue { get{ return pass[0]; } set{ pass[0] = value; } }
+            public double Accumulation { get{ return accumulationArray[0]; } set{ accumulationArray[0] = value; } }
+            private Vector3 _offset { get { return offsetArray[0]; } set { offsetArray[0] = value; } }
 
             public void Execute()
             {
@@ -262,13 +243,12 @@ namespace JiggleBones
                 {
                     var bone = Bones[index];
 
-                    Vector3 offset = Vector3.zero;
                     if (index == 1)
                     {
                         Vector3 virtualPosition = bone.DeriveFinalSolvePosition(Vector3.zero, _smoothing, Time, FixedDeltaTime);
-                        offset = transform.position - virtualPosition;
+                        _offset = transform.position - virtualPosition;
                     }
-                    bone.DeriveFinalSolvePosition(offset, _smoothing, Time, FixedDeltaTime);
+                    bone.DeriveFinalSolvePosition(_offset, _smoothing, Time, FixedDeltaTime);
 
                     Bones[index] = bone;
                 }
@@ -297,8 +277,10 @@ namespace JiggleBones
         private NativeArray<JiggleBone>[] _jiggleBonesArrays;
         private NativeArray<int>[] _pass;
         private NativeArray<double>[] _accumulations;
+        private NativeArray<Vector3>[] _offsets;
+        //private NativeArray<double>[] _time;
 
-        private JiggleRigJob[] _jobs;
+        public JiggleRigJob[] _jobs;
 
         private void CreateArrays()
         {
@@ -310,6 +292,8 @@ namespace JiggleBones
             _jiggleBonesArrays = new NativeArray<JiggleBone>[rigCount];
             _pass = new NativeArray<int>[rigCount];
             _accumulations = new NativeArray<double>[rigCount];
+            _offsets = new NativeArray<Vector3>[rigCount];
+            //_time = new NativeArray<double>[rigCount];
 
             for (var i = 0; i < rigCount; i++)
             {
@@ -319,6 +303,10 @@ namespace JiggleBones
                 _pass[i][0] = 1;
                 _accumulations[i] = new NativeArray<double>(1, Allocator.Persistent);
                 _accumulations[i][0] = 0;
+                _offsets[i] = new NativeArray<Vector3>(1, Allocator.Persistent);
+                _offsets[i][0] = Vector3.zero;
+                //_time[i] = new NativeArray<double>(1, Allocator.Persistent);
+                //_time[i][0] = Time.timeAsDouble;
 
                 _jobs[i] = new JiggleRigJob
                 {
@@ -327,7 +315,9 @@ namespace JiggleBones
                     Gravity = Physics.gravity,
                     JiggleSettings = _jiggleRigs[i].jiggleSettings.GetSettingsStruct(),
                     pass = _pass[i],
-                    accumulationArray = _accumulations[i]
+                    accumulationArray = _accumulations[i],
+                    offsetArray = _offsets[i]
+                    //timeArray = _time[i]
                 };
             }
 
@@ -339,7 +329,8 @@ namespace JiggleBones
         {
             if (AllowUpdate)
             {
-                HandleJob();
+                //HandleJob();
+                WaitForJobs();
             }
            /* SetTimeVariables();
             ScheduleTransformJobs();
@@ -384,10 +375,11 @@ namespace JiggleBones
             }
         }
 
-        public void ScheduleTransformJobs()
+        public void ScheduleTransformJobs(int pass)
         {
             for (var i = 0; i < _jobHandles.Length; i++)
             {
+                _jobs[i].PassValue = pass;
                 _jobHandles[i] = _jobs[i].Schedule(_accessArrays[i]);
             }
         }
@@ -412,7 +404,8 @@ namespace JiggleBones
         {
             if (AllowUpdate)
             {
-                WaitForJobs();
+                HandleJob();
+                //WaitForJobs();
             }
         }
 
@@ -424,6 +417,8 @@ namespace JiggleBones
                 _accessArrays[i].Dispose();
                 _pass[i].Dispose();
                 _accumulations[i].Dispose();
+                _offsets[i].Dispose();
+                //_time[i].Dispose();
             }
         }
     }

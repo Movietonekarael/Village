@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 namespace JigglePhysics
@@ -204,6 +201,7 @@ namespace JigglePhysics
         }
         public Vector3 DeriveFinalSolvePosition(Vector3 offset, float smoothing)
         {
+            //Debug.Log($"<color=blue>offset: {offset} smoothing: {smoothing}</color>");
             double t = ((Time.timeAsDouble - smoothing * Time.fixedDeltaTime) - previousUpdateTime) / Time.fixedDeltaTime;
             extrapolatedPosition = offset + Vector3.LerpUnclamped(previousPosition, position, (float)t);
             return extrapolatedPosition;

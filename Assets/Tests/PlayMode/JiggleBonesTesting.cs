@@ -9,8 +9,6 @@ using System.Runtime.InteropServices;
 using JigglePhysics;
 using JiggleBones;
 using System;
-using System.Data.SqlTypes;
-using UnityEngine.UIElements;
 
 public class JiggleBonesTesting
 {
@@ -76,6 +74,8 @@ public class JiggleBonesTesting
         rigBuilder2.AllowUpdate = false;
         rigBuilder2.Setup();
 
+        CompareRigs(rigBuilder1, rigBuilder2);
+
         var x = 0f;
         for (var i = 0; i < 100; i++)
         {
@@ -85,16 +85,71 @@ public class JiggleBonesTesting
 
             Debug.Log("Preparing bones...");
             rigBuilder1.PrepareAllBones();
-            rigBuilder2.ScheduleTransformJobs();
-            CheckTransformPairsRotations(LeftBreast1, RightBreast1, LeftBreast2, RightBreast2);
+            rigBuilder2.SetTimeVariables();
+            rigBuilder2.ScheduleTransformJobs(1);
+            rigBuilder2.WaitForJobs();
+            CompareRigs(rigBuilder1, rigBuilder2);
+            //CheckTransformPairsRotations(LeftBreast1, RightBreast1, LeftBreast2, RightBreast2);
 
+            Debug.Log("Simulating bones...");
+            rigBuilder1.SimulateAllBones();
+            rigBuilder2.ScheduleJobs();
+            rigBuilder2.WaitForJobs();
+            CompareRigs(rigBuilder1, rigBuilder2);
 
+            Debug.Log("Deriving bones...");
+            rigBuilder1.DeriveAllBones();
+            rigBuilder2.ScheduleTransformJobs(3);
+            rigBuilder2.WaitForJobs();
+            CompareRigs(rigBuilder1, rigBuilder2);
+
+            Debug.Log("Posing bones...");
+            rigBuilder1.PoseAllBones();
+            rigBuilder2.ScheduleTransformJobs(4);
+            rigBuilder2.WaitForJobs();
+            CompareRigs(rigBuilder1, rigBuilder2);
 
             yield return null;
             x++;
         }
+    }
 
+    private void CompareRigs(JigglePhysics.JiggleRigBuilder builder1, JiggleBones.JiggleBuilder builder2)
+    {
+        for (var i = 0; i < builder1.jiggleRigs.Count; i++)
+        {
+            Debug.Log($"Comparing rigs ¹{i}");
+            CompareRigs(builder1.jiggleRigs[i], builder2._jobs[i]);
+        }
+    }
 
+    private void CompareRigs(JigglePhysics.JiggleRigBuilder.JiggleRig rig1,
+                             JiggleBones.JiggleBuilder.JiggleRigJob rig2)
+    {
+        List<BoneTrace> rig1Traces = new();
+        List<BoneTrace> rig2Traces = new();
+
+        for (var i = 0; i < rig1.simulatedPoints.Count; i++)
+        {
+            rig1Traces.Add(new BoneTrace(rig1.simulatedPoints[i]));
+            rig2Traces.Add(new BoneTrace(rig2.Bones[i + 1]));
+        }
+
+        var equality = true;
+
+        for (var i = 0; i < rig1Traces.Count; i++)
+        {
+            equality = equality && (rig1Traces[i] == rig2Traces[i]);
+        }
+
+        if (equality)
+        {
+            Debug.Log("<color=green>Rig bones are equal.</color>");
+        }
+        else
+        {
+            Debug.Log("<color=red>Rig bones aren't equal.</color>");
+        }
     }
 
     private JigglePhysics.JiggleSettings CreateSettings()
@@ -134,14 +189,14 @@ public class JiggleBonesTesting
             transform12.rotation.eulerAngles == transform22.rotation.eulerAngles)
         {
             Debug.Log("Transform check: <color=green>Success</color>");
-        }
+        }   
         else
         {
             Debug.Log("Transform check: <color=red>Fail</color>");
         }
     }
 
-    private struct BoneTrace
+    private struct BoneTrace : IEquatable<BoneTrace>
     {
         public struct PositionFrame : IEquatable<PositionFrame>
         {
@@ -171,6 +226,11 @@ public class JiggleBonesTesting
                 equality = equality && other.position.Equals(position);
                 equality = equality && other.time.Equals(time);
                 return equality;
+            }
+
+            public override string ToString()
+            {
+                return $"(Position: {position}), (Time: {time})";
             }
         }
 
@@ -241,26 +301,69 @@ public class JiggleBonesTesting
             }
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is BoneTrace trace && Equals(trace);
+        }
 
+        public bool Equals(BoneTrace other)
+        {
+            return Position.Equals(other.Position) &&
+                   PreviousPosition.Equals(other.PreviousPosition) &&
+                   ExtrapolatedPosition.Equals(other.ExtrapolatedPosition) &&
+                   UpdateTime == other.UpdateTime &&
+                   PreviousUpdateTime == other.PreviousUpdateTime &&
+                   CurrentTargetAnimatedBoneFrame.Equals(other.CurrentTargetAnimatedBoneFrame) &&
+                   LastTargetAnimatedBoneFrame.Equals(other.LastTargetAnimatedBoneFrame) &&
+                   CurrentFixedAnimatedBonePosition.Equals(other.CurrentFixedAnimatedBonePosition) &&
+                   boneRotationChangeCheck.Equals(other.boneRotationChangeCheck) &&
+                   bonePositionChangeCheck.Equals(other.bonePositionChangeCheck) &&
+                   lastValidPoseBoneRotation.Equals(other.lastValidPoseBoneRotation) &&
+                   lastValidPoseBoneLocalPosition.Equals(other.lastValidPoseBoneLocalPosition) &&
+                   EqualityComparer<Vector3?>.Default.Equals(transformPosition, other.transformPosition) &&
+                   EqualityComparer<Matrix4x4?>.Default.Equals(fromLocalToWorld, other.fromLocalToWorld) &&
+                   EqualityComparer<Matrix4x4?>.Default.Equals(fromWorldToLocal, other.fromWorldToLocal);
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new();
+            hash.Add(Position);
+            hash.Add(PreviousPosition);
+            hash.Add(ExtrapolatedPosition);
+            hash.Add(UpdateTime);
+            hash.Add(PreviousUpdateTime);
+            hash.Add(CurrentTargetAnimatedBoneFrame);
+            hash.Add(LastTargetAnimatedBoneFrame);
+            hash.Add(CurrentFixedAnimatedBonePosition);
+            hash.Add(boneRotationChangeCheck);
+            hash.Add(bonePositionChangeCheck);
+            hash.Add(lastValidPoseBoneRotation);
+            hash.Add(lastValidPoseBoneLocalPosition);
+            hash.Add(transformPosition);
+            hash.Add(fromLocalToWorld);
+            hash.Add(fromWorldToLocal);
+            return hash.ToHashCode();
+        }
 
         public static bool operator ==(BoneTrace a, BoneTrace b) 
         {
             var equality = true;
-            equality = equality && BonesValueEquals(a.Position, b.Position);
-            equality = equality && BonesValueEquals(a.PreviousPosition, b.PreviousPosition);
-            equality = equality && BonesValueEquals(a.ExtrapolatedPosition, b.ExtrapolatedPosition);
-            equality = equality && BonesValueEquals(a.UpdateTime, b.UpdateTime);
-            equality = equality && BonesValueEquals(a.PreviousUpdateTime, b.PreviousUpdateTime);
-            equality = equality && BonesValueEquals(a.CurrentTargetAnimatedBoneFrame, b.CurrentTargetAnimatedBoneFrame);
-            equality = equality && BonesValueEquals(a.LastTargetAnimatedBoneFrame, b.LastTargetAnimatedBoneFrame);
-            equality = equality && BonesValueEquals(a.CurrentFixedAnimatedBonePosition, b.CurrentFixedAnimatedBonePosition);
-            equality = equality && BonesValueEquals(a.boneRotationChangeCheck, b.boneRotationChangeCheck);
-            equality = equality && BonesValueEquals(a.bonePositionChangeCheck, b.bonePositionChangeCheck);
-            equality = equality && BonesValueEquals(a.lastValidPoseBoneRotation, b.lastValidPoseBoneRotation);
-            equality = equality && BonesValueEquals(a.lastValidPoseBoneLocalPosition, b.lastValidPoseBoneLocalPosition);
-            equality = equality && NullableBonesValueEquals(a.transformPosition, b.transformPosition);
-            equality = equality && NullableBonesValueEquals(a.fromLocalToWorld, b.fromLocalToWorld);
-            equality = equality && NullableBonesValueEquals(a.fromWorldToLocal, b.fromWorldToLocal);
+            equality = equality && BonesValueEquals(a.Position, b.Position, "Position");
+            equality = equality && BonesValueEquals(a.PreviousPosition, b.PreviousPosition, "PreviousPosition");
+            equality = equality && BonesValueEquals(a.ExtrapolatedPosition, b.ExtrapolatedPosition, "ExtrapolatedPosition");
+            equality = equality && BonesValueEquals(a.UpdateTime, b.UpdateTime, "UpdateTime");
+            equality = equality && BonesValueEquals(a.PreviousUpdateTime, b.PreviousUpdateTime, "PreviousUpdateTime");
+            equality = equality && BonesValueEquals(a.CurrentTargetAnimatedBoneFrame, b.CurrentTargetAnimatedBoneFrame, "CurrentTargetAnimatedBoneFrame");
+            equality = equality && BonesValueEquals(a.LastTargetAnimatedBoneFrame, b.LastTargetAnimatedBoneFrame, "LastTargetAnimatedBoneFrame");
+            equality = equality && BonesValueEquals(a.CurrentFixedAnimatedBonePosition, b.CurrentFixedAnimatedBonePosition, "CurrentFixedAnimatedBonePosition");
+            equality = equality && BonesValueEquals(a.boneRotationChangeCheck, b.boneRotationChangeCheck, "boneRotationChangeCheck");
+            equality = equality && BonesValueEquals(a.bonePositionChangeCheck, b.bonePositionChangeCheck, "bonePositionChangeCheck");
+            equality = equality && BonesValueEquals(a.lastValidPoseBoneRotation, b.lastValidPoseBoneRotation, "lastValidPoseBoneRotation");
+            equality = equality && BonesValueEquals(a.lastValidPoseBoneLocalPosition, b.lastValidPoseBoneLocalPosition, "lastValidPoseBoneLocalPosition");
+            equality = equality && BonesValueEquals(a.transformPosition, b.transformPosition, "transformPosition");
+            equality = equality && BonesValueEquals(a.fromLocalToWorld, b.fromLocalToWorld, "fromLocalToWorld");
+            equality = equality && BonesValueEquals(a.fromWorldToLocal, b.fromWorldToLocal, "fromWorldToLocal");
             return equality;
         }
 
@@ -269,11 +372,11 @@ public class JiggleBonesTesting
             return !(a == b);
         }
 
-        private static bool BonesValueEquals<T> (T a, T b) where T : IEquatable<T>
+        private static bool BonesValueEquals<T> (T a, T b, string name) where T : IEquatable<T>
         {
             if (!a.Equals(b))
             {
-                Debug.Log($"Bones {nameof(a)} aren't equal: {a} | {b}");
+                DebugParametersArentEqual(a, b, name);
                 return false;
             }
             else
@@ -282,7 +385,7 @@ public class JiggleBonesTesting
             }
         }
 
-        private static bool NullableBonesValueEquals(Vector3? a, Vector3? b)
+        private static bool BonesValueEquals<T>(T? a, T? b, string name) where T : struct, IEquatable<T>
         {
             var equality = true;
             if (a == null && b == null)
@@ -291,31 +394,19 @@ public class JiggleBonesTesting
             }
             else if ((a == null && b != null) || (a != null && b == null))
             {
+                DebugParametersArentEqual(a, b, name);
                 equality = false;
             }
             else
             {
-                equality = equality && BonesValueEquals(a.Value, b.Value);
+                equality = equality && BonesValueEquals(a.Value, b.Value, name);
             }
             return equality;
         }
 
-        private static bool NullableBonesValueEquals(Matrix4x4? a, Matrix4x4? b)
+        private static void DebugParametersArentEqual<T>(T a, T b, string name)
         {
-            var equality = true;
-            if (a == null && b == null)
-            {
-                equality = true;
-            }
-            else if ((a == null && b != null) || (a != null && b == null))
-            {
-                equality = false;
-            }
-            else
-            {
-                equality = equality && BonesValueEquals(a.Value, b.Value);
-            }
-            return equality;
+            Debug.Log($"Bone's {name} aren't equal: {a} | {b}");
         }
     }
 }

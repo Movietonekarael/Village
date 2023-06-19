@@ -1,12 +1,9 @@
-using log4net.Util;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Jobs;
-using UnityEngine.UIElements;
-using static PlasticGui.LaunchDiffParameters;
 
 namespace JiggleBones
 {
@@ -83,11 +80,17 @@ namespace JiggleBones
             {
                 lastValidPoseBoneRotation = transform.localRotation;
                 lastValidPoseBoneLocalPosition = transform.localPosition;
+                transformPosition = transform.position;
+                fromLocalToWorld = transform.localToWorldMatrix;
+                fromWorldToLocal = transform.worldToLocalMatrix;
             }
             else
             {
                 lastValidPoseBoneRotation = default;
                 lastValidPoseBoneLocalPosition = default;
+                transformPosition = null;
+                fromLocalToWorld = null;
+                fromWorldToLocal = null;
             }
 
             UpdateTime = Time.timeAsDouble;
@@ -108,9 +111,6 @@ namespace JiggleBones
             boneRotationChangeCheck = default;
             bonePositionChangeCheck = default;
             CurrentFixedAnimatedBonePosition = default;
-            transformPosition = null;
-            fromLocalToWorld = null;
-            fromWorldToLocal = null;
             ExtrapolatedPosition = default;
         }
         
@@ -218,6 +218,7 @@ namespace JiggleBones
 
         public Vector3 DeriveFinalSolvePosition(Vector3 offset, float smoothing, double time, float fixedDeltaTime)
         {
+            //Debug.Log($"<color=yellow>offset: {offset} smoothing: {smoothing}</color>");
             double t = ((time - smoothing * fixedDeltaTime) - PreviousUpdateTime) / fixedDeltaTime;
             ExtrapolatedPosition = offset + Vector3.LerpUnclamped(PreviousPosition, Position, (float)t);
             return ExtrapolatedPosition;
@@ -288,8 +289,6 @@ namespace JiggleBones
                 Vector3 childPositionBlend = Vector3.Lerp(bones[ChildIndex.Value].CurrentTargetAnimatedBoneFrame.position,
                                                           bones[ChildIndex.Value].ExtrapolatedPosition, 
                                                           blend);
-
-                //Debug.Log(positionBlend);
 
                 if (ParentIndex != null && ParentIndex.Value != 0)
                 {
