@@ -15,12 +15,16 @@ namespace GameCore.Installers
 
         private void BindView()
         {
-            UIElementInstaller.BindUiElement<OpenedPlayerInventoryView, IOpenedPlayerInventoryView>(Container);
+            UIElementInstaller.BindUiElement<OpenedPlayerInventoryView, 
+                                             IOpenedPlayerInventoryView,
+                                             IUIView<OpenedPlayerInventoryViewParameters, IOpenedPlayerInventoryController>>(Container);
         }
 
         private void BindController()
         {
-            UIElementInstaller.BindUiElement<OpenedPlayerInventoryController, IOpenedPlayerInventoryController>(Container);
+            UIElementInstaller.BindUiElement<OpenedPlayerInventoryController, 
+                                             IOpenedPlayerInventoryController,
+                                             IUIController<OpenedPlayerInventoryViewParameters>>(Container);
         }
     }
 }

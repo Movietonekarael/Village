@@ -9,54 +9,29 @@ using Zenject;
 
 namespace GameCore.GUI
 {
-    public sealed class MainScreenUIState : BaseUIState
+    public sealed class MainScreenUIState : BaseUIState<MainScreenViewParameters, IMainScreenController>
     {
         [Header("Next state")]
-        [SerializeField] private BaseUIState _openInventoryState;
+        [SerializeField]
+        [RequireInterface(typeof(IUIState))]
+        private UnityEngine.Object _openInventoryStateBase;
 
-        [SerializeField] private MainScreenViewParameters _mainScreenViewParameters;
+        private IUIState _openInventoryState { get => _openInventoryStateBase as IUIState; }
 
-        [Inject] private readonly IMainScreenController _mainScreenController;
-        [Inject(Id = typeof(MainScreenController))] private readonly IDeinitializable _mainScreenControllerDeinitializator;
-        [Inject(Id = typeof(MainScreenController))] private readonly IActivatable _mainScreenControllerActivator;
 
-        protected override void OnAwake()
+        protected override void StartState()
         {
-            InitializeController();
-        }
-
-        private void InitializeController()
-        {          
-            _mainScreenController.Init(_mainScreenViewParameters);
-        }
-
-        private void DeinitializeController()
-        {
-            _mainScreenControllerDeinitializator.Deinitialize();
-        }
-
-        public override void EnterState()
-        {
-            _mainScreenControllerActivator.Activate();
-
             _InputHandler.OnOpenCloseInventory += OpenPlayerInventory;
         }
 
-        protected override void ExitState()
+        protected override void EndState()
         {
-            _mainScreenControllerActivator.Deactivate();
-
             _InputHandler.OnOpenCloseInventory -= OpenPlayerInventory;
         }
 
         private void OpenPlayerInventory()
         {
             SwitchState(_openInventoryState);
-        }
-
-        private void OnDestroy()
-        {
-            DeinitializeController();
         }
     }
 }

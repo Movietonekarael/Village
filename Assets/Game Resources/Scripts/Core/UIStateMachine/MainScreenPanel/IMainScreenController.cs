@@ -1,9 +1,7 @@
-﻿using GameCore.Inventory;
-
-namespace GameCore.GUI
+﻿namespace GameCore.GUI
 {
-    public interface IMainScreenController
+    public interface IMainScreenController : ISpecificController
     {
-        public void Init(MainScreenViewParameters parameters);
+        public void SetActiveItem(int index);
     }
 }

@@ -9,74 +9,49 @@ using Zenject;
 
 namespace GameCore.GUI
 {
-    public sealed class MainScreenController : IMainScreenController, ISubscribable, IDeinitializable, IActivatable
+    public sealed class MainScreenController : UIController<MainScreenViewParameters, IMainScreenController, IMainScreenView>, IMainScreenController
     {
-        [Inject] private readonly IMainScreenView _mainScreenView;
-        [Inject(Id = typeof(MainScreenView))] private readonly IDeinitializable _mainScreenViewDeinitializator;
-        [Inject(Id = typeof(MainScreenView))] private readonly IActivatable _mainScreenViewActivator;
-
-        [Inject] private readonly InputHandler _inputHandler;
         [Inject] private readonly IInventory _inventory;
         [Inject] private readonly PlayerHoldItem _playerHoldItem;
         private int _indexOfCurrentHoldItem = 0;
 
-        public void Init(MainScreenViewParameters parameters)
+        protected override void SubscribeForEvents()
         {
-            InitializeView(parameters);
-            Subscribe();
-        }
-
-        private void InitializeView(MainScreenViewParameters parameters)
-        {
-            _mainScreenView.Init(parameters, this);
-        }
-
-        public void Deinitialize()
-        {
-            Unsubscribe();
-            _mainScreenViewDeinitializator.Deinitialize();
-        }
-
-        public void Subscribe()
-        {
-            _inputHandler.OnInventoryKeyPressed += SwitchSelectedItem;
-            _inputHandler.OnInventoryArrowPressed += MoveItemSelection;
+            _InputHandler.OnInventoryKeyPressed += SwitchSelectedItem;
+            _InputHandler.OnInventoryArrowPressed += MoveItemSelection;
             _inventory.OnItemChanged += ChangeItemInformation;
         }
 
-        public void Unsubscribe()
+        protected override void UnsubscribeForEvents()
         {
-            _inputHandler.OnInventoryKeyPressed -= SwitchSelectedItem;
-            _inputHandler.OnInventoryArrowPressed -= MoveItemSelection;
+            _InputHandler.OnInventoryKeyPressed -= SwitchSelectedItem;
+            _InputHandler.OnInventoryArrowPressed -= MoveItemSelection;
             _inventory.OnItemChanged -= ChangeItemInformation;
+        }
+
+        protected override void InitializeParameters(MainScreenViewParameters parameters) { }
+        protected override void OnActivate() { }
+        protected override void OnDeactivate() { }
+
+        public void SetActiveItem(int index)
+        {
+            SetHoldingItem(index);
         }
 
         private void SwitchSelectedItem(int index)
         {
-            _mainScreenView.SetActiveButton(index);
+            _SpecificView.SetActiveButton(index);
         }
 
         private void MoveItemSelection(int direction)
         {
-            _mainScreenView.MoveActiveButtonSelection(direction);
-        }
-
-        public void SetHoldingItem(int index)
-        {
-            _indexOfCurrentHoldItem = index;
-            UpdateHoldingItem();
-        }
-
-        private void UpdateHoldingItem()
-        {
-            var item = _inventory.GetGameItem(_indexOfCurrentHoldItem);
-            _playerHoldItem.Item = item;
+            _SpecificView.MoveActiveButtonSelection(direction);
         }
 
         private void ChangeItemInformation(int position)
         {
             var item = _inventory.GetGameItem(position);
-            _mainScreenView.SetItemInformation(position, item);
+            _SpecificView.SetItemInformation(position, item);
             CheckHoldinghItemForUpdate(position);
         }
 
@@ -86,14 +61,16 @@ namespace GameCore.GUI
                 UpdateHoldingItem();
         }
 
-        public void Activate()
+        private void SetHoldingItem(int index)
         {
-            _mainScreenViewActivator.Activate();
+            _indexOfCurrentHoldItem = index;
+            UpdateHoldingItem();
         }
 
-        public void Deactivate()
+        private void UpdateHoldingItem()
         {
-            _mainScreenViewActivator.Deactivate();
+            var item = _inventory.GetGameItem(_indexOfCurrentHoldItem);
+            _playerHoldItem.Item = item;
         }
     }
 }

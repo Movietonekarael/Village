@@ -18,12 +18,16 @@ namespace GameCore.Installers
 
         private void BindView()
         {
-            UIElementInstaller.BindUiElement<MainScreenView, IMainScreenView>(Container);
+            UIElementInstaller.BindUiElement<MainScreenView, 
+                                             IMainScreenView,
+                                             IUIView<MainScreenViewParameters, IMainScreenController>>(Container);
         }
 
         private void BindController()
         {
-            UIElementInstaller.BindUiElement<MainScreenController, IMainScreenController>(Container);
+            UIElementInstaller.BindUiElement<MainScreenController, 
+                                             IMainScreenController, 
+                                             IUIController<MainScreenViewParameters>>(Container);
         }
     }
 }

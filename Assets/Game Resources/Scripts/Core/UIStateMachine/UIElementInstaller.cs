@@ -1,16 +1,19 @@
-﻿using Zenject;
+﻿using GameCore.GUI;
+using Zenject;
 
 
 namespace GameCore.Installers
 {
     public static class UIElementInstaller
     {
-        public static void BindUiElement<T, I>(DiContainer diContainer) where T : I, IDeinitializable, IActivatable, new()
+        public static void BindUiElement<T, I, P>(DiContainer diContainer) where T : I, P, IDeinitializable<I>, IActivatable<I>, new()
+                                                                           where I : ISpecific
         {
             var instance = CreateInstance<T>(diContainer);
-            BindInitialization<T, I>(diContainer, instance);
-            BindDeinitialization(diContainer, instance);
-            BindActivation(diContainer, instance);
+            BindInterface<T, I>(diContainer, instance);
+            BindInterface<T, P>(diContainer, instance);
+            BindDeinitialization<T, I>(diContainer, instance);
+            BindActivation<T, I>(diContainer, instance);
         }
 
         private static T CreateInstance<T>(DiContainer diContainer) where T : new()
@@ -20,7 +23,7 @@ namespace GameCore.Installers
             return instance;
         }
 
-        private static void BindInitialization<T, I>(DiContainer diContainer, T instance) where T : I
+        private static void BindInterface<T, I>(DiContainer diContainer, T instance) where T : I
         {
             diContainer.Bind<I>().
                         To<T>().
@@ -29,20 +32,18 @@ namespace GameCore.Installers
                         NonLazy();
         }
 
-        private static void BindDeinitialization<T>(DiContainer diContainer, T instance) where T : IDeinitializable
+        private static void BindDeinitialization<T, I>(DiContainer diContainer, T instance) where T : IDeinitializable<I>
         {
-            diContainer.Bind<IDeinitializable>().
-                        WithId(typeof(T)).
+            diContainer.Bind<IDeinitializable<I>>().
                         To<T>().
                         FromInstance(instance).
                         AsCached().
                         NonLazy();
         }
 
-        private static void BindActivation<T>(DiContainer diContainer, T instance) where T : IActivatable
+        private static void BindActivation<T, I>(DiContainer diContainer, T instance) where T : IActivatable<I>
         {
-            diContainer.Bind<IActivatable>().
-                        WithId(typeof(T)).
+            diContainer.Bind<IActivatable<I>>().
                         To<T>().
                         FromInstance(instance).
                         AsCached().

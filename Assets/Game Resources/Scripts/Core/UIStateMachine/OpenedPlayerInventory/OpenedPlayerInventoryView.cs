@@ -8,22 +8,22 @@ using Zenject;
 
 namespace GameCore.GUI
 {
-    public sealed class OpenedPlayerInventoryView : IOpenedPlayerInventoryView, IActivatable, IDeinitializable
+    public sealed class OpenedPlayerInventoryView : UIView<OpenedPlayerInventoryViewParameters,
+                                                           IOpenedPlayerInventoryController,
+                                                           IOpenedPlayerInventoryView>,
+                                                    IOpenedPlayerInventoryView
     {
-        private OpenedPlayerInventoryViewParameters _parameters;
-        private OpenedPlayerInventoryController _controller;
-
         private const string _CANVAS_NAME = "PlayerInventoryCanvas";
-        private GameObject _canvasPrefab => _parameters.CanvasPrefab;
+        private GameObject _canvasPrefab => _Parameters.CanvasPrefab;
         private GameObject _canvasObject;
-        private GameObject _buttonPrefab => _parameters.ButtonPrefab;
-        private GameObject _dragAndDropPrefab => _parameters.DragAndDropPrefab;
+        private GameObject _buttonPrefab => _Parameters.ButtonPrefab;
+        private GameObject _dragAndDropPrefab => _Parameters.DragAndDropPrefab;
         private DragObject _dragAndDropObject;
 
-        private int _numberOfItemsInRow => (int)_parameters.NumberOfItemsInRow;
-        private int _itemsNumber;
-        private Vector2Int _itemIndent => _parameters.ItemIndent;
-        private Vector2Int _itemDelta => _parameters.ItemDelta;
+        private int _numberOfItemsInRow => (int)_Parameters.NumberOfItemsInRow;
+        private int _itemsNumber => _Parameters.ItemsNumber;
+        private Vector2Int _itemIndent => _Parameters.ItemIndent;
+        private Vector2Int _itemDelta => _Parameters.ItemDelta;
 
         [Inject] private readonly EventSystem _eventSystem;
         [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
@@ -34,26 +34,35 @@ namespace GameCore.GUI
         private Vector2Int? _holdingButtonImagePosition = null;
 
 
-        public void Init(OpenedPlayerInventoryViewParameters parameters, int itemsNumber, OpenedPlayerInventoryController controller)
+        public override void Activate()
         {
-            InitializeParameters(parameters);
-            InitializeItemsNumber(itemsNumber);
-            var buttons = InstantiateViewElements();
+            _canvasObject.SetActive(true);
+        }
+
+        public override void Deactivate()
+        {
+            DeactivateDragAndDropObject();
+            _canvasObject.SetActive(false);
+        }
+
+        public override void Deinitialize()
+        {
+            UnsubscribeButtonsEvents();
+            InstantiateService.DestroyObject(_canvasObject);
+        }
+
+        protected override void InstantiateViewElements()
+        {
+            var buttons = CreateViewElements();
             SetupInventoryButtons(buttons);
-            _controller = controller;
         }
 
-        private void InitializeParameters(OpenedPlayerInventoryViewParameters parameters)
+        public void SetItemInformation(int position, GameItem item)
         {
-            _parameters = parameters;
+            _inventoryButtons[position / _numberOfItemsInRow][position % _numberOfItemsInRow].SetItem(item);
         }
 
-        private void InitializeItemsNumber(int itemsNumber)
-        {
-            _itemsNumber = itemsNumber;
-        }
-
-        private GameObject[][] InstantiateViewElements()
+        private GameObject[][] CreateViewElements()
         {
             InstantiateCanvas();
             var buttons = CreateButtons();
@@ -235,42 +244,20 @@ namespace GameCore.GUI
             var itemNumber1 = GetNumberFromPosition(_holdingButtonImagePosition.Value);
             var itemNumber2 = GetNumberFromPosition(_currentButtonHoveredPosition.Value);
 
-            _controller.ChangeItemsInInventory(itemNumber1, itemNumber2);
+            _Controller.ChangeItemsInInventory(itemNumber1, itemNumber2);
         }
 
         private void DropInventoryItem()
         {
             var itemNumber = GetNumberFromPosition(_holdingButtonImagePosition.Value);
 
-            _controller.DropInventoryItem(itemNumber);
+            _Controller.DropInventoryItem(itemNumber);
         }
 
         private int GetNumberFromPosition(Vector2Int position)
         {
             var number = position.y * _numberOfItemsInRow + position.x;
             return number;
-        }
-
-        public void Activate()
-        {
-            _canvasObject.SetActive(true);
-        }
-
-        public void Deactivate()
-        {
-            DeactivateDragAndDropObject();
-            _canvasObject.SetActive(false);
-        }
-
-        public void Deinitialize()
-        {
-            UnsubscribeButtonsEvents();
-            InstantiateService.DestroyObject(_canvasObject);
-        }
-
-        public void SetItemInformation(int position, GameItem item)
-        {
-            _inventoryButtons[position / _numberOfItemsInRow][position % _numberOfItemsInRow].SetItem(item);
         }
     }
 }

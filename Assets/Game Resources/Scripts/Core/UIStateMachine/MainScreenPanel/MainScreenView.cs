@@ -9,39 +9,39 @@ using Zenject;
 
 namespace GameCore.GUI
 {
-    public sealed class MainScreenView : IMainScreenView, IActivatable, IDeinitializable
+    public sealed class MainScreenView : UIView<MainScreenViewParameters, IMainScreenController, IMainScreenView>, IMainScreenView
     {
-        private MainScreenViewParameters _parameters;
-        private MainScreenController _controller;
-
         private const string _CANVAS_NAME = "MainScreenCanvas";
-        private GameObject _canvasPrefab => _parameters.CanvasPrefab;
+        private GameObject _canvasPrefab => _Parameters.CanvasPrefab;
         private GameObject _canvasObject;
-        private GameObject _itemCellPrefab => _parameters.ItemCellPrefab;
+        private GameObject _itemCellPrefab => _Parameters.ItemCellPrefab;
 
-        private int _numberOfItemsToShow => (int)_parameters.NumberOfItemsToShow;
-        private Vector2Int _itemIndent => _parameters.ItemIndent;
-        private Vector2Int _itemDelta => _parameters.ItemDelta;
+        private int _numberOfItemsToShow => (int)_Parameters.NumberOfItemsToShow;
+        private Vector2Int _itemIndent => _Parameters.ItemIndent;
+        private Vector2Int _itemDelta => _Parameters.ItemDelta;
 
         [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
 
         private ItemCell[] _itemCells;
         private int _currentActiveButton = 0;
 
-
-        public void Init(MainScreenViewParameters parameters, MainScreenController controller)
+        public override void Activate()
         {
-            InitializeParameters(parameters);
-            InstantiateViewElements();
-            _controller = controller;
+            _canvasObject.SetActive(true);
+            EnableActiveButton();
         }
 
-        private void InitializeParameters(MainScreenViewParameters parameters)
+        public override void Deactivate()
         {
-            _parameters = parameters;
+            _canvasObject.SetActive(false);
         }
 
-        private void InstantiateViewElements()
+        public override void Deinitialize()
+        {
+            InstantiateService.DestroyObject(_canvasObject);
+        }
+
+        protected override void InstantiateViewElements()
         {
             InstantiateCanvas();
             var buttons = InstantiateButtons();
@@ -55,6 +55,34 @@ namespace GameCore.GUI
             _canvasObject.name = _CANVAS_NAME;
             var canvas = _canvasObject.GetComponent<Canvas>();
             canvas.worldCamera = _uiCamera;
+        }
+
+        public void SetActiveButton(int index)
+        {
+            if (!CheckIfActiveButtonIndexWasChanged(index))
+                return;
+            if (CheckIfNewButtonIndexOutOfRange(index))
+                return;
+
+            DisableActiveButton();
+            _currentActiveButton = index;
+            EnableActiveButton();
+        }
+
+        public void MoveActiveButtonSelection(int direction)
+        {
+            DisableActiveButton();
+            _currentActiveButton += direction;
+            HandleCurrentActiveButtonForOutOfRange();
+            EnableActiveButton();
+        }
+
+        public void SetItemInformation(int position, GameItem item)
+        {
+            if (position >= _numberOfItemsToShow)
+                return;
+
+            _itemCells[position].SetItem(item);
         }
 
         private GameObject[] InstantiateButtons()
@@ -91,29 +119,6 @@ namespace GameCore.GUI
             }
         }
 
-        public void Activate()
-        {
-            _canvasObject.SetActive(true);
-            EnableActiveButton();
-        }
-
-        public void Deactivate()
-        {
-            _canvasObject.SetActive(false);
-        }
-
-        public void SetActiveButton(int index)
-        {
-            if (!CheckIfActiveButtonIndexWasChanged(index))
-                return;
-            if (CheckIfNewButtonIndexOutOfRange(index))
-                return;
-
-            DisableActiveButton();
-            _currentActiveButton = index;
-            EnableActiveButton();
-        }
-
         private bool CheckIfActiveButtonIndexWasChanged(int index)
         {
             return index != _currentActiveButton;
@@ -126,14 +131,6 @@ namespace GameCore.GUI
                 return true;
             }
             return false;
-        }
-
-        public void MoveActiveButtonSelection(int direction)
-        {
-            DisableActiveButton();
-            _currentActiveButton += direction;
-            HandleCurrentActiveButtonForOutOfRange();
-            EnableActiveButton();
         }
 
         private void HandleCurrentActiveButtonForOutOfRange()
@@ -159,21 +156,8 @@ namespace GameCore.GUI
             if (itemCell != null) 
             {
                 itemCell.SetActive();
-                _controller.SetHoldingItem(_currentActiveButton);
+                _Controller.SetActiveItem(_currentActiveButton);
             }
-        }
-
-        public void Deinitialize()
-        {
-            InstantiateService.DestroyObject(_canvasObject);
-        }
-
-        public void SetItemInformation(int position, GameItem item)
-        {
-            if (position >= _numberOfItemsToShow)
-                return;
-
-            _itemCells[position].SetItem(item);
         }
     }
 }

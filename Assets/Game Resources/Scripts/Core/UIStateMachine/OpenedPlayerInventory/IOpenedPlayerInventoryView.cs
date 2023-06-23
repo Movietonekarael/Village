@@ -2,9 +2,8 @@
 
 namespace GameCore.GUI
 {
-    public interface IOpenedPlayerInventoryView
+    public interface IOpenedPlayerInventoryView : ISpecificView
     {
-        public void Init(OpenedPlayerInventoryViewParameters parameters, int itemsNumber, OpenedPlayerInventoryController controller);
         public void SetItemInformation(int position, GameItem item);
     }
 }

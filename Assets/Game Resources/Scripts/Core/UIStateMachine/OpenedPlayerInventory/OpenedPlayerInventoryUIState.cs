@@ -8,54 +8,29 @@ using Zenject;
 
 namespace GameCore.GUI
 {
-    public sealed class OpenedPlayerInventoryUIState : BaseUIState
+    public sealed class OpenedPlayerInventoryUIState : BaseUIState<OpenedPlayerInventoryViewParameters, IOpenedPlayerInventoryController>
     {
         [Header("Next state")]
-        [SerializeField] private BaseUIState _closeInventoryState;
+        [SerializeField]
+        [RequireInterface(typeof(IUIState))]
+        private UnityEngine.Object _closeInventoryStateBase;
 
-        [SerializeField] private OpenedPlayerInventoryViewParameters _openedPlayerInventoryViewParameters;
+        private IUIState _closeInventoryState { get => _closeInventoryStateBase as IUIState; }
 
-        [Inject] private readonly IOpenedPlayerInventoryController _openedPlayerInventoryController;
-        [Inject(Id = typeof(OpenedPlayerInventoryController))] private readonly IDeinitializable _openedPlayerInventoryControllerDeinitializator;
-        [Inject(Id = typeof(OpenedPlayerInventoryController))] private readonly IActivatable _openedPlayerInventoryControllerActivator;
 
-        protected override void OnAwake()
+        protected override void StartState()
         {
-            InitializeController();
-        }
-
-        private void InitializeController()
-        {
-            _openedPlayerInventoryController.Init(_openedPlayerInventoryViewParameters);
-        }
-
-        private void DeinitializeController()
-        {
-            _openedPlayerInventoryControllerDeinitializator.Deinitialize();
-        }
-
-        public override void EnterState()
-        {
-            _openedPlayerInventoryControllerActivator.Activate();
-
             _InputHandler.OnOpenCloseInventory += ClosePlayerInventory;
         }
 
-        protected override void ExitState()
+        protected override void EndState()
         {
-            _openedPlayerInventoryControllerActivator.Deactivate();
-
             _InputHandler.OnOpenCloseInventory -= ClosePlayerInventory;
         }
 
         private void ClosePlayerInventory()
         {
             SwitchState(_closeInventoryState);
-        }
-
-        private void OnDestroy()
-        {
-            DeinitializeController();
         }
     }
 }

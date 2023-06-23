@@ -10,80 +10,38 @@ using System.Threading.Tasks;
 
 namespace GameCore.GUI
 {
-    public sealed class OpenedPlayerInventoryController : IOpenedPlayerInventoryController, ISubscribable, IDeinitializable, IActivatable
+    public sealed class OpenedPlayerInventoryController : UIController<OpenedPlayerInventoryViewParameters, 
+                                                                       IOpenedPlayerInventoryController, 
+                                                                       IOpenedPlayerInventoryView>, 
+                                                          IOpenedPlayerInventoryController
     {
-        [Inject] private readonly IOpenedPlayerInventoryView _openedPlayerInventoryView;
-        [Inject(Id = typeof(OpenedPlayerInventoryView))] private readonly IDeinitializable _openedPlayerInventoryViewDeinitializator;
-        [Inject(Id = typeof(OpenedPlayerInventoryView))] private readonly IActivatable _openedPlayerInventoryViewActivator;
-
-        [Inject] private readonly InputHandler _inputHandler;
         [Inject] private readonly PlayerInventory _inventory;
         [Inject] private readonly UnityEngine.InputSystem.PlayerInput _playerInput;
-        private VirtualMouseHandler _virtualMouseHandler => _inputHandler.VirtualMouse;
-        private ControlScheme _currentControlScheme => _inputHandler.CurrentControlScheme;
+        private VirtualMouseHandler _virtualMouseHandler => _InputHandler.VirtualMouse;
+        private ControlScheme _currentControlScheme => _InputHandler.CurrentControlScheme;
 
         private bool _openedInventoryControlsActive = false;
 
-        public void Init(OpenedPlayerInventoryViewParameters parameters) 
+        protected override void InitializeParameters(OpenedPlayerInventoryViewParameters parameters)
         {
-            InitializeView(parameters);
-            Subscribe();
+            parameters.ItemsNumber = _inventory.GetInventorySize();
         }
 
-        private void InitializeView(OpenedPlayerInventoryViewParameters parameters)
-        {
-            _openedPlayerInventoryView.Init(parameters, _inventory.GetInventorySize(), this);
-        }
-
-        public void Deinitialize()
-        {
-            Unsubscribe();
-            _openedPlayerInventoryViewDeinitializator.Deinitialize();
-        }
-
-        public void Subscribe()
+        protected override void SubscribeForEvents()
         {
             _inventory.OnItemChanged += ChangeItemInformation;
-            _inputHandler.OnControlSchemeChanged += ControlSchemeChanged;
+            _InputHandler.OnControlSchemeChanged += ControlSchemeChanged;
         }
 
-        public void Unsubscribe()
+        protected override void UnsubscribeForEvents()
         {
             _inventory.OnItemChanged -= ChangeItemInformation;
-            _inputHandler.OnControlSchemeChanged -= ControlSchemeChanged;
-        }
-
-        private void ChangeItemInformation(int position)
-        {
-            var item = _inventory.GetGameItem(position);
-            _openedPlayerInventoryView.SetItemInformation(position, item);
-        }
-
-        public void Activate()
-        {
-            _openedPlayerInventoryViewActivator.Activate();
-            SetOpenedInventoryControlsActive();
-        }
-
-        public void Deactivate()
-        {
-            _openedPlayerInventoryViewActivator.Deactivate();
-            SetOpenedInventoryControlsInactive();
-        }
-
-        public void ChangeItemsInInventory(int itemNumber1, int itemNumber2)
-        {
-            _inventory.MoveItem(itemNumber1, itemNumber2);
-        }
-
-        public void DropInventoryItem(int itemNumber)
-        {
-            _inventory.DropItem(itemNumber);
+            _InputHandler.OnControlSchemeChanged -= ControlSchemeChanged;
         }
 
         private void ControlSchemeChanged(ControlScheme controlScheme)
         {
-            if (controlScheme == ControlScheme.Keyboard) 
+            if (controlScheme == ControlScheme.Keyboard)
             {
                 if (_openedInventoryControlsActive)
                 {
@@ -99,16 +57,46 @@ namespace GameCore.GUI
             }
         }
 
-        public void SetOpenedInventoryControlsInactive()
+        private void ChangeItemInformation(int position)
+        {
+            var item = _inventory.GetGameItem(position);
+            _SpecificView.SetItemInformation(position, item);
+        }
+
+        protected override void OnActivate()
+        {
+            SetOpenedInventoryControlsActive();
+        }
+
+        private void SetOpenedInventoryControlsActive()
+        {
+            _openedInventoryControlsActive = true;
+            _InputHandler.DisableFreezableInputActionMaps();
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            if (_currentControlScheme == ControlScheme.Gamepad)
+            {
+                _virtualMouseHandler.EnableMouse();
+            }
+        }
+
+        protected override void OnDeactivate()
+        {
+            SetOpenedInventoryControlsInactive();
+        }
+
+        private void SetOpenedInventoryControlsInactive()
         {
             _openedInventoryControlsActive = false;
-            _inputHandler.EnableFreezableInputActionMaps();
+            _InputHandler.EnableFreezableInputActionMaps();
 
             if (_currentControlScheme == ControlScheme.Gamepad)
             {
                 _virtualMouseHandler.DisableMouse();
                 Cursor.lockState = CursorLockMode.Locked;
-                _inputHandler.canUiChange = false;
+                _InputHandler.canUiChange = false;
                 EnableUiChangeInOneFrame();
             }
             else
@@ -130,22 +118,18 @@ namespace GameCore.GUI
             for (var i = 0; i < 2; i++)
                 await Task.Yield();
 
-            _inputHandler.canUiChange = true;
+            _InputHandler.canUiChange = true;
             _playerInput.SwitchCurrentControlScheme(_virtualMouseHandler.VirtualMouse, Gamepad.current);
         }
 
-        public void SetOpenedInventoryControlsActive()
+        public void ChangeItemsInInventory(int itemNumber1, int itemNumber2)
         {
-            _openedInventoryControlsActive = true;
-            _inputHandler.DisableFreezableInputActionMaps();
+            _inventory.MoveItem(itemNumber1, itemNumber2);
+        }
 
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            
-            if (_currentControlScheme == ControlScheme.Gamepad)
-            {
-                _virtualMouseHandler.EnableMouse();
-            }
+        public void DropInventoryItem(int itemNumber)
+        {
+            _inventory.DropItem(itemNumber);
         }
     }
 }

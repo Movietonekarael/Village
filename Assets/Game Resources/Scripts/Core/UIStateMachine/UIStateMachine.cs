@@ -11,9 +11,13 @@ namespace GameCore.GUI
 {
     public sealed class UIStateMachine : MonoBehaviour
     {
-        [SerializeField] private BaseUIState _firstState;
+        [SerializeField]
+        [RequireInterface(typeof(IUIState))]
+        private UnityEngine.Object _firstStateBase;
+
+        private IUIState _firstState { get => _firstStateBase as IUIState; }
         
-        public BaseUIState CurrentState { private get; set; }
+        public IUIState CurrentState { private get; set; }
 
 
         private void Start()
