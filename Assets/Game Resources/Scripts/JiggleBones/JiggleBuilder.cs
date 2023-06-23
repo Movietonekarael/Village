@@ -1,89 +1,96 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Jobs;
-using Unity.Burst;
 using System;
-using JetBrains.Annotations;
 
 namespace JiggleBones
 {
-    
-
-    [System.Serializable]
-    public class JiggleRig
+    public partial class JiggleBuilder : MonoBehaviour
     {
-        [Tooltip("The root bone from which an individual JiggleRig will be constructed. The JiggleRig encompasses all children of the specified root.")]
-        public Transform rootTransform;
-        [Tooltip("The settings that the rig should update with, create them using the Create->JigglePhysics->Settings menu option.")]
-        public JiggleSettings jiggleSettings;
-        [Tooltip("The list of transforms to ignore during the jiggle. Each bone listed will also ignore all the children of the specified bone.")]
-        public List<Transform> ignoredTransforms;
-        [HideInInspector] public List<JiggleBone> bones;
-        [HideInInspector] public List<Transform> bonesTransforms;
-
-        public JiggleRig(Transform _rootTransform, JiggleSettings _jiggleSettings)
-        {
-            rootTransform = _rootTransform;
-            jiggleSettings = _jiggleSettings;
-            ignoredTransforms = new();
-            bones = new();
-            bonesTransforms = new();
-        }
-    }
-
-    public class JiggleBuilder : MonoBehaviour
-    {
-        public List<JiggleRig> _jiggleRigs;
+        public List<JiggleRig> JiggleRigs;
         private Dictionary<Transform, JiggleRig> _jiggleRigLookup;
 
         [Tooltip("An air force that is applied to the entire rig, this is useful to plug in some wind volumes from external sources.")]
-        public Vector3 wind;
+        public Vector3 Wind;
 
+        private TransformAccessArray[] _accessArrays;
+        private NativeArray<JiggleBone>[] _jiggleBonesArrays;
+        private NativeArray<int>[] _pass;
+        private NativeArray<double>[] _accumulations;
+        private NativeArray<Vector3>[] _offsets;
 
-        [SerializeField] private bool _setupOnAwake = false;
-        public bool AllowUpdate = true;
+        private JiggleRigJob[] _jobs;
+        private JobHandle[] _jobHandles;
+
+        [HideInInspector] public bool SetupOnAwake = true;
+        [HideInInspector] public bool AllowUpdate = true;
 
         private void Awake()
         {
-            //accumulation = 0f;
-
-            if (_setupOnAwake)
+            if (SetupOnAwake)
                 Setup();
+        }
+
+        private void Update()
+        {
+            if (AllowUpdate)
+            {
+                WaitForJobs();
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (AllowUpdate)
+            {
+                HandleJob();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            for (var i = 0; i < _jiggleBonesArrays.Length; i++)
+            {
+                _jiggleBonesArrays[i].Dispose();
+                _accessArrays[i].Dispose();
+                _pass[i].Dispose();
+                _accumulations[i].Dispose();
+                _offsets[i].Dispose();
+            }
         }
 
         public void Setup()
         {
             _jiggleRigLookup ??= new Dictionary<Transform, JiggleRig>();
             _jiggleRigLookup.Clear();
-            _jiggleRigs ??= new List<JiggleRig>();
+            JiggleRigs ??= new List<JiggleRig>();
 
-            foreach (JiggleRig rig in _jiggleRigs)
+            foreach (JiggleRig rig in JiggleRigs)
             {
-                if (_jiggleRigLookup.ContainsKey(rig.rootTransform))
+                if (_jiggleRigLookup.ContainsKey(rig.RootTransform))
                 {
                     throw new UnityException("JiggleRig was added to transform where one already exists!");
                 }
-                _jiggleRigLookup.Add(rig.rootTransform, rig);
+                _jiggleRigLookup.Add(rig.RootTransform, rig);
 
-                rig.bones = new List<JiggleBone>();
-                CreateBones(rig, rig.rootTransform, null);
+                rig.Bones = new List<JiggleBone>();
+                CreateBones(rig, rig.RootTransform, null);
 
-                rig.bonesTransforms.Insert(0, rig.bonesTransforms[0].parent);
-                rig.bones.Insert(0, new JiggleBone(rig.bonesTransforms[0], 0, null, rig.bonesTransforms[0].position, rig.bones));
+                rig.BonesTransforms.Insert(0, rig.BonesTransforms[0].parent);
+                rig.Bones.Insert(0, new JiggleBone(rig.BonesTransforms[0], 0, null, rig.BonesTransforms[0].position, rig.Bones));
 
-                for (var i = 1; i < rig.bones.Count; i++)
+                for (var i = 1; i < rig.Bones.Count; i++)
                 {
-                    var bone = rig.bones[i];
+                    var bone = rig.Bones[i];
                     bone.IncreaseIndex();
                     if (i == 1)
                     {
                         bone.SetParentIndex(0);
                     }
-                    rig.bones[i] = bone;
+                    rig.Bones[i] = bone;
                 }
 
 
@@ -94,13 +101,13 @@ namespace JiggleBones
 
         private void CreateBones(JiggleRig rig, Transform currentTransform, int? parentJiggleBoneIndex)
         {
-            JiggleBone newJiggleBone = new JiggleBone(currentTransform, 
-                                                      rig.bones.Count, 
-                                                      parentJiggleBoneIndex, 
-                                                      currentTransform.position, 
-                                                      rig.bones);
-            rig.bones.Add(newJiggleBone);
-            rig.bonesTransforms.Add(currentTransform);
+            var newJiggleBone = new JiggleBone(currentTransform, 
+                                               rig.Bones.Count, 
+                                               parentJiggleBoneIndex, 
+                                               currentTransform.position, 
+                                               rig.Bones);
+            rig.Bones.Add(newJiggleBone);
+            rig.BonesTransforms.Add(currentTransform);
 
             if (currentTransform.childCount == 0)
             {
@@ -112,36 +119,36 @@ namespace JiggleBones
                     }
                     else
                     {
-                        float lengthToParent = Vector3.Distance(currentTransform.position, currentTransform.parent.position);
-                        Vector3 projectedForwardReal = (currentTransform.position - currentTransform.parent.position).normalized;
-                        rig.bones.Add(new JiggleBone(null, 
-                                                     rig.bones.Count, 
+                        var lengthToParent = Vector3.Distance(currentTransform.position, currentTransform.parent.position);
+                        var projectedForwardReal = (currentTransform.position - currentTransform.parent.position).normalized;
+                        rig.Bones.Add(new JiggleBone(null, 
+                                                     rig.Bones.Count, 
                                                      newJiggleBone.Index, 
                                                      currentTransform.position + projectedForwardReal * lengthToParent,
-                                                     rig.bones));
-                        rig.bonesTransforms.Add(null);
+                                                     rig.Bones));
+                        rig.BonesTransforms.Add(null);
                         return;
                     }
                 }
-                var parentTransform = rig.bonesTransforms[parentJiggleBoneIndex.Value];
-                Vector3 projectedForward = (currentTransform.position - parentTransform.position).normalized;
-                float length = 0.1f;
-                if (rig.bones[parentJiggleBoneIndex.Value].ParentIndex != null)
+                var parentTransform = rig.BonesTransforms[parentJiggleBoneIndex.Value];
+                var projectedForward = (currentTransform.position - parentTransform.position).normalized;
+                var length = 0.1f;
+                if (rig.Bones[parentJiggleBoneIndex.Value].ParentIndex != null)
                 {
                     length = Vector3.Distance(parentTransform.position, parentTransform.parent.transform.position);
                 }
-                rig.bones.Add(new JiggleBone(null,
-                                             rig.bones.Count,
+                rig.Bones.Add(new JiggleBone(null,
+                                             rig.Bones.Count,
                                              newJiggleBone.Index, 
                                              currentTransform.position + projectedForward * length,
-                                             rig.bones));
-                rig.bonesTransforms.Add(null);
+                                             rig.Bones));
+                rig.BonesTransforms.Add(null);
                 return;
             }
 
-            for (int i = 0; i < currentTransform.childCount; i++)
+            for (var i = 0; i < currentTransform.childCount; i++)
             {
-                if (rig.ignoredTransforms.Contains(currentTransform.GetChild(i)))
+                if (rig.IgnoredTransforms.Contains(currentTransform.GetChild(i)))
                 {
                     continue;
                 }
@@ -149,142 +156,9 @@ namespace JiggleBones
             }
         }
 
-        [BurstCompile]
-        public struct JiggleRigJob : IJobParallelForTransform, IJob
-        {
-            [NativeDisableContainerSafetyRestriction] public NativeArray<JiggleBone> Bones;
-            [ReadOnly] public double Time;
-            [ReadOnly] public float FixedDeltaTime;
-            [ReadOnly] public JiggleSettingsBase JiggleSettings;
-            [ReadOnly] public Vector3 Wind;
-            [ReadOnly] private const float _smoothing = 1f;
-            [ReadOnly] public Vector3 Gravity;
-
-            [NativeDisableContainerSafetyRestriction] public NativeArray<int> pass;
-            [NativeDisableContainerSafetyRestriction] public NativeArray<double> accumulationArray;
-            [NativeDisableContainerSafetyRestriction] public NativeArray<Vector3> offsetArray;
-
-            public int PassValue { get{ return pass[0]; } set{ pass[0] = value; } }
-            public double Accumulation { get{ return accumulationArray[0]; } set{ accumulationArray[0] = value; } }
-            private Vector3 _offset { get { return offsetArray[0]; } set { offsetArray[0] = value; } }
-
-            public void Execute()
-            {
-                while (Accumulation > FixedDeltaTime)
-                {
-                    Accumulation -= FixedDeltaTime;
-                    var accumulationTime = Time - Accumulation;
-                    for (var i = 1; i < Bones.Length; i++)
-                    {
-                        var bone = Bones[i];
-                        bone.Simulate(ref JiggleSettings, ref Wind, Gravity, accumulationTime, FixedDeltaTime, ref Bones);
-                        Bones[i] = bone;
-                    }
-                }
-                PassValue++;
-            }
-
-            public void Execute(int index, TransformAccess transform)
-            {
-                if (PassValue == 1)
-                {
-                    FirstProcess(index, ref transform, true);
-                    if (index == Bones.Length - 2)
-                    {
-                        FirstProcess(index + 1, ref transform, false);
-                        PassValue++;
-                    }
-                }
-                else if (PassValue == 3)
-                {
-                    DeriveAllPositions(index, ref transform);
-                    if (index == Bones.Length - 2)
-                    {
-                        DeriveAllPositions(index + 1, ref transform);
-                        PassValue++;
-                    }
-                }
-                else if (PassValue == 4)
-                {
-                    PoseAllBones(index, ref transform, true);
-                    if (index == Bones.Length - 2)
-                    {
-                        PoseAllBones(index + 1, ref transform, false);
-                        PassValue = 1;
-                    }
-                }
-            }
-
-            private void FirstProcess(int index, ref TransformAccess transform, bool transformExist)
-            {
-                var bone = Bones[index];
-
-                if (index != 0)
-                {
-                    bone.PrepareBone(ref transform, ref Bones, Time, transformExist);
-                }
-                if (transformExist)
-                {
-                    bone.SetTransformInfo(ref transform);
-                }
-                if (index != 0)
-                {
-                    bone.CacheAnimationPosition(ref transform, ref Bones, Time, transformExist);
-                }
-
-                Bones[index] = bone;
-            }
-
-            private void DeriveAllPositions(int index, ref TransformAccess transform)
-            {
-                
-
-                if (index != 0)
-                {
-                    var bone = Bones[index];
-
-                    if (index == 1)
-                    {
-                        Vector3 virtualPosition = bone.DeriveFinalSolvePosition(Vector3.zero, _smoothing, Time, FixedDeltaTime);
-                        _offset = transform.position - virtualPosition;
-                    }
-                    bone.DeriveFinalSolvePosition(_offset, _smoothing, Time, FixedDeltaTime);
-
-                    Bones[index] = bone;
-                }
-
-                
-            }
-
-            private void PoseAllBones(int index, ref TransformAccess transform, bool transformExist)
-            {
-                var bone = Bones[index];
-
-                if (index != 0)
-                { 
-                    bone.PoseBone(ref transform, JiggleSettings.Blend, ref Bones, transformExist);
-                }
-                if (transformExist)
-                {
-                    bone.SetTransformInfo(ref transform);
-                }
-
-                Bones[index] = bone;
-            }
-        }
-
-        private TransformAccessArray[] _accessArrays;
-        private NativeArray<JiggleBone>[] _jiggleBonesArrays;
-        private NativeArray<int>[] _pass;
-        private NativeArray<double>[] _accumulations;
-        private NativeArray<Vector3>[] _offsets;
-        //private NativeArray<double>[] _time;
-
-        public JiggleRigJob[] _jobs;
-
         private void CreateArrays()
         {
-            var rigCount = _jiggleRigs.Count;
+            var rigCount = JiggleRigs.Count;
 
             _jobs = new JiggleRigJob[rigCount];
             _jobHandles = new JobHandle[rigCount];
@@ -293,54 +167,40 @@ namespace JiggleBones
             _pass = new NativeArray<int>[rigCount];
             _accumulations = new NativeArray<double>[rigCount];
             _offsets = new NativeArray<Vector3>[rigCount];
-            //_time = new NativeArray<double>[rigCount];
 
             for (var i = 0; i < rigCount; i++)
             {
-                _accessArrays[i] = new TransformAccessArray(_jiggleRigs[i].bonesTransforms.ToArray(), 1);
-                _jiggleBonesArrays[i] = new NativeArray<JiggleBone>(_jiggleRigs[i].bones.ToArray(), Allocator.Persistent);
+                _accessArrays[i] = new TransformAccessArray(JiggleRigs[i].BonesTransforms.ToArray(), 1);
+                _jiggleBonesArrays[i] = new NativeArray<JiggleBone>(JiggleRigs[i].Bones.ToArray(), Allocator.Persistent);
                 _pass[i] = new NativeArray<int>(1, Allocator.Persistent);
                 _pass[i][0] = 1;
                 _accumulations[i] = new NativeArray<double>(1, Allocator.Persistent);
                 _accumulations[i][0] = 0;
                 _offsets[i] = new NativeArray<Vector3>(1, Allocator.Persistent);
                 _offsets[i][0] = Vector3.zero;
-                //_time[i] = new NativeArray<double>(1, Allocator.Persistent);
-                //_time[i][0] = Time.timeAsDouble;
 
                 _jobs[i] = new JiggleRigJob
                 {
                     Bones = _jiggleBonesArrays[i],
-                    Wind = wind,
+                    Wind = Wind,
                     Gravity = Physics.gravity,
-                    JiggleSettings = _jiggleRigs[i].jiggleSettings.GetSettingsStruct(),
-                    pass = _pass[i],
-                    accumulationArray = _accumulations[i],
-                    offsetArray = _offsets[i]
-                    //timeArray = _time[i]
+                    JiggleSettings = JiggleRigs[i].JiggleSettings.GetSettingsStruct(),
+                    Pass = _pass[i],
+                    AccumulationArray = _accumulations[i],
+                    OffsetArray = _offsets[i]
                 };
             }
 
         }
 
-        private JobHandle[] _jobHandles;
-
-        private void Update()
+        public void AddRig(JiggleRig rig)
         {
-            if (AllowUpdate)
-            {
-                //HandleJob();
-                WaitForJobs();
-            }
-           /* SetTimeVariables();
-            ScheduleTransformJobs();
-            WaitForJobs();
-            ScheduleJobs();
-            WaitForJobs();
-            ScheduleTransformJobs();
-            WaitForJobs();
-            ScheduleTransformJobs();
-            WaitForJobs();*/
+            JiggleRigs.Add(rig);
+        }
+
+        public JiggleRigJob GetJob(int index)
+        {
+            return _jobs[index];
         }
 
         private void HandleJob()
@@ -397,28 +257,6 @@ namespace JiggleBones
             for (var i = 0; i < _jobHandles.Length; i++)
             {
                 _jobHandles[i].Complete();
-            }
-        }
-
-        private void LateUpdate()
-        {
-            if (AllowUpdate)
-            {
-                HandleJob();
-                //WaitForJobs();
-            }
-        }
-
-        private void OnDestroy()
-        {
-            for (var i = 0; i < _jiggleBonesArrays.Length; i++)
-            {
-                _jiggleBonesArrays[i].Dispose();
-                _accessArrays[i].Dispose();
-                _pass[i].Dispose();
-                _accumulations[i].Dispose();
-                _offsets[i].Dispose();
-                //_time[i].Dispose();
             }
         }
     }
