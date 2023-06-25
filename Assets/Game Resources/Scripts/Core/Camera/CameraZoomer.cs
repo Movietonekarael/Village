@@ -11,7 +11,7 @@ namespace GameCore.GameControls
 {
     public sealed class CameraZoomer : MonoBehaviour
     {
-        [Inject] private readonly InputHandler _inputHandler;
+        [Inject] private readonly ICameraZoomer _cameraZoomer;
 
         [SerializeField] private CinemachineVirtualCamera _virtualCamera;
         private Cinemachine3rdPersonFollow _followComponent;
@@ -80,12 +80,12 @@ namespace GameCore.GameControls
 
         private void OnEnable()
         {
-            _inputHandler.OnCameraZoomed += ZoomCamera;
+            _cameraZoomer.OnCameraZoomed += ZoomCamera;
         }
 
         private void OnDisable()
         {
-            _inputHandler.OnCameraZoomed -= ZoomCamera;
+            _cameraZoomer.OnCameraZoomed -= ZoomCamera;
         }
 
         private async void ZoomCamera(float zoomDirection)

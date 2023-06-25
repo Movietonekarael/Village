@@ -18,9 +18,9 @@ namespace GameCore.GameMovement
 
             public override void EnterState()
             {
-                StateMachine._animatorController.SetBool(StateMachine._isWalkingBoolHash, false);
+                _StateMachine._animatorController.SetBool(_StateMachine._isWalkingBoolHash, false);
                 
-                StateMachine.OnMovementStart += StartMovement;
+                _Movement.OnMovementStart += StartMovement;
             }
 
             public override void UpdateState() { }
@@ -32,28 +32,28 @@ namespace GameCore.GameMovement
 
             public override void ExitState()
             {
-                StateMachine.OnMovementStart -= StartMovement;
+                _Movement.OnMovementStart -= StartMovement;
             }
 
             //-------------------------------------------------------Local methods-----------------------------------------------------------//
 
             private void StartMovement()
             {
-                if (!StateMachine._isRunning)
-                    SwitchState(StateMachine._walkState);
+                if (!_StateMachine._isRunning)
+                    SwitchState(_StateMachine._walkState);
                 else
-                    SwitchState(StateMachine._runState);
+                    SwitchState(_StateMachine._runState);
             }
 
             private void HandleMoving()
             {
-                var characterActor = StateMachine._characterActor;
+                var characterActor = _StateMachine._characterActor;
 
                 var deceleration = characterActor.CurrentState switch
                 {
-                    CharacterActorState.StableGrounded => StateMachine._stableGroundedDeceleration,
-                    CharacterActorState.UnstableGrounded => StateMachine._unstableGroundedDeceleration,
-                    CharacterActorState.NotGrounded => StateMachine._notGroundedDeceleration,
+                    CharacterActorState.StableGrounded => _StateMachine._stableGroundedParameters.Deceleration,
+                    CharacterActorState.UnstableGrounded => _StateMachine._unstableGroundedParameters.Deceleration,
+                    CharacterActorState.NotGrounded => _StateMachine._notGroundedParameters.Deceleration,
                     _ => 0f,
                 };
 

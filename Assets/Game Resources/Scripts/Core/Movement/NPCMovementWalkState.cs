@@ -15,20 +15,20 @@ namespace GameCore.GameMovement
             public override void UpdateState()
             {
                 base.UpdateState();
-                if (StateMachine._isRunning)
+                if (_StateMachine._isRunning)
                     SetRunState();
             }
 
             protected override Vector3 SetLimitedTargetVelocity(Vector3 vec)
             {
-                return vec.normalized * StateMachine._walkSpeedLimit;
+                return vec.normalized * _StateMachine._walkSpeedLimit;
             }
 
             //----------------------------------------------------------Local methods------------------------------------------------------//
 
             private void SetRunState()
             {
-                SwitchState(StateMachine._runState);
+                SwitchState(_StateMachine._runState);
             }
         }
     }

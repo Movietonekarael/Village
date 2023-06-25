@@ -11,6 +11,8 @@ namespace GameCore.GUI
 {
     public sealed class MainScreenUIState : BaseUIState<MainScreenViewParameters, IMainScreenController>
     {
+        [Inject] private readonly IOpenCloseInventory _openCloseInventory;
+
         [Header("Next state")]
         [SerializeField]
         [RequireInterface(typeof(IUIState))]
@@ -21,12 +23,12 @@ namespace GameCore.GUI
 
         protected override void StartState()
         {
-            _InputHandler.OnOpenCloseInventory += OpenPlayerInventory;
+            _openCloseInventory.OnOpenCloseInventory += OpenPlayerInventory;
         }
 
         protected override void EndState()
         {
-            _InputHandler.OnOpenCloseInventory -= OpenPlayerInventory;
+            _openCloseInventory.OnOpenCloseInventory -= OpenPlayerInventory;
         }
 
         private void OpenPlayerInventory()

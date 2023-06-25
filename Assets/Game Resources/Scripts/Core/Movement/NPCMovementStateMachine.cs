@@ -5,33 +5,25 @@ using UnityEngine;
 using GameCore.GameControls;
 using UnityEngine.UI;
 using Lightbug.CharacterControllerPro.Core;
-
+using System.Threading.Tasks;
 
 namespace GameCore.GameMovement
 {
     public abstract partial class NPCMovementStateMachine : MonoBehaviour
     {
-        public struct MotionParameters
-        {
-            public float Acceleration;
-            public float Deceleration;
-        }
-
+        protected IMovement _Movement;
        
         [Header("Character Actor: ")]
         [SerializeField] protected CharacterActor _characterActor = null;
 
         [Header("Stable Grounded parameters: ")]
-        [SerializeField] private float _stableGroundedAcceleration = 50f;
-        [SerializeField] private float _stableGroundedDeceleration = 40f;
+        [SerializeField] private MotionParameters _stableGroundedParameters = new (50f, 40f);
 
         [Header("Unstable Grounded parameters: ")]
-        [SerializeField] private float _unstableGroundedAcceleration = 10f;
-        [SerializeField] private float _unstableGroundedDeceleration = 2f;
+        [SerializeField] private MotionParameters _unstableGroundedParameters = new(10f, 2f);
 
         [Header("Not Grounded parameters: ")]
-        [SerializeField] private float _notGroundedAcceleration = 20f;
-        [SerializeField] private float _notGroundedDeceleration = 5f;
+        [SerializeField] private MotionParameters _notGroundedParameters = new(20f, 5f);
 
         [Header("Speed: ")]
         [SerializeField] private float _walkSpeedLimit = 2f;
@@ -69,14 +61,8 @@ namespace GameCore.GameMovement
         private readonly int _interruptJumpTriggerHash = Animator.StringToHash("InterruptJump");
 
 
-        public Action OnMovementStart;
-        public Action OnMovementFinish;
-        public Action<Vector2> OnMovement;
-        public Action OnRunningStateChanged;
-        public Action OnDashed;
-        public Action OnJump;
-        public Action OnJumpEnded;
-        public Action OnJumpStartEnded;
+        public event Action OnJumpEnded;
+        public event Action OnJumpStartEnded;
 
 
         protected Vector2 _GlobalDirectionOfMoving;
@@ -99,8 +85,7 @@ namespace GameCore.GameMovement
             }
         }
 
-
-        protected virtual void Awake()
+        private void Awake()
         {
             SetUpJumpListener();
             SetRotationZero();
@@ -111,6 +96,14 @@ namespace GameCore.GameMovement
             var animatorObject = _animatorController.gameObject;
             var listner = animatorObject.AddComponent<ListenJumpEvent>();
             listner.NPC = this;
+        }
+
+        private void SetRotationZero()
+        {
+            _NeededRotation = new()
+            {
+                eulerAngles = Vector3.forward
+            };
         }
 
         private void Start()
@@ -136,7 +129,7 @@ namespace GameCore.GameMovement
             _currentState.EnterState();
         }
 
-        protected virtual void Update()
+        private void Update()
         {
             _currentState.UpdateStates();
         }
@@ -144,14 +137,6 @@ namespace GameCore.GameMovement
         private void FixedUpdate()
         {
             _currentState.FixedUpdateStates();
-        }
-
-        private void SetRotationZero()
-        {
-            _NeededRotation = new()
-            {
-                eulerAngles = Vector3.forward
-            };
         }
 
         public void StartJumpingEnd()

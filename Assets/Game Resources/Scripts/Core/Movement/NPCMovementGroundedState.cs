@@ -11,17 +11,17 @@ namespace GameCore.GameMovement
             public NPCMovementGroundedState(NPCMovementStateMachine currentStateMachine)
             : base(currentStateMachine)
             {
-                var state = StateMachine._idleState;
+                var state = _StateMachine._idleState;
                 state.EnterState();
                 SetSubState(state);
             }
 
             public override void EnterState()
             {
-                StateMachine.OnRunningStateChanged += ChangeRunState;
-                StateMachine.OnJump += HandleJump;
+                _Movement.OnRunningChanged += ChangeRunState;
+                _Movement.OnJumped += HandleJump;
 
-                StateMachine._characterActor.alwaysNotGrounded = false;
+                _StateMachine._characterActor.alwaysNotGrounded = false;
             }
 
             public override void UpdateState() { }
@@ -33,8 +33,8 @@ namespace GameCore.GameMovement
 
             public override void ExitState()
             {
-                StateMachine.OnRunningStateChanged -= ChangeRunState;
-                StateMachine.OnJump -= HandleJump;
+                _Movement.OnRunningChanged -= ChangeRunState;
+                _Movement.OnJumped -= HandleJump;
             }
 
 
@@ -42,17 +42,17 @@ namespace GameCore.GameMovement
 
             private void HandleJump()
             {
-                if (StateMachine._characterActor.IsGrounded)
+                if (_StateMachine._characterActor.IsGrounded)
                 {
-                    SwitchState(StateMachine._jumpState);
+                    SwitchState(_StateMachine._jumpState);
                 }
 
             }
 
             private void ChangeRunState()
             {
-                StateMachine._isRunning = !StateMachine._isRunning;
-                StateMachine._animatorController.SetBool(StateMachine._isRunningBoolHash, StateMachine._isRunning);
+                _StateMachine._isRunning = !_StateMachine._isRunning;
+                _StateMachine._animatorController.SetBool(_StateMachine._isRunningBoolHash, _StateMachine._isRunning);
             }
 
 

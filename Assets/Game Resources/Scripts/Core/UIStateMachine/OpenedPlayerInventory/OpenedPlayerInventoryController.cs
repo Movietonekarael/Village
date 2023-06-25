@@ -15,10 +15,11 @@ namespace GameCore.GUI
                                                                        IOpenedPlayerInventoryView>, 
                                                           IOpenedPlayerInventoryController
     {
+        [Inject] private readonly InputHandler _inputHandler;
         [Inject] private readonly PlayerInventory _inventory;
         [Inject] private readonly UnityEngine.InputSystem.PlayerInput _playerInput;
-        private VirtualMouseHandler _virtualMouseHandler => _InputHandler.VirtualMouse;
-        private ControlScheme _currentControlScheme => _InputHandler.CurrentControlScheme;
+        private VirtualMouseHandler _virtualMouseHandler => _inputHandler.VirtualMouse;
+        private ControlScheme _currentControlScheme => _inputHandler.CurrentControlScheme;
 
         private bool _openedInventoryControlsActive = false;
 
@@ -30,13 +31,13 @@ namespace GameCore.GUI
         protected override void SubscribeForEvents()
         {
             _inventory.OnItemChanged += ChangeItemInformation;
-            _InputHandler.OnControlSchemeChanged += ControlSchemeChanged;
+            _inputHandler.OnControlSchemeChanged += ControlSchemeChanged;
         }
 
         protected override void UnsubscribeForEvents()
         {
             _inventory.OnItemChanged -= ChangeItemInformation;
-            _InputHandler.OnControlSchemeChanged -= ControlSchemeChanged;
+            _inputHandler.OnControlSchemeChanged -= ControlSchemeChanged;
         }
 
         private void ControlSchemeChanged(ControlScheme controlScheme)
@@ -71,7 +72,7 @@ namespace GameCore.GUI
         private void SetOpenedInventoryControlsActive()
         {
             _openedInventoryControlsActive = true;
-            _InputHandler.DisableFreezableInputActionMaps();
+            _inputHandler.DisableFreezableInputActionMaps();
 
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -90,13 +91,13 @@ namespace GameCore.GUI
         private void SetOpenedInventoryControlsInactive()
         {
             _openedInventoryControlsActive = false;
-            _InputHandler.EnableFreezableInputActionMaps();
+            _inputHandler.EnableFreezableInputActionMaps();
 
             if (_currentControlScheme == ControlScheme.Gamepad)
             {
                 _virtualMouseHandler.DisableMouse();
                 Cursor.lockState = CursorLockMode.Locked;
-                _InputHandler.canUiChange = false;
+                _inputHandler.canUiChange = false;
                 EnableUiChangeInOneFrame();
             }
             else
@@ -118,7 +119,7 @@ namespace GameCore.GUI
             for (var i = 0; i < 2; i++)
                 await Task.Yield();
 
-            _InputHandler.canUiChange = true;
+            _inputHandler.canUiChange = true;
             _playerInput.SwitchCurrentControlScheme(_virtualMouseHandler.VirtualMouse, Gamepad.current);
         }
 

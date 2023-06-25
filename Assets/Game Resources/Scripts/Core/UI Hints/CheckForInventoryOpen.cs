@@ -7,7 +7,7 @@ namespace GameCore.GameControls
 {
     public class CheckForInventoryOpen : MonoBehaviour, ISubscribable
     {
-        [Inject] private readonly InputHandler _inputHandler;
+        [Inject] private readonly IOpenCloseInventory _openCloseInventory;
         private bool _isClosed = true;
 
         private void Start()
@@ -18,12 +18,12 @@ namespace GameCore.GameControls
 
         public void Subscribe()
         {
-            _inputHandler.OnOpenCloseInventory += InventoryWasOpenedClosed;
+            _openCloseInventory.OnOpenCloseInventory += InventoryWasOpenedClosed;
         }
 
         public void Unsubscribe()
         {
-            _inputHandler.OnOpenCloseInventory -= InventoryWasOpenedClosed;
+            _openCloseInventory.OnOpenCloseInventory -= InventoryWasOpenedClosed;
         }
 
         public void InventoryWasOpenedClosed()

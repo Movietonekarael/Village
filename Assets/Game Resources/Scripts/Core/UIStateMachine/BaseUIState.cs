@@ -13,7 +13,6 @@ namespace GameCore.GUI
                                               where T : IUIParameters
                                               where I : ISpecificController
     {
-        [Inject] protected InputHandler _InputHandler;
         private UIStateMachine _stateMachine;
         protected UIStateMachine _StateMachine { get { return _stateMachine; } }
 

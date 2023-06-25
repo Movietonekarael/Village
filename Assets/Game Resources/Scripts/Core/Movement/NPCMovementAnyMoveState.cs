@@ -18,10 +18,10 @@ namespace GameCore.GameMovement
 
             public override void EnterState()
             {
-                StateMachine._animatorController.SetBool(StateMachine._isWalkingBoolHash, true);
+                _StateMachine._animatorController.SetBool(_StateMachine._isWalkingBoolHash, true);
                 
-                StateMachine.OnMovementFinish += SetIdleState;
-                StateMachine.OnMovement += Move;
+                _Movement.OnMovementFinish += SetIdleState;
+                _Movement.OnMovement += Move;
             }
 
             public override void UpdateState() { }
@@ -34,14 +34,14 @@ namespace GameCore.GameMovement
 
             private void HandleMoving()
             {
-                StateMachine.LocalDirectionOfMovingChanged();
+                _StateMachine.LocalDirectionOfMovingChanged();
 
-                var globalDirection = new Vector3(StateMachine._GlobalDirectionOfMoving.x,
+                var globalDirection = new Vector3(_StateMachine._GlobalDirectionOfMoving.x,
                                                   .0f,
-                                                  StateMachine._GlobalDirectionOfMoving.y);
+                                                  _StateMachine._GlobalDirectionOfMoving.y);
 
                 var targetVelocity = SetLimitedTargetVelocity(globalDirection);
-                var characterActor = StateMachine._characterActor;
+                var characterActor = _StateMachine._characterActor;
                 var needToAccelerate = false;
 
                 SetMotionValues(characterActor);
@@ -74,16 +74,13 @@ namespace GameCore.GameMovement
                 switch (characterActor.CurrentState)
                 {
                     case CharacterActorState.StableGrounded:
-                        currentMotionParameters.Acceleration = StateMachine._stableGroundedAcceleration;
-                        currentMotionParameters.Deceleration = StateMachine._stableGroundedDeceleration;
+                        currentMotionParameters = _StateMachine._stableGroundedParameters;
                         break;
                     case CharacterActorState.UnstableGrounded:
-                        currentMotionParameters.Acceleration = StateMachine._unstableGroundedAcceleration;
-                        currentMotionParameters.Deceleration = StateMachine._unstableGroundedDeceleration;
+                        currentMotionParameters = _StateMachine._unstableGroundedParameters;
                         break;
                     case CharacterActorState.NotGrounded:
-                        currentMotionParameters.Acceleration = StateMachine._notGroundedAcceleration;
-                        currentMotionParameters.Deceleration = StateMachine._notGroundedDeceleration;
+                        currentMotionParameters = _StateMachine._notGroundedParameters;
                         break;
                 }
             }
@@ -95,26 +92,26 @@ namespace GameCore.GameMovement
 
             private void HandleRotation()
             {
-                StateMachine._characterActor.Rotation = 
-                    Quaternion.Lerp(StateMachine.transform.rotation, 
-                    StateMachine._NeededRotation, 
-                    Time.deltaTime * StateMachine._RotationSpeed);
+                _StateMachine._characterActor.Rotation = 
+                    Quaternion.Lerp(_StateMachine.transform.rotation, 
+                    _StateMachine._NeededRotation, 
+                    Time.deltaTime * _StateMachine._RotationSpeed);
             }
 
             private void Move(Vector2 dir)
             {
-                StateMachine._localDirectionOfMoving = dir;
+                _StateMachine._localDirectionOfMoving = dir;
             }
 
             private void SetIdleState()
             {
-                SwitchState(StateMachine._idleState);
+                SwitchState(_StateMachine._idleState);
             }
             
             public override void ExitState()
             {
-                StateMachine.OnMovementFinish -= SetIdleState;
-                StateMachine.OnMovement -= Move;
+                _Movement.OnMovementFinish -= SetIdleState;
+                _Movement.OnMovement -= Move;
             }
 
         }

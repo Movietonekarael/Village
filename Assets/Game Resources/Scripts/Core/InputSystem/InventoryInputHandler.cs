@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -53,7 +54,7 @@ namespace GameCore.GameControls
 
                 DeinitializeKeyActions();
             }
-
+            
             private void InitializeKeyActions()
             {
                 _keyActions = new Action<InputAction.CallbackContext>[8];

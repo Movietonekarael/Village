@@ -11,52 +11,17 @@ using Zenject;
 
 namespace GameCore.GameMovement
 {
-    public class PlayerMovementStateMachine : NPCMovementStateMachine
+    public sealed class PlayerMovementStateMachine : NPCMovementStateMachine
     {
-        [Inject] private readonly InputHandler _inputHandler;
-
+        [Inject] private IMovement _movement
+        {
+            set
+            {
+                _Movement = value;
+            }
+        }
         [SerializeField] private Transform _cameraTarget;
-        private Action[] _movementActions;
-        private Action<Vector2> _movementAction;
 
-        private void OnEnable()
-        {
-            _inputHandler.OnMovementStart += _movementActions[0];
-            _inputHandler.OnMovementFinish += _movementActions[1];
-            _inputHandler.OnMovement += _movementAction;
-            _inputHandler.OnRunningChanged += _movementActions[2];
-            _inputHandler.OnDashed += _movementActions[3];
-            _inputHandler.OnJumped += _movementActions[4];
-        }
-
-        private void OnDisable()
-        {
-            _inputHandler.OnMovementStart -= _movementActions[0];
-            _inputHandler.OnMovementFinish -= _movementActions[1];
-            _inputHandler.OnMovement -= _movementAction;
-            _inputHandler.OnRunningChanged -= _movementActions[2];
-            _inputHandler.OnDashed -= _movementActions[3];
-            _inputHandler.OnJumped -= _movementActions[4];
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
-            CacheInputActions();
-        }
-
-        private void CacheInputActions()
-        {
-            _movementActions = new Action[5];
-
-            _movementActions[0] = delegate { OnMovementStart?.Invoke(); };
-            _movementActions[1] = delegate { OnMovementFinish?.Invoke(); };
-            _movementActions[2] = delegate { OnRunningStateChanged?.Invoke(); };
-            _movementActions[3] = delegate { OnDashed?.Invoke(); };
-            _movementActions[4] = delegate { OnJump?.Invoke(); };
-
-            _movementAction = (Vector2 val) => OnMovement?.Invoke(val);
-        }
 
         protected override void LocalDirectionOfMovingChanged()
         {

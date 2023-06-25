@@ -17,14 +17,14 @@ namespace GameCore.GameMovement
             {
                 base.EnterState();
 
-                StateMachine.OnDashed += Dash;
+                _Movement.OnDashed += Dash;
             }
 
             public override void UpdateState()
             {
                 base.UpdateState();
 
-                if (!StateMachine._isRunning)
+                if (!_StateMachine._isRunning)
                     SetWalkState();
             }
 
@@ -33,14 +33,14 @@ namespace GameCore.GameMovement
                 base.ExitState();
 
                 _dashed = false;
-                StateMachine.OnDashed -= Dash;
+                _Movement.OnDashed -= Dash;
             }
 
             //----------------------------------------------------------Local methods------------------------------------------------------//
 
             private void SetWalkState()
             {
-                SwitchState(StateMachine._walkState);
+                SwitchState(_StateMachine._walkState);
             }
 
             private void Dash()
@@ -48,16 +48,16 @@ namespace GameCore.GameMovement
                 if (!_dashed)
                 {
                     _dashed = true;
-                    StateMachine._animatorController.SetTrigger(StateMachine._dashTriggerHash);
+                    _StateMachine._animatorController.SetTrigger(_StateMachine._dashTriggerHash);
                 }
             }
 
             protected override Vector3 SetLimitedTargetVelocity(Vector3 vec)
             {
                 if (!_dashed)
-                    return vec.normalized * StateMachine._slowRunSpeedLimit;
+                    return vec.normalized * _StateMachine._slowRunSpeedLimit;
                 else
-                    return vec.normalized * StateMachine._fastRunSpeedLimit;
+                    return vec.normalized * _StateMachine._fastRunSpeedLimit;
             }
         }
     }

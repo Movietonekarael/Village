@@ -11,21 +11,22 @@ namespace GameCore.GUI
 {
     public sealed class MainScreenController : UIController<MainScreenViewParameters, IMainScreenController, IMainScreenView>, IMainScreenController
     {
+        [Inject] private readonly IInventoryPress _inventoryPress;
         [Inject] private readonly IInventory _inventory;
         [Inject] private readonly PlayerHoldItem _playerHoldItem;
         private int _indexOfCurrentHoldItem = 0;
 
         protected override void SubscribeForEvents()
         {
-            _InputHandler.OnInventoryKeyPressed += SwitchSelectedItem;
-            _InputHandler.OnInventoryArrowPressed += MoveItemSelection;
+            _inventoryPress.OnInventoryKeyPressed += SwitchSelectedItem;
+            _inventoryPress.OnInventoryArrowPressed += MoveItemSelection;
             _inventory.OnItemChanged += ChangeItemInformation;
         }
 
         protected override void UnsubscribeForEvents()
         {
-            _InputHandler.OnInventoryKeyPressed -= SwitchSelectedItem;
-            _InputHandler.OnInventoryArrowPressed -= MoveItemSelection;
+            _inventoryPress.OnInventoryKeyPressed -= SwitchSelectedItem;
+            _inventoryPress.OnInventoryArrowPressed -= MoveItemSelection;
             _inventory.OnItemChanged -= ChangeItemInformation;
         }
 

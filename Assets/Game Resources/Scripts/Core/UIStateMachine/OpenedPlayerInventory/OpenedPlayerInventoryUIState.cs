@@ -10,6 +10,8 @@ namespace GameCore.GUI
 {
     public sealed class OpenedPlayerInventoryUIState : BaseUIState<OpenedPlayerInventoryViewParameters, IOpenedPlayerInventoryController>
     {
+        [Inject] private readonly IOpenCloseInventory _openCloseInventory;
+
         [Header("Next state")]
         [SerializeField]
         [RequireInterface(typeof(IUIState))]
@@ -20,12 +22,12 @@ namespace GameCore.GUI
 
         protected override void StartState()
         {
-            _InputHandler.OnOpenCloseInventory += ClosePlayerInventory;
+            _openCloseInventory.OnOpenCloseInventory += ClosePlayerInventory;
         }
 
         protected override void EndState()
         {
-            _InputHandler.OnOpenCloseInventory -= ClosePlayerInventory;
+            _openCloseInventory.OnOpenCloseInventory -= ClosePlayerInventory;
         }
 
         private void ClosePlayerInventory()

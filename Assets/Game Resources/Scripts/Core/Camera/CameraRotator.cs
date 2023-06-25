@@ -9,7 +9,7 @@ namespace GameCore.GameControls
 {
     public sealed class CameraRotator : MonoBehaviour
     {
-        [Inject] private readonly InputHandler _inputHandler;
+        [Inject] private readonly ICameraRotator _cameraRotator;
 
         [SerializeField] private CameraFollowTargetRotator _cameraFollowTarget;
 
@@ -34,12 +34,12 @@ namespace GameCore.GameControls
 
         private void OnEnable()
         {
-            _inputHandler.OnCameraRotated += RotateCamera;
+            _cameraRotator.OnCameraRotated += RotateCamera;
         }
 
         private void OnDisable()
         {
-            _inputHandler.OnCameraRotated -= RotateCamera;
+            _cameraRotator.OnCameraRotated -= RotateCamera;
         }
 
         public void RotateCamera(Vector2 vec, bool isGamepad)

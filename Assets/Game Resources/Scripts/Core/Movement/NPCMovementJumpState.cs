@@ -13,10 +13,10 @@ namespace GameCore.GameMovement
 
             public override void EnterState()
             {
-                StateMachine.OnJumpStartEnded += JumpStartEnded;
-                StateMachine.OnJumpEnded += JumpEnded;
+                _StateMachine.OnJumpStartEnded += JumpStartEnded;
+                _StateMachine.OnJumpEnded += JumpEnded;
 
-                StateMachine._animatorController.SetBool(StateMachine._isJumpingBoolHash, true);
+                _StateMachine._animatorController.SetBool(_StateMachine._isJumpingBoolHash, true);
                 HandleJump();
             }
 
@@ -33,51 +33,51 @@ namespace GameCore.GameMovement
 
             public override void ExitState()
             {
-                StateMachine.OnJumpStartEnded -= JumpStartEnded;
-                StateMachine.OnJumpEnded -= JumpEnded;
+                _StateMachine.OnJumpStartEnded -= JumpStartEnded;
+                _StateMachine.OnJumpEnded -= JumpEnded;
 
-                StateMachine._animatorController.SetBool(StateMachine._isJumpingBoolHash, false);
-                StateMachine._animatorController.SetBool(StateMachine._isJumpingEndBoolHash, false); 
+                _StateMachine._animatorController.SetBool(_StateMachine._isJumpingBoolHash, false);
+                _StateMachine._animatorController.SetBool(_StateMachine._isJumpingEndBoolHash, false); 
             }
 
             //----------------------------------------------------------Local methods------------------------------------------------------//
 
             private void JumpStartEnded()
             {
-                StateMachine._isJumping = true;
+                _StateMachine._isJumping = true;
             }
 
             private void JumpEnded()
             {
-                StateMachine._isJumping = false;
+                _StateMachine._isJumping = false;
 
-                SwitchState(StateMachine._groundedState);
+                SwitchState(_StateMachine._groundedState);
             }
 
             private void CheckJumpEnd()
             {
-                if (StateMachine._isJumping && StateMachine._characterActor.IsFalling)
+                if (_StateMachine._isJumping && _StateMachine._characterActor.IsFalling)
                 {
-                    StateMachine._animatorController.SetBool(StateMachine._isJumpingEndBoolHash, true);
+                    _StateMachine._animatorController.SetBool(_StateMachine._isJumpingEndBoolHash, true);
                 }
             }
 
             private void CheckJumpInterruption()
             {
-                if (StateMachine._isJumping && StateMachine._characterActor.IsGrounded)
+                if (_StateMachine._isJumping && _StateMachine._characterActor.IsGrounded)
                 {
-                    StateMachine._animatorController.SetTrigger(StateMachine._interruptJumpTriggerHash);
-                    SwitchState(StateMachine._groundedState);
+                    _StateMachine._animatorController.SetTrigger(_StateMachine._interruptJumpTriggerHash);
+                    SwitchState(_StateMachine._groundedState);
                 }
             }
 
             private void HandleJump()
             {
-                var characterActor = StateMachine._characterActor;
+                var characterActor = _StateMachine._characterActor;
                 var jumpDirection = characterActor.Up;
 
                 characterActor.ForceNotGrounded();
-                characterActor.Velocity += jumpDirection * StateMachine._jumpSpeed;
+                characterActor.Velocity += jumpDirection * _StateMachine._jumpSpeed;
             }
         }
     }

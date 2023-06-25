@@ -12,7 +12,13 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 namespace GameCore.GameControls
 {
-    public sealed partial class InputHandler : MonoBehaviour, IInteractionPerformer
+    public sealed partial class InputHandler : MonoBehaviour, 
+                                               IInteractionPerformer, 
+                                               ICameraRotator, 
+                                               ICameraZoomer,
+                                               IMovement,
+                                               IInventoryPress,
+                                               IOpenCloseInventory
     {
         private const string _GAMEPAD_SCHEME = "Gamepad";
         private const string _KEYBOADR_SCHEME = "Keyboard";
@@ -24,11 +30,11 @@ namespace GameCore.GameControls
 
         private PlayerInputScheme _inputScheme;
 
+        public event Action<Vector2, bool> OnCameraRotated;
+        public event Action<float> OnCameraZoomed;
         public event Action OnMovementStart;
         public event Action OnMovementFinish;
         public event Action<Vector2> OnMovement;
-        public event Action<Vector2, bool> OnCameraRotated;
-        public event Action<float> OnCameraZoomed;
         public event Action OnRunningChanged;
         public event Action OnDashed;
         public event Action OnJumped;

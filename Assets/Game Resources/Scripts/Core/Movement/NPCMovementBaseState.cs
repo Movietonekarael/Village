@@ -1,3 +1,4 @@
+using GameCore.GameControls;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,11 +9,13 @@ namespace GameCore.GameMovement
     {
         public abstract class NPCMovementBaseState
         {
+            protected IMovement _Movement => _stateMachine._Movement;
+
             private NPCMovementStateMachine _stateMachine;
             private NPCMovementBaseState _currentSuperState;
             private NPCMovementBaseState _currentSubState;
 
-            protected NPCMovementStateMachine StateMachine { get { return _stateMachine; } }
+            protected NPCMovementStateMachine _StateMachine { get { return _stateMachine; } }
 
             public NPCMovementBaseState(NPCMovementStateMachine currentStateMachine)
             {
@@ -29,7 +32,7 @@ namespace GameCore.GameMovement
             protected void HandleGravity()
             {
                 var gravity = 2 * 2.25f / Mathf.Pow(0.5f, 2);
-                var characterActor = StateMachine._characterActor;
+                var characterActor = _StateMachine._characterActor;
 
                 if (!characterActor.IsStable)
                     characterActor.VerticalVelocity += gravity * Time.deltaTime * -characterActor.Up;

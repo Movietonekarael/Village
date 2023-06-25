@@ -17,8 +17,6 @@ namespace GameCore.GUI
         [Inject] private IDeinitializable<I> _viewDeinitializator;
         [Inject] private IActivatable<I> _viewActivator;
 
-        [Inject] protected readonly InputHandler _InputHandler;
-
         protected abstract void SubscribeForEvents();
         protected abstract void UnsubscribeForEvents();
         protected abstract void InitializeParameters(T parameters);
