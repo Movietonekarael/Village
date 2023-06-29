@@ -202,7 +202,7 @@ namespace GameCore.GUI
         {
             if (_currentButtonHoveredPosition != null) 
             {
-                var sprite = _inventoryButtons[_currentButtonHoveredPosition.Value.y][_currentButtonHoveredPosition.Value.x].itemImage.sprite;
+                var sprite = _inventoryButtons[_currentButtonHoveredPosition.Value.y][_currentButtonHoveredPosition.Value.x].ItemImage.sprite;
                 if (sprite != null) 
                 {
                     _holdingButtonImagePosition = _currentButtonHoveredPosition.Value;

@@ -14,7 +14,7 @@ namespace GameCore.GameMovement
         protected IMovement _Movement;
        
         [Header("Character Actor: ")]
-        [SerializeField] protected CharacterActor _characterActor = null;
+        [SerializeField] protected CharacterActor _CharacterActor = null;
 
         [Header("Stable Grounded parameters: ")]
         [SerializeField] private MotionParameters _stableGroundedParameters = new (50f, 40f);
@@ -71,7 +71,7 @@ namespace GameCore.GameMovement
         private Vector2 _privateLocalDirectionOfMoving;
 
 
-        protected Vector2 _localDirectionOfMoving
+        protected Vector2 _LocalDirectionOfMoving
         {
             get
             {
@@ -110,13 +110,13 @@ namespace GameCore.GameMovement
 
         private void Start()
         {
-            if (_characterActor is not null)
+            if (_CharacterActor is not null)
             {
-                _characterActor.UseRootMotion = false;
-                _characterActor.UpdateRootPosition = false;
-                _characterActor.UpdateRootRotation = false;
+                _CharacterActor.UseRootMotion = false;
+                _CharacterActor.UpdateRootPosition = false;
+                _CharacterActor.UpdateRootRotation = false;
 
-                _characterActor.Velocity = Vector3.zero;
+                _CharacterActor.Velocity = Vector3.zero;
             }
 
 
@@ -153,8 +153,8 @@ namespace GameCore.GameMovement
 
         protected virtual void LocalDirectionOfMovingChanged()
         {
-            if(_localDirectionOfMoving != Vector2.zero) 
-                _GlobalDirectionOfMoving = _localDirectionOfMoving;
+            if(_LocalDirectionOfMoving != Vector2.zero) 
+                _GlobalDirectionOfMoving = _LocalDirectionOfMoving;
         }
 
     }

@@ -10,8 +10,8 @@ namespace GameCore.Inventory
 {
     public class ItemCell : MonoBehaviour
     {
-        public Image itemImage;
-        public Text itemCountText;
+        public Image ItemImage;
+        public Text ItemCountText;
         [Header("Put if necessary")]
         [SerializeField] private ImageColor _imageColor;
 
@@ -32,16 +32,16 @@ namespace GameCore.Inventory
 
         private void SetProperItemInformation(GameItem item)
         {
-            itemImage.gameObject.SetActive(true);
-            itemImage.sprite = item.Image;
-            itemCountText.text = item.Number.ToString();
+            ItemImage.gameObject.SetActive(true);
+            ItemImage.sprite = item.Image;
+            ItemCountText.text = item.Number.ToString();
         }
 
         private void SetEmptyItemInformation()
         {
-            itemImage.gameObject.SetActive(false);
-            itemImage.sprite = null;
-            itemCountText.text = string.Empty;
+            ItemImage.gameObject.SetActive(false);
+            ItemImage.sprite = null;
+            ItemCountText.text = string.Empty;
         }
 
         protected virtual void Awake()
@@ -52,7 +52,7 @@ namespace GameCore.Inventory
 
         private void SetItemNumberTextEmpty()
         {
-            itemCountText.text = string.Empty;
+            ItemCountText.text = string.Empty;
         }
 
         public void SetActive()

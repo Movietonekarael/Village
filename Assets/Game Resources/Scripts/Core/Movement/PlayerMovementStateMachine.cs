@@ -34,7 +34,7 @@ namespace GameCore.GameMovement
 
         private float GetAngleOfLocalMovingDirection()
         {
-            return MathM.Vector.GetAngleOfVector2(_localDirectionOfMoving);
+            return MathM.Vector.GetAngleOfVector2(_LocalDirectionOfMoving);
         }
 
         private float GetAngleOfGlobalcameraDirection()

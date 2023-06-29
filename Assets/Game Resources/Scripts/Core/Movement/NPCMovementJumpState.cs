@@ -56,7 +56,7 @@ namespace GameCore.GameMovement
 
             private void CheckJumpEnd()
             {
-                if (_StateMachine._isJumping && _StateMachine._characterActor.IsFalling)
+                if (_StateMachine._isJumping && _StateMachine._CharacterActor.IsFalling)
                 {
                     _StateMachine._animatorController.SetBool(_StateMachine._isJumpingEndBoolHash, true);
                 }
@@ -64,7 +64,7 @@ namespace GameCore.GameMovement
 
             private void CheckJumpInterruption()
             {
-                if (_StateMachine._isJumping && _StateMachine._characterActor.IsGrounded)
+                if (_StateMachine._isJumping && _StateMachine._CharacterActor.IsGrounded)
                 {
                     _StateMachine._animatorController.SetTrigger(_StateMachine._interruptJumpTriggerHash);
                     SwitchState(_StateMachine._groundedState);
@@ -73,7 +73,7 @@ namespace GameCore.GameMovement
 
             private void HandleJump()
             {
-                var characterActor = _StateMachine._characterActor;
+                var characterActor = _StateMachine._CharacterActor;
                 var jumpDirection = characterActor.Up;
 
                 characterActor.ForceNotGrounded();

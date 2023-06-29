@@ -9,7 +9,7 @@ namespace GameCore.Inventory
         [SerializeField] private MeshFilter _meshFilter;
         [SerializeField] private MeshRenderer _meshRenderer;
 
-        public MeshFilter meshFilter 
+        public MeshFilter MeshFilter 
         { 
             get
             {
@@ -17,7 +17,7 @@ namespace GameCore.Inventory
             }
         }
 
-        public MeshRenderer meshRenderer 
+        public MeshRenderer MeshRenderer 
         { 
             get 
             {

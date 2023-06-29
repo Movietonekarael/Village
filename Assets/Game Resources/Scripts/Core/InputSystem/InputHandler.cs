@@ -12,11 +12,6 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 namespace GameCore.GameControls
 {
-    public interface IEscapable
-    {
-        public event Action OnEscape;
-    }
-
     public sealed partial class InputHandler : MonoBehaviour, 
                                                IInteractionPerformer, 
                                                ICameraRotator, 

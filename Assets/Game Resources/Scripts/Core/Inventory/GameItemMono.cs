@@ -12,7 +12,7 @@ namespace GameCore.Inventory
         [SerializeField] private GameItemData _data;
         [SerializeField] private int _number = 1;
 
-        string IInteractable.InteractionMessage => Item.Name;
+        public string InteractionMessage => Item.Name;
 
 
         public bool Interact(Interactor interactor)

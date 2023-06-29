@@ -32,7 +32,7 @@ namespace GameCore.GameMovement
             protected void HandleGravity()
             {
                 var gravity = 2 * 2.25f / Mathf.Pow(0.5f, 2);
-                var characterActor = _StateMachine._characterActor;
+                var characterActor = _StateMachine._CharacterActor;
 
                 if (!characterActor.IsStable)
                     characterActor.VerticalVelocity += gravity * Time.deltaTime * -characterActor.Up;

@@ -21,7 +21,7 @@ namespace GameCore.GameMovement
                 _Movement.OnRunningChanged += ChangeRunState;
                 _Movement.OnJumped += HandleJump;
 
-                _StateMachine._characterActor.alwaysNotGrounded = false;
+                _StateMachine._CharacterActor.alwaysNotGrounded = false;
             }
 
             public override void UpdateState() { }
@@ -42,7 +42,7 @@ namespace GameCore.GameMovement
 
             private void HandleJump()
             {
-                if (_StateMachine._characterActor.IsGrounded)
+                if (_StateMachine._CharacterActor.IsGrounded)
                 {
                     SwitchState(_StateMachine._jumpState);
                 }

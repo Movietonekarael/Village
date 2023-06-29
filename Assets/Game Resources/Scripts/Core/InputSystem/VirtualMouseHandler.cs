@@ -24,7 +24,7 @@ namespace GameCore.GameControls
             private Mouse _virtualMouse;
             public Mouse VirtualMouse { get { return _virtualMouse; } }
 
-            public bool previousMouseState;
+            public bool PreviousMouseState;
 
             public VirtualMouseHandler(InputHandler inputHandler)
             {
@@ -102,7 +102,7 @@ namespace GameCore.GameControls
                 _virtualMouse.CopyState<MouseState>(out var mouseState);
                 mouseState.WithButton(MouseButton.Left, isPressed);
                 InputState.Change(_virtualMouse, mouseState);
-                previousMouseState = isPressed;
+                PreviousMouseState = isPressed;
             }
         }
     }

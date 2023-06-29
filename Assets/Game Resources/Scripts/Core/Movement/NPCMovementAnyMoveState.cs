@@ -14,7 +14,7 @@ namespace GameCore.GameMovement
             public NPCMovementAnyMoveState(NPCMovementStateMachine currentStateMachine) 
             : base(currentStateMachine) {}
 
-            protected MotionParameters currentMotionParameters = new();
+            protected MotionParameters _CurrentMotionParameters = new();
 
             public override void EnterState()
             {
@@ -41,7 +41,7 @@ namespace GameCore.GameMovement
                                                   _StateMachine._GlobalDirectionOfMoving.y);
 
                 var targetVelocity = SetLimitedTargetVelocity(globalDirection);
-                var characterActor = _StateMachine._characterActor;
+                var characterActor = _StateMachine._CharacterActor;
                 var needToAccelerate = false;
 
                 SetMotionValues(characterActor);
@@ -63,8 +63,8 @@ namespace GameCore.GameMovement
                 characterActor.PlanarVelocity = Vector3.MoveTowards(characterActor.PlanarVelocity, 
                                                                     targetVelocity, 
                                                                     (needToAccelerate ? 
-                                                                    currentMotionParameters.Acceleration : 
-                                                                    currentMotionParameters.Deceleration) * 
+                                                                    _CurrentMotionParameters.Acceleration : 
+                                                                    _CurrentMotionParameters.Deceleration) * 
                                                                     Time.deltaTime);
 
             }
@@ -74,13 +74,13 @@ namespace GameCore.GameMovement
                 switch (characterActor.CurrentState)
                 {
                     case CharacterActorState.StableGrounded:
-                        currentMotionParameters = _StateMachine._stableGroundedParameters;
+                        _CurrentMotionParameters = _StateMachine._stableGroundedParameters;
                         break;
                     case CharacterActorState.UnstableGrounded:
-                        currentMotionParameters = _StateMachine._unstableGroundedParameters;
+                        _CurrentMotionParameters = _StateMachine._unstableGroundedParameters;
                         break;
                     case CharacterActorState.NotGrounded:
-                        currentMotionParameters = _StateMachine._notGroundedParameters;
+                        _CurrentMotionParameters = _StateMachine._notGroundedParameters;
                         break;
                 }
             }
@@ -92,7 +92,7 @@ namespace GameCore.GameMovement
 
             private void HandleRotation()
             {
-                _StateMachine._characterActor.Rotation = 
+                _StateMachine._CharacterActor.Rotation = 
                     Quaternion.Lerp(_StateMachine.transform.rotation, 
                     _StateMachine._NeededRotation, 
                     Time.deltaTime * _StateMachine._RotationSpeed);
@@ -100,7 +100,7 @@ namespace GameCore.GameMovement
 
             private void Move(Vector2 dir)
             {
-                _StateMachine._localDirectionOfMoving = dir;
+                _StateMachine._LocalDirectionOfMoving = dir;
             }
 
             private void SetIdleState()

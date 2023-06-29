@@ -35,10 +35,10 @@ namespace GameCore.Inventory
                     return;
                 }
 
-                _meshFilter.sharedMesh = meshInfo.meshFilter.sharedMesh;
+                _meshFilter.sharedMesh = meshInfo.MeshFilter.sharedMesh;
 
 
-                _meshRenderer.sharedMaterial = meshInfo.meshRenderer.sharedMaterial;
+                _meshRenderer.sharedMaterial = meshInfo.MeshRenderer.sharedMaterial;
 
 
                 _holdPoint.localScale = _item.Prefab.transform.localScale;

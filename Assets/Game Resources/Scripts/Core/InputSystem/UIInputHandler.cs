@@ -113,7 +113,7 @@ namespace GameCore.GameControls
             private void TryClickVirtualMouse()
             {
                 var isVirtualButtonPressed = _virtualMouseClick.IsPressed();
-                if (isVirtualButtonPressed != _virtualMouseHandler.previousMouseState)
+                if (isVirtualButtonPressed != _virtualMouseHandler.PreviousMouseState)
                 {
                     _virtualMouseHandler.PerformClick(isVirtualButtonPressed);
                 }
