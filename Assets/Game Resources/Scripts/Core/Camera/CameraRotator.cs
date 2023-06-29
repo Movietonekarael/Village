@@ -13,11 +13,12 @@ namespace GameCore.GameControls
 
         [SerializeField] private CameraFollowTargetRotator _cameraFollowTarget;
 
-        [SerializeField] private float _degreesPerSecond = 60f;
+        [SerializeField] private float _gamepadDegreesPerSecondLimit = 60f;
 
-        [Header("Default sensitivity is 4")]
+        [Header("Mouse sensitivity")]
+        [Tooltip("Default sensitivity is 4")]
         [Range(0f, 10f)]
-        [SerializeField] private float _mouseSensitivity = 4f;
+        [SerializeField] private float _mouseCameraSensitivity = 4f;
         private float _totalMouseSensitivity;
         private const float _MOUSE_REDUCTION = 0.05f;
 
@@ -29,7 +30,7 @@ namespace GameCore.GameControls
 
         private void CalculateMouseSensitivity()
         {
-            _totalMouseSensitivity = _MOUSE_REDUCTION * _mouseSensitivity / 4;
+            _totalMouseSensitivity = _MOUSE_REDUCTION * _mouseCameraSensitivity / 4;
         }
 
         private void OnEnable()
@@ -44,7 +45,7 @@ namespace GameCore.GameControls
 
         public void RotateCamera(Vector2 vec, bool isGamepad)
         {
-            var rotationModifier = isGamepad ? _degreesPerSecond : _totalMouseSensitivity;
+            var rotationModifier = isGamepad ? _gamepadDegreesPerSecondLimit : _totalMouseSensitivity;
             _cameraFollowTarget.InvokeRotation(new Vector2(-vec.y, vec.x) * rotationModifier);
         }
     }

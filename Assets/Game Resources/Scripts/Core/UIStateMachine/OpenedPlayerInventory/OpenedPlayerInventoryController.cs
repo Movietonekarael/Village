@@ -97,7 +97,6 @@ namespace GameCore.GUI
             {
                 _virtualMouseHandler.DisableMouse();
                 Cursor.lockState = CursorLockMode.Locked;
-                _inputHandler.canUiChange = false;
                 EnableUiChangeInOneFrame();
             }
             else
@@ -119,7 +118,6 @@ namespace GameCore.GUI
             for (var i = 0; i < 2; i++)
                 await Task.Yield();
 
-            _inputHandler.canUiChange = true;
             _playerInput.SwitchCurrentControlScheme(_virtualMouseHandler.VirtualMouse, Gamepad.current);
         }
 

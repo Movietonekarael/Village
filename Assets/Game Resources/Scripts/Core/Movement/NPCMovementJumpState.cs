@@ -77,7 +77,7 @@ namespace GameCore.GameMovement
                 var jumpDirection = characterActor.Up;
 
                 characterActor.ForceNotGrounded();
-                characterActor.Velocity += jumpDirection * _StateMachine._jumpSpeed;
+                characterActor.Velocity += jumpDirection * _StateMachine._jumpVelocityImpulse;
             }
         }
     }

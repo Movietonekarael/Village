@@ -12,7 +12,6 @@ namespace GameCore.GameControls
 {
     public partial class InputHandler
     {
-
         public sealed class VirtualMouseHandler : IMouseEnablable
         {
             private const string _DEVICE_NAME = "VirtualMouse";

@@ -21,7 +21,7 @@ namespace GameCore.GameMovement
 
             protected override Vector3 SetLimitedTargetVelocity(Vector3 vec)
             {
-                return vec.normalized * _StateMachine._walkSpeedLimit;
+                return vec.normalized * _StateMachine._walkVelocityLimit;
             }
 
             //----------------------------------------------------------Local methods------------------------------------------------------//

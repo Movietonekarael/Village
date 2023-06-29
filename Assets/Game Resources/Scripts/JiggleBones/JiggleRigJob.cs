@@ -4,27 +4,49 @@ using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Jobs;
 using Unity.Burst;
+using static UnityEditor.ShaderData;
 
 namespace JiggleBones
 {
     [BurstCompile]
     public struct JiggleRigJob : IJobParallelForTransform, IJob
     {
-        [NativeDisableContainerSafetyRestriction] public NativeArray<JiggleBone> Bones;
+        [NativeDisableContainerSafetyRestriction] private NativeArray<JiggleBone> _bones;
+        public NativeArray<JiggleBone> Bones { get { return _bones; } }
+
         [ReadOnly] public double Time;
         [ReadOnly] public float FixedDeltaTime;
-        [ReadOnly] public JiggleSettingsBase JiggleSettings;
-        [ReadOnly] public Vector3 Wind;
+        [ReadOnly] public JiggleSettingsBase _jiggleSettings;
+        [ReadOnly] public Vector3 _wind;
         [ReadOnly] private const float _SMOOTHING = 1f;
-        [ReadOnly] public Vector3 Gravity;
+        [ReadOnly] private Vector3 _gravity;
 
-        [NativeDisableContainerSafetyRestriction] public NativeArray<int> Pass;
-        [NativeDisableContainerSafetyRestriction] public NativeArray<double> AccumulationArray;
-        [NativeDisableContainerSafetyRestriction] public NativeArray<Vector3> OffsetArray;
+        [NativeDisableContainerSafetyRestriction] private NativeArray<int> _passArray;
+        [NativeDisableContainerSafetyRestriction] private NativeArray<double> _accumulationArray;
+        [NativeDisableContainerSafetyRestriction] private NativeArray<Vector3> _offsetArray;
 
-        public int PassValue { get { return Pass[0]; } set { Pass[0] = value; } }
-        public double Accumulation { get { return AccumulationArray[0]; } set { AccumulationArray[0] = value; } }
-        private Vector3 _offset { get { return OffsetArray[0]; } set { OffsetArray[0] = value; } }
+        public JiggleRigJob(NativeArray<JiggleBone> bones,
+                            Vector3 wind,
+                            Vector3 gravity,
+                            JiggleSettingsBase jiggleSettings,
+                            NativeArray<int> pass,
+                            NativeArray<double> accumulationArray,
+                            NativeArray<Vector3> offsetArray)
+        {
+            _bones = bones;
+            _wind = wind;
+            _gravity = gravity;
+            _jiggleSettings = jiggleSettings;
+            _passArray = pass;
+            _accumulationArray = accumulationArray;
+            _offsetArray = offsetArray;
+            Time = default;
+            FixedDeltaTime = default;
+        }
+
+        public int PassValue { get { return _passArray[0]; } set { _passArray[0] = value; } }
+        public double Accumulation { get { return _accumulationArray[0]; } set { _accumulationArray[0] = value; } }
+        private Vector3 _offset { get { return _offsetArray[0]; } set { _offsetArray[0] = value; } }
 
         public void Execute()
         {
@@ -32,11 +54,11 @@ namespace JiggleBones
             {
                 Accumulation -= FixedDeltaTime;
                 var accumulationTime = Time - Accumulation;
-                for (var i = 1; i < Bones.Length; i++)
+                for (var i = 1; i < _bones.Length; i++)
                 {
-                    var bone = Bones[i];
-                    bone.Simulate(ref JiggleSettings, ref Wind, Gravity, accumulationTime, FixedDeltaTime, ref Bones);
-                    Bones[i] = bone;
+                    var bone = _bones[i];
+                    bone.Simulate(ref _jiggleSettings, ref _wind, _gravity, accumulationTime, FixedDeltaTime, ref _bones);
+                    _bones[i] = bone;
                 }
             }
             PassValue++;
@@ -47,7 +69,7 @@ namespace JiggleBones
             if (PassValue == 1)
             {
                 FirstProcess(index, ref transform, true);
-                if (index == Bones.Length - 2)
+                if (index == _bones.Length - 2)
                 {
                     FirstProcess(index + 1, ref transform, false);
                     PassValue++;
@@ -56,7 +78,7 @@ namespace JiggleBones
             else if (PassValue == 3)
             {
                 DeriveAllPositions(index, ref transform);
-                if (index == Bones.Length - 2)
+                if (index == _bones.Length - 2)
                 {
                     DeriveAllPositions(index + 1, ref transform);
                     PassValue++;
@@ -65,7 +87,7 @@ namespace JiggleBones
             else if (PassValue == 4)
             {
                 PoseAllBones(index, ref transform, true);
-                if (index == Bones.Length - 2)
+                if (index == _bones.Length - 2)
                 {
                     PoseAllBones(index + 1, ref transform, false);
                     PassValue = 1;
@@ -75,7 +97,7 @@ namespace JiggleBones
 
         private void FirstProcess(int index, ref TransformAccess transform, bool transformExist)
         {
-            var bone = Bones[index];
+            var bone = _bones[index];
 
             if (index != 0)
             {
@@ -87,16 +109,16 @@ namespace JiggleBones
             }
             if (index != 0)
             {
-                bone.CacheAnimationPosition(ref transform, ref Bones, Time, transformExist);
+                bone.CacheAnimationPosition(ref transform, ref _bones, Time, transformExist);
             }
-            Bones[index] = bone;
+            _bones[index] = bone;
         }
 
         private void DeriveAllPositions(int index, ref TransformAccess transform)
         {
             if (index != 0)
             {
-                var bone = Bones[index];
+                var bone = _bones[index];
 
                 if (index == 1)
                 {
@@ -105,24 +127,24 @@ namespace JiggleBones
                 }
                 bone.DeriveFinalSolvePosition(_offset, _SMOOTHING, Time, FixedDeltaTime);
 
-                Bones[index] = bone;
+                _bones[index] = bone;
             }
         }
 
         private void PoseAllBones(int index, ref TransformAccess transform, bool transformExist)
         {
-            var bone = Bones[index];
+            var bone = _bones[index];
 
             if (index != 0)
             {
-                bone.PoseBone(ref transform, JiggleSettings.Blend, ref Bones, transformExist);
+                bone.PoseBone(ref transform, _jiggleSettings.Blend, ref _bones, transformExist);
             }
             if (transformExist)
             {
                 bone.SetTransformInfo(ref transform);
             }
 
-            Bones[index] = bone;
+            _bones[index] = bone;
         }
     }
 }

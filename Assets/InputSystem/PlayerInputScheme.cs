@@ -365,7 +365,7 @@ namespace PlayerInput
             ""id"": ""34d51931-afde-4e8b-a503-7d8825595cd1"",
             ""actions"": [
                 {
-                    ""name"": ""Quit"",
+                    ""name"": ""Escape"",
                     ""type"": ""Button"",
                     ""id"": ""36d7a0b9-f66b-4da4-985e-ca871ac90791"",
                     ""expectedControlType"": ""Button"",
@@ -391,7 +391,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Quit"",
+                    ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -402,7 +402,7 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Quit"",
+                    ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -413,17 +413,6 @@ namespace PlayerInput
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""EditorGamemodeQuit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""683cfcf6-90ed-4417-a6e4-ae2d1204aabb"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
                     ""action"": ""EditorGamemodeQuit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -757,6 +746,24 @@ namespace PlayerInput
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""727080a0-abed-44e8-9918-28e9099d545f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa29d8bd-ff61-4daf-94b0-532364249150"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -858,6 +865,149 @@ namespace PlayerInput
                     ""action"": ""VirtualMousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9481f2c5-34b5-401a-89bc-63a3cba98f44"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""a9771643-c567-489e-87c7-dfcfd747de02"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""ea4a4180-bc34-4b64-b451-54675ccd2499"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""da65d3a0-503c-4a4d-a007-57fe6f00e6e0"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""1618c69f-21c7-438b-88bb-714349b64458"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""90e7863f-0fe6-4cb1-8f0b-d2ee5c458b32"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""GamepadArrows"",
+                    ""id"": ""176ea44d-7894-4c22-b1fe-b8e086048a29"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""1b2c6972-e318-4b11-a576-cef07d5c6fa7"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""3c789d98-9132-4556-8eba-1dff08a4ba3a"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""cf26871e-353b-4bcf-9014-4589e7ac176f"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""54dfe09b-f117-4889-a9f4-4319cd1c3456"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c8635d9-c9a5-4e5d-bd1f-cc2476ce3ca4"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bdf6dadd-3747-4911-9a65-17cf5fb8e17c"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -914,7 +1064,7 @@ namespace PlayerInput
             m_CameraControl_ZoomOut = m_CameraControl.FindAction("ZoomOut", throwIfNotFound: true);
             // ApplicationControl
             m_ApplicationControl = asset.FindActionMap("ApplicationControl", throwIfNotFound: true);
-            m_ApplicationControl_Quit = m_ApplicationControl.FindAction("Quit", throwIfNotFound: true);
+            m_ApplicationControl_Escape = m_ApplicationControl.FindAction("Escape", throwIfNotFound: true);
             m_ApplicationControl_EditorGamemodeQuit = m_ApplicationControl.FindAction("EditorGamemodeQuit", throwIfNotFound: true);
             // InventoryControl
             m_InventoryControl = asset.FindActionMap("InventoryControl", throwIfNotFound: true);
@@ -938,6 +1088,8 @@ namespace PlayerInput
             m_UI_MouseDelta = m_UI.FindAction("MouseDelta", throwIfNotFound: true);
             m_UI_MousePosition = m_UI.FindAction("MousePosition", throwIfNotFound: true);
             m_UI_VirtualMousePosition = m_UI.FindAction("VirtualMousePosition", throwIfNotFound: true);
+            m_UI_Move = m_UI.FindAction("Move", throwIfNotFound: true);
+            m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1163,13 +1315,13 @@ namespace PlayerInput
         // ApplicationControl
         private readonly InputActionMap m_ApplicationControl;
         private List<IApplicationControlActions> m_ApplicationControlActionsCallbackInterfaces = new List<IApplicationControlActions>();
-        private readonly InputAction m_ApplicationControl_Quit;
+        private readonly InputAction m_ApplicationControl_Escape;
         private readonly InputAction m_ApplicationControl_EditorGamemodeQuit;
         public struct ApplicationControlActions
         {
             private @PlayerInputScheme m_Wrapper;
             public ApplicationControlActions(@PlayerInputScheme wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Quit => m_Wrapper.m_ApplicationControl_Quit;
+            public InputAction @Escape => m_Wrapper.m_ApplicationControl_Escape;
             public InputAction @EditorGamemodeQuit => m_Wrapper.m_ApplicationControl_EditorGamemodeQuit;
             public InputActionMap Get() { return m_Wrapper.m_ApplicationControl; }
             public void Enable() { Get().Enable(); }
@@ -1180,9 +1332,9 @@ namespace PlayerInput
             {
                 if (instance == null || m_Wrapper.m_ApplicationControlActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_ApplicationControlActionsCallbackInterfaces.Add(instance);
-                @Quit.started += instance.OnQuit;
-                @Quit.performed += instance.OnQuit;
-                @Quit.canceled += instance.OnQuit;
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
                 @EditorGamemodeQuit.started += instance.OnEditorGamemodeQuit;
                 @EditorGamemodeQuit.performed += instance.OnEditorGamemodeQuit;
                 @EditorGamemodeQuit.canceled += instance.OnEditorGamemodeQuit;
@@ -1190,9 +1342,9 @@ namespace PlayerInput
 
             private void UnregisterCallbacks(IApplicationControlActions instance)
             {
-                @Quit.started -= instance.OnQuit;
-                @Quit.performed -= instance.OnQuit;
-                @Quit.canceled -= instance.OnQuit;
+                @Escape.started -= instance.OnEscape;
+                @Escape.performed -= instance.OnEscape;
+                @Escape.canceled -= instance.OnEscape;
                 @EditorGamemodeQuit.started -= instance.OnEditorGamemodeQuit;
                 @EditorGamemodeQuit.performed -= instance.OnEditorGamemodeQuit;
                 @EditorGamemodeQuit.canceled -= instance.OnEditorGamemodeQuit;
@@ -1350,6 +1502,8 @@ namespace PlayerInput
         private readonly InputAction m_UI_MouseDelta;
         private readonly InputAction m_UI_MousePosition;
         private readonly InputAction m_UI_VirtualMousePosition;
+        private readonly InputAction m_UI_Move;
+        private readonly InputAction m_UI_Submit;
         public struct UIActions
         {
             private @PlayerInputScheme m_Wrapper;
@@ -1361,6 +1515,8 @@ namespace PlayerInput
             public InputAction @MouseDelta => m_Wrapper.m_UI_MouseDelta;
             public InputAction @MousePosition => m_Wrapper.m_UI_MousePosition;
             public InputAction @VirtualMousePosition => m_Wrapper.m_UI_VirtualMousePosition;
+            public InputAction @Move => m_Wrapper.m_UI_Move;
+            public InputAction @Submit => m_Wrapper.m_UI_Submit;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1391,6 +1547,12 @@ namespace PlayerInput
                 @VirtualMousePosition.started += instance.OnVirtualMousePosition;
                 @VirtualMousePosition.performed += instance.OnVirtualMousePosition;
                 @VirtualMousePosition.canceled += instance.OnVirtualMousePosition;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+                @Submit.started += instance.OnSubmit;
+                @Submit.performed += instance.OnSubmit;
+                @Submit.canceled += instance.OnSubmit;
             }
 
             private void UnregisterCallbacks(IUIActions instance)
@@ -1416,6 +1578,12 @@ namespace PlayerInput
                 @VirtualMousePosition.started -= instance.OnVirtualMousePosition;
                 @VirtualMousePosition.performed -= instance.OnVirtualMousePosition;
                 @VirtualMousePosition.canceled -= instance.OnVirtualMousePosition;
+                @Move.started -= instance.OnMove;
+                @Move.performed -= instance.OnMove;
+                @Move.canceled -= instance.OnMove;
+                @Submit.started -= instance.OnSubmit;
+                @Submit.performed -= instance.OnSubmit;
+                @Submit.canceled -= instance.OnSubmit;
             }
 
             public void RemoveCallbacks(IUIActions instance)
@@ -1470,7 +1638,7 @@ namespace PlayerInput
         }
         public interface IApplicationControlActions
         {
-            void OnQuit(InputAction.CallbackContext context);
+            void OnEscape(InputAction.CallbackContext context);
             void OnEditorGamemodeQuit(InputAction.CallbackContext context);
         }
         public interface IInventoryControlActions
@@ -1496,6 +1664,8 @@ namespace PlayerInput
             void OnMouseDelta(InputAction.CallbackContext context);
             void OnMousePosition(InputAction.CallbackContext context);
             void OnVirtualMousePosition(InputAction.CallbackContext context);
+            void OnMove(InputAction.CallbackContext context);
+            void OnSubmit(InputAction.CallbackContext context);
         }
     }
 }

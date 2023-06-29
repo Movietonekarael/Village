@@ -22,8 +22,11 @@ namespace GameCore.GUI
 
         private void Start()
         {
-            CurrentState = _firstState;
-            CurrentState.EnterState();
+            if (_firstState is not null)
+            {
+                CurrentState = _firstState;
+                CurrentState.EnterState();
+            }
         }
     }
 

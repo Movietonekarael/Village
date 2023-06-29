@@ -4,7 +4,10 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Jobs;
+using Unity.Burst;
 using System;
+using Unity.Collections.LowLevel.Unsafe;
+using System.ComponentModel;
 
 namespace JiggleBones
 {
@@ -179,18 +182,17 @@ namespace JiggleBones
                 _offsets[i] = new NativeArray<Vector3>(1, Allocator.Persistent);
                 _offsets[i][0] = Vector3.zero;
 
-                _jobs[i] = new JiggleRigJob
-                {
-                    Bones = _jiggleBonesArrays[i],
-                    Wind = Wind,
-                    Gravity = Physics.gravity,
-                    JiggleSettings = JiggleRigs[i].JiggleSettings.GetSettingsStruct(),
-                    Pass = _pass[i],
-                    AccumulationArray = _accumulations[i],
-                    OffsetArray = _offsets[i]
-                };
+                _jobs[i] = new JiggleRigJob(_jiggleBonesArrays[i],
+                                            Wind,
+                                            Physics.gravity,
+                                            JiggleRigs[i].JiggleSettings.GetSettingsStruct(),
+                                            _pass[i],
+                                            _accumulations[i],
+                                            _offsets[i]);
             }
 
+            JiggleRigs = null;
+            _jiggleRigLookup = null;
         }
 
         public void AddRig(JiggleRig rig)

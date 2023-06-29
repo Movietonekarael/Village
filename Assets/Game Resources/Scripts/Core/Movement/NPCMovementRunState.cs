@@ -55,9 +55,9 @@ namespace GameCore.GameMovement
             protected override Vector3 SetLimitedTargetVelocity(Vector3 vec)
             {
                 if (!_dashed)
-                    return vec.normalized * _StateMachine._slowRunSpeedLimit;
+                    return vec.normalized * _StateMachine._slowRunVelocityLimit;
                 else
-                    return vec.normalized * _StateMachine._fastRunSpeedLimit;
+                    return vec.normalized * _StateMachine._fastRunVelocityLimit;
             }
         }
     }

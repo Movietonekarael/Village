@@ -33,11 +33,8 @@ namespace GameCore.GameControls
 
         private void ControlSchemeChanged(ControlScheme controlScheme)
         {
-            if (_inputHandler.canUiChange)
-            {
-                CurrentControlScheme = controlScheme;
-                SetCurrentActiveObject();
-            }
+            CurrentControlScheme = controlScheme;
+            SetCurrentActiveObject();
         }
 
         private void SetCurrentActiveObject()

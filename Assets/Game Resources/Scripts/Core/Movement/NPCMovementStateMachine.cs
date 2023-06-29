@@ -25,17 +25,19 @@ namespace GameCore.GameMovement
         [Header("Not Grounded parameters: ")]
         [SerializeField] private MotionParameters _notGroundedParameters = new(20f, 5f);
 
-        [Header("Speed: ")]
-        [SerializeField] private float _walkSpeedLimit = 2f;
-        [SerializeField] private float _slowRunSpeedLimit = 5f;
-        [SerializeField] private float _fastRunSpeedLimit = 6f;
+        [Header("Velocity: ")]
+        [SerializeField] private float _walkVelocityLimit = 2f;
+        [SerializeField] private float _slowRunVelocityLimit = 5f;
+        [SerializeField] private float _fastRunVelocityLimit = 6f;
 
         [Header("Rotation: ")]
+        [Tooltip("Rotation has about logarithmic dependence. The higher speed parameter, the higher dependency graph. " +
+                 "Actual formula is C'(t) = (N - C(t)) * dt * speed. Where C - current rotation, N - needed rotation.")]
         [SerializeField] protected float _RotationSpeed = 13.5f;
         protected Quaternion _NeededRotation;
 
-        [Header("Jump Speed: ")]
-        [SerializeField] private float _jumpSpeed = 5f;
+        [Header("Jump Velocity Impulse: ")]
+        [SerializeField] private float _jumpVelocityImpulse = 8f;
 
 
 

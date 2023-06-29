@@ -15,6 +15,8 @@ namespace GameCore.Boot
         private readonly int _isActivateID = Animator.StringToHash("Activate");
 
         [SerializeField] private bool _interactible;
+        [SerializeField] private bool _setActive = false;
+        [SerializeField] private EventSystem _eventSystem;
 
         private void Awake()
         {
@@ -32,6 +34,10 @@ namespace GameCore.Boot
 
             var button = GetComponent<Button>();
             button.interactable = _interactible;
+            if (_setActive)
+            {
+                _eventSystem.SetSelectedGameObject(this.gameObject);
+            }
         }
     }
 }

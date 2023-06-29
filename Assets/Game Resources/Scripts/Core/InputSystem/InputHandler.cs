@@ -12,13 +12,19 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 namespace GameCore.GameControls
 {
+    public interface IEscapable
+    {
+        public event Action OnEscape;
+    }
+
     public sealed partial class InputHandler : MonoBehaviour, 
                                                IInteractionPerformer, 
                                                ICameraRotator, 
                                                ICameraZoomer,
                                                IMovement,
                                                IInventoryPress,
-                                               IOpenCloseInventory
+                                               IOpenCloseInventory,
+                                               IEscapable
     {
         private const string _GAMEPAD_SCHEME = "Gamepad";
         private const string _KEYBOADR_SCHEME = "Keyboard";
@@ -43,6 +49,8 @@ namespace GameCore.GameControls
         public event Action<int> OnInventoryKeyPressed;
         public event Action<int> OnInventoryArrowPressed;
 
+        public event Action OnEscape;
+
         public event Action OnLeftMouseButtonPressed;
         public event Action OnLeftMouseButtonReleased;
 
@@ -60,6 +68,9 @@ namespace GameCore.GameControls
         private UIInputHandler _uiInputHandler;
         private ApplicationInputHandler _applicationInputHandler;
 
+
+
+        [Tooltip("1/1920 part of screen width per second * gamepad stick input value.")]
         [SerializeField] private float _virtualMouseSpeed = 150f;
         [HideInInspector] public VirtualMouseHandler VirtualMouse;
         [HideInInspector] public RealMouseHandler RealMouse;
@@ -69,8 +80,6 @@ namespace GameCore.GameControls
 
         private ControlScheme _currentControlScheme = ControlScheme.Keyboard;
         public ControlScheme CurrentControlScheme { get { return _currentControlScheme; } }
-
-        public bool canUiChange = true;
 
         private void Awake()
         {

@@ -33,7 +33,7 @@ namespace GameCore.Injectors
 
         private void InjectUiInputModule(UnityEngine.InputSystem.PlayerInput playerInput)
         {
-            var uiInputModule = FindFirstObjectByType<InputSystemUIInputModule>();
+            var uiInputModule = FindFirstObjectByType<InputSystemUIInputModule>();//?????
             playerInput.uiInputModule = uiInputModule;
         }
 

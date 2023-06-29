@@ -19,6 +19,7 @@ namespace GameCore.GUI
         [SerializeField] private T _parameters;
 
         [Inject] private IUIController<T> _uiController;
+        [Inject] protected I _Controller;
         [Inject] private IDeinitializable<I> _controllerDeinitializator;
         [Inject] private IActivatable<I> _controllerActivator;
 

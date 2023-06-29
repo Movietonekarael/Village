@@ -16,7 +16,7 @@ namespace GameCore.GameControls
             protected override void RegisterForInputEvents()
             {
                 CheckForInputHandler(this.GetType().Name);
-                _InputHandler._inputScheme.ApplicationControl.Quit.performed += QuitApplication;
+                _InputHandler._inputScheme.ApplicationControl.Escape.performed += EscapePressed;
 #if UNITY_EDITOR
                 _InputHandler._inputScheme.ApplicationControl.EditorGamemodeQuit.performed += QuitGameMode;
 #endif
@@ -25,15 +25,15 @@ namespace GameCore.GameControls
             protected override void UnregisterForInputEvents() 
             {
                 CheckForInputHandler(this.GetType().Name);
-                _InputHandler._inputScheme.ApplicationControl.Quit.performed -= QuitApplication;
+                _InputHandler._inputScheme.ApplicationControl.Escape.performed -= EscapePressed;
 #if UNITY_EDITOR
                 _InputHandler._inputScheme.ApplicationControl.EditorGamemodeQuit.performed -= QuitGameMode;
 #endif
             }
 
-            private void QuitApplication(InputAction.CallbackContext context)
+            private void EscapePressed(InputAction.CallbackContext context)
             {
-                Application.Quit();
+                _InputHandler.OnEscape?.Invoke();
             }
 
 #if UNITY_EDITOR
