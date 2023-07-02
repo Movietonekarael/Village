@@ -172,8 +172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8543dcf7a6b9a4a408403f825d506f11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 4736241202923491274}
-  itemCountText: {fileID: 378771014412327342}
+  ItemImage: {fileID: 4736241202923491274}
+  ItemCountText: {fileID: 378771014412327342}
   _imageColor: {fileID: 2453735717980126126}
 --- !u!114 &2453735717980126126
 MonoBehaviour:

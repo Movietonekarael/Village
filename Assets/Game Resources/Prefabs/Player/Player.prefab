@@ -7271,8 +7271,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraFollowTarget: {fileID: 1355705038272565870}
-  _degreesPerSecond: 60
-  _mouseSensitivity: 4
+  _gamepadDegreesPerSecondLimit: 60
+  _mouseCameraSensitivity: 4
 --- !u!114 &7444839941713633863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7369,27 +7369,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 716940e1c34dc7d4faf3b485bc819be7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterActor: {fileID: 6190287814026155175}
+  _CharacterActor: {fileID: 6190287814026155175}
   _stableGroundedParameters:
     Acceleration: 50
     Deceleration: 40
-  _stableGroundedAcceleration: 50
-  _stableGroundedDeceleration: 40
   _unstableGroundedParameters:
     Acceleration: 10
     Deceleration: 2
-  _unstableGroundedAcceleration: 10
-  _unstableGroundedDeceleration: 2
   _notGroundedParameters:
     Acceleration: 20
     Deceleration: 5
-  _notGroundedAcceleration: 20
-  _notGroundedDeceleration: 5
-  _walkSpeedLimit: 2
-  _slowRunSpeedLimit: 5
-  _fastRunSpeedLimit: 6
+  _walkVelocityLimit: 2
+  _slowRunVelocityLimit: 5
+  _fastRunVelocityLimit: 6
   _RotationSpeed: 13.5
-  _jumpSpeed: 8
+  _jumpVelocityImpulse: 8
   _animatorController: {fileID: 3803694181913317574}
   _cameraTarget: {fileID: 5805818121474792049}
 --- !u!114 &3324006553699926581

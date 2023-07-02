@@ -4,7 +4,6 @@ using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Jobs;
 using Unity.Burst;
-using static UnityEditor.ShaderData;
 
 namespace JiggleBones
 {
@@ -12,12 +11,11 @@ namespace JiggleBones
     public struct JiggleRigJob : IJobParallelForTransform, IJob
     {
         [NativeDisableContainerSafetyRestriction] private NativeArray<JiggleBone> _bones;
-        public NativeArray<JiggleBone> Bones { get { return _bones; } }
 
         [ReadOnly] public double Time;
         [ReadOnly] public float FixedDeltaTime;
-        [ReadOnly] public JiggleSettingsBase _jiggleSettings;
-        [ReadOnly] public Vector3 _wind;
+        [ReadOnly] private JiggleSettingsBase _jiggleSettings;
+        [ReadOnly] private Vector3 _wind;
         [ReadOnly] private const float _SMOOTHING = 1f;
         [ReadOnly] private Vector3 _gravity;
 
@@ -68,10 +66,10 @@ namespace JiggleBones
         {
             if (PassValue == 1)
             {
-                FirstProcess(index, ref transform, true);
+                PrepareBones(index, ref transform, true);
                 if (index == _bones.Length - 2)
                 {
-                    FirstProcess(index + 1, ref transform, false);
+                    PrepareBones(index + 1, ref transform, false);
                     PassValue++;
                 }
             }
@@ -95,7 +93,7 @@ namespace JiggleBones
             }
         }
 
-        private void FirstProcess(int index, ref TransformAccess transform, bool transformExist)
+        private void PrepareBones(int index, ref TransformAccess transform, bool transformExist)
         {
             var bone = _bones[index];
 

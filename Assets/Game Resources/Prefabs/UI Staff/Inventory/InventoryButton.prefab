@@ -136,8 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2a5299360ee784cb4200fe84a5e627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 1773133698937341004}
-  itemCountText: {fileID: 7350766646253864032}
+  ItemImage: {fileID: 1773133698937341004}
+  ItemCountText: {fileID: 7350766646253864032}
+  _imageColor: {fileID: 0}
   Position: {x: 0, y: 0}
 --- !u!1 &1773133698937341002
 GameObject:

@@ -57,8 +57,8 @@ public partial class JiggleBonesTesting
         rigBuilder1.AllowUpdate = false;
 
         var settings2 = CreateStructSettings();
-        rigBuilder2.AddRig(new JiggleRig(LeftBreast2, settings2));
-        rigBuilder2.AddRig(new JiggleRig(RightBreast2, settings2));
+        rigBuilder2.AddRig(new JiggleBones.JiggleRig(LeftBreast2, settings2));
+        rigBuilder2.AddRig(new JiggleBones.JiggleRig(RightBreast2, settings2));
 
         rigBuilder2.AllowUpdate = false;
         rigBuilder2.Setup();
@@ -106,12 +106,12 @@ public partial class JiggleBonesTesting
     {
         for (var i = 0; i < builder1.jiggleRigs.Count; i++)
         {
-            CompareRigs(builder1.jiggleRigs[i], builder2.GetJob(i));
+            CompareRigs(builder1.jiggleRigs[i], builder2.JiggleBonesArrays[i].ToArray());
         }
     }
 
     private void CompareRigs(JigglePhysics.JiggleRigBuilder.JiggleRig rig1,
-                             JiggleBones.JiggleRigJob rig2)
+                             JiggleBones.JiggleBone[] bones2)
     {
         List<BoneTrace> rig1Traces = new();
         List<BoneTrace> rig2Traces = new();
@@ -119,7 +119,7 @@ public partial class JiggleBonesTesting
         for (var i = 0; i < rig1.simulatedPoints.Count; i++)
         {
             rig1Traces.Add(new BoneTrace(rig1.simulatedPoints[i]));
-            rig2Traces.Add(new BoneTrace(rig2.Bones[i + 1]));
+            rig2Traces.Add(new BoneTrace(bones2[i + 1]));
         }
 
         var equality = true;

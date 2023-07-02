@@ -21,6 +21,7 @@ namespace JiggleBones
 
         private TransformAccessArray[] _accessArrays;
         private NativeArray<JiggleBone>[] _jiggleBonesArrays;
+        public NativeArray<JiggleBone>[] JiggleBonesArrays => _jiggleBonesArrays;
         private NativeArray<int>[] _pass;
         private NativeArray<double>[] _accumulations;
         private NativeArray<Vector3>[] _offsets;
@@ -197,6 +198,7 @@ namespace JiggleBones
 
         public void AddRig(JiggleRig rig)
         {
+            JiggleRigs ??= new();
             JiggleRigs.Add(rig);
         }
 
