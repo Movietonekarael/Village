@@ -9,14 +9,16 @@ using GameCore.Inventory;
 namespace GameCore.GUI
 {
     [RequireComponent(typeof(UIStateMachine))]
-    public abstract class BaseUIState<T, I> : MonoBehaviour, IUIState 
-                                              where T : IUIParameters
-                                              where I : ISpecificController
+    public abstract partial class BaseUIState<T, I> : MonoBehaviour, IUIState 
+                                                      where T : IUIParameters, new()
+                                                      where I : ISpecificController
     {
         private UIStateMachine _stateMachine;
         protected UIStateMachine _StateMachine { get { return _stateMachine; } }
 
         [SerializeField] private T _parameters;
+
+        [SerializeField] private List<UIStateWrap> _substates;
 
         [Inject] private IUIController<T> _uiController;
         [Inject] protected I _Controller;
@@ -39,7 +41,13 @@ namespace GameCore.GUI
 
         private void InitializeController()
         {
+            InitializeParametersIfNull();
             _uiController.Init(_parameters);
+        }
+
+        private void InitializeParametersIfNull()
+        {
+            _parameters ??= new();
         }
 
         private void DeinitializeController()
@@ -51,12 +59,30 @@ namespace GameCore.GUI
         {
             _controllerActivator?.Activate();
             StartState();
+            EnterSubstates();
         }
 
-        protected void ExitState()
+        public void ExitState()
         {
             _controllerActivator?.Deactivate();
             EndState();
+            ExitSubstates();
+        }
+
+        private void EnterSubstates()
+        {
+            foreach (var substate in _substates) 
+            {
+                substate.Value.EnterState();
+            }
+        }
+
+        private void ExitSubstates()
+        {
+            foreach (var substate in _substates)
+            {
+                substate.Value.ExitState();
+            }
         }
 
         protected void SwitchState(IUIState newState)

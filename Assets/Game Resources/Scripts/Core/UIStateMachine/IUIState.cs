@@ -3,6 +3,7 @@
     public interface IUIState
     {
         public void EnterState();
+        public void ExitState();
     }
 }
 
