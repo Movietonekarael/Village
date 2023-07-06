@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Jobs;
+
 
 namespace JiggleBones
 {
@@ -59,7 +58,7 @@ namespace JiggleBones
             ParentIndex = value;
         }
 
-        public (Vector3, Vector3, Vector3, 
+        public readonly (Vector3, Vector3, Vector3, 
                double, double, 
                PositionFrame, PositionFrame, Vector3, 
                Quaternion, Vector3, Quaternion, Vector3, 
@@ -118,7 +117,7 @@ namespace JiggleBones
             _extrapolatedPosition = default;
         }
         
-        public void PrepareBone(ref TransformAccess transform, bool transformExist)
+        public readonly void PrepareBone(ref TransformAccess transform, bool transformExist)
         {
             // If bone is not animated, return to last unadulterated pose
             if (transformExist)
@@ -144,7 +143,6 @@ namespace JiggleBones
                 if (bones[ParentIndex.Value].ParentIndex != null && 
                     bones[ParentIndex.Value].ParentIndex.Value != 0)
                 {
-                    //Vector3 projectedForward = (parentTransformPosition - parent.parent.transform.position).normalized;
                     Vector3 pos = bones[bones[ParentIndex.Value].ParentIndex.Value]._fromWorldToLocal.Value * parentTransformPosition;
                     pos = bones[ParentIndex.Value]._fromLocalToWorld.Value * pos;
                     _currentTargetAnimatedBoneFrame = new PositionFrame(pos, time);
@@ -152,7 +150,6 @@ namespace JiggleBones
                 else
                 {
                     // parent.transform.parent is guaranteed to exist here, unless the user is jiggling a single bone by itself (which throws an exception).
-                    //Vector3 projectedForward = (parentTransformPosition - parent.transform.parent.position).normalized;
                     Vector3 pos = bones[bones[ParentIndex.Value].ParentIndex.Value]._fromWorldToLocal.Value * parentTransformPosition;
                     pos = bones[ParentIndex.Value]._fromLocalToWorld.Value * pos;
                     _currentTargetAnimatedBoneFrame = new PositionFrame(pos, time);

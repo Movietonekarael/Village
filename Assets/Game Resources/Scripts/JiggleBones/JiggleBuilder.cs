@@ -1,13 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Jobs;
-using Unity.Burst;
-using System;
-using Unity.Collections.LowLevel.Unsafe;
-using System.ComponentModel;
+
 
 namespace JiggleBones
 {
@@ -22,15 +18,22 @@ namespace JiggleBones
         private TransformAccessArray[] _accessArrays;
         private NativeArray<JiggleBone>[] _jiggleBonesArrays;
         public NativeArray<JiggleBone>[] JiggleBonesArrays => _jiggleBonesArrays;
-        private NativeArray<int>[] _pass;
-        private NativeArray<double>[] _accumulations;
-        private NativeArray<Vector3>[] _offsets;
+        private JiggleSettingsBase[] _settings;
+        private double[] _accumulations;
+        private Vector3[] _offsets;
+        private double _time;
+        private float _fixedDeltaTime;
+        private Vector3 _gravity;
 
-        private JiggleRigJob[] _jobs;
+        private JiggleRigPreparationJob[] _preparationJobs;
+        private JiggleRigSimulationJob[] _simulationJobs;
+        private JiggleRigDerivingPositionJob[] _derivingPositionJobs;
+        private JiggleRigPosingJob[] _posingJobs;
         private JobHandle[] _jobHandles;
 
         [HideInInspector] public bool SetupOnAwake = true;
         [HideInInspector] public bool AllowUpdate = true;
+
 
         private void Awake()
         {
@@ -60,9 +63,6 @@ namespace JiggleBones
             {
                 _jiggleBonesArrays[i].Dispose();
                 _accessArrays[i].Dispose();
-                _pass[i].Dispose();
-                _accumulations[i].Dispose();
-                _offsets[i].Dispose();
             }
         }
 
@@ -96,10 +96,7 @@ namespace JiggleBones
                     }
                     rig.Bones[i] = bone;
                 }
-
-
             }
-
             CreateArrays();
         }
 
@@ -160,38 +157,58 @@ namespace JiggleBones
             }
         }
 
-        private void CreateArrays()
+        private unsafe void CreateArrays()
         {
             var rigCount = JiggleRigs.Count;
 
-            _jobs = new JiggleRigJob[rigCount];
+
+            _preparationJobs = new JiggleRigPreparationJob[rigCount];
+            _simulationJobs = new JiggleRigSimulationJob[rigCount];
+            _derivingPositionJobs = new JiggleRigDerivingPositionJob[rigCount];
+            _posingJobs = new JiggleRigPosingJob[rigCount];
             _jobHandles = new JobHandle[rigCount];
             _accessArrays = new TransformAccessArray[rigCount];
             _jiggleBonesArrays = new NativeArray<JiggleBone>[rigCount];
-            _pass = new NativeArray<int>[rigCount];
-            _accumulations = new NativeArray<double>[rigCount];
-            _offsets = new NativeArray<Vector3>[rigCount];
+            _settings = new JiggleSettingsBase[rigCount];
+            _accumulations = new double[rigCount];
+            _offsets = new Vector3[rigCount];
+            _time = Time.timeAsDouble;
+            _fixedDeltaTime = Time.fixedDeltaTime;
+            _gravity = Physics.gravity;
+
 
             for (var i = 0; i < rigCount; i++)
             {
                 _accessArrays[i] = new TransformAccessArray(JiggleRigs[i].BonesTransforms.ToArray(), 1);
                 _jiggleBonesArrays[i] = new NativeArray<JiggleBone>(JiggleRigs[i].Bones.ToArray(), Allocator.Persistent);
-                _pass[i] = new NativeArray<int>(1, Allocator.Persistent);
-                _pass[i][0] = 1;
-                _accumulations[i] = new NativeArray<double>(1, Allocator.Persistent);
-                _accumulations[i][0] = 0;
-                _offsets[i] = new NativeArray<Vector3>(1, Allocator.Persistent);
-                _offsets[i][0] = Vector3.zero;
+                _settings[i] = JiggleRigs[i].JiggleSettings.GetSettingsStruct();
+                _accumulations[i] = 0;
+                _offsets[i] = Vector3.zero;
 
-                _jobs[i] = new JiggleRigJob(_jiggleBonesArrays[i],
-                                            Wind,
-                                            Physics.gravity,
-                                            JiggleRigs[i].JiggleSettings.GetSettingsStruct(),
-                                            _pass[i],
-                                            _accumulations[i],
-                                            _offsets[i]);
+
+                fixed (double* time = &_time)
+                fixed (float* fixedDeltaTime = &_fixedDeltaTime)
+                fixed (double* accumulation = &_accumulations[i])
+                fixed (Vector3* wind = &Wind)
+                fixed (Vector3* gravity = &_gravity)
+                fixed (JiggleSettingsBase* settings = &_settings[i])
+                fixed (Vector3* offset = &_offsets[i])
+                {
+                    _preparationJobs[i] = new JiggleRigPreparationJob(_jiggleBonesArrays[i], time);
+                    _simulationJobs[i] = new JiggleRigSimulationJob(_jiggleBonesArrays[i],
+                                                                    accumulation,
+                                                                    time,
+                                                                    fixedDeltaTime,
+                                                                    wind,
+                                                                    gravity,
+                                                                    settings);
+                    _derivingPositionJobs[i] = new JiggleRigDerivingPositionJob(_jiggleBonesArrays[i],
+                                                                                time,
+                                                                                fixedDeltaTime,
+                                                                                offset);
+                    _posingJobs[i] = new JiggleRigPosingJob(_jiggleBonesArrays[i], settings);
+                }
             }
-
             JiggleRigs = null;
             _jiggleRigLookup = null;
         }
@@ -202,57 +219,63 @@ namespace JiggleBones
             JiggleRigs.Add(rig);
         }
 
-        public JiggleRigJob GetJob(int index)
-        {
-            return _jobs[index];
-        }
-
         private void HandleJob()
         {
-            var timeAsDouble = Time.timeAsDouble;
-            var fixedDeltaTime = Time.fixedDeltaTime;
+            _time = Time.timeAsDouble;
+            _fixedDeltaTime = Time.fixedDeltaTime;
             var deltaTime = Time.deltaTime;
 
             for (var i = 0; i < _jobHandles.Length; i++)
             {
-                _jobs[i].Time = timeAsDouble;
-                _jobs[i].FixedDeltaTime = fixedDeltaTime;
-                _jobs[i].Accumulation = System.Math.Min(_jobs[i].Accumulation + deltaTime, fixedDeltaTime * 4f);
-                var handle1 = _jobs[i].Schedule(_accessArrays[i]);
-                var handle2 = _jobs[i].Schedule(handle1);
-                var handle3 = _jobs[i].Schedule(_accessArrays[i], handle2);
-                _jobHandles[i] = _jobs[i].Schedule(_accessArrays[i], handle3);
+                _accumulations[i] = System.Math.Min(_accumulations[i] + deltaTime, _fixedDeltaTime * 4f);
+                var handle1 = _preparationJobs[i].Schedule(_accessArrays[i]);
+                var handle2 = _simulationJobs[i].Schedule(handle1);
+                var handle3 = _derivingPositionJobs[i].Schedule(_accessArrays[i], handle2);
+                _jobHandles[i] = _posingJobs[i].Schedule(_accessArrays[i], handle3);
             }
         }
 
         public void SetTimeVariables()
         {
-            var timeAsDouble = Time.timeAsDouble;
-            var fixedDeltaTime = Time.fixedDeltaTime;
+            _time = Time.timeAsDouble;
+            _fixedDeltaTime = Time.fixedDeltaTime;
             var deltaTime = Time.deltaTime;
 
             for (var i = 0; i < _jobHandles.Length; i++)
             {
-                _jobs[i].Time = timeAsDouble;
-                _jobs[i].FixedDeltaTime = fixedDeltaTime;
-                _jobs[i].Accumulation = System.Math.Min(_jobs[i].Accumulation + deltaTime, fixedDeltaTime * 4f);
+                _accumulations[i] = System.Math.Min(_accumulations[i] + deltaTime, _fixedDeltaTime * 4f);
             }
         }
 
-        public void ScheduleTransformJobs(int pass)
+        public void SchedulePreparationJobs()
         {
             for (var i = 0; i < _jobHandles.Length; i++)
             {
-                _jobs[i].PassValue = pass;
-                _jobHandles[i] = _jobs[i].Schedule(_accessArrays[i]);
+                _jobHandles[i] = _preparationJobs[i].Schedule(_accessArrays[i]);
             }
         }
 
-        public void ScheduleJobs()
+        public void SchedulesSimulateJobs()
         {
             for (var i = 0; i < _jobHandles.Length; i++)
             {
-                _jobHandles[i] = _jobs[i].Schedule();
+                _jobHandles[i] = _simulationJobs[i].Schedule();
+            }
+        }
+
+        public void ScheduleDerivingJobs()
+        {
+            for (var i = 0; i < _jobHandles.Length; i++)
+            {
+                _jobHandles[i] = _derivingPositionJobs[i].Schedule(_accessArrays[i]);
+            }
+        }
+
+        public void SchedulePosingJobs()
+        {
+            for (var i = 0; i < _jobHandles.Length; i++)
+            {
+                _jobHandles[i] = _posingJobs[i].Schedule(_accessArrays[i]);
             }
         }
 

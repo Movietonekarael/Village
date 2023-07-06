@@ -22484,6 +22484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parameters: {fileID: 11400000, guid: 1b5a3f8e2243bea48b004ea21209eb19, type: 2}
+  _substates: []
   _openInventoryStateBase: {fileID: 1105856869}
   _pauseStateBase: {fileID: 1105856870}
 --- !u!114 &1105856868
@@ -22512,6 +22513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parameters: {fileID: 11400000, guid: 8e4047bb6ab36834ba42d3f084f668f7, type: 2}
+  _substates: []
   _closeInventoryStateBase: {fileID: 1105856867}
 --- !u!114 &1105856870
 MonoBehaviour:
@@ -22526,6 +22528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parameters: {fileID: 11400000, guid: f3c1732774f88fd439ce6e22c7428599, type: 2}
+  _substates: []
   _mainScreenStateBase: {fileID: 1105856867}
 --- !u!1 &1116020352
 GameObject:

@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.TestTools;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using System.Runtime.InteropServices;
 using JigglePhysics;
 using JiggleBones;
+
 
 public partial class JiggleBonesTesting
 {
@@ -75,25 +75,25 @@ public partial class JiggleBonesTesting
             //Debug.Log("Preparing bones...");
             rigBuilder1.PrepareAllBones();
             rigBuilder2.SetTimeVariables();
-            rigBuilder2.ScheduleTransformJobs(1);
+            rigBuilder2.SchedulePreparationJobs();
             rigBuilder2.WaitForJobs();
             CompareRigs(rigBuilder1, rigBuilder2);
 
             //Debug.Log("Simulating bones...");
             rigBuilder1.SimulateAllBones();
-            rigBuilder2.ScheduleJobs();
+            rigBuilder2.SchedulesSimulateJobs();
             rigBuilder2.WaitForJobs();
             CompareRigs(rigBuilder1, rigBuilder2);
 
             //Debug.Log("Deriving bones...");
             rigBuilder1.DeriveAllBones();
-            rigBuilder2.ScheduleTransformJobs(3);
+            rigBuilder2.ScheduleDerivingJobs();
             rigBuilder2.WaitForJobs();
             CompareRigs(rigBuilder1, rigBuilder2);
 
             //Debug.Log("Posing bones...");
             rigBuilder1.PoseAllBones();
-            rigBuilder2.ScheduleTransformJobs(4);
+            rigBuilder2.SchedulePosingJobs();
             rigBuilder2.WaitForJobs();
             CompareRigs(rigBuilder1, rigBuilder2);
 
