@@ -11,8 +11,6 @@ namespace GameCore.GUI
         private GameObject _canvasObject;
         private GameObject _pauseMenuPrefab => _Parameters.PauseMenuPrefab;
 
-        private GameObject _lastSubmitObject;
-
         [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
         [Inject] private readonly EventSystem _eventSystem;
 
@@ -20,8 +18,7 @@ namespace GameCore.GUI
 
         public override void Activate()
         {
-            _lastSubmitObject = _pauseMenu.ContinueButton;
-            SetLastSubmitButton();
+            SetSubmitButton();
             _pauseMenu.OnContinuePressed += ContinuePressed;
             _pauseMenu.OnQuitPressed += QuitPressed;
             _canvasObject.SetActive(true);
@@ -69,15 +66,10 @@ namespace GameCore.GUI
         {
             _Controller.QuitGame();
         }
-
-        public void SetLastSubmitButton()
+        
+        private void SetSubmitButton()
         {
-            _eventSystem.SetSelectedGameObject(_lastSubmitObject);
-        }
-
-        public void RememberSubmitButton()
-        {
-            _lastSubmitObject = _eventSystem.currentSelectedGameObject;
+            _eventSystem.SetSelectedGameObject(_pauseMenu.ContinueButton);
         }
     }
 }

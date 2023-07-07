@@ -20,10 +20,10 @@ namespace GameCore.GUI
 
         [SerializeField] private List<UIStateWrap> _substates;
 
-        [Inject] private IUIController<T> _uiController;
+        [Inject] private readonly IUIController<T> _uiController;
         [Inject] protected I _Controller;
-        [Inject] private IDeinitializable<I> _controllerDeinitializator;
-        [Inject] private IActivatable<I> _controllerActivator;
+        [Inject] private readonly IDeinitializable<I> _controllerDeinitializator;
+        [Inject] private readonly IActivatable<I> _controllerActivator;
 
         private void Awake()
         {
