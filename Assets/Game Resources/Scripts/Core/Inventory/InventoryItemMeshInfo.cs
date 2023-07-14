@@ -1,29 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameCore.Inventory
+
+namespace GameCore
 {
-    public class InventoryItemMeshInfo : MonoBehaviour
+    namespace Inventory
     {
-        [SerializeField] private MeshFilter _meshFilter;
-        [SerializeField] private MeshRenderer _meshRenderer;
+        public class InventoryItemMeshInfo : MonoBehaviour
+        {
+            [SerializeField] private MeshFilter _meshFilter;
+            [SerializeField] private MeshRenderer _meshRenderer;
 
-        public MeshFilter MeshFilter 
-        { 
-            get
+            public MeshFilter MeshFilter
             {
-                return _meshFilter;
+                get
+                {
+                    return _meshFilter;
+                }
             }
-        }
 
-        public MeshRenderer MeshRenderer 
-        { 
-            get 
+            public MeshRenderer MeshRenderer
             {
-                return _meshRenderer;
-            } 
+                get
+                {
+                    return _meshRenderer;
+                }
+            }
         }
     }
 }
-

@@ -1,32 +1,33 @@
-using UnityEngine.InputSystem.XR;
-
-namespace GameCore.GUI
+namespace GameCore
 {
-    public abstract class UIView<T, P, I> : IUIView<T, P>,
-                                            IActivatable<I>,
-                                            IDeinitializable<I>
-                                            where T : IUIParameters
-                                            where P : ISpecificController
-                                            where I : ISpecificView
+    namespace GUI
     {
-        protected T _Parameters;
-        protected P _Controller;
-
-        public abstract void Activate();
-        public abstract void Deactivate();
-        public abstract void Deinitialize();
-        protected abstract void InstantiateViewElements();
-
-        public void Init(T parameters, P controller)
+        public abstract class UIView<T, P, I> : IUIView<T, P>,
+                                                IActivatable<I>,
+                                                IDeinitializable<I>
+                                                where T : IUIParameters
+                                                where P : ISpecificController
+                                                where I : ISpecificView
         {
-            InitializeParameters(parameters);
-            InstantiateViewElements();
-            _Controller = controller;
-        }
+            protected T _Parameters;
+            protected P _Controller;
 
-        private void InitializeParameters(T parameters)
-        {
-            _Parameters = parameters;
+            public abstract void Activate();
+            public abstract void Deactivate();
+            public abstract void Deinitialize();
+            protected abstract void InstantiateViewElements();
+
+            public void Init(T parameters, P controller)
+            {
+                InitializeParameters(parameters);
+                InstantiateViewElements();
+                _Controller = controller;
+            }
+
+            private void InitializeParameters(T parameters)
+            {
+                _Parameters = parameters;
+            }
         }
     }
 }

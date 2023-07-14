@@ -1,8 +1,11 @@
-﻿namespace GameCore.GUI
+﻿namespace GameCore
 {
-    public interface ICursorUnlockView : ISpecificView
+    namespace GUI
     {
-        public void RememberSubmitButton();
-        public void SetLastSubmitButton();
+        public interface ICursorUnlockView : ISpecificView
+        {
+            public void RememberSubmitButton();
+            public void SetLastSubmitButton();
+        }
     }
 }

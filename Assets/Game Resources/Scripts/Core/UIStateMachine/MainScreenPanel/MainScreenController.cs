@@ -1,77 +1,76 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
 using GameCore.GameControls;
 using GameCore.Inventory;
 using Zenject;
 
-namespace GameCore.GUI
+
+namespace GameCore
 {
-    public sealed class MainScreenController : UIController<MainScreenViewParameters, IMainScreenController, IMainScreenView>, IMainScreenController
+    namespace GUI
     {
-        [Inject] private readonly IInventoryPress _inventoryPress;
-        [Inject] private readonly IInventory _inventory;
-        [Inject] private readonly PlayerHoldItem _playerHoldItem;
-        private int _indexOfCurrentHoldItem = 0;
-
-        protected override void SubscribeForEvents()
+        public sealed class MainScreenController : UIController<MainScreenViewParameters, IMainScreenController, IMainScreenView>, IMainScreenController
         {
-            _inventoryPress.OnInventoryKeyPressed += SwitchSelectedItem;
-            _inventoryPress.OnInventoryArrowPressed += MoveItemSelection;
-            _inventory.OnItemChanged += ChangeItemInformation;
-        }
+            [Inject] private readonly IInventoryPress _inventoryPress;
+            [Inject] private readonly IInventory _inventory;
+            [Inject] private readonly PlayerHoldItem _playerHoldItem;
+            private int _indexOfCurrentHoldItem = 0;
 
-        protected override void UnsubscribeForEvents()
-        {
-            _inventoryPress.OnInventoryKeyPressed -= SwitchSelectedItem;
-            _inventoryPress.OnInventoryArrowPressed -= MoveItemSelection;
-            _inventory.OnItemChanged -= ChangeItemInformation;
-        }
+            protected override void SubscribeForEvents()
+            {
+                _inventoryPress.OnInventoryKeyPressed += SwitchSelectedItem;
+                _inventoryPress.OnInventoryArrowPressed += MoveItemSelection;
+                _inventory.OnItemChanged += ChangeItemInformation;
+            }
 
-        protected override void InitializeParameters(MainScreenViewParameters parameters) { }
-        protected override void OnActivate() { }
-        protected override void OnDeactivate() { }
+            protected override void UnsubscribeForEvents()
+            {
+                _inventoryPress.OnInventoryKeyPressed -= SwitchSelectedItem;
+                _inventoryPress.OnInventoryArrowPressed -= MoveItemSelection;
+                _inventory.OnItemChanged -= ChangeItemInformation;
+            }
 
-        public void SetActiveItem(int index)
-        {
-            SetHoldingItem(index);
-        }
+            protected override void InitializeParameters(MainScreenViewParameters parameters) { }
+            protected override void OnActivate() { }
+            protected override void OnDeactivate() { }
 
-        private void SwitchSelectedItem(int index)
-        {
-            _SpecificView.SetActiveButton(index);
-        }
+            public void SetActiveItem(int index)
+            {
+                SetHoldingItem(index);
+            }
 
-        private void MoveItemSelection(int direction)
-        {
-            _SpecificView.MoveActiveButtonSelection(direction);
-        }
+            private void SwitchSelectedItem(int index)
+            {
+                _SpecificView.SetActiveButton(index);
+            }
 
-        private void ChangeItemInformation(int position)
-        {
-            var item = _inventory.GetGameItem(position);
-            _SpecificView.SetItemInformation(position, item);
-            CheckHoldinghItemForUpdate(position);
-        }
+            private void MoveItemSelection(int direction)
+            {
+                _SpecificView.MoveActiveButtonSelection(direction);
+            }
 
-        private void CheckHoldinghItemForUpdate(int index)
-        {
-            if (index == _indexOfCurrentHoldItem)
+            private void ChangeItemInformation(int position)
+            {
+                var item = _inventory.GetGameItem(position);
+                _SpecificView.SetItemInformation(position, item);
+                CheckHoldinghItemForUpdate(position);
+            }
+
+            private void CheckHoldinghItemForUpdate(int index)
+            {
+                if (index == _indexOfCurrentHoldItem)
+                    UpdateHoldingItem();
+            }
+
+            private void SetHoldingItem(int index)
+            {
+                _indexOfCurrentHoldItem = index;
                 UpdateHoldingItem();
-        }
+            }
 
-        private void SetHoldingItem(int index)
-        {
-            _indexOfCurrentHoldItem = index;
-            UpdateHoldingItem();
-        }
-
-        private void UpdateHoldingItem()
-        {
-            var item = _inventory.GetGameItem(_indexOfCurrentHoldItem);
-            _playerHoldItem.Item = item;
+            private void UpdateHoldingItem()
+            {
+                var item = _inventory.GetGameItem(_indexOfCurrentHoldItem);
+                _playerHoldItem.Item = item;
+            }
         }
     }
 }

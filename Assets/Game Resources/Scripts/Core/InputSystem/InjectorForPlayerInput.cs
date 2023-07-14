@@ -1,46 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using Zenject;
 
 
-namespace GameCore.Injectors
+namespace GameCore
 {
-    [RequireComponent(typeof(UnityEngine.InputSystem.PlayerInput))]
-    public class InjectorForPlayerInput : MonoBehaviour
+    namespace Injectors
     {
-        [Inject(Id = "UiCamera")] private Camera _uiCamera;
-
-        private void Awake()
+        [RequireComponent(typeof(UnityEngine.InputSystem.PlayerInput))]
+        public class InjectorForPlayerInput : MonoBehaviour
         {
-            var playerInput = GetPlayerInput();
-            InjectUiCamera(playerInput);
-            InjectUiInputModule(playerInput);
-            DestroyThisInjector();
-        }
+            [Inject(Id = "UiCamera")] private Camera _uiCamera;
 
-        private UnityEngine.InputSystem.PlayerInput GetPlayerInput()
-        {
-            return GetComponent<UnityEngine.InputSystem.PlayerInput>();
-        }
+            private void Awake()
+            {
+                var playerInput = GetPlayerInput();
+                InjectUiCamera(playerInput);
+                InjectUiInputModule(playerInput);
+                DestroyThisInjector();
+            }
 
-        private void InjectUiCamera(UnityEngine.InputSystem.PlayerInput playerInput)
-        {
-            playerInput.camera = _uiCamera;
-        }
+            private UnityEngine.InputSystem.PlayerInput GetPlayerInput()
+            {
+                return GetComponent<UnityEngine.InputSystem.PlayerInput>();
+            }
 
-        private void InjectUiInputModule(UnityEngine.InputSystem.PlayerInput playerInput)
-        {
-            var uiInputModule = FindFirstObjectByType<InputSystemUIInputModule>();//?????
-            playerInput.uiInputModule = uiInputModule;
-        }
+            private void InjectUiCamera(UnityEngine.InputSystem.PlayerInput playerInput)
+            {
+                playerInput.camera = _uiCamera;
+            }
 
-        private void DestroyThisInjector()
-        {
-            Destroy(this);
+            private void InjectUiInputModule(UnityEngine.InputSystem.PlayerInput playerInput)
+            {
+                var uiInputModule = FindFirstObjectByType<InputSystemUIInputModule>();//?????
+                playerInput.uiInputModule = uiInputModule;
+            }
+
+            private void DestroyThisInjector()
+            {
+                Destroy(this);
+            }
         }
     }
 }
-

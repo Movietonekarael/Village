@@ -1,24 +1,25 @@
-﻿using Unity;
-using UnityEngine;
+﻿using UnityEngine;
 
 
-namespace GameCore.GameMovement
+namespace GameCore
 {
-    public abstract partial class NPCMovementStateMachine
+    namespace GameMovement
     {
-        [System.Serializable]
-        public struct MotionParameters
+        public abstract partial class NPCMovementStateMachine
         {
-            [SerializeField] public float Acceleration;
-            [SerializeField] public float Deceleration;
-
-            public MotionParameters(float acceleration = 0, float deceleration = 0)
+            [System.Serializable]
+            public struct MotionParameters
             {
-                Acceleration = acceleration;
-                Deceleration = deceleration;
-            }
-        }
+                [SerializeField] public float Acceleration;
+                [SerializeField] public float Deceleration;
 
+                public MotionParameters(float acceleration = 0, float deceleration = 0)
+                {
+                    Acceleration = acceleration;
+                    Deceleration = deceleration;
+                }
+            }
+
+        }
     }
 }
-

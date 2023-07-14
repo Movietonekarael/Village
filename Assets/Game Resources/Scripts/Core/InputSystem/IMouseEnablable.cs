@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 
 
-namespace GameCore.GameControls
+namespace GameCore
 {
-    public partial class InputHandler
+    namespace GameControls
     {
-        public interface IMouseEnablable
+        public partial class InputHandler
         {
-            public void EnableMouse();
-            public void DisableMouse();
-            public void SetPosition(Vector2 position);
-            public void SetDelta(Vector2 delta);
-            public Vector2 GetPosition();
+            public interface IMouseEnablable
+            {
+                public void EnableMouse();
+                public void DisableMouse();
+                public void SetPosition(Vector2 position);
+                public void SetDelta(Vector2 delta);
+                public Vector2 GetPosition();
+            }
         }
     }
 }

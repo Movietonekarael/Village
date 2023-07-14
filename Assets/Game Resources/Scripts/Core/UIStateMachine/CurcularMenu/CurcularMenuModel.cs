@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace GameCore.GUI
+namespace GameCore
 {
-    public class CurcularMenuModel : MonoBehaviour
+    namespace GUI
     {
-        
+        public class CurcularMenuModel : MonoBehaviour
+        {
+
+        }
     }
 }
-

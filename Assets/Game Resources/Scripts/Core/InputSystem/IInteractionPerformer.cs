@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace GameCore.GameControls
+namespace GameCore
 {
-    public interface IInteractionPerformer
+    namespace GameControls
     {
-        public bool IfInteractionWasPerformed();
+        public interface IInteractionPerformer
+        {
+            public bool IfInteractionWasPerformed();
+        }
     }
 }

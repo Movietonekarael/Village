@@ -1,71 +1,69 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using GameCore.Inventory;
 using UnityEngine.UI;
 
 
-namespace GameCore.Inventory
+namespace GameCore
 {
-    public class ItemCell : MonoBehaviour
+    namespace Inventory
     {
-        public Image ItemImage;
-        public Text ItemCountText;
-        [Header("Put if necessary")]
-        [SerializeField] private ImageColor _imageColor;
-
-        private uint _number = 0;
-
-        public uint GetNumber()
+        public class ItemCell : MonoBehaviour
         {
-            return _number;
-        }
+            public Image ItemImage;
+            public Text ItemCountText;
+            [Header("Put if necessary")]
+            [SerializeField] private ImageColor _imageColor;
 
-        public void SetItem(GameItem item)
-        {
-            if (item is not null)
-                SetProperItemInformation(item);
-            else
-                SetEmptyItemInformation();
-        }
+            private uint _number = 0;
 
-        private void SetProperItemInformation(GameItem item)
-        {
-            ItemImage.gameObject.SetActive(true);
-            ItemImage.sprite = item.Image;
-            ItemCountText.text = item.Number.ToString();
-        }
+            public uint GetNumber()
+            {
+                return _number;
+            }
 
-        private void SetEmptyItemInformation()
-        {
-            ItemImage.gameObject.SetActive(false);
-            ItemImage.sprite = null;
-            ItemCountText.text = string.Empty;
-        }
+            public void SetItem(GameItem item)
+            {
+                if (item is not null)
+                    SetProperItemInformation(item);
+                else
+                    SetEmptyItemInformation();
+            }
 
-        protected virtual void Awake()
-        {
-            SetItemNumberTextEmpty();
-            SetInactive();
-        }
+            private void SetProperItemInformation(GameItem item)
+            {
+                ItemImage.gameObject.SetActive(true);
+                ItemImage.sprite = item.Image;
+                ItemCountText.text = item.Number.ToString();
+            }
 
-        private void SetItemNumberTextEmpty()
-        {
-            ItemCountText.text = string.Empty;
-        }
+            private void SetEmptyItemInformation()
+            {
+                ItemImage.gameObject.SetActive(false);
+                ItemImage.sprite = null;
+                ItemCountText.text = string.Empty;
+            }
 
-        public void SetActive()
-        {
-            if (_imageColor != null)
-                _imageColor.SetActiveColor();
-        }
+            protected virtual void Awake()
+            {
+                SetItemNumberTextEmpty();
+                SetInactive();
+            }
 
-        public void SetInactive()
-        {
-            if (_imageColor != null)
-                _imageColor.SetNormalColor();
+            private void SetItemNumberTextEmpty()
+            {
+                ItemCountText.text = string.Empty;
+            }
+
+            public void SetActive()
+            {
+                if (_imageColor != null)
+                    _imageColor.SetActiveColor();
+            }
+
+            public void SetInactive()
+            {
+                if (_imageColor != null)
+                    _imageColor.SetNormalColor();
+            }
         }
     }
 }
-

@@ -1,10 +1,13 @@
 ﻿using System;
 
-namespace GameCore.GameControls
+
+namespace GameCore
 {
-    public interface IEscapable
+    namespace GameControls
     {
-        public event Action OnEscape;
+        public interface IEscapable
+        {
+            public event Action OnEscape;
+        }
     }
 }
-

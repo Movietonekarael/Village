@@ -1,32 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace GameCore.Inventory
+namespace GameCore
 {
-    [RequireComponent(typeof(Image))]
-    public class ImageColor : MonoBehaviour
+    namespace Inventory
     {
-        [SerializeField] private Color _normalColor;
-        [SerializeField] private Color _activeColor;
-        private Image _image;
-
-
-        private void Awake()
+        [RequireComponent(typeof(Image))]
+        public class ImageColor : MonoBehaviour
         {
-            _image = GetComponent<Image>();
-        }
+            [SerializeField] private Color _normalColor;
+            [SerializeField] private Color _activeColor;
+            private Image _image;
 
-        public void SetNormalColor()
-        {
-            _image.color = _normalColor;
-        }
 
-        public void SetActiveColor()
-        {
-            _image.color = _activeColor;
+            private void Awake()
+            {
+                _image = GetComponent<Image>();
+            }
+
+            public void SetNormalColor()
+            {
+                _image.color = _normalColor;
+            }
+
+            public void SetActiveColor()
+            {
+                _image.color = _activeColor;
+            }
         }
     }
 }

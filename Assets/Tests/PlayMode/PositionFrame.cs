@@ -1,43 +1,47 @@
 ﻿using UnityEngine;
 using System;
 
-public partial class JiggleBonesTesting
+
+namespace Testing
 {
-    private partial struct BoneTrace
+    public partial class JiggleBonesTesting
     {
-        private struct PositionFrame : IEquatable<PositionFrame>
+        private partial struct BoneTrace
         {
-            public Vector3 position;
-            public double time;
-            public PositionFrame(Vector3 position, double time)
+            private struct PositionFrame : IEquatable<PositionFrame>
             {
-                this.position = position;
-                this.time = time;
-            }
+                public Vector3 position;
+                public double time;
+                public PositionFrame(Vector3 position, double time)
+                {
+                    this.position = position;
+                    this.time = time;
+                }
 
-            public PositionFrame (JiggleBones.PositionFrame frame)
-            {
-                position = frame.position;
-                time = frame.time;
-            }
+                public PositionFrame(JiggleBones.PositionFrame frame)
+                {
+                    position = frame.position;
+                    time = frame.time;
+                }
 
-            public PositionFrame(JigglePhysics.JiggleBone.PositionFrame frame)
-            {
-                position = frame.position;
-                time = frame.time;
-            }
+                public PositionFrame(JigglePhysics.JiggleBone.PositionFrame frame)
+                {
+                    position = frame.position;
+                    time = frame.time;
+                }
 
-            public readonly bool Equals(PositionFrame other)
-            {
-                var equality = true;
-                equality = equality && other.position.Equals(position);
-                equality = equality && other.time.Equals(time);
-                return equality;
-            }
+                public readonly bool Equals(PositionFrame other)
+                {
+                    var equality = true;
+                    equality = equality && other.position.Equals(position);
+                    equality = equality && other.time.Equals(time);
+                    return equality;
+                }
 
-            public override string ToString()
-            {
-                return $"(Position: {position}), (Time: {time})";
+                public override string ToString()
+                {
+                    return $"(Position: {position}), (Time: {time})";
+                }
             }
         }
     }

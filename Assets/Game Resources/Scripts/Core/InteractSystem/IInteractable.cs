@@ -1,16 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-namespace GameCore.Interactions
+namespace GameCore
 {
-    public interface IInteractable
+    namespace Interactions
     {
-        public string InteractionMessage { get; }
+        public interface IInteractable
+        {
+            public string InteractionMessage { get; }
 
-        public bool Interact(Interactor interactor);
+            public bool Interact(Interactor interactor);
+        }
     }
 }
-
- 

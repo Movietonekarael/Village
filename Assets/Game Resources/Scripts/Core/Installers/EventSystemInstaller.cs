@@ -3,20 +3,23 @@ using UnityEngine.EventSystems;
 using Zenject;
 
 
-namespace GameCore.Installers
+namespace GameCore
 {
-    public class EventSystemInstaller : MonoInstaller
+    namespace Installers
     {
-        [SerializeField] private EventSystem _eventSystem;
-
-        public override void InstallBindings()
+        public class EventSystemInstaller : MonoInstaller
         {
-            BindEventSystem();
-        }
+            [SerializeField] private EventSystem _eventSystem;
 
-        private void BindEventSystem()
-        { 
-            Container.Bind<EventSystem>().FromInstance(_eventSystem).AsSingle().NonLazy();
+            public override void InstallBindings()
+            {
+                BindEventSystem();
+            }
+
+            private void BindEventSystem()
+            {
+                Container.Bind<EventSystem>().FromInstance(_eventSystem).AsSingle().NonLazy();
+            }
         }
     }
 }

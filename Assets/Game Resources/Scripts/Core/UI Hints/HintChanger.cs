@@ -1,60 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
-namespace GameCore.GameControls
+
+namespace GameCore
 {
-    public class HintChanger : MonoBehaviour, ISubscribable
+    namespace GameControls
     {
-        public ControlScheme CurrentControlScheme = ControlScheme.Keyboard;
-
-        public GameObject KeyboardActiveGameObject;
-        public GameObject GamepadActiveGameObject;
-
-        [Inject] private readonly InputHandler _inputHandler;
-
-        private void Start()
+        public class HintChanger : MonoBehaviour, ISubscribable
         {
-            Subscribe();
-            SetCurrentActiveObject();
-        }
+            public ControlScheme CurrentControlScheme = ControlScheme.Keyboard;
 
-        public void Subscribe()
-        {
-            _inputHandler.OnControlSchemeChanged += ControlSchemeChanged;
-        }
+            public GameObject KeyboardActiveGameObject;
+            public GameObject GamepadActiveGameObject;
 
-        public void Unsubscribe()
-        {
-            _inputHandler.OnControlSchemeChanged -= ControlSchemeChanged;
-        }
+            [Inject] private readonly InputHandler _inputHandler;
 
-        private void ControlSchemeChanged(ControlScheme controlScheme)
-        {
-            CurrentControlScheme = controlScheme;
-            SetCurrentActiveObject();
-        }
-
-        private void SetCurrentActiveObject()
-        {
-            if (CurrentControlScheme == ControlScheme.Keyboard)
+            private void Start()
             {
-                KeyboardActiveGameObject.SetActive(true);
-                GamepadActiveGameObject.SetActive(false);
+                Subscribe();
+                SetCurrentActiveObject();
             }
-            else if (CurrentControlScheme == ControlScheme.Gamepad)
-            {
-                GamepadActiveGameObject.SetActive(true);
-                KeyboardActiveGameObject.SetActive(false);
-            }
-        }
 
-        private void OnDestroy()
-        {
-            Unsubscribe();
+            public void Subscribe()
+            {
+                _inputHandler.OnControlSchemeChanged += ControlSchemeChanged;
+            }
+
+            public void Unsubscribe()
+            {
+                _inputHandler.OnControlSchemeChanged -= ControlSchemeChanged;
+            }
+
+            private void ControlSchemeChanged(ControlScheme controlScheme)
+            {
+                CurrentControlScheme = controlScheme;
+                SetCurrentActiveObject();
+            }
+
+            private void SetCurrentActiveObject()
+            {
+                if (CurrentControlScheme == ControlScheme.Keyboard)
+                {
+                    KeyboardActiveGameObject.SetActive(true);
+                    GamepadActiveGameObject.SetActive(false);
+                }
+                else if (CurrentControlScheme == ControlScheme.Gamepad)
+                {
+                    GamepadActiveGameObject.SetActive(true);
+                    KeyboardActiveGameObject.SetActive(false);
+                }
+            }
+
+            private void OnDestroy()
+            {
+                Unsubscribe();
+            }
         }
     }
-
 }

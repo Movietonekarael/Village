@@ -1,44 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using GameCore.GUI;
 
 
-namespace GameCore.Boot
+namespace GameCore
 {
-    public class ButtonAppear : MonoBehaviour
+    namespace Boot
     {
-        private Animator _animator;
-
-        private readonly int _isActiveID = Animator.StringToHash("Active");
-        private readonly int _isActivateID = Animator.StringToHash("Activate");
-
-        [SerializeField] private bool _interactible;
-        [SerializeField] private bool _setActive = false;
-        [SerializeField] private EventSystem _eventSystem;
-
-        private void Awake()
+        public class ButtonAppear : MonoBehaviour
         {
-            _animator = GetComponent<Animator>();
-        }
+            private Animator _animator;
 
-        public void AppearButton()
-        {
-            _animator.SetBool(_isActivateID, true);
-        }
+            private readonly int _isActiveID = Animator.StringToHash("Active");
+            private readonly int _isActivateID = Animator.StringToHash("Activate");
 
-        public void SetNowActive()
-        {
-            _animator.SetBool(_isActiveID, true);
+            [SerializeField] private bool _interactible;
+            [SerializeField] private bool _setActive = false;
+            [SerializeField] private EventSystem _eventSystem;
+            [SerializeField] private UIStateMachine _stateMachine;
 
-            var button = GetComponent<Button>();
-            button.interactable = _interactible;
-            if (_setActive)
+            private void Awake()
             {
-                _eventSystem.SetSelectedGameObject(this.gameObject);
+                _animator = GetComponent<Animator>();
+            }
+
+            public void AppearButton()
+            {
+                _animator.SetBool(_isActivateID, true);
+            }
+
+            public void SetNowActive()
+            {
+                _animator.SetBool(_isActiveID, true);
+
+                var button = GetComponent<Button>();
+                button.interactable = _interactible;
+                if (_setActive)
+                {
+                    _eventSystem.SetSelectedGameObject(this.gameObject);
+                    _stateMachine.StartStateMachine();
+                }
             }
         }
     }
 }
-

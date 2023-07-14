@@ -1,41 +1,37 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using PlayerInput;
-using UnityEngine.InputSystem;
-using GameCore.GameMovement;
-using Lightbug.CharacterControllerPro.Implementation;
-using System.Runtime.CompilerServices;
 
-namespace GameCore.GameControls
+
+namespace GameCore
 {
-    partial class InputHandler
+    namespace GameControls
     {
-        private abstract class SubInputHandler
+        partial class InputHandler
         {
-            protected readonly InputHandler _InputHandler;
-
-            public SubInputHandler(InputHandler inputHandler)
+            private abstract class SubInputHandler
             {
-                _InputHandler = inputHandler;
-                RegisterForInputEvents();
-            }
+                protected readonly InputHandler _InputHandler;
 
-            public void DestroyAllReferences()
-            {
-                UnregisterForInputEvents();
-            }
-            
-            protected abstract void RegisterForInputEvents();
-            protected abstract void UnregisterForInputEvents();
-
-            protected void CheckForInputHandler(string handlerName)
-            {
-                if (_InputHandler == null)
+                public SubInputHandler(InputHandler inputHandler)
                 {
-                    throw new Exception("InputHandler reference not found in " +
-                                        handlerName + ".");
+                    _InputHandler = inputHandler;
+                    RegisterForInputEvents();
+                }
+
+                public void DestroyAllReferences()
+                {
+                    UnregisterForInputEvents();
+                }
+
+                protected abstract void RegisterForInputEvents();
+                protected abstract void UnregisterForInputEvents();
+
+                protected void CheckForInputHandler(string handlerName)
+                {
+                    if (_InputHandler == null)
+                    {
+                        throw new Exception("InputHandler reference not found in " +
+                                            handlerName + ".");
+                    }
                 }
             }
         }

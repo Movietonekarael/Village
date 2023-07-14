@@ -1,25 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace GameCore.Audio
+namespace GameCore
 {
-    public class AudioSourceRandomizerReference : MonoBehaviour
+    namespace Audio
     {
-        [SerializeField] private AudioSourceRandomizer[] _audioSourceRandomizers;
-
-        public void Play(SoundEffectType playingSoundEffectType)
+        public class AudioSourceRandomizerReference : MonoBehaviour
         {
-            foreach(var randomizer in _audioSourceRandomizers)
+            [SerializeField] private AudioSourceRandomizer[] _audioSourceRandomizers;
+
+            public void Play(SoundEffectType playingSoundEffectType)
             {
-                if (randomizer.SoundType == playingSoundEffectType) 
+                foreach (var randomizer in _audioSourceRandomizers)
                 {
-                    randomizer.Play(); 
-                    break;
+                    if (randomizer.SoundType == playingSoundEffectType)
+                    {
+                        randomizer.Play();
+                        break;
+                    }
                 }
             }
         }
     }
 }
-

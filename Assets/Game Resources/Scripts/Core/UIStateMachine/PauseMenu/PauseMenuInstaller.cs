@@ -2,29 +2,31 @@
 using Zenject;
 
 
-namespace GameCore.Installers
+namespace GameCore
 {
-    public class PauseMenuInstaller : MonoInstaller
+    namespace Installers
     {
-        public override void InstallBindings()
+        public class PauseMenuInstaller : MonoInstaller
         {
-            BindView();
-            BindController();
-        }
+            public override void InstallBindings()
+            {
+                BindView();
+                BindController();
+            }
 
-        private void BindView()
-        {
-            UIElementInstaller.BindUiElement<PauseMenuView,
-                                             IPauseMenuView,
-                                             IUIView<PauseMenuViewParameters, IPauseMenuController>>(Container);
-        }
+            private void BindView()
+            {
+                UIElementInstaller.BindUiElement<PauseMenuView,
+                                                 IPauseMenuView,
+                                                 IUIView<PauseMenuViewParameters, IPauseMenuController>>(Container);
+            }
 
-        private void BindController()
-        {
-            UIElementInstaller.BindUiElement<PauseMenuController,
-                                             IPauseMenuController,
-                                             IUIController<PauseMenuViewParameters>>(Container);
+            private void BindController()
+            {
+                UIElementInstaller.BindUiElement<PauseMenuController,
+                                                 IPauseMenuController,
+                                                 IUIController<PauseMenuViewParameters>>(Container);
+            }
         }
     }
 }
-

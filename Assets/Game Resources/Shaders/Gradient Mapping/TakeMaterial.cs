@@ -1,25 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameCore.Shaders
+
+namespace GameCore
 {
-    [RequireComponent(typeof(MeshRenderer))]
+    namespace Shaders
+    {
+        [RequireComponent(typeof(MeshRenderer))]
 #if MONOCACHE
     public class TakeMaterial : MonoCache
 #else
-    public class TakeMaterial : MonoBehaviour
+        public class TakeMaterial : MonoBehaviour
 #endif
-    {
-        [SerializeField] private GradientGenerate _gradientGenerate;
+        {
+            [SerializeField] private GradientGenerate _gradientGenerate;
 #if MONOCACHE
         protected override void FixedRun()
 #else
-        private void FixedUpdate()
+            private void FixedUpdate()
 #endif
-        {
-            GetComponent<MeshRenderer>().sharedMaterial = _gradientGenerate.rocksMaterial;
+            {
+                GetComponent<MeshRenderer>().sharedMaterial = _gradientGenerate.rocksMaterial;
+            }
         }
     }
 }
-

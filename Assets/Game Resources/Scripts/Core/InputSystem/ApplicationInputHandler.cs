@@ -1,47 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-namespace GameCore.GameControls
+namespace GameCore
 {
-    partial class InputHandler
+    namespace GameControls
     {
-        private sealed class ApplicationInputHandler : SubInputHandler
+        partial class InputHandler
         {
-            public ApplicationInputHandler(InputHandler inputHandler) : base(inputHandler) { }
-
-            protected override void RegisterForInputEvents()
+            private sealed class ApplicationInputHandler : SubInputHandler
             {
-                CheckForInputHandler(this.GetType().Name);
-                _InputHandler._inputScheme.ApplicationControl.Escape.performed += EscapePressed;
+                public ApplicationInputHandler(InputHandler inputHandler) : base(inputHandler) { }
+
+                protected override void RegisterForInputEvents()
+                {
+                    CheckForInputHandler(this.GetType().Name);
+                    _InputHandler._inputScheme.ApplicationControl.Escape.performed += EscapePressed;
 #if UNITY_EDITOR
-                _InputHandler._inputScheme.ApplicationControl.EditorGamemodeQuit.performed += QuitGameMode;
+                    _InputHandler._inputScheme.ApplicationControl.EditorGamemodeQuit.performed += QuitGameMode;
+#endif
+                }
+
+                protected override void UnregisterForInputEvents()
+                {
+                    CheckForInputHandler(this.GetType().Name);
+                    _InputHandler._inputScheme.ApplicationControl.Escape.performed -= EscapePressed;
+#if UNITY_EDITOR
+                    _InputHandler._inputScheme.ApplicationControl.EditorGamemodeQuit.performed -= QuitGameMode;
+#endif
+                }
+
+                private void EscapePressed(InputAction.CallbackContext context)
+                {
+                    _InputHandler.OnEscape?.Invoke();
+                }
+
+#if UNITY_EDITOR
+                private void QuitGameMode(InputAction.CallbackContext context)
+                {
+                    EditorApplication.isPlaying = false;
+                }
 #endif
             }
-
-            protected override void UnregisterForInputEvents() 
-            {
-                CheckForInputHandler(this.GetType().Name);
-                _InputHandler._inputScheme.ApplicationControl.Escape.performed -= EscapePressed;
-#if UNITY_EDITOR
-                _InputHandler._inputScheme.ApplicationControl.EditorGamemodeQuit.performed -= QuitGameMode;
-#endif
-            }
-
-            private void EscapePressed(InputAction.CallbackContext context)
-            {
-                _InputHandler.OnEscape?.Invoke();
-            }
-
-#if UNITY_EDITOR
-            private void QuitGameMode(InputAction.CallbackContext context)
-            {
-                EditorApplication.isPlaying = false;
-            }
-#endif
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿namespace GameCore.GameControls
+﻿namespace GameCore
 {
-    public enum ControlScheme
+    namespace GameControls
     {
-        Keyboard,
-        Gamepad
+        public enum ControlScheme
+        {
+            Keyboard,
+            Gamepad
+        }
     }
 }
-

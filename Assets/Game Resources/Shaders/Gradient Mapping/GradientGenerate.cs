@@ -1,54 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameCore.Shaders
+
+namespace GameCore
 {
-    [ExecuteInEditMode]
+    namespace Shaders
+    {
+        [ExecuteInEditMode]
 #if MONOCACHE
     public class GradientGenerate : MonoCache
 #else
-    public class GradientGenerate : MonoBehaviour
+        public class GradientGenerate : MonoBehaviour
 #endif
-    {
-        public Material rocksMaterial;
-        public bool realtimeGeneration;
-        public Gradient lutGradient;
-        public Vector2Int lutTextureSize;
-        public Texture2D lutTexture;
+        {
+            public Material rocksMaterial;
+            public bool realtimeGeneration;
+            public Gradient lutGradient;
+            public Vector2Int lutTextureSize;
+            public Texture2D lutTexture;
 
 #if MONOCACHE
         protected override void Run()
 #else
-        private void Update()
+            private void Update()
 #endif
-        {
-            if (realtimeGeneration)
             {
-                GenerateLutTexture();
-            }
-        }
-
-        private void GenerateLutTexture()
-        {
-            lutTexture = new Texture2D(lutTextureSize.x, lutTextureSize.y)
-            {
-                wrapMode = TextureWrapMode.Clamp
-            };
-
-            for (var x = 0; x < lutTextureSize.x; x++)
-            {
-                var color = lutGradient.Evaluate(x / (float)lutTextureSize.x);
-                for (var y = 0; y < lutTextureSize.y; y++)
+                if (realtimeGeneration)
                 {
-                    lutTexture.SetPixel(x, y, color);
+                    GenerateLutTexture();
                 }
             }
 
-            lutTexture.Apply();
-            rocksMaterial.SetTexture("_GradientRamp", lutTexture);
+            private void GenerateLutTexture()
+            {
+                lutTexture = new Texture2D(lutTextureSize.x, lutTextureSize.y)
+                {
+                    wrapMode = TextureWrapMode.Clamp
+                };
 
+                for (var x = 0; x < lutTextureSize.x; x++)
+                {
+                    var color = lutGradient.Evaluate(x / (float)lutTextureSize.x);
+                    for (var y = 0; y < lutTextureSize.y; y++)
+                    {
+                        lutTexture.SetPixel(x, y, color);
+                    }
+                }
+
+                lutTexture.Apply();
+                rocksMaterial.SetTexture("_GradientRamp", lutTexture);
+
+            }
         }
     }
 }
-

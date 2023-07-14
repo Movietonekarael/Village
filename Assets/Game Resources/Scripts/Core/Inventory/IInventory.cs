@@ -1,19 +1,18 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 
-namespace GameCore.Inventory
+namespace GameCore
 {
-    public interface IInventory
+    namespace Inventory
     {
-        public bool Push(ref GameItem item);
-        public bool Push(ref GameItem item, int position);
-        public GameItem Pull(int position);
-        public GameItem GetGameItem(int position);
+        public interface IInventory
+        {
+            public bool Push(ref GameItem item);
+            public bool Push(ref GameItem item, int position);
+            public GameItem Pull(int position);
+            public GameItem GetGameItem(int position);
 
-        public event Action<int> OnItemChanged;
+            public event Action<int> OnItemChanged;
+        }
     }
-
 }

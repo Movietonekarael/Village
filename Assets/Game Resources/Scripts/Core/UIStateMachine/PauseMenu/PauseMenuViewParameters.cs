@@ -1,13 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameCore.GUI
+
+namespace GameCore
 {
-    [CreateAssetMenu(fileName = "View Data", menuName = "Game UI/View panels data/Pause menu", order = 3)]
-    public sealed class PauseMenuViewParameters : ScriptableObject, IUIParameters
+    namespace GUI
     {
-        public GameObject CanvasPrefab;
-        public GameObject PauseMenuPrefab;
+        [CreateAssetMenu(fileName = "View Data", menuName = "Game UI/View panels data/Pause menu", order = 3)]
+        public sealed class PauseMenuViewParameters : ScriptableObject, IUIParameters
+        {
+            public GameObject CanvasPrefab;
+            public GameObject PauseMenuPrefab;
+        }
     }
 }

@@ -1,28 +1,26 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using PlayerInput;
 using UnityEngine.InputSystem;
 
 
-namespace GameCore.GameControls
+namespace GameCore
 {
-    public static class InputSystemExtensions
+    namespace GameControls
     {
-        public static void EnableAll(this InputActionMap[] array)
+        public static class InputSystemExtensions
         {
-            foreach (var inputActionMap in array)
+            public static void EnableAll(this InputActionMap[] array)
             {
-                inputActionMap.Enable();
+                foreach (var inputActionMap in array)
+                {
+                    inputActionMap.Enable();
+                }
             }
-        }
 
-        public static void DisableAll(this InputActionMap[] array)
-        {
-            foreach (var inputActionMap in array)
+            public static void DisableAll(this InputActionMap[] array)
             {
-                inputActionMap.Disable();
+                foreach (var inputActionMap in array)
+                {
+                    inputActionMap.Disable();
+                }
             }
         }
     }

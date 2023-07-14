@@ -1,7 +1,10 @@
-namespace GameCore.GUI
+namespace GameCore
 {
-    public interface IUIView<T, P> where T : IUIParameters where P :ISpecificController
+    namespace GUI
     {
-        public void Init(T parameters, P controller);
+        public interface IUIView<T, P> where T : IUIParameters where P : ISpecificController
+        {
+            public void Init(T parameters, P controller);
+        }
     }
 }

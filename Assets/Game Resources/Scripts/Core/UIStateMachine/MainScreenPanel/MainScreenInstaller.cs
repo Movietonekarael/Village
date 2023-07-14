@@ -1,34 +1,32 @@
 using GameCore.GUI;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using UnityEngine;
 using Zenject;
 
 
-namespace GameCore.Installers
+namespace GameCore
 {
-    public class MainScreenInstaller : MonoInstaller
+    namespace Installers
     {
-        public override void InstallBindings()
+        public class MainScreenInstaller : MonoInstaller
         {
-            BindView();
-            BindController();
-        }
+            public override void InstallBindings()
+            {
+                BindView();
+                BindController();
+            }
 
-        private void BindView()
-        {
-            UIElementInstaller.BindUiElement<MainScreenView, 
-                                             IMainScreenView,
-                                             IUIView<MainScreenViewParameters, IMainScreenController>>(Container);
-        }
+            private void BindView()
+            {
+                UIElementInstaller.BindUiElement<MainScreenView,
+                                                 IMainScreenView,
+                                                 IUIView<MainScreenViewParameters, IMainScreenController>>(Container);
+            }
 
-        private void BindController()
-        {
-            UIElementInstaller.BindUiElement<MainScreenController, 
-                                             IMainScreenController, 
-                                             IUIController<MainScreenViewParameters>>(Container);
+            private void BindController()
+            {
+                UIElementInstaller.BindUiElement<MainScreenController,
+                                                 IMainScreenController,
+                                                 IUIController<MainScreenViewParameters>>(Container);
+            }
         }
     }
 }
-

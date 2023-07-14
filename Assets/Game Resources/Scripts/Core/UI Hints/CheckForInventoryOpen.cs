@@ -1,46 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace GameCore.GameControls
+
+namespace GameCore
 {
-    public class CheckForInventoryOpen : MonoBehaviour, ISubscribable
+    namespace GameControls
     {
-        [Inject] private readonly IOpenCloseInventory _openCloseInventory;
-        private bool _isClosed = true;
-
-        private void Start()
+        public class CheckForInventoryOpen : MonoBehaviour, ISubscribable
         {
-            Subscribe();
-            SetObjectState();
-        }
+            [Inject] private readonly IOpenCloseInventory _openCloseInventory;
+            private bool _isClosed = true;
 
-        public void Subscribe()
-        {
-            _openCloseInventory.OnOpenCloseInventory += InventoryWasOpenedClosed;
-        }
+            private void Start()
+            {
+                Subscribe();
+                SetObjectState();
+            }
 
-        public void Unsubscribe()
-        {
-            _openCloseInventory.OnOpenCloseInventory -= InventoryWasOpenedClosed;
-        }
+            public void Subscribe()
+            {
+                _openCloseInventory.OnOpenCloseInventory += InventoryWasOpenedClosed;
+            }
 
-        public void InventoryWasOpenedClosed()
-        {
-            _isClosed = !_isClosed;
-            SetObjectState();
-        }
+            public void Unsubscribe()
+            {
+                _openCloseInventory.OnOpenCloseInventory -= InventoryWasOpenedClosed;
+            }
 
-        private void SetObjectState()
-        {
-            this.gameObject.SetActive(!_isClosed);
-        }
+            public void InventoryWasOpenedClosed()
+            {
+                _isClosed = !_isClosed;
+                SetObjectState();
+            }
 
-        private void OnDestroy()
-        {
-            Unsubscribe();
+            private void SetObjectState()
+            {
+                this.gameObject.SetActive(!_isClosed);
+            }
+
+            private void OnDestroy()
+            {
+                Unsubscribe();
+            }
         }
     }
 }
-

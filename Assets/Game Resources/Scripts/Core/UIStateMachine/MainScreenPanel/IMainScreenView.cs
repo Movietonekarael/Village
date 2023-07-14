@@ -1,11 +1,15 @@
 ﻿using GameCore.Inventory;
 
-namespace GameCore.GUI
+
+namespace GameCore
 {
-    public interface IMainScreenView : ISpecificView
+    namespace GUI
     {
-        public void SetActiveButton(int index);
-        public void SetItemInformation(int position, GameItem item);
-        public void MoveActiveButtonSelection(int direction);
+        public interface IMainScreenView : ISpecificView
+        {
+            public void SetActiveButton(int index);
+            public void SetItemInformation(int position, GameItem item);
+            public void MoveActiveButtonSelection(int direction);
+        }
     }
 }

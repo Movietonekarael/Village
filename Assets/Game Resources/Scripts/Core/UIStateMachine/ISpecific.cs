@@ -1,7 +1,10 @@
-﻿namespace GameCore.GUI
+﻿namespace GameCore
 {
-    public interface ISpecific
+    namespace GUI
     {
+        public interface ISpecific
+        {
 
+        }
     }
 }

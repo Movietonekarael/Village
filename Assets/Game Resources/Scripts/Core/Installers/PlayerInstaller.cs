@@ -3,42 +3,45 @@ using UnityEngine;
 using Zenject;
 
 
-namespace GameCore.Installers
+namespace GameCore
 {
-    public class PlayerInstaller : MonoInstaller
+    namespace Installers
     {
-        [SerializeField] private GameObject _playerPrefab;
-        [SerializeField] private PlayerSpawnPoint _spawnPoint;
-
-        public override void InstallBindings()
+        public class PlayerInstaller : MonoInstaller
         {
-            var instance = CreateInstance();
-            BindPlayer(instance);
-            BindInventory(instance);
-            BindHoldItem(instance);
-        }
+            [SerializeField] private GameObject _playerPrefab;
+            [SerializeField] private PlayerSpawnPoint _spawnPoint;
 
-        private GameObject CreateInstance()
-        {
-            return Container.InstantiatePrefab(_playerPrefab, _spawnPoint.transform.position, Quaternion.identity, null);
-        }
+            public override void InstallBindings()
+            {
+                var instance = CreateInstance();
+                BindPlayer(instance);
+                BindInventory(instance);
+                BindHoldItem(instance);
+            }
 
-        private void BindPlayer(GameObject playerInstance)
-        {
-            Container.Bind<GameObject>().WithId("Player").FromInstance(playerInstance).AsSingle().NonLazy();
-        }
+            private GameObject CreateInstance()
+            {
+                return Container.InstantiatePrefab(_playerPrefab, _spawnPoint.transform.position, Quaternion.identity, null);
+            }
 
-        private void BindInventory(GameObject playerInstance)
-        {
-            var playerInventory = playerInstance.GetComponent<PlayerInventory>();
-            Container.Bind<PlayerInventory>().FromInstance(playerInventory).AsCached().NonLazy();
-            Container.Bind<IInventory>().To<PlayerInventory>().FromInstance(playerInventory).AsCached().NonLazy();
-        }
+            private void BindPlayer(GameObject playerInstance)
+            {
+                Container.Bind<GameObject>().WithId("Player").FromInstance(playerInstance).AsSingle().NonLazy();
+            }
 
-        private void BindHoldItem(GameObject playerInstance)
-        {
-            var playerHoldItem = playerInstance.GetComponent<PlayerHoldItem>();
-            Container.Bind<PlayerHoldItem>().FromInstance(playerHoldItem).AsSingle().NonLazy();
+            private void BindInventory(GameObject playerInstance)
+            {
+                var playerInventory = playerInstance.GetComponent<PlayerInventory>();
+                Container.Bind<PlayerInventory>().FromInstance(playerInventory).AsCached().NonLazy();
+                Container.Bind<IInventory>().To<PlayerInventory>().FromInstance(playerInventory).AsCached().NonLazy();
+            }
+
+            private void BindHoldItem(GameObject playerInstance)
+            {
+                var playerHoldItem = playerInstance.GetComponent<PlayerHoldItem>();
+                Container.Bind<PlayerHoldItem>().FromInstance(playerHoldItem).AsSingle().NonLazy();
+            }
         }
     }
 }

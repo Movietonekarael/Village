@@ -1,9 +1,11 @@
-﻿namespace GameCore.GUI
+﻿namespace GameCore
 {
-    public interface IUIState
+    namespace GUI
     {
-        public void EnterState();
-        public void ExitState();
+        public interface IUIState
+        {
+            public void EnterState(params bool[] args);
+            public void ExitState();
+        }
     }
 }
-

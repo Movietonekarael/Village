@@ -1,20 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 
-namespace GameCore.Injectors
+namespace GameCore
 {
-    [RequireComponent(typeof(Canvas))]
-    public class InjectorForHintsCanvas : MonoBehaviour
+    namespace Injectors
     {
-        [Inject(Id = "UiCamera")] private Camera _uiCamera;
-
-        private void Awake()
+        [RequireComponent(typeof(Canvas))]
+        public class InjectorForHintsCanvas : MonoBehaviour
         {
-            var canvas = GetComponent<Canvas>();
-            canvas.worldCamera = _uiCamera;
+            [Inject(Id = "UiCamera")] private Camera _uiCamera;
+
+            private void Awake()
+            {
+                var canvas = GetComponent<Canvas>();
+                canvas.worldCamera = _uiCamera;
+            }
         }
     }
 }

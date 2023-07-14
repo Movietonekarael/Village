@@ -1,39 +1,39 @@
 using GameCore.GameControls;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 
-namespace GameCore.GUI
+namespace GameCore
 {
-    public sealed class PauseMenuUIState : BaseUIState<PauseMenuViewParameters, IPauseMenuController>
+    namespace GUI
     {
-        [Inject] private readonly IEscapable _escape;
-
-        [Header("Next state")]
-        [SerializeField]
-        [RequireInterface(typeof(IUIState))]
-        private UnityEngine.Object _mainScreenStateBase;
-
-        private IUIState _mainScreenState { get => _mainScreenStateBase as IUIState; }
-
-        protected override void StartState()
+        public sealed class PauseMenuUIState : BaseUIState<PauseMenuViewParameters, IPauseMenuController>
         {
-            _escape.OnEscape += ContinueGame;
-            _Controller.OnContinueGame += ContinueGame;
-        }
+            [Inject] private readonly IEscapable _escape;
 
-        protected override void EndState()
-        {
-            _escape.OnEscape -= ContinueGame;
-            _Controller.OnContinueGame -= ContinueGame;
-        }
+            [Header("Next state")]
+            [SerializeField]
+            [RequireInterface(typeof(IUIState))]
+            private UnityEngine.Object _mainScreenStateBase;
 
-        private void ContinueGame()
-        {
-            SwitchState(_mainScreenState);
+            private IUIState _mainScreenState { get => _mainScreenStateBase as IUIState; }
+
+            protected override void StartState(params bool[] args)
+            {
+                _escape.OnEscape += ContinueGame;
+                _Controller.OnContinueGame += ContinueGame;
+            }
+
+            protected override void EndState()
+            {
+                _escape.OnEscape -= ContinueGame;
+                _Controller.OnContinueGame -= ContinueGame;
+            }
+
+            private void ContinueGame()
+            {
+                SwitchState(_mainScreenState);
+            }
         }
     }
 }
-

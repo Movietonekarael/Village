@@ -2,27 +2,30 @@ using UnityEngine;
 using Zenject;
 
 
-namespace GameCore.Installers
+namespace GameCore
 {
-    public class PlayerInputInstaller : MonoInstaller
+    namespace Installers
     {
-        [SerializeField] private UnityEngine.InputSystem.PlayerInput _playerInput;
-        [SerializeField] private Transform _parentTransform;
-
-        public override void InstallBindings()
+        public class PlayerInputInstaller : MonoInstaller
         {
-            var playerInputInstance = CreateInstance();
-            BindPlayerInput(playerInputInstance);
-        }
+            [SerializeField] private UnityEngine.InputSystem.PlayerInput _playerInput;
+            [SerializeField] private Transform _parentTransform;
 
-        private UnityEngine.InputSystem.PlayerInput CreateInstance()
-        {
-            return Container.InstantiatePrefabForComponent<UnityEngine.InputSystem.PlayerInput>(_playerInput, _parentTransform);
-        }
+            public override void InstallBindings()
+            {
+                var playerInputInstance = CreateInstance();
+                BindPlayerInput(playerInputInstance);
+            }
 
-        private void BindPlayerInput(UnityEngine.InputSystem.PlayerInput playerInputInstance)
-        {
-            Container.Bind<UnityEngine.InputSystem.PlayerInput>().FromInstance(playerInputInstance).AsSingle().NonLazy();
+            private UnityEngine.InputSystem.PlayerInput CreateInstance()
+            {
+                return Container.InstantiatePrefabForComponent<UnityEngine.InputSystem.PlayerInput>(_playerInput, _parentTransform);
+            }
+
+            private void BindPlayerInput(UnityEngine.InputSystem.PlayerInput playerInputInstance)
+            {
+                Container.Bind<UnityEngine.InputSystem.PlayerInput>().FromInstance(playerInputInstance).AsSingle().NonLazy();
+            }
         }
     }
 }

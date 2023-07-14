@@ -1,10 +1,13 @@
 ﻿using System;
 
-namespace GameCore.GameControls
+
+namespace GameCore
 {
-    public interface IOpenCloseInventory
+    namespace GameControls
     {
-        public event Action OnOpenCloseInventory;
+        public interface IOpenCloseInventory
+        {
+            public event Action OnOpenCloseInventory;
+        }
     }
 }
-

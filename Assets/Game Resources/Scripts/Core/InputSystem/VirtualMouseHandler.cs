@@ -1,108 +1,110 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using PlayerInput;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.InputSystem.LowLevel;
-using Zenject;
 
-namespace GameCore.GameControls
+
+namespace GameCore
 {
-    public partial class InputHandler
+    namespace GameControls
     {
-        public sealed class VirtualMouseHandler : IMouseEnablable
+        public partial class InputHandler
         {
-            private const string _DEVICE_NAME = "VirtualMouse";
-
-            private readonly InputHandler _inputHandler;
-            private UnityEngine.InputSystem.PlayerInput _playerInput => _inputHandler._playerInput;
-            private RectTransform _pointerTransform => _inputHandler._pointerTransform;
-            private RealMouseHandler _realMouse => _inputHandler.RealMouse;
-
-            private Mouse _virtualMouse;
-            public Mouse VirtualMouse { get { return _virtualMouse; } }
-
-            public bool PreviousMouseState;
-
-            public VirtualMouseHandler(InputHandler inputHandler)
+            public sealed class VirtualMouseHandler : IMouseEnablable
             {
-                _inputHandler = inputHandler;
-                InitializeVirtualMouse();
-            }
+                private const string _DEVICE_NAME = "VirtualMouse";
 
-            private void InitializeVirtualMouse()
-            {
-                InputDevice virtualMouseInputDevice = InputSystem.GetDevice(_DEVICE_NAME);
+                private readonly InputHandler _inputHandler;
+                private UnityEngine.InputSystem.PlayerInput _playerInput => _inputHandler._playerInput;
+                private RectTransform _pointerTransform => _inputHandler.PointerTransform;
+                private RealMouseHandler _realMouse => _inputHandler.RealMouse;
 
-                if (virtualMouseInputDevice == null || !virtualMouseInputDevice.added)
+                private Mouse _virtualMouse;
+                public Mouse VirtualMouse => _virtualMouse;
+
+                public bool PreviousMouseState;
+
+                public VirtualMouseHandler(InputHandler inputHandler)
                 {
-                    _virtualMouse = (Mouse)InputSystem.AddDevice(_DEVICE_NAME);
-                }
-                else
-                {
-                    _virtualMouse = (Mouse)virtualMouseInputDevice;
+                    _inputHandler = inputHandler;
+                    InitializeVirtualMouse();
                 }
 
-                InputUser.PerformPairingWithDevice(_virtualMouse, _playerInput.user);   
-            }
+                private void InitializeVirtualMouse()
+                {
+                    InputDevice virtualMouseInputDevice = InputSystem.GetDevice(_DEVICE_NAME);
 
-            public void EnableMouse()
-            {
-                ActivateVirtualPointer();
-                InputSystem.EnableDevice(_virtualMouse);
-            }
+                    if (virtualMouseInputDevice == null || !virtualMouseInputDevice.added)
+                    {
+                        _virtualMouse = (Mouse)InputSystem.AddDevice(_DEVICE_NAME);
+                    }
+                    else
+                    {
+                        _virtualMouse = (Mouse)virtualMouseInputDevice;
+                    }
 
-            public void DisableMouse()
-            {
-                DeactivateVirtualPointer();
-                InputSystem.DisableDevice(_virtualMouse); 
-            }
+                    InputUser.PerformPairingWithDevice(_virtualMouse, _playerInput.user);
+                    _inputHandler._inputScheme.UI.GamepadVirtualMousePoint.Disable();
+                }
 
-            private void ActivateVirtualPointer()
-            {
-                _pointerTransform.gameObject.SetActive(true);
-                Cursor.visible = false;
-                SetPosition(_realMouse.GetPosition());
-                AnchorPointer(GetPosition());
-            }
+                public void EnableMouse()
+                {
+                    ActivateVirtualPointer();
+                    _inputHandler._inputScheme.UI.GamepadVirtualMousePoint.Enable();
+                    InputSystem.EnableDevice(_virtualMouse);
+                }
 
-            private void DeactivateVirtualPointer()
-            {
-                _pointerTransform.gameObject.SetActive(false);
-                Cursor.visible = true;
-                _realMouse.DisableMouse();
-                _realMouse.SetPosition(GetPosition());
-                _realMouse.EnableMouse();
-            }
+                public void DisableMouse()
+                {
+                    DeactivateVirtualPointer();
+                    _inputHandler._inputScheme.UI.GamepadVirtualMousePoint.Disable();
+                    InputSystem.DisableDevice(_virtualMouse);
+                }
 
-            private void AnchorPointer(Vector2 newPosition)
-            {
-                _pointerTransform.anchoredPosition = _inputHandler.AnchorPosition(newPosition);
-            }
+                private void ActivateVirtualPointer()
+                {
+                    _pointerTransform.gameObject.SetActive(true);
+                    Cursor.visible = false;
+                    SetPosition(_realMouse.GetPosition());
+                    AnchorPointer(GetPosition());
+                }
 
-            public void SetPosition(Vector2 position)
-            {
-                InputState.Change(_virtualMouse.position, position);
-            }
+                private void DeactivateVirtualPointer()
+                {
+                    _pointerTransform.gameObject.SetActive(false);
+                    Cursor.visible = true;
+                    _realMouse.DisableMouse();
+                    _realMouse.SetPosition(GetPosition());
+                    _realMouse.EnableMouse();
+                }
 
-            public void SetDelta(Vector2 delta) 
-            {
-                InputState.Change(_virtualMouse.delta, delta);
-            }
+                private void AnchorPointer(Vector2 newPosition)
+                {
+                    _pointerTransform.anchoredPosition = _inputHandler.AnchorPosition(newPosition);
+                }
 
-            public Vector2 GetPosition()
-            {
-                return _virtualMouse.position.ReadValue();
-            }
+                public void SetPosition(Vector2 position)
+                {
+                    InputState.Change(_virtualMouse.position, position);
+                }
 
-            public void PerformClick(bool isPressed)
-            {
-                _virtualMouse.CopyState<MouseState>(out var mouseState);
-                mouseState.WithButton(MouseButton.Left, isPressed);
-                InputState.Change(_virtualMouse, mouseState);
-                PreviousMouseState = isPressed;
+                public void SetDelta(Vector2 delta)
+                {
+                    InputState.Change(_virtualMouse.delta, delta);
+                }
+
+                public Vector2 GetPosition()
+                {
+                    return _virtualMouse.position.ReadValue();
+                }
+
+                public void PerformClick(bool isPressed)
+                {
+                    _virtualMouse.CopyState<MouseState>(out var mouseState);
+                    mouseState.WithButton(MouseButton.Left, isPressed);
+                    InputState.Change(_virtualMouse, mouseState);
+                    PreviousMouseState = isPressed;
+                }
             }
         }
     }

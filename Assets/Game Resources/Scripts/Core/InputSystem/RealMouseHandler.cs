@@ -3,49 +3,53 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
 
-namespace GameCore.GameControls
+namespace GameCore
 {
-    public partial class InputHandler
+    namespace GameControls
     {
-        public sealed class RealMouseHandler : IMouseEnablable
+        public partial class InputHandler
         {
-            private const string _DEVICE_NAME = "Mouse";
-
-            private Mouse _realMouse;
-
-            public RealMouseHandler(InputHandler inputHandler) 
-            { 
-                CacheRealMouse();
-            }
-
-            private void CacheRealMouse()
+            public sealed class RealMouseHandler : IMouseEnablable
             {
-                _realMouse = InputSystem.GetDevice(_DEVICE_NAME) as Mouse;
-            }
+                private const string _DEVICE_NAME = "Mouse";
 
-            public void EnableMouse()
-            {
-                InputSystem.EnableDevice(_realMouse);
-            }
+                private Mouse _realMouse;
+                public Mouse RealMouse => _realMouse;
 
-            public void DisableMouse()
-            {
-                InputSystem.DisableDevice(_realMouse);
-            }
+                public RealMouseHandler(InputHandler inputHandler)
+                {
+                    CacheRealMouse();
+                }
 
-            public void SetPosition(Vector2 position)
-            {
-                _realMouse.WarpCursorPosition(position);
-            }
+                private void CacheRealMouse()
+                {
+                    _realMouse = InputSystem.GetDevice(_DEVICE_NAME) as Mouse;
+                }
 
-            public void SetDelta(Vector2 delta)
-            {
-                InputState.Change(_realMouse.delta, delta);
-            }
+                public void EnableMouse()
+                {
+                    InputSystem.EnableDevice(_realMouse);
+                }
 
-            public Vector2 GetPosition()
-            {
-                return _realMouse.position.ReadValue();
+                public void DisableMouse()
+                {
+                    InputSystem.DisableDevice(_realMouse);
+                }
+
+                public void SetPosition(Vector2 position)
+                {
+                    _realMouse.WarpCursorPosition(position);
+                }
+
+                public void SetDelta(Vector2 delta)
+                {
+                    InputState.Change(_realMouse.delta, delta);
+                }
+
+                public Vector2 GetPosition()
+                {
+                    return _realMouse.position.ReadValue();
+                }
             }
         }
     }

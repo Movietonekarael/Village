@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
-namespace GameCore.GameControls
+
+namespace GameCore
 {
-    public interface ICameraRotator
+    namespace GameControls
     {
-        public event Action<Vector2, bool> OnCameraRotated;
+        public interface ICameraRotator
+        {
+            public event Action<Vector2, bool> OnCameraRotated;
+        }
     }
 }
-

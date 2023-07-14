@@ -1,116 +1,114 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine; 
-using GameCore.GameControls;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
-namespace GameCore.Inventory
+
+namespace GameCore
 {
-    public sealed class PlayerInventory : MonoBehaviour, IInventory
+    namespace Inventory
     {
-        [Header("Inventory: ")]
-        [SerializeField] private int _inventorySize = 32;
-        private GameItem[] _gameItems;
-
-        public Transform DropPoint;
-
-        public event Action<int> OnItemChanged;
-
-        public int GetInventorySize()
+        public sealed class PlayerInventory : MonoBehaviour, IInventory
         {
-            return _inventorySize;
-        }
+            [Header("Inventory: ")]
+            [SerializeField] private int _inventorySize = 32;
+            private GameItem[] _gameItems;
 
-        private void Start()
-        {
-            _gameItems = new GameItem[_inventorySize];
-        }
+            public Transform DropPoint;
 
-        public bool Push(ref GameItem item)
-        {
-            var result = PushItemToNextCell(ref item, 0);
+            public event Action<int> OnItemChanged;
 
-            return result;
-        }
-
-        private bool PushItemToNextCell(ref GameItem item, int startIndex)
-        {
-            for (var i = startIndex; i < _inventorySize; i++)
+            public int GetInventorySize()
             {
-                if (_gameItems[i] == null || _gameItems[i].Data == item.Data)
+                return _inventorySize;
+            }
+
+            private void Start()
+            {
+                _gameItems = new GameItem[_inventorySize];
+            }
+
+            public bool Push(ref GameItem item)
+            {
+                var result = PushItemToNextCell(ref item, 0);
+
+                return result;
+            }
+
+            private bool PushItemToNextCell(ref GameItem item, int startIndex)
+            {
+                for (var i = startIndex; i < _inventorySize; i++)
                 {
-                    var addResult = GameItem.Add(_gameItems[i], item);
-                    
-                    if (addResult.Item1)
+                    if (_gameItems[i] == null || _gameItems[i].Data == item.Data)
                     {
-                        _gameItems[i] = addResult.Item2;
-                        item = addResult.Item3;
-                        OnItemChanged?.Invoke(i);
-                        return true;
+                        var addResult = GameItem.Add(_gameItems[i], item);
+
+                        if (addResult.Item1)
+                        {
+                            _gameItems[i] = addResult.Item2;
+                            item = addResult.Item3;
+                            OnItemChanged?.Invoke(i);
+                            return true;
+                        }
+                        else
+                        {
+                            _gameItems[i] = addResult.Item3;
+                            item = addResult.Item2;
+                            return PushItemToNextCell(ref item, i + 1);
+                        }
                     }
-                    else
-                    {
-                        _gameItems[i] = addResult.Item3;
-                        item = addResult.Item2;
-                        return PushItemToNextCell(ref item, i + 1);
-                    }
+                }
+
+                Debug.Log("Inventory is full.");
+                return false;
+            }
+
+            public bool Push(ref GameItem item, int position)
+            {
+                var inventoryItem = _gameItems[position];
+                if (inventoryItem != null && inventoryItem.Data == item.Data)
+                {
+                    var addResult = GameItem.Add(inventoryItem, item);
+                    _gameItems[position] = addResult.Item2;
+                    item = addResult.Item3;
+                    OnItemChanged?.Invoke(position);
+                    return addResult.Item1;
+                }
+                else
+                {
+                    _gameItems[position] = item;
+                    item = inventoryItem;
+                    OnItemChanged?.Invoke(position);
+                    return true;
                 }
             }
 
-            Debug.Log("Inventory is full.");
-            return false;
-        }
-
-        public bool Push(ref GameItem item, int position)
-        {
-            var inventoryItem = _gameItems[position];
-            if (inventoryItem != null && inventoryItem.Data == item.Data)
+            public GameItem Pull(int position)
             {
-                var addResult = GameItem.Add(inventoryItem, item);
-                _gameItems[position] = addResult.Item2;
-                item = addResult.Item3;
+                var item = _gameItems[position];
+                _gameItems[position] = null;
                 OnItemChanged?.Invoke(position);
-                return addResult.Item1;
+                return item;
             }
-            else
+
+            public GameItem GetGameItem(int position)
             {
-                _gameItems[position] = item;
-                item = inventoryItem;
-                OnItemChanged?.Invoke(position);
-                return true;
+                return _gameItems[position];
             }
-        }
 
-        public GameItem Pull(int position)
-        {
-            var item = _gameItems[position];
-            _gameItems[position] = null;
-            OnItemChanged?.Invoke(position);
-            return item;
-        }
-
-        public GameItem GetGameItem(int position)
-        {
-            return _gameItems[position];
-        }
-
-        public void DropItem(int position)
-        {
-            var item = Pull(position);
-            for (var i = 0; i < item.Number; i++)
+            public void DropItem(int position)
             {
-                Instantiate(item.Prefab, DropPoint.position, Quaternion.identity);
+                var item = Pull(position);
+                for (var i = 0; i < item.Number; i++)
+                {
+                    Instantiate(item.Prefab, DropPoint.position, Quaternion.identity);
+                }
             }
-        }
 
-        public void MoveItem(int fromPosition, int toPosition)
-        {
-            if (fromPosition == toPosition) return;
-            Push(ref _gameItems[fromPosition], toPosition);
-            OnItemChanged?.Invoke(fromPosition);
+            public void MoveItem(int fromPosition, int toPosition)
+            {
+                if (fromPosition == toPosition) return;
+                Push(ref _gameItems[fromPosition], toPosition);
+                OnItemChanged?.Invoke(fromPosition);
+            }
         }
     }
 }

@@ -1,73 +1,71 @@
-using PlayerInput;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-namespace GameCore.GameControls
+namespace GameCore
 {
-    partial class InputHandler
+    namespace GameControls
     {
-        private sealed class PlayerMovementInputHandler : SubInputHandler
+        partial class InputHandler
         {
-            public PlayerMovementInputHandler(InputHandler inputHandler) : base(inputHandler) { }
-
-            protected override void RegisterForInputEvents()
+            private sealed class PlayerMovementInputHandler : SubInputHandler
             {
-                CheckForInputHandler(this.GetType().Name);
-                var inputActions = _InputHandler._inputScheme.PlayerControl;
-                inputActions.Movement.started += StartMoving;
-                inputActions.Movement.canceled += StopMoving;
-                inputActions.Movement.performed += Move;
-                inputActions.isRunning.started += SwitchRunState;
-                inputActions.Dash.started += Dash;
-                inputActions.Jump.performed += Jump;
-            }
+                public PlayerMovementInputHandler(InputHandler inputHandler) : base(inputHandler) { }
 
-            protected override void UnregisterForInputEvents()
-            {
-                CheckForInputHandler(this.GetType().Name);
-                var inputActions = _InputHandler._inputScheme.PlayerControl;
-                inputActions.Movement.started -= StartMoving;
-                inputActions.Movement.canceled -= StopMoving;
-                inputActions.Movement.performed -= Move;
-                inputActions.isRunning.started -= SwitchRunState;
-                inputActions.Dash.started -= Dash;
-                inputActions.Jump.performed -= Jump;
-            }
+                protected override void RegisterForInputEvents()
+                {
+                    CheckForInputHandler(this.GetType().Name);
+                    var inputActions = _InputHandler._inputScheme.PlayerControl;
+                    inputActions.Movement.started += StartMoving;
+                    inputActions.Movement.canceled += StopMoving;
+                    inputActions.Movement.performed += Move;
+                    inputActions.isRunning.started += SwitchRunState;
+                    inputActions.Dash.started += Dash;
+                    inputActions.Jump.performed += Jump;
+                }
 
-            private void StartMoving(InputAction.CallbackContext context)
-            {
-                _InputHandler.OnMovementStart?.Invoke();
-            }
+                protected override void UnregisterForInputEvents()
+                {
+                    CheckForInputHandler(this.GetType().Name);
+                    var inputActions = _InputHandler._inputScheme.PlayerControl;
+                    inputActions.Movement.started -= StartMoving;
+                    inputActions.Movement.canceled -= StopMoving;
+                    inputActions.Movement.performed -= Move;
+                    inputActions.isRunning.started -= SwitchRunState;
+                    inputActions.Dash.started -= Dash;
+                    inputActions.Jump.performed -= Jump;
+                }
 
-            private void StopMoving(InputAction.CallbackContext context)
-            {
-                _InputHandler.OnMovementFinish?.Invoke();
-            }
+                private void StartMoving(InputAction.CallbackContext context)
+                {
+                    _InputHandler.OnMovementStart?.Invoke();
+                }
 
-            private void Move(InputAction.CallbackContext context)
-            {
-                _InputHandler.OnMovement?.Invoke(context.ReadValue<Vector2>());
-            }
+                private void StopMoving(InputAction.CallbackContext context)
+                {
+                    _InputHandler.OnMovementFinish?.Invoke();
+                }
 
-            private void SwitchRunState(InputAction.CallbackContext context)
-            {
-                _InputHandler.OnRunningChanged?.Invoke();
-            }
+                private void Move(InputAction.CallbackContext context)
+                {
+                    _InputHandler.OnMovement?.Invoke(context.ReadValue<Vector2>());
+                }
 
-            private void Dash(InputAction.CallbackContext context)
-            {
-                _InputHandler.OnDashed?.Invoke();
-            }
+                private void SwitchRunState(InputAction.CallbackContext context)
+                {
+                    _InputHandler.OnRunningChanged?.Invoke();
+                }
 
-            private void Jump(InputAction.CallbackContext context)
-            {
-                _InputHandler.OnJumped?.Invoke();
+                private void Dash(InputAction.CallbackContext context)
+                {
+                    _InputHandler.OnDashed?.Invoke();
+                }
+
+                private void Jump(InputAction.CallbackContext context)
+                {
+                    _InputHandler.OnJumped?.Invoke();
+                }
             }
         }
     }
 }
-

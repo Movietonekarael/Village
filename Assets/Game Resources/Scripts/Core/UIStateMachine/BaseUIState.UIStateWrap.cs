@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 
-namespace GameCore.GUI
+
+namespace GameCore
 {
-    public abstract partial class BaseUIState<T, I> where T : IUIParameters, new()
-                                                    where I : ISpecificController
+    namespace GUI
     {
         [System.Serializable]
-        private class UIStateWrap
+        public class UIStateWrap
         {
             [SerializeField]
             [RequireInterface(typeof(IUIState))]
             private UnityEngine.Object _valueBase;
 
+            public bool[] Arguments;
+
             [HideInInspector] public IUIState Value { get => _valueBase as IUIState; }
         }
     }
 }
-

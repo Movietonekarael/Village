@@ -1,70 +1,70 @@
 using GameCore.GameControls;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace GameCore.Inventory
+
+namespace GameCore
 {
-    public sealed class InventoryButton : ItemCell, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, ISubscribable
+    namespace Inventory
     {
-        [Inject] private readonly InputHandler _inputHandler;
-
-        public Vector2Int Position;
-
-        public event Action OnPointerDownEvent;
-        public event Action OnPointerUpEvent;
-        public event Action<Vector2Int> OnPointerEnterEvent;
-        public event Action OnPointerExitEvent;
-
-
-        public void OnPointerDown(PointerEventData eventData)
+        public sealed class InventoryButton : ItemCell, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, ISubscribable
         {
-            OnPointerDownEvent?.Invoke();
-        }
+            [Inject] private readonly InputHandler _inputHandler;
 
-        private void OnControlsChanged(ControlScheme controlScheme)
-        {
-            UpPointer();
-        }
+            public Vector2Int Position;
 
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            UpPointer();
-        }
+            public event Action OnPointerDownEvent;
+            public event Action OnPointerUpEvent;
+            public event Action<Vector2Int> OnPointerEnterEvent;
+            public event Action OnPointerExitEvent;
 
-        private void UpPointer()
-        {
-            OnPointerUpEvent?.Invoke();
-        }
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            OnPointerEnterEvent?.Invoke(Position);
-        }
+            public void OnPointerDown(PointerEventData eventData)
+            {
+                OnPointerDownEvent?.Invoke();
+            }
 
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            OnPointerExitEvent?.Invoke();
-        }
+            private void OnControlsChanged(ControlScheme controlScheme)
+            {
+                UpPointer();
+            }
 
-        public void Subscribe()
-        {
-            _inputHandler.OnControlSchemeChanged += OnControlsChanged;
-        }
+            public void OnPointerUp(PointerEventData eventData)
+            {
+                UpPointer();
+            }
 
-        public void Unsubscribe()
-        {
-            _inputHandler.OnControlSchemeChanged -= OnControlsChanged;
-        }
+            private void UpPointer()
+            {
+                OnPointerUpEvent?.Invoke();
+            }
 
-        private void OnDestroy()
-        {
-            Unsubscribe();
+            public void OnPointerEnter(PointerEventData eventData)
+            {
+                OnPointerEnterEvent?.Invoke(Position);
+            }
+
+            public void OnPointerExit(PointerEventData eventData)
+            {
+                OnPointerExitEvent?.Invoke();
+            }
+
+            public void Subscribe()
+            {
+                _inputHandler.OnControlSchemeChanged += OnControlsChanged;
+            }
+
+            public void Unsubscribe()
+            {
+                _inputHandler.OnControlSchemeChanged -= OnControlsChanged;
+            }
+
+            private void OnDestroy()
+            {
+                Unsubscribe();
+            }
         }
     }
 }
-

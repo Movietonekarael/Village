@@ -1,27 +1,22 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameCore;
 
 
-namespace GameCore.Boot
+namespace GameCore
 {
-    public class ButtonsAppearAnimator : MonoBehaviour
+    namespace Boot
     {
-        [SerializeField] List<ButtonAppear> _buttonsAppears;
-
-        public void AppearAllButtons()
+        public class ButtonsAppearAnimator : MonoBehaviour
         {
-            foreach (var button in _buttonsAppears)
+            [SerializeField] List<ButtonAppear> _buttonsAppears;
+
+            public void AppearAllButtons()
             {
-                button.AppearButton();
+                foreach (var button in _buttonsAppears)
+                {
+                    button.AppearButton();
+                }
             }
         }
-
     }
-
-
-
-
 }
-

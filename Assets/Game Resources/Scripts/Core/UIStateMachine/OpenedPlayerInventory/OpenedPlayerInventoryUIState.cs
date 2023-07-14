@@ -1,39 +1,38 @@
 using GameCore.GameControls;
-using GameCore.Inventory;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
 
-namespace GameCore.GUI
+
+namespace GameCore
 {
-    public sealed class OpenedPlayerInventoryUIState : BaseUIState<OpenedPlayerInventoryViewParameters, IOpenedPlayerInventoryController>
+    namespace GUI
     {
-        [Inject] private readonly IOpenCloseInventory _openCloseInventory;
-
-        [Header("Next state")]
-        [SerializeField]
-        [RequireInterface(typeof(IUIState))]
-        private UnityEngine.Object _closeInventoryStateBase;
-
-        private IUIState _closeInventoryState { get => _closeInventoryStateBase as IUIState; }
-
-
-        protected override void StartState()
+        public sealed class OpenedPlayerInventoryUIState : BaseUIState<OpenedPlayerInventoryViewParameters, IOpenedPlayerInventoryController>
         {
-            _openCloseInventory.OnOpenCloseInventory += ClosePlayerInventory;
-        }
+            [Inject] private readonly IOpenCloseInventory _openCloseInventory;
 
-        protected override void EndState()
-        {
-            _openCloseInventory.OnOpenCloseInventory -= ClosePlayerInventory;
-        }
+            [Header("Next state")]
+            [SerializeField]
+            [RequireInterface(typeof(IUIState))]
+            private UnityEngine.Object _closeInventoryStateBase;
 
-        private void ClosePlayerInventory()
-        {
-            SwitchState(_closeInventoryState);
+            private IUIState _closeInventoryState { get => _closeInventoryStateBase as IUIState; }
+
+
+            protected override void StartState(params bool[] args)
+            {
+                _openCloseInventory.OnOpenCloseInventory += ClosePlayerInventory;
+            }
+
+            protected override void EndState()
+            {
+                _openCloseInventory.OnOpenCloseInventory -= ClosePlayerInventory;
+            }
+
+            private void ClosePlayerInventory()
+            {
+                SwitchState(_closeInventoryState);
+            }
         }
     }
 }
-

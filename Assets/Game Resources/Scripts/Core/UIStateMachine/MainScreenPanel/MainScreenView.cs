@@ -1,162 +1,161 @@
 using GameCore.Inventory;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using Zenject;
 
-namespace GameCore.GUI
+
+namespace GameCore
 {
-    public sealed class MainScreenView : UIView<MainScreenViewParameters, IMainScreenController, IMainScreenView>, IMainScreenView
+    namespace GUI
     {
-        private const string _CANVAS_NAME = "MainScreenCanvas";
-        private GameObject _canvasPrefab => _Parameters.CanvasPrefab;
-        private GameObject _canvasObject;
-        private GameObject _itemCellPrefab => _Parameters.ItemCellPrefab;
-
-        private int _numberOfItemsToShow => (int)_Parameters.NumberOfItemsToShow;
-        private Vector2Int _itemIndent => _Parameters.ItemIndent;
-        private Vector2Int _itemDelta => _Parameters.ItemDelta;
-
-        [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
-
-        private ItemCell[] _itemCells;
-        private int _currentActiveButton = 0;
-
-        public override void Activate()
+        public sealed class MainScreenView : UIView<MainScreenViewParameters, IMainScreenController, IMainScreenView>, IMainScreenView
         {
-            _canvasObject.SetActive(true);
-            EnableActiveButton();
-        }
+            private const string _CANVAS_NAME = "MainScreenCanvas";
+            private GameObject _canvasPrefab => _Parameters.CanvasPrefab;
+            private GameObject _canvasObject;
+            private GameObject _itemCellPrefab => _Parameters.ItemCellPrefab;
 
-        public override void Deactivate()
-        {
-            _canvasObject.SetActive(false);
-        }
+            private int _numberOfItemsToShow => (int)_Parameters.NumberOfItemsToShow;
+            private Vector2Int _itemIndent => _Parameters.ItemIndent;
+            private Vector2Int _itemDelta => _Parameters.ItemDelta;
 
-        public override void Deinitialize()
-        {
-            InstantiateService.DestroyObject(_canvasObject);
-        }
+            [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
 
-        protected override void InstantiateViewElements()
-        {
-            InstantiateCanvas();
-            var buttons = InstantiateButtons();
-            CacheInventoryButtons(buttons);
-            Deactivate();
-        }
+            private ItemCell[] _itemCells;
+            private int _currentActiveButton = 0;
 
-        private void InstantiateCanvas()
-        {
-            _canvasObject = InstantiateService.InstantiateObject(_canvasPrefab);
-            _canvasObject.name = _CANVAS_NAME;
-            var canvas = _canvasObject.GetComponent<Canvas>();
-            canvas.worldCamera = _uiCamera;
-        }
-
-        public void SetActiveButton(int index)
-        {
-            if (!CheckIfActiveButtonIndexWasChanged(index))
-                return;
-            if (CheckIfNewButtonIndexOutOfRange(index))
-                return;
-
-            DisableActiveButton();
-            _currentActiveButton = index;
-            EnableActiveButton();
-        }
-
-        public void MoveActiveButtonSelection(int direction)
-        {
-            DisableActiveButton();
-            _currentActiveButton += direction;
-            HandleCurrentActiveButtonForOutOfRange();
-            EnableActiveButton();
-        }
-
-        public void SetItemInformation(int position, GameItem item)
-        {
-            if (position >= _numberOfItemsToShow)
-                return;
-
-            _itemCells[position].SetItem(item);
-        }
-
-        private GameObject[] InstantiateButtons()
-        {
-            var buttons = new GameObject[_numberOfItemsToShow];
-            for (var i = 0; i < _numberOfItemsToShow; i++) 
+            public override void Activate()
             {
-                var itemButton = InstantiateService.InstantiateObject(_itemCellPrefab, _canvasObject.transform);
-                SetButtonAnchoredPosition(itemButton, i);
-                buttons[i] = itemButton;
+                _canvasObject.SetActive(true);
+                EnableActiveButton();
             }
-            SetActiveButton(0);
-            return buttons;
-        }
 
-        private void SetButtonAnchoredPosition(GameObject itemButton, int numberOfButton)
-        {
-            var itemButtonRect = itemButton.GetComponent<RectTransform>();
-
-            itemButtonRect.anchorMax = new Vector2(.5f, 0f);
-            itemButtonRect.anchorMin = new Vector2(.5f, 0f);
-
-            itemButtonRect.anchoredPosition = new Vector2(-_itemDelta.x * (_numberOfItemsToShow / 2 - 1) -
-                                                   (_numberOfItemsToShow % 2 != 0 ? 0 : _itemDelta.x / 2) +
-                                                   _itemDelta.x * numberOfButton, -_itemIndent.y);
-        }
-
-        private void CacheInventoryButtons(GameObject[] buttons)
-        {
-            _itemCells = new ItemCell[_numberOfItemsToShow];
-            for (var i = 0; i < _numberOfItemsToShow; i++)
+            public override void Deactivate()
             {
-                _itemCells[i] = buttons[i].GetComponent<ItemCell>();
+                _canvasObject.SetActive(false);
             }
-        }
 
-        private bool CheckIfActiveButtonIndexWasChanged(int index)
-        {
-            return index != _currentActiveButton;
-        }
-
-        private bool CheckIfNewButtonIndexOutOfRange(int index)
-        {
-            if (index >= _numberOfItemsToShow || index < 0)
+            public override void Deinitialize()
             {
-                return true;
+                InstantiateService.DestroyObject(_canvasObject);
             }
-            return false;
-        }
 
-        private void HandleCurrentActiveButtonForOutOfRange()
-        {
-            if (_currentActiveButton >= _numberOfItemsToShow)
+            protected override void InstantiateViewElements()
             {
-                _currentActiveButton %= _numberOfItemsToShow;
+                InstantiateCanvas();
+                var buttons = InstantiateButtons();
+                CacheInventoryButtons(buttons);
+                Deactivate();
             }
-            while (_currentActiveButton < 0)
+
+            private void InstantiateCanvas()
             {
-                _currentActiveButton += _numberOfItemsToShow;
+                _canvasObject = InstantiateService.InstantiateObject(_canvasPrefab);
+                _canvasObject.name = _CANVAS_NAME;
+                var canvas = _canvasObject.GetComponent<Canvas>();
+                canvas.worldCamera = _uiCamera;
             }
-        }
 
-        private void DisableActiveButton()
-        {
-            _itemCells?[_currentActiveButton].SetInactive();
-        }
-
-        private void EnableActiveButton()
-        {
-            var itemCell = _itemCells?[_currentActiveButton];
-            if (itemCell != null) 
+            public void SetActiveButton(int index)
             {
-                itemCell.SetActive();
-                _Controller.SetActiveItem(_currentActiveButton);
+                if (!CheckIfActiveButtonIndexWasChanged(index))
+                    return;
+                if (CheckIfNewButtonIndexOutOfRange(index))
+                    return;
+
+                DisableActiveButton();
+                _currentActiveButton = index;
+                EnableActiveButton();
+            }
+
+            public void MoveActiveButtonSelection(int direction)
+            {
+                DisableActiveButton();
+                _currentActiveButton += direction;
+                HandleCurrentActiveButtonForOutOfRange();
+                EnableActiveButton();
+            }
+
+            public void SetItemInformation(int position, GameItem item)
+            {
+                if (position >= _numberOfItemsToShow)
+                    return;
+
+                _itemCells[position].SetItem(item);
+            }
+
+            private GameObject[] InstantiateButtons()
+            {
+                var buttons = new GameObject[_numberOfItemsToShow];
+                for (var i = 0; i < _numberOfItemsToShow; i++)
+                {
+                    var itemButton = InstantiateService.InstantiateObject(_itemCellPrefab, _canvasObject.transform);
+                    SetButtonAnchoredPosition(itemButton, i);
+                    buttons[i] = itemButton;
+                }
+                SetActiveButton(0);
+                return buttons;
+            }
+
+            private void SetButtonAnchoredPosition(GameObject itemButton, int numberOfButton)
+            {
+                var itemButtonRect = itemButton.GetComponent<RectTransform>();
+
+                itemButtonRect.anchorMax = new Vector2(.5f, 0f);
+                itemButtonRect.anchorMin = new Vector2(.5f, 0f);
+
+                itemButtonRect.anchoredPosition = new Vector2(-_itemDelta.x * (_numberOfItemsToShow / 2 - 1) -
+                                                       (_numberOfItemsToShow % 2 != 0 ? 0 : _itemDelta.x / 2) +
+                                                       _itemDelta.x * numberOfButton, -_itemIndent.y);
+            }
+
+            private void CacheInventoryButtons(GameObject[] buttons)
+            {
+                _itemCells = new ItemCell[_numberOfItemsToShow];
+                for (var i = 0; i < _numberOfItemsToShow; i++)
+                {
+                    _itemCells[i] = buttons[i].GetComponent<ItemCell>();
+                }
+            }
+
+            private bool CheckIfActiveButtonIndexWasChanged(int index)
+            {
+                return index != _currentActiveButton;
+            }
+
+            private bool CheckIfNewButtonIndexOutOfRange(int index)
+            {
+                if (index >= _numberOfItemsToShow || index < 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            private void HandleCurrentActiveButtonForOutOfRange()
+            {
+                if (_currentActiveButton >= _numberOfItemsToShow)
+                {
+                    _currentActiveButton %= _numberOfItemsToShow;
+                }
+                while (_currentActiveButton < 0)
+                {
+                    _currentActiveButton += _numberOfItemsToShow;
+                }
+            }
+
+            private void DisableActiveButton()
+            {
+                _itemCells?[_currentActiveButton].SetInactive();
+            }
+
+            private void EnableActiveButton()
+            {
+                var itemCell = _itemCells?[_currentActiveButton];
+                if (itemCell != null)
+                {
+                    itemCell.SetActive();
+                    _Controller.SetActiveItem(_currentActiveButton);
+                }
             }
         }
     }

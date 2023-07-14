@@ -1,10 +1,13 @@
 ﻿using System;
 
-namespace GameCore.GameControls
+
+namespace GameCore
 {
-    public interface ICameraZoomer
+    namespace GameControls
     {
-        public event Action<float> OnCameraZoomed;
+        public interface ICameraZoomer
+        {
+            public event Action<float> OnCameraZoomed;
+        }
     }
 }
-

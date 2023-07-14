@@ -1,66 +1,67 @@
 using GameCore.Interactions;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace GameCore.Inventory
+namespace GameCore
 {
-    public class GameItemMono : MonoBehaviour, IInteractable
+    namespace Inventory
     {
-        public GameItem Item;
-        [SerializeField] private GameItemData _data;
-        [SerializeField] private int _number = 1;
-
-        public string InteractionMessage => Item.Name;
-
-
-        public bool Interact(Interactor interactor)
+        public class GameItemMono : MonoBehaviour, IInteractable
         {
-            return CheckInventoryAndPushItemToIt(interactor);
-        }
+            public GameItem Item;
+            [SerializeField] private GameItemData _data;
+            [SerializeField] private int _number = 1;
 
-        private bool CheckInventoryAndPushItemToIt(Interactor interactor)
-        {
-            var inventory = interactor.Inventory;
+            public string InteractionMessage => Item.Name;
 
-            CheckInventory(inventory);
-            return PushItemToInventory(inventory);
-        }
 
-        private void CheckInventory(IInventory inventory)
-        {
-            if (inventory == null)
+            public bool Interact(Interactor interactor)
             {
-                throw new System.Exception("No inventory found for interactable item.");
+                return CheckInventoryAndPushItemToIt(interactor);
             }
-        }
 
-        private bool PushItemToInventory(IInventory inventory)
-        {
-            if (inventory.Push(ref Item))
+            private bool CheckInventoryAndPushItemToIt(Interactor interactor)
             {
-                Destroy(this.gameObject);
-                return true;
+                var inventory = interactor.Inventory;
+
+                CheckInventory(inventory);
+                return PushItemToInventory(inventory);
             }
-            else
+
+            private void CheckInventory(IInventory inventory)
             {
-                return false;
+                if (inventory == null)
+                {
+                    throw new System.Exception("No inventory found for interactable item.");
+                }
             }
-        }
 
-        private void Start()
-        {
-            InitializeGameItem();
-        }
-
-        private void InitializeGameItem()
-        {
-            Item ??= new()
+            private bool PushItemToInventory(IInventory inventory)
             {
-                Data = _data,
-                Number = _number
-            };
+                if (inventory.Push(ref Item))
+                {
+                    Destroy(this.gameObject);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            private void Start()
+            {
+                InitializeGameItem();
+            }
+
+            private void InitializeGameItem()
+            {
+                Item ??= new()
+                {
+                    Data = _data,
+                    Number = _number
+                };
+            }
         }
     }
 }

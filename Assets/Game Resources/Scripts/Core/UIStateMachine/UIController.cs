@@ -1,66 +1,69 @@
 using Zenject;
-using GameCore.GameControls;
 
-namespace GameCore.GUI
+
+namespace GameCore
 {
-    public abstract class UIController<T, P, I> : IUIController<T>,
-                                               ISpecificController,
-                                               ISubscribable, 
-                                               IDeinitializable<P>, 
-                                               IActivatable<P>
-                                               where T : IUIParameters
-                                               where P : class, ISpecificController
-                                               where I : ISpecificView
+    namespace GUI
     {
-        [Inject] protected I _SpecificView;
-        [Inject] private IUIView<T, P> _view;
-        [Inject] private IDeinitializable<I> _viewDeinitializator;
-        [Inject] private IActivatable<I> _viewActivator;
-
-        protected abstract void SubscribeForEvents();
-        protected abstract void UnsubscribeForEvents();
-        protected abstract void InitializeParameters(T parameters);
-        protected abstract void OnActivate();
-        protected abstract void OnDeactivate();
-
-        public void Init(T parameters)
+        public abstract class UIController<T, P, I> : IUIController<T>,
+                                                   ISpecificController,
+                                                   ISubscribable,
+                                                   IDeinitializable<P>,
+                                                   IActivatable<P>
+                                                   where T : IUIParameters
+                                                   where P : class, ISpecificController
+                                                   where I : ISpecificView
         {
-            InitializeParameters(parameters);
-            InitializeView(parameters);
-            Subscribe();
-        }
+            [Inject] protected I _SpecificView;
+            [Inject] private IUIView<T, P> _view;
+            [Inject] private IDeinitializable<I> _viewDeinitializator;
+            [Inject] private IActivatable<I> _viewActivator;
 
-        private void InitializeView(T parameters)
-        {
-            _view.Init(parameters, this as P);
-        }
+            protected abstract void SubscribeForEvents();
+            protected abstract void UnsubscribeForEvents();
+            protected abstract void InitializeParameters(T parameters);
+            protected abstract void OnActivate();
+            protected abstract void OnDeactivate();
 
-        public void Subscribe()
-        {
-            SubscribeForEvents();
-        }
+            public void Init(T parameters)
+            {
+                InitializeParameters(parameters);
+                InitializeView(parameters);
+                Subscribe();
+            }
 
-        public void Unsubscribe()
-        {
-            UnsubscribeForEvents();
-        }
+            private void InitializeView(T parameters)
+            {
+                _view.Init(parameters, this as P);
+            }
 
-        public void Deinitialize()
-        {
-            Unsubscribe();
-            _viewDeinitializator?.Deinitialize();
-        }
+            public void Subscribe()
+            {
+                SubscribeForEvents();
+            }
 
-        public void Activate()
-        {
-            _viewActivator?.Activate();
-            OnActivate();
-        }
+            public void Unsubscribe()
+            {
+                UnsubscribeForEvents();
+            }
 
-        public void Deactivate()
-        {
-            _viewActivator?.Deactivate();
-            OnDeactivate();
+            public void Deinitialize()
+            {
+                Unsubscribe();
+                _viewDeinitializator?.Deinitialize();
+            }
+
+            public void Activate()
+            {
+                _viewActivator?.Activate();
+                OnActivate();
+            }
+
+            public void Deactivate()
+            {
+                _viewActivator?.Deactivate();
+                OnDeactivate();
+            }
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using System;
 
-namespace GameCore.GameControls
+
+namespace GameCore
 {
-    public interface IInventoryPress
+    namespace GameControls
     {
-        public event Action<int> OnInventoryKeyPressed;
-        public event Action<int> OnInventoryArrowPressed;
+        public interface IInventoryPress
+        {
+            public event Action<int> OnInventoryKeyPressed;
+            public event Action<int> OnInventoryArrowPressed;
+        }
     }
 }
-

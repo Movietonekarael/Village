@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace GameCore.GUI
+namespace GameCore
 {
-    [RequireComponent(typeof(CurcularMenuController))]
-    public class CurcularMenuView : MonoBehaviour
+    namespace GUI
     {
-        
+        [RequireComponent(typeof(CurcularMenuController))]
+        public class CurcularMenuView : MonoBehaviour
+        {
+
+        }
     }
 }
-

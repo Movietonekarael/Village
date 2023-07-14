@@ -1,65 +1,66 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameCore.GameMovement
+
+namespace GameCore
 {
-    public abstract partial class NPCMovementStateMachine
+    namespace GameMovement
     {
-        public class NPCMovementRunState : NPCMovementAnyMoveState
+        public abstract partial class NPCMovementStateMachine
         {
-            private bool _dashed = false;
-
-            public NPCMovementRunState(NPCMovementStateMachine currentStateMachine) 
-            : base(currentStateMachine) { }
-
-            public override void EnterState()
+            public class NPCMovementRunState : NPCMovementAnyMoveState
             {
-                base.EnterState();
+                private bool _dashed = false;
 
-                _Movement.OnDashed += Dash;
-            }
+                public NPCMovementRunState(NPCMovementStateMachine currentStateMachine)
+                : base(currentStateMachine) { }
 
-            public override void UpdateState()
-            {
-                base.UpdateState();
-
-                if (!_StateMachine._isRunning)
-                    SetWalkState();
-            }
-
-            public override void ExitState()
-            {
-                base.ExitState();
-
-                _dashed = false;
-                _Movement.OnDashed -= Dash;
-            }
-
-            //----------------------------------------------------------Local methods------------------------------------------------------//
-
-            private void SetWalkState()
-            {
-                SwitchState(_StateMachine._walkState);
-            }
-
-            private void Dash()
-            {
-                if (!_dashed)
+                public override void EnterState()
                 {
-                    _dashed = true;
-                    _StateMachine._animatorController.SetTrigger(_StateMachine._dashTriggerHash);
-                }
-            }
+                    base.EnterState();
 
-            protected override Vector3 SetLimitedTargetVelocity(Vector3 vec)
-            {
-                if (!_dashed)
-                    return vec.normalized * _StateMachine._slowRunVelocityLimit;
-                else
-                    return vec.normalized * _StateMachine._fastRunVelocityLimit;
+                    _Movement.OnDashed += Dash;
+                }
+
+                public override void UpdateState()
+                {
+                    base.UpdateState();
+
+                    if (!_StateMachine._isRunning)
+                        SetWalkState();
+                }
+
+                public override void ExitState()
+                {
+                    base.ExitState();
+
+                    _dashed = false;
+                    _Movement.OnDashed -= Dash;
+                }
+
+                //----------------------------------------------------------Local methods------------------------------------------------------//
+
+                private void SetWalkState()
+                {
+                    SwitchState(_StateMachine._walkState);
+                }
+
+                private void Dash()
+                {
+                    if (!_dashed)
+                    {
+                        _dashed = true;
+                        _StateMachine._animatorController.SetTrigger(_StateMachine._dashTriggerHash);
+                    }
+                }
+
+                protected override Vector3 SetLimitedTargetVelocity(Vector3 vec)
+                {
+                    if (!_dashed)
+                        return vec.normalized * _StateMachine._slowRunVelocityLimit;
+                    else
+                        return vec.normalized * _StateMachine._fastRunVelocityLimit;
+                }
             }
         }
     }
 }
-

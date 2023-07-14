@@ -1,12 +1,15 @@
-﻿namespace GameCore.GameControls
+﻿namespace GameCore
 {
-    public static class HoldControlExtensions
+    namespace GameControls
     {
-        public static void UpdateAll(this IHoldControl[] array)
+        public static class HoldControlExtensions
         {
-            foreach (var item in array)
+            public static void UpdateAll(this IHoldControl[] array)
             {
-                item.Update();
+                foreach (var item in array)
+                {
+                    item.Update();
+                }
             }
         }
     }

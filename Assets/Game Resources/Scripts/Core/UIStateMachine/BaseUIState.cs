@@ -1,101 +1,100 @@
-using GameCore.GameControls;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using System;
-using GameCore.Inventory;
 
-namespace GameCore.GUI
+
+namespace GameCore
 {
-    [RequireComponent(typeof(UIStateMachine))]
-    public abstract partial class BaseUIState<T, I> : MonoBehaviour, IUIState 
-                                                      where T : IUIParameters, new()
-                                                      where I : ISpecificController
+    namespace GUI
     {
-        private UIStateMachine _stateMachine;
-        protected UIStateMachine _StateMachine { get { return _stateMachine; } }
-
-        [SerializeField] private T _parameters;
-
-        [SerializeField] private List<UIStateWrap> _substates;
-
-        [Inject] private readonly IUIController<T> _uiController;
-        [Inject] protected I _Controller;
-        [Inject] private readonly IDeinitializable<I> _controllerDeinitializator;
-        [Inject] private readonly IActivatable<I> _controllerActivator;
-
-        private void Awake()
+        [RequireComponent(typeof(UIStateMachine))]
+        public abstract partial class BaseUIState<T, I> : MonoBehaviour, IUIState
+                                                          where T : IUIParameters, new()
+                                                          where I : ISpecificController
         {
-            _stateMachine = GetComponent<UIStateMachine>();
-            InitializeController();
-        }
+            private UIStateMachine _stateMachine;
+            protected UIStateMachine _StateMachine { get { return _stateMachine; } }
 
-        private void OnDestroy()
-        {
-            DeinitializeController();
-        }
+            [SerializeField] private T _parameters;
 
-        protected abstract void StartState();
-        protected abstract void EndState();
+            [SerializeField] private List<UIStateWrap> _substates;
 
-        private void InitializeController()
-        {
-            InitializeParametersIfNull();
-            _uiController.Init(_parameters);
-        }
+            [Inject] private readonly IUIController<T> _uiController;
+            [Inject] protected I _Controller;
+            [Inject] private readonly IDeinitializable<I> _controllerDeinitializator;
+            [Inject] private readonly IActivatable<I> _controllerActivator;
 
-        private void InitializeParametersIfNull()
-        {
-            _parameters ??= new();
-        }
-
-        private void DeinitializeController()
-        {
-            _controllerDeinitializator?.Deinitialize();
-        }        
-
-        public void EnterState()
-        {
-            _controllerActivator?.Activate();
-            StartState();
-            EnterSubstates();
-        }
-
-        public void ExitState()
-        {
-            _controllerActivator?.Deactivate();
-            EndState();
-            ExitSubstates();
-        }
-
-        private void EnterSubstates()
-        {
-            foreach (var substate in _substates) 
+            private void Awake()
             {
-                substate.Value.EnterState();
+                _stateMachine = GetComponent<UIStateMachine>();
+                InitializeController();
             }
-        }
 
-        private void ExitSubstates()
-        {
-            foreach (var substate in _substates)
+            private void OnDestroy()
             {
-                substate.Value.ExitState();
+                DeinitializeController();
             }
-        }
 
-        protected void SwitchState(IUIState newState)
-        {
-            if (newState != null)
+            protected abstract void StartState(params bool[] args);
+            protected abstract void EndState();
+
+            private void InitializeController()
             {
-                ExitState();
+                InitializeParametersIfNull();
+                _uiController.Init(_parameters);
+            }
 
-                newState.EnterState();
+            private void InitializeParametersIfNull()
+            {
+                _parameters ??= new();
+            }
 
-                _stateMachine.CurrentState = newState;
+            private void DeinitializeController()
+            {
+                _controllerDeinitializator?.Deinitialize();
+            }
+
+            public void EnterState(params bool[] args)
+            {
+                StartState(args);
+                _controllerActivator?.Activate();
+                EnterSubstates();
+            }
+
+            public void ExitState()
+            {
+                EndState();
+                _controllerActivator?.Deactivate();
+                ExitSubstates();
+            }
+
+            private void EnterSubstates()
+            {
+                foreach (var substate in _substates)
+                {
+                    substate.Value.EnterState(substate.Arguments);
+                }
+            }
+
+            private void ExitSubstates()
+            {
+                foreach (var substate in _substates)
+                {
+                    substate.Value.ExitState();
+                }
+            }
+
+            protected void SwitchState(IUIState newState)
+            {
+                if (newState != null)
+                {
+                    ExitState();
+
+                    newState.EnterState();
+
+                    _stateMachine.CurrentState = newState;
+                }
             }
         }
     }
 }
-

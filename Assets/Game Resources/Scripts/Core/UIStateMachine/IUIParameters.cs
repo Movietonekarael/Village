@@ -1,7 +1,10 @@
-namespace GameCore.GUI
+namespace GameCore
 {
-    public interface IUIParameters
-    { 
+    namespace GUI
+    {
+        public interface IUIParameters
+        {
 
+        }
     }
 }

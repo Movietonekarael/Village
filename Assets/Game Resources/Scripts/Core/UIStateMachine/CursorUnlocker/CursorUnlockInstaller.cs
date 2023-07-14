@@ -1,29 +1,33 @@
 ﻿using GameCore.GUI;
 using Zenject;
 
-namespace GameCore.Installers
+
+namespace GameCore
 {
-    public class CursorUnlockInstaller : MonoInstaller
+    namespace Installers
     {
-        public override void InstallBindings()
+        public class CursorUnlockInstaller : MonoInstaller
         {
-            BindView();
-            BindController();
-        }
+            public override void InstallBindings()
+            {
+                BindView();
+                BindController();
+            }
 
-        private void BindView()
-        {
-            UIElementInstaller.BindUiElement<CursorUnlockView,
-                                             ICursorUnlockView,
-                                             IUIView<CursorUnlockViewParameters,
-                                             ICursorUnlockController>>(Container);
-        }
+            private void BindView()
+            {
+                UIElementInstaller.BindUiElement<CursorUnlockView,
+                                                 ICursorUnlockView,
+                                                 IUIView<CursorUnlockViewParameters,
+                                                 ICursorUnlockController>>(Container);
+            }
 
-        private void BindController()
-        {
-            UIElementInstaller.BindUiElement<CursorUnlockController,
-                                             ICursorUnlockController,
-                                             IUIController<CursorUnlockViewParameters>>(Container);
+            private void BindController()
+            {
+                UIElementInstaller.BindUiElement<CursorUnlockController,
+                                                 ICursorUnlockController,
+                                                 IUIController<CursorUnlockViewParameters>>(Container);
+            }
         }
     }
 }

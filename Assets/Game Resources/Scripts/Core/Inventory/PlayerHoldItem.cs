@@ -1,56 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameCore.Inventory
+
+namespace GameCore
 {
-    public class PlayerHoldItem : MonoBehaviour
+    namespace Inventory
     {
-        [SerializeField] private Transform _holdPoint;
-        [SerializeField] private MeshFilter _meshFilter;
-        [SerializeField] private MeshRenderer _meshRenderer;
-
-        private GameItem _item;
-
-        public GameItem Item
+        public class PlayerHoldItem : MonoBehaviour
         {
-            set
+            [SerializeField] private Transform _holdPoint;
+            [SerializeField] private MeshFilter _meshFilter;
+            [SerializeField] private MeshRenderer _meshRenderer;
+
+            private GameItem _item;
+
+            public GameItem Item
             {
-                _item = value;
-                ChangeItemMesh();
-            }
-        }
-
-
-        private void ChangeItemMesh()
-        {
-
-            if (_item is not null)
-            {
-                var meshInfo = _item.Prefab.GetComponent<InventoryItemMeshInfo>();
-
-                if (meshInfo == null)
+                set
                 {
-                    Debug.LogError("No InventoryItemMeshInfo on Storable prefab. Name: " + _item.Name);
-                    return;
+                    _item = value;
+                    ChangeItemMesh();
                 }
-
-                _meshFilter.sharedMesh = meshInfo.MeshFilter.sharedMesh;
-
-
-                _meshRenderer.sharedMaterial = meshInfo.MeshRenderer.sharedMaterial;
-
-
-                _holdPoint.localScale = _item.Prefab.transform.localScale;
-                _holdPoint.localScale *= .01f;
             }
-            else
+
+
+            private void ChangeItemMesh()
             {
-                _meshFilter.sharedMesh = null;
-                _meshRenderer.sharedMaterial = null;
-            }
-        }
 
+                if (_item is not null)
+                {
+                    var meshInfo = _item.Prefab.GetComponent<InventoryItemMeshInfo>();
+
+                    if (meshInfo == null)
+                    {
+                        Debug.LogError("No InventoryItemMeshInfo on Storable prefab. Name: " + _item.Name);
+                        return;
+                    }
+
+                    _meshFilter.sharedMesh = meshInfo.MeshFilter.sharedMesh;
+
+
+                    _meshRenderer.sharedMaterial = meshInfo.MeshRenderer.sharedMaterial;
+
+
+                    _holdPoint.localScale = _item.Prefab.transform.localScale;
+                    _holdPoint.localScale *= .01f;
+                }
+                else
+                {
+                    _meshFilter.sharedMesh = null;
+                    _meshRenderer.sharedMaterial = null;
+                }
+            }
+
+        }
     }
 }
-

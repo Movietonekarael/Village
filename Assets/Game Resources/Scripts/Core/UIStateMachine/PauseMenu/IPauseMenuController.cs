@@ -1,12 +1,15 @@
 ﻿using System;
 
-namespace GameCore.GUI
+
+namespace GameCore
 {
-    public interface IPauseMenuController : ISpecificController
+    namespace GUI
     {
-        public event Action OnContinueGame;
-        public void ContinueGame();
-        public void QuitGame();
+        public interface IPauseMenuController : ISpecificController
+        {
+            public event Action OnContinueGame;
+            public void ContinueGame();
+            public void QuitGame();
+        }
     }
 }
-

@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace GameCore.GameMovement
+namespace GameCore
 {
-    partial class NPCMovementStateMachine
+    namespace GameMovement
     {
-        public interface IRootState
+        partial class NPCMovementStateMachine
         {
+            public interface IRootState
+            {
 
+            }
         }
     }
 }

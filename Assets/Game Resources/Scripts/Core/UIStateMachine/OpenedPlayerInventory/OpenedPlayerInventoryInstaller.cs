@@ -1,30 +1,32 @@
 using GameCore.GUI;
-using UnityEngine;
 using Zenject;
 
 
-namespace GameCore.Installers
+namespace GameCore
 {
-    public class OpenedPlayerInventoryInstaller : MonoInstaller
+    namespace Installers
     {
-        public override void InstallBindings()
+        public class OpenedPlayerInventoryInstaller : MonoInstaller
         {
-            BindView();
-            BindController();
-        }
+            public override void InstallBindings()
+            {
+                BindView();
+                BindController();
+            }
 
-        private void BindView()
-        {
-            UIElementInstaller.BindUiElement<OpenedPlayerInventoryView, 
-                                             IOpenedPlayerInventoryView,
-                                             IUIView<OpenedPlayerInventoryViewParameters, IOpenedPlayerInventoryController>>(Container);
-        }
+            private void BindView()
+            {
+                UIElementInstaller.BindUiElement<OpenedPlayerInventoryView,
+                                                 IOpenedPlayerInventoryView,
+                                                 IUIView<OpenedPlayerInventoryViewParameters, IOpenedPlayerInventoryController>>(Container);
+            }
 
-        private void BindController()
-        {
-            UIElementInstaller.BindUiElement<OpenedPlayerInventoryController, 
-                                             IOpenedPlayerInventoryController,
-                                             IUIController<OpenedPlayerInventoryViewParameters>>(Container);
+            private void BindController()
+            {
+                UIElementInstaller.BindUiElement<OpenedPlayerInventoryController,
+                                                 IOpenedPlayerInventoryController,
+                                                 IUIController<OpenedPlayerInventoryViewParameters>>(Container);
+            }
         }
     }
 }

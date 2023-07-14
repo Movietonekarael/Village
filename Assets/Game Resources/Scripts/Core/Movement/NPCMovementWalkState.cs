@@ -1,36 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace GameCore.GameMovement
+namespace GameCore
 {
-    public abstract partial class NPCMovementStateMachine
+    namespace GameMovement
     {
-        public class NPCMovementWalkState : NPCMovementAnyMoveState
+        public abstract partial class NPCMovementStateMachine
         {
-            public NPCMovementWalkState(NPCMovementStateMachine currentStateMachine) 
-            : base(currentStateMachine) {}
-
-            public override void UpdateState()
+            public class NPCMovementWalkState : NPCMovementAnyMoveState
             {
-                base.UpdateState();
-                if (_StateMachine._isRunning)
-                    SetRunState();
-            }
+                public NPCMovementWalkState(NPCMovementStateMachine currentStateMachine)
+                : base(currentStateMachine) { }
 
-            protected override Vector3 SetLimitedTargetVelocity(Vector3 vec)
-            {
-                return vec.normalized * _StateMachine._walkVelocityLimit;
-            }
+                public override void UpdateState()
+                {
+                    base.UpdateState();
+                    if (_StateMachine._isRunning)
+                        SetRunState();
+                }
 
-            //----------------------------------------------------------Local methods------------------------------------------------------//
+                protected override Vector3 SetLimitedTargetVelocity(Vector3 vec)
+                {
+                    return vec.normalized * _StateMachine._walkVelocityLimit;
+                }
 
-            private void SetRunState()
-            {
-                SwitchState(_StateMachine._runState);
+                //----------------------------------------------------------Local methods------------------------------------------------------//
+
+                private void SetRunState()
+                {
+                    SwitchState(_StateMachine._runState);
+                }
             }
         }
     }
 }
-

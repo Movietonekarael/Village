@@ -2,87 +2,90 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-namespace GameCore.GameControls
+namespace GameCore
 {
-    partial class InputHandler
+    namespace GameControls
     {
-        private sealed class CameraRotationInputHandler : SubInputHandler, 
-                                                          IHoldControl, 
-                                                          IStickDirection
+        partial class InputHandler
         {
-            private bool _rotationEnabled = false;
-            private Vector2 _forceVector = Vector2.zero;
-
-            public CameraRotationInputHandler(InputHandler inputHandler) : base(inputHandler) { }
-
-            protected override void RegisterForInputEvents()
+            private sealed class CameraRotationInputHandler : SubInputHandler,
+                                                              IHoldControl,
+                                                              IStickDirection
             {
-                CheckForInputHandler(this.GetType().Name);
-                var inputAction = _InputHandler._inputScheme.CameraControl;
-                inputAction.MouseMovement.performed += MoveMouse;
-                inputAction.RotationSticks.started += StartRightStickMoving;
-                inputAction.RotationSticks.canceled += StopRightStickMoving;
-                inputAction.RotationSticks.performed += PerformRightStickMoving;
-            }
+                private bool _rotationEnabled = false;
+                private Vector2 _forceVector = Vector2.zero;
 
-            protected override void UnregisterForInputEvents() 
-            {
-                CheckForInputHandler(this.GetType().Name);
-                var inputAction = _InputHandler._inputScheme.CameraControl;
-                inputAction.MouseMovement.performed -= MoveMouse;
-                inputAction.RotationSticks.started -= StartRightStickMoving;
-                inputAction.RotationSticks.canceled -= StopRightStickMoving;
-                inputAction.RotationSticks.performed -= PerformRightStickMoving;
-            }
+                public CameraRotationInputHandler(InputHandler inputHandler) : base(inputHandler) { }
 
-            private void MoveMouse(InputAction.CallbackContext context)
-            {
-                InvokeCameraRotationEvent(context.ReadValue<Vector2>(), false);
-            }
-
-            private void StartRightStickMoving(InputAction.CallbackContext context)
-            {
-                SetEnable();
-            }
-
-            private void StopRightStickMoving(InputAction.CallbackContext context)
-            {
-                SetDisable();
-            }
-
-            private void PerformRightStickMoving(InputAction.CallbackContext context)
-            {
-                Perform(context.ReadValue<Vector2>());
-            }
-
-            public void SetEnable()
-            {
-                _rotationEnabled = true;
-            }
-
-            public void SetDisable()
-            {
-                _rotationEnabled = false;
-            }
-
-            public void Perform(Vector2 forceVector)
-            {
-                _forceVector = forceVector;
-            }
-
-            public void Update()
-            {
-                if (_rotationEnabled)
+                protected override void RegisterForInputEvents()
                 {
-                    InvokeCameraRotationEvent(_forceVector
-                                              * Time.deltaTime,
-                                              true);
+                    CheckForInputHandler(this.GetType().Name);
+                    var inputAction = _InputHandler._inputScheme.CameraControl;
+                    inputAction.MouseMovement.performed += MoveMouse;
+                    inputAction.RotationSticks.started += StartRightStickMoving;
+                    inputAction.RotationSticks.canceled += StopRightStickMoving;
+                    inputAction.RotationSticks.performed += PerformRightStickMoving;
                 }
-            }
 
-            private void InvokeCameraRotationEvent(Vector2 vec, bool isGamepad)
-            {
-                _InputHandler.OnCameraRotated?.Invoke(vec, isGamepad);
+                protected override void UnregisterForInputEvents()
+                {
+                    CheckForInputHandler(this.GetType().Name);
+                    var inputAction = _InputHandler._inputScheme.CameraControl;
+                    inputAction.MouseMovement.performed -= MoveMouse;
+                    inputAction.RotationSticks.started -= StartRightStickMoving;
+                    inputAction.RotationSticks.canceled -= StopRightStickMoving;
+                    inputAction.RotationSticks.performed -= PerformRightStickMoving;
+                }
+
+                private void MoveMouse(InputAction.CallbackContext context)
+                {
+                    InvokeCameraRotationEvent(context.ReadValue<Vector2>(), false);
+                }
+
+                private void StartRightStickMoving(InputAction.CallbackContext context)
+                {
+                    SetEnable();
+                }
+
+                private void StopRightStickMoving(InputAction.CallbackContext context)
+                {
+                    SetDisable();
+                }
+
+                private void PerformRightStickMoving(InputAction.CallbackContext context)
+                {
+                    Perform(context.ReadValue<Vector2>());
+                }
+
+                public void SetEnable()
+                {
+                    _rotationEnabled = true;
+                }
+
+                public void SetDisable()
+                {
+                    _rotationEnabled = false;
+                }
+
+                public void Perform(Vector2 forceVector)
+                {
+                    _forceVector = forceVector;
+                }
+
+                public void Update()
+                {
+                    if (_rotationEnabled)
+                    {
+                        InvokeCameraRotationEvent(_forceVector
+                                                  * Time.deltaTime,
+                                                  true);
+                    }
+                }
+
+                private void InvokeCameraRotationEvent(Vector2 vec, bool isGamepad)
+                {
+                    _InputHandler.OnCameraRotated?.Invoke(vec, isGamepad);
+                }
             }
         }
     }

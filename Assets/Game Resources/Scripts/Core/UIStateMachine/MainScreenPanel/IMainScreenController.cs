@@ -1,7 +1,10 @@
-﻿namespace GameCore.GUI
+﻿namespace GameCore
 {
-    public interface IMainScreenController : ISpecificController
+    namespace GUI
     {
-        public void SetActiveItem(int index);
+        public interface IMainScreenController : ISpecificController
+        {
+            public void SetActiveItem(int index);
+        }
     }
 }

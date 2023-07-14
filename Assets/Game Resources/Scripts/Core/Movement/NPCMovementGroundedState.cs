@@ -1,62 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace GameCore.GameMovement
+namespace GameCore
 {
-    partial class NPCMovementStateMachine
+    namespace GameMovement
     {
-        public class NPCMovementGroundedState : NPCMovementBaseState, IRootState
+        partial class NPCMovementStateMachine
         {
-            public NPCMovementGroundedState(NPCMovementStateMachine currentStateMachine)
-            : base(currentStateMachine)
+            public class NPCMovementGroundedState : NPCMovementBaseState, IRootState
             {
-                var state = _StateMachine._idleState;
-                state.EnterState();
-                SetSubState(state);
-            }
-
-            public override void EnterState()
-            {
-                _Movement.OnRunningChanged += ChangeRunState;
-                _Movement.OnJumped += HandleJump;
-
-                _StateMachine._CharacterActor.alwaysNotGrounded = false;
-            }
-
-            public override void UpdateState() { }
-
-            public override void FixedUpdateState() 
-            {
-                HandleGravity();
-            }
-
-            public override void ExitState()
-            {
-                _Movement.OnRunningChanged -= ChangeRunState;
-                _Movement.OnJumped -= HandleJump;
-            }
-
-
-            //----------------------------------------------------------Local methods------------------------------------------------------//
-
-            private void HandleJump()
-            {
-                if (_StateMachine._CharacterActor.IsGrounded)
+                public NPCMovementGroundedState(NPCMovementStateMachine currentStateMachine)
+                : base(currentStateMachine)
                 {
-                    SwitchState(_StateMachine._jumpState);
+                    var state = _StateMachine._idleState;
+                    state.EnterState();
+                    SetSubState(state);
                 }
 
+                public override void EnterState()
+                {
+                    _Movement.OnRunningChanged += ChangeRunState;
+                    _Movement.OnJumped += HandleJump;
+
+                    _StateMachine._CharacterActor.alwaysNotGrounded = false;
+                }
+
+                public override void UpdateState() { }
+
+                public override void FixedUpdateState()
+                {
+                    HandleGravity();
+                }
+
+                public override void ExitState()
+                {
+                    _Movement.OnRunningChanged -= ChangeRunState;
+                    _Movement.OnJumped -= HandleJump;
+                }
+
+
+                //----------------------------------------------------------Local methods------------------------------------------------------//
+
+                private void HandleJump()
+                {
+                    if (_StateMachine._CharacterActor.IsGrounded)
+                    {
+                        SwitchState(_StateMachine._jumpState);
+                    }
+
+                }
+
+                private void ChangeRunState()
+                {
+                    _StateMachine._isRunning = !_StateMachine._isRunning;
+                    _StateMachine._animatorController.SetBool(_StateMachine._isRunningBoolHash, _StateMachine._isRunning);
+                }
             }
-
-            private void ChangeRunState()
-            {
-                _StateMachine._isRunning = !_StateMachine._isRunning;
-                _StateMachine._animatorController.SetBool(_StateMachine._isRunningBoolHash, _StateMachine._isRunning);
-            }
-
-
-
         }
     }
 }

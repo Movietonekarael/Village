@@ -1,10 +1,13 @@
-namespace GameCore.Audio
+namespace GameCore
 {
-    public enum SoundEffectType
+    namespace Audio
     {
-        Grab,
-        SlowStep,
-        FastStep,
-        Jump
+        public enum SoundEffectType
+        {
+            Grab,
+            SlowStep,
+            FastStep,
+            Jump
+        }
     }
 }

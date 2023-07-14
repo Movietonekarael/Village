@@ -1,13 +1,16 @@
 using UnityEngine;
 
 
-namespace GameCore.GameControls
+namespace GameCore
 {
-    public partial class InputHandler
+    namespace GameControls
     {
-        private interface IStickDirection
+        public partial class InputHandler
         {
-            public void Perform(Vector2 vec);
+            private interface IStickDirection
+            {
+                public void Perform(Vector2 vec);
+            }
         }
     }
 }

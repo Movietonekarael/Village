@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-
-namespace GameCore.GUI
+﻿namespace GameCore
 {
-    public interface IPauseMenuView : ISpecificView
+    namespace GUI
     {
+        public interface IPauseMenuView : ISpecificView
+        {
 
+        }
     }
 }
-

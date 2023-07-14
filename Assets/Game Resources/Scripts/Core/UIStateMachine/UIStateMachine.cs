@@ -1,34 +1,45 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using GameCore.GameControls;
-using GameCore.Inventory;
-using UnityEngine.EventSystems;
-using Zenject;
 
-namespace GameCore.GUI
+
+namespace GameCore
 {
-    public sealed class UIStateMachine : MonoBehaviour
+    namespace GUI
     {
-        [SerializeField]
-        [RequireInterface(typeof(IUIState))]
-        private UnityEngine.Object _firstStateBase;
-
-        private IUIState _firstState { get => _firstStateBase as IUIState; }
-        
-        public IUIState CurrentState { private get; set; }
-
-
-        private void Start()
+        public sealed class UIStateMachine : MonoBehaviour
         {
-            if (_firstState is not null)
+            [SerializeField] private bool _enterFirstStateOnStart = true;
+
+            [SerializeField]
+            [RequireInterface(typeof(IUIState))]
+            private UnityEngine.Object _firstStateBase;
+
+            private IUIState _firstState { get => _firstStateBase as IUIState; }
+
+            public IUIState CurrentState { private get; set; }
+
+
+            private void Start()
             {
-                CurrentState = _firstState;
-                CurrentState.EnterState();
+                if (_enterFirstStateOnStart)
+                    EnterFirstState();
+            }
+
+            public void StartStateMachine()
+            {
+                if (_enterFirstStateOnStart)
+                    Debug.LogWarning("UI State Machine already started.");
+                else
+                    EnterFirstState();
+            }
+
+            private void EnterFirstState()
+            {
+                if (_firstState is not null)
+                {
+                    CurrentState = _firstState;
+                    CurrentState.EnterState();
+                }
             }
         }
     }
-
 }
-

@@ -1,28 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace GameCore.Boot
+
+namespace GameCore
 {
-    public class MenuSceneLoader : MonoBehaviour
+    namespace Boot
     {
-        [SerializeField] private AssetReference _testScene;
-
-        public void LoadTestLevel()
+        public class MenuSceneLoader : MonoBehaviour
         {
-            Addressables.LoadSceneAsync(_testScene, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
-        }
+            [SerializeField] private AssetReference _testScene;
 
-        public void Exit()
-        {
-            Application.Quit();
+            public void LoadTestLevel()
+            {
+                Addressables.LoadSceneAsync(_testScene, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
+            }
+
+            public void Exit()
+            {
+                Application.Quit();
 #if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
+                EditorApplication.isPlaying = false;
 #endif
+            }
         }
     }
 }
-
