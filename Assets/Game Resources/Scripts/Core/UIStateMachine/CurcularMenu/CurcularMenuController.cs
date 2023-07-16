@@ -10,52 +10,73 @@ namespace GameCore
         public enum CurcularMenuType : int
         {
             Auto = 0,
-            OneCell,
-            TwoCells,
-            ThreeCells,
-            FourCells,
-            FiveCells,
-            SixCells,
-            SevenCells,
-            EightCells,
-            NineCells,
-            TenCells
+            OneCell = 1,
+            TwoCells = 2,
+            ThreeCells = 3,
+            FourCells = 4,
+            FiveCells = 5,
+            SixCells = 6,
+            SevenCells = 7,
+            EightCells = 8,
+            NineCells = 9,
+            TenCells = 10
         };
 
-        public class CurcularMenuController : MonoBehaviour
+        public class CurcularMenuController : UIController<CurcularMenuViewParameters, ICurcularMenuController, ICurcularMenuView>, ICurcularMenuController
         {
-            [SerializeField] private GameObject _cellPrefab;
-
-            [SerializeField] private CurcularMenuType _curcularMenuType;
-
-            [SerializeField] private List<Sprite> _spritesOfCellItems;
-            [SerializeField] private List<UnityEvent> _events;
-            private CurcularCell[] _cells;
-
-            private void OnEnable()
+            protected override void InitializeParameters(CurcularMenuViewParameters parameters)
             {
-
+                throw new System.NotImplementedException();
             }
 
-            private void OnDisable()
+            protected override void OnActivate()
             {
-
+                throw new System.NotImplementedException();
             }
 
-            private void Start()
+            protected override void OnDeactivate()
             {
-                InstantiateCells();
+                throw new System.NotImplementedException();
             }
 
-            private void InstantiateCells()
+            protected override void SubscribeForEvents()
             {
-                /*
-                switch(_curcularMenuType)
-                {
-
-                }
-                */
+                throw new System.NotImplementedException();
             }
+
+            protected override void UnsubscribeForEvents()
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public class CurcularMenuUIState : BaseUIState<CurcularMenuViewParameters, ICurcularMenuController>
+        {
+            protected override void StartState(params bool[] args)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            protected override void EndState()
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public interface ICurcularMenuController : ISpecificController
+        {
+
+        }
+
+        public interface ICurcularMenuView : ISpecificView
+        {
+
+        }
+
+        [CreateAssetMenu(fileName = "View Data", menuName = "Game UI/View panels data/Curcular Menu", order = 5)]
+        public class CurcularMenuViewParameters : ScriptableObject, IUIParameters
+        { 
+
         }
     }
 }

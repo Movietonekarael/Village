@@ -14,6 +14,21 @@ namespace GameCore
             public GameObject ContinueButton;
             public GameObject QuitButton;
 
+            [HideInInspector] public UiSelecter ContinueUiSelecter;
+            [HideInInspector] public UiSelecter QuitUiSelecter;
+
+
+            private void Awake()
+            {
+                SetUiSelecters();
+            }
+
+            private void SetUiSelecters()
+            {
+                ContinueUiSelecter = ContinueButton.GetComponent<UiSelecter>();
+                QuitUiSelecter = QuitButton.GetComponent<UiSelecter>();
+            }
+
             public void ContinuePressed()
             {
                 OnContinuePressed?.Invoke();

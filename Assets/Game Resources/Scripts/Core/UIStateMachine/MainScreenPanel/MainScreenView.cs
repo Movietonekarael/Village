@@ -19,6 +19,7 @@ namespace GameCore
             private Vector2Int _itemDelta => _Parameters.ItemDelta;
 
             [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
+            [Inject] private readonly UiSelectionService _submitService;
 
             private ItemCell[] _itemCells;
             private int _currentActiveButton = 0;
@@ -145,7 +146,7 @@ namespace GameCore
 
             private void DisableActiveButton()
             {
-                _itemCells?[_currentActiveButton].SetInactive();
+                _submitService.CurrentSelected = _itemCells?[_currentActiveButton];
             }
 
             private void EnableActiveButton()
@@ -153,7 +154,7 @@ namespace GameCore
                 var itemCell = _itemCells?[_currentActiveButton];
                 if (itemCell != null)
                 {
-                    itemCell.SetActive();
+                    _submitService.CurrentSelected = itemCell;
                     _Controller.SetActiveItem(_currentActiveButton);
                 }
             }

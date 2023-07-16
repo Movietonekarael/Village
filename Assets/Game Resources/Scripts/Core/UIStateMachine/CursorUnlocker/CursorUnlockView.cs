@@ -16,19 +16,23 @@ namespace GameCore
             private GameObject _virtualPointerPrefab => _Parameters.VirtualPointerPrefab;
 
             [Inject] private readonly InputHandler _inputHandler;
-            [Inject] private readonly EventSystem _eventSystem;
+            [Inject] private readonly UiSelectionService _uiSelectionService;
             [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
 
-            private GameObject _lastSubmitObject;
-
-
-            public override void Deactivate() { }
-
-            public override void Deinitialize() { }
 
             public override void Activate()
             {
-                _lastSubmitObject = _eventSystem.currentSelectedGameObject;
+                _canvasObject.SetActive(true);
+            }
+
+            public override void Deactivate() 
+            {
+                _canvasObject.SetActive(false);
+            }
+
+            public override void Deinitialize() 
+            {
+                InstantiateService.DestroyObject(_canvasObject);
             }
 
             protected override void InstantiateViewElements()
@@ -37,14 +41,14 @@ namespace GameCore
                 InstantiateVirtualPointer();
             }
 
-            public void RememberSubmitButton()
+            public void DisableSelection()
             {
-                _lastSubmitObject = _eventSystem.currentSelectedGameObject;
+                _uiSelectionService.SelectionEnabled = false;
             }
 
-            public void SetLastSubmitButton()
+            public void EnableSelection()
             {
-                _eventSystem.SetSelectedGameObject(_lastSubmitObject);
+                _uiSelectionService.SelectionEnabled = true;
             }
 
             private void InstantiateCanvas()

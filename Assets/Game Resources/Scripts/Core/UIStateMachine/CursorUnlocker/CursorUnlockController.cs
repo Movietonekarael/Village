@@ -30,29 +30,26 @@ namespace GameCore
             protected override void OnActivate()
             {
                 if (!_virtualPointerAllowed)
-                {
                     DisableCursor();
-                }
                 else
-                {
                     EnableVirtualPointer();
-                }
 
                 _inputHandler.DisableFreezableInputActionMaps();
+
+                if (_inputHandler.CurrentControlScheme == ControlScheme.Keyboard)
+                    _SpecificView.DisableSelection();
             }
 
             protected override void OnDeactivate()
             {
                 if (_virtualPointerAllowed == false)
-                {
                     EnableCursor();
-                }
                 else
-                {
                     DisableVirtualPointer();
-                }
 
                 _inputHandler.EnableFreezableInputActionMaps();
+
+                _SpecificView.EnableSelection();
             }
 
             protected override void SubscribeForEvents()
@@ -130,7 +127,7 @@ namespace GameCore
             {
                 if (controlScheme == ControlScheme.Keyboard)
                 {
-                    _SpecificView.RememberSubmitButton();
+                    _SpecificView.DisableSelection();
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
                 }
@@ -138,7 +135,7 @@ namespace GameCore
                 {
                     Cursor.visible = false;
                     Cursor.lockState = CursorLockMode.Locked;
-                    _SpecificView.SetLastSubmitButton();
+                    _SpecificView.EnableSelection();
                     _inputHandler.ChangeControlSchemeInOneFrame(controlScheme);
                 }
             }

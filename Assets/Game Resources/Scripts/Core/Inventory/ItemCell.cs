@@ -1,3 +1,4 @@
+using GameCore.GUI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,7 @@ namespace GameCore
 {
     namespace Inventory
     {
-        public class ItemCell : MonoBehaviour
+        public class ItemCell : MonoBehaviour, ISelectable
         {
             public Image ItemImage;
             public Text ItemCountText;
@@ -53,13 +54,31 @@ namespace GameCore
                 ItemCountText.text = string.Empty;
             }
 
-            public void SetActive()
+            public void Select()
+            {
+                SetActive();
+            }
+
+            public void Deselect()
+            {
+                SetInactive();
+            }
+
+            private void SetActive(bool isActive)
+            {
+                if (isActive)
+                    SetActive();
+                else
+                    SetInactive();
+            }
+
+            private void SetActive()
             {
                 if (_imageColor != null)
                     _imageColor.SetActiveColor();
             }
 
-            public void SetInactive()
+            private void SetInactive()
             {
                 if (_imageColor != null)
                     _imageColor.SetNormalColor();

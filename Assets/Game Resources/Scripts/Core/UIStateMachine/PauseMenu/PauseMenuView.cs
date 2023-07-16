@@ -15,13 +15,13 @@ namespace GameCore
             private GameObject _pauseMenuPrefab => _Parameters.PauseMenuPrefab;
 
             [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
-            [Inject] private readonly EventSystem _eventSystem;
+            [Inject] private readonly UiSelectionService _uiSelectionService;
 
             private PauseMenu _pauseMenu;
 
             public override void Activate()
             {
-                SetSubmitButton();
+                SetSelectedButton();
                 _pauseMenu.OnContinuePressed += ContinuePressed;
                 _pauseMenu.OnQuitPressed += QuitPressed;
                 _canvasObject.SetActive(true);
@@ -56,7 +56,7 @@ namespace GameCore
 
             private void InstantiatePauseMenu()
             {
-                var pauseMenuObject = InstantiateService.InstantiateObject(_pauseMenuPrefab, _canvasObject.transform);
+                var pauseMenuObject = InstantiateService.InstantiateObjectWithInjections(_pauseMenuPrefab, _canvasObject.transform);
                 _pauseMenu = pauseMenuObject.GetComponent<PauseMenu>();
             }
 
@@ -70,9 +70,9 @@ namespace GameCore
                 _Controller.QuitGame();
             }
 
-            private void SetSubmitButton()
+            private void SetSelectedButton()
             {
-                _eventSystem.SetSelectedGameObject(_pauseMenu.ContinueButton);
+                _uiSelectionService.CurrentSelected = _pauseMenu.ContinueUiSelecter;
             }
         }
     }
