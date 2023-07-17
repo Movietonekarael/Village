@@ -8,9 +8,10 @@ namespace GameCore
     namespace GUI
     {
         [RequireComponent(typeof(UIStateMachine))]
-        public abstract partial class BaseUIState<T, I> : MonoBehaviour, IUIState
+        public abstract partial class BaseUIState<T, I, P> : MonoBehaviour, IUIState
                                                           where T : IUIParameters, new()
-                                                          where I : ISpecificController
+                                                          where I : P, IUIController<T>, IDeinitializable, IActivatable, new()
+                                                          where P : ISpecificController
         {
             private UIStateMachine _stateMachine;
             protected UIStateMachine _StateMachine { get { return _stateMachine; } }
@@ -19,10 +20,10 @@ namespace GameCore
 
             [SerializeField] private List<UIStateWrap> _substates;
 
-            [Inject] private readonly IUIController<T> _uiController;
-            [Inject] protected I _Controller;
-            [Inject] private readonly IDeinitializable<I> _controllerDeinitializator;
-            [Inject] private readonly IActivatable<I> _controllerActivator;
+            private IUIController<T> _uiController;
+            protected P _Controller;
+            private IDeinitializable _controllerDeinitializator;
+            private IActivatable _controllerActivator;
 
             private void Awake()
             {
@@ -41,12 +42,23 @@ namespace GameCore
             private void InitializeController()
             {
                 InitializeParametersIfNull();
+                InstantiateController();
                 _uiController.Init(_parameters);
             }
 
             private void InitializeParametersIfNull()
             {
                 _parameters ??= new();
+            }
+
+            private void InstantiateController()
+            {
+                var controller = new I();
+                DiContainerReference.Container.Inject(controller);
+                _Controller = controller;
+                _uiController = controller;
+                _controllerDeinitializator = controller;
+                _controllerActivator = controller;
             }
 
             private void DeinitializeController()

@@ -7,7 +7,7 @@ namespace GameCore
 {
     namespace GUI
     {
-        public sealed class PauseMenuUIState : BaseUIState<PauseMenuViewParameters, IPauseMenuController>
+        public sealed class PauseMenuUIState : BaseUIState<PauseMenuViewParameters, PauseMenuController, IPauseMenuController>
         {
             [Inject] private readonly IEscapable _escape;
 

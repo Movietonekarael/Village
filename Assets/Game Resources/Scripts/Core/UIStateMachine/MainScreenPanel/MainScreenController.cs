@@ -7,7 +7,11 @@ namespace GameCore
 {
     namespace GUI
     {
-        public sealed class MainScreenController : UIController<MainScreenViewParameters, IMainScreenController, IMainScreenView>, IMainScreenController
+        public sealed class MainScreenController : UIController<MainScreenViewParameters, 
+                                                                IMainScreenController, 
+                                                                MainScreenView,
+                                                                IMainScreenView>, 
+                                                   IMainScreenController
         {
             [Inject] private readonly IInventoryPress _inventoryPress;
             [Inject] private readonly IInventory _inventory;
@@ -39,18 +43,18 @@ namespace GameCore
 
             private void SwitchSelectedItem(int index)
             {
-                _SpecificView.SetActiveButton(index);
+                _View.SetActiveButton(index);
             }
 
             private void MoveItemSelection(int direction)
             {
-                _SpecificView.MoveActiveButtonSelection(direction);
+                _View.MoveActiveButtonSelection(direction);
             }
 
             private void ChangeItemInformation(int position)
             {
                 var item = _inventory.GetGameItem(position);
-                _SpecificView.SetItemInformation(position, item);
+                _View.SetItemInformation(position, item);
                 CheckHoldinghItemForUpdate(position);
             }
 

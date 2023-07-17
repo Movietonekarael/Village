@@ -7,7 +7,8 @@ namespace GameCore
 {
     namespace GUI
     {
-        public sealed class PauseMenuController : UIController<PauseMenuViewParameters, IPauseMenuController, IPauseMenuView>, IPauseMenuController
+        public sealed class PauseMenuController : UIController<PauseMenuViewParameters, IPauseMenuController, PauseMenuView, IPauseMenuView>, 
+                                                  IPauseMenuController
         {
             public event Action OnContinueGame;
 

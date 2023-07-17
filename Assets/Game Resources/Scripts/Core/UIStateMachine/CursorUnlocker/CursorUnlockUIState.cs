@@ -2,7 +2,9 @@ namespace GameCore
 {
     namespace GUI
     {
-        public sealed class CursorUnlockUIState : BaseUIState<CursorUnlockViewParameters, ICursorUnlockController>
+        public sealed class CursorUnlockUIState : BaseUIState<CursorUnlockViewParameters, 
+                                                              CursorUnlockController,
+                                                              ICursorUnlockController>
         {
             private bool _virtualPointerAllowed = false;
 

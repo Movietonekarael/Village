@@ -3,8 +3,8 @@ namespace GameCore
     namespace GUI
     {
         public abstract class UIView<T, P, I> : IUIView<T, P>,
-                                                IActivatable<I>,
-                                                IDeinitializable<I>
+                                                IActivatable,
+                                                IDeinitializable
                                                 where T : IUIParameters
                                                 where P : ISpecificController
                                                 where I : ISpecificView

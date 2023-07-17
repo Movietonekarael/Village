@@ -10,7 +10,11 @@ namespace GameCore
 {
     namespace GUI
     {
-        public sealed class CursorUnlockController : UIController<CursorUnlockViewParameters, ICursorUnlockController, ICursorUnlockView>, ICursorUnlockController
+        public sealed class CursorUnlockController : UIController<CursorUnlockViewParameters, 
+                                                                  ICursorUnlockController, 
+                                                                  CursorUnlockView,
+                                                                  ICursorUnlockView>, 
+                                                     ICursorUnlockController
         {
             [Inject] private readonly InputHandler _inputHandler;
             private VirtualMouseHandler _virtualMouseHandler => _inputHandler.VirtualMouse;
@@ -37,7 +41,7 @@ namespace GameCore
                 _inputHandler.DisableFreezableInputActionMaps();
 
                 if (_inputHandler.CurrentControlScheme == ControlScheme.Keyboard)
-                    _SpecificView.DisableSelection();
+                    _View.DisableSelection();
             }
 
             protected override void OnDeactivate()
@@ -49,7 +53,7 @@ namespace GameCore
 
                 _inputHandler.EnableFreezableInputActionMaps();
 
-                _SpecificView.EnableSelection();
+                _View.EnableSelection();
             }
 
             protected override void SubscribeForEvents()
@@ -127,7 +131,7 @@ namespace GameCore
             {
                 if (controlScheme == ControlScheme.Keyboard)
                 {
-                    _SpecificView.DisableSelection();
+                    _View.DisableSelection();
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
                 }
@@ -135,7 +139,7 @@ namespace GameCore
                 {
                     Cursor.visible = false;
                     Cursor.lockState = CursorLockMode.Locked;
-                    _SpecificView.EnableSelection();
+                    _View.EnableSelection();
                     _inputHandler.ChangeControlSchemeInOneFrame(controlScheme);
                 }
             }

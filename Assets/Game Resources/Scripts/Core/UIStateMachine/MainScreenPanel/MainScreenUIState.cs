@@ -7,7 +7,7 @@ namespace GameCore
 {
     namespace GUI
     {
-        public sealed class MainScreenUIState : BaseUIState<MainScreenViewParameters, IMainScreenController>
+        public sealed class MainScreenUIState : BaseUIState<MainScreenViewParameters, MainScreenController, IMainScreenController>
         {
             [Inject] private readonly IOpenCloseInventory _openCloseInventory;
             [Inject] private readonly IEscapable _escape;

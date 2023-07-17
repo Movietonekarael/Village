@@ -8,7 +8,7 @@ namespace GameCore
     {
         public static class UIElementInstaller
         {
-            public static void BindUiElement<T, I, P>(DiContainer diContainer) where T : I, P, IDeinitializable<I>, IActivatable<I>, new()
+            public static void BindUiElement<T, I, P>(DiContainer diContainer) where T : I, P, IDeinitializable, IActivatable, new()
                                                                                where I : ISpecific
             {
                 var instance = CreateInstance<T>(diContainer);
@@ -34,18 +34,18 @@ namespace GameCore
                             NonLazy();
             }
 
-            private static void BindDeinitialization<T, I>(DiContainer diContainer, T instance) where T : IDeinitializable<I>
+            private static void BindDeinitialization<T, I>(DiContainer diContainer, T instance) where T : IDeinitializable
             {
-                diContainer.Bind<IDeinitializable<I>>().
+                diContainer.Bind<IDeinitializable>().
                             To<T>().
                             FromInstance(instance).
                             AsCached().
                             NonLazy();
             }
 
-            private static void BindActivation<T, I>(DiContainer diContainer, T instance) where T : IActivatable<I>
+            private static void BindActivation<T, I>(DiContainer diContainer, T instance) where T : IActivatable
             {
-                diContainer.Bind<IActivatable<I>>().
+                diContainer.Bind<IActivatable>().
                             To<T>().
                             FromInstance(instance).
                             AsCached().

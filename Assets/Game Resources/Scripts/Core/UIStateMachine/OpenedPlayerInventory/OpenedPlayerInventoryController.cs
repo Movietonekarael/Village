@@ -8,6 +8,7 @@ namespace GameCore
     {
         public sealed class OpenedPlayerInventoryController : UIController<OpenedPlayerInventoryViewParameters,
                                                                            IOpenedPlayerInventoryController,
+                                                                           OpenedPlayerInventoryView,
                                                                            IOpenedPlayerInventoryView>,
                                                               IOpenedPlayerInventoryController
         {
@@ -31,7 +32,7 @@ namespace GameCore
             private void ChangeItemInformation(int position)
             {
                 var item = _inventory.GetGameItem(position);
-                _SpecificView.SetItemInformation(position, item);
+                _View.SetItemInformation(position, item);
             }
 
             protected override void OnActivate()

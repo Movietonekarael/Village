@@ -1,6 +1,6 @@
 namespace GameCore
 {
-    public interface IDeinitializable<T>
+    public interface IDeinitializable
     {
         public void Deinitialize();
     }

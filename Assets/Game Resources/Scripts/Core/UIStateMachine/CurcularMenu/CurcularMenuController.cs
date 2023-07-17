@@ -22,7 +22,11 @@ namespace GameCore
             TenCells = 10
         };
 
-        public class CurcularMenuController : UIController<CurcularMenuViewParameters, ICurcularMenuController, ICurcularMenuView>, ICurcularMenuController
+        public class CurcularMenuController : UIController<CurcularMenuViewParameters, 
+                                                           ICurcularMenuController, 
+                                                           CurcularMenuView,
+                                                           ICurcularMenuView>, 
+                                              ICurcularMenuController
         {
             protected override void InitializeParameters(CurcularMenuViewParameters parameters)
             {
@@ -50,7 +54,7 @@ namespace GameCore
             }
         }
 
-        public class CurcularMenuUIState : BaseUIState<CurcularMenuViewParameters, ICurcularMenuController>
+        public class CurcularMenuUIState : BaseUIState<CurcularMenuViewParameters, CurcularMenuController, ICurcularMenuController>
         {
             protected override void StartState(params bool[] args)
             {

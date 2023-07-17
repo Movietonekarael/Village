@@ -1,3 +1,4 @@
+using UnityEngine.InputSystem.XR;
 using Zenject;
 
 
@@ -5,19 +6,20 @@ namespace GameCore
 {
     namespace GUI
     {
-        public abstract class UIController<T, P, I> : IUIController<T>,
+        public abstract class UIController<T, P, I, K> : IUIController<T>,
                                                    ISpecificController,
                                                    ISubscribable,
-                                                   IDeinitializable<P>,
-                                                   IActivatable<P>
+                                                   IDeinitializable,
+                                                   IActivatable
                                                    where T : IUIParameters
                                                    where P : class, ISpecificController
-                                                   where I : ISpecificView
+                                                   where I : K, IUIView<T, P>, IDeinitializable, IActivatable, new()
+                                                   where K : ISpecificView
         {
-            [Inject] protected I _SpecificView;
-            [Inject] private IUIView<T, P> _view;
-            [Inject] private IDeinitializable<I> _viewDeinitializator;
-            [Inject] private IActivatable<I> _viewActivator;
+            protected K _View;
+            private IUIView<T, P> _view;
+            private IDeinitializable _viewDeinitializator;
+            private IActivatable _viewActivator;
 
             protected abstract void SubscribeForEvents();
             protected abstract void UnsubscribeForEvents();
@@ -34,7 +36,18 @@ namespace GameCore
 
             private void InitializeView(T parameters)
             {
+                InstantiateView();
                 _view.Init(parameters, this as P);
+            }
+
+            private void InstantiateView()
+            {
+                var view = new I();
+                DiContainerReference.Container.Inject(view);
+                _View = view;
+                _view = view;
+                _viewDeinitializator = view;
+                _viewActivator = view;
             }
 
             public void Subscribe()

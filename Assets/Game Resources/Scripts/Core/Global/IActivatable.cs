@@ -1,6 +1,6 @@
 namespace GameCore
 {
-    public interface IActivatable<T>
+    public interface IActivatable
     {
         public void Activate();
         public void Deactivate();

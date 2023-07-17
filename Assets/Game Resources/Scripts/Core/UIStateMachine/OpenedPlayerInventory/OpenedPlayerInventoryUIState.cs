@@ -7,7 +7,9 @@ namespace GameCore
 {
     namespace GUI
     {
-        public sealed class OpenedPlayerInventoryUIState : BaseUIState<OpenedPlayerInventoryViewParameters, IOpenedPlayerInventoryController>
+        public sealed class OpenedPlayerInventoryUIState : BaseUIState<OpenedPlayerInventoryViewParameters, 
+                                                                       OpenedPlayerInventoryController,
+                                                                       IOpenedPlayerInventoryController>
         {
             [Inject] private readonly IOpenCloseInventory _openCloseInventory;
 
