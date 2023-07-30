@@ -43,12 +43,22 @@ namespace GameCore
                 throw new System.NotImplementedException();
             }
 
-            protected override void SubscribeForEvents()
+            protected override void SubscribeForPermanentEvents()
             {
                 throw new System.NotImplementedException();
             }
 
-            protected override void UnsubscribeForEvents()
+            protected override void UnsubscribeForPermanentEvents()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            protected override void SubscribeForTemporaryEvents()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            protected override void UnsubscribeForTemporaryEvents()
             {
                 throw new System.NotImplementedException();
             }

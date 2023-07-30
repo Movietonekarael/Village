@@ -18,18 +18,26 @@ namespace GameCore
             [Inject] private readonly PlayerHoldItem _playerHoldItem;
             private int _indexOfCurrentHoldItem = 0;
 
-            protected override void SubscribeForEvents()
+            protected override void SubscribeForPermanentEvents() 
             {
-                _inventoryPress.OnInventoryKeyPressed += SwitchSelectedItem;
-                _inventoryPress.OnInventoryArrowPressed += MoveItemSelection;
                 _inventory.OnItemChanged += ChangeItemInformation;
             }
 
-            protected override void UnsubscribeForEvents()
+            protected override void UnsubscribeForPermanentEvents() 
+            {
+                _inventory.OnItemChanged -= ChangeItemInformation;
+            }
+
+            protected override void SubscribeForTemporaryEvents()
+            {
+                _inventoryPress.OnInventoryKeyPressed += SwitchSelectedItem;
+                _inventoryPress.OnInventoryArrowPressed += MoveItemSelection;  
+            }
+
+            protected override void UnsubscribeForTemporaryEvents()
             {
                 _inventoryPress.OnInventoryKeyPressed -= SwitchSelectedItem;
                 _inventoryPress.OnInventoryArrowPressed -= MoveItemSelection;
-                _inventory.OnItemChanged -= ChangeItemInformation;
             }
 
             protected override void InitializeParameters(MainScreenViewParameters parameters) { }

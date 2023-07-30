@@ -53,8 +53,8 @@ namespace GameCore
 
             private void InstantiateController()
             {
-                var controller = new I();
-                DiContainerReference.Container.Inject(controller);
+                Debug.Log("Creating controller.");
+                var controller = DiContainerReference.Container.Instantiate<I>();
                 _Controller = controller;
                 _uiController = controller;
                 _controllerDeinitializator = controller;

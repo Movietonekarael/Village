@@ -19,15 +19,18 @@ namespace GameCore
                 parameters.ItemsNumber = _inventory.GetInventorySize();
             }
 
-            protected override void SubscribeForEvents()
+            protected override void SubscribeForPermanentEvents()
             {
                 _inventory.OnItemChanged += ChangeItemInformation;
             }
 
-            protected override void UnsubscribeForEvents()
+            protected override void UnsubscribeForPermanentEvents()
             {
                 _inventory.OnItemChanged -= ChangeItemInformation;
             }
+
+            protected override void SubscribeForTemporaryEvents() { }
+            protected override void UnsubscribeForTemporaryEvents() { }
 
             private void ChangeItemInformation(int position)
             {

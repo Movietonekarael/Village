@@ -3,14 +3,21 @@ using Zenject;
 
 namespace GameCore
 {
-    [CreateAssetMenu(fileName = "DiContainerReferenceInstaller", menuName = "Installers/DiContainerReferenceInstaller")]
-    public class DiContainerReferenceInstaller : ScriptableObjectInstaller<DiContainerReferenceInstaller>
+    namespace Installers
     {
-        [Inject] private readonly DiContainer _container;
-
-        public override void InstallBindings()
+        public class DiContainerReferenceInstaller : MonoInstaller
         {
-            DiContainerReference.Container = _container;
+            [Inject] private readonly DiContainer _container;
+
+            public override void InstallBindings()
+            {
+                SetupDiContainerReference();
+            }
+
+            private void SetupDiContainerReference()
+            {
+                DiContainerReference.Container = _container;
+            }
         }
     }
 }

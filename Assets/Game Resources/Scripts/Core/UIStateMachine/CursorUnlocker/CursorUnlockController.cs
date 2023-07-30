@@ -56,12 +56,15 @@ namespace GameCore
                 _View.EnableSelection();
             }
 
-            protected override void SubscribeForEvents()
+            protected override void SubscribeForPermanentEvents() { }
+            protected override void UnsubscribeForPermanentEvents() { }
+
+            protected override void SubscribeForTemporaryEvents()
             {
                 _inputHandler.OnControlSchemeChanged += ControlSchemeChanged;
             }
 
-            protected override void UnsubscribeForEvents()
+            protected override void UnsubscribeForTemporaryEvents()
             {
                 _inputHandler.OnControlSchemeChanged -= ControlSchemeChanged;
             }

@@ -15,8 +15,10 @@ namespace GameCore
 
             protected override void InitializeParameters(PauseMenuViewParameters parameters) { }
 
-            protected override void SubscribeForEvents() { }
-            protected override void UnsubscribeForEvents() { }
+            protected override void SubscribeForPermanentEvents() { }
+            protected override void UnsubscribeForPermanentEvents() { }
+            protected override void SubscribeForTemporaryEvents() { }
+            protected override void UnsubscribeForTemporaryEvents() { }
 
             protected override void OnActivate()
             {
