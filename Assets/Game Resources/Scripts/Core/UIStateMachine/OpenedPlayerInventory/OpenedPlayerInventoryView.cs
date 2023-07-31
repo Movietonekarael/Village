@@ -1,4 +1,5 @@
 using GameCore.Inventory;
+using GameCore.Services;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -25,6 +26,7 @@ namespace GameCore
             private Vector2Int _itemIndent => _Parameters.ItemIndent;
             private Vector2Int _itemDelta => _Parameters.ItemDelta;
 
+            [Inject] private readonly InstantiateService _instantiateService;
             [Inject] private readonly EventSystem _eventSystem;
             [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
 
@@ -48,7 +50,7 @@ namespace GameCore
             public override void Deinitialize()
             {
                 UnsubscribeButtonsEvents();
-                InstantiateService.DestroyObject(_canvasObject);
+                _instantiateService.DestroyObject(_canvasObject);
             }
 
             protected override void InstantiateViewElements()
@@ -73,7 +75,7 @@ namespace GameCore
 
             private void InstantiateCanvas()
             {
-                _canvasObject = InstantiateService.InstantiateObject(_canvasPrefab);
+                _canvasObject = _instantiateService.InstantiateObject(_canvasPrefab);
                 _canvasObject.name = _CANVAS_NAME;
                 var canvas = _canvasObject.GetComponent<Canvas>();
                 canvas.worldCamera = _uiCamera;
@@ -105,7 +107,7 @@ namespace GameCore
                 {
                     for (var j = 0; j < buttons[i].Length; j++)
                     {
-                        var itemButton = InstantiateService.InstantiateObjectWithInjections(_buttonPrefab, _canvasObject.transform);
+                        var itemButton = _instantiateService.InstantiateObjectWithInjections(_buttonPrefab, _canvasObject.transform);
                         SetButtonAnchoredPosition(itemButton, i, j);
                         buttons[i][j] = itemButton;
                     }
@@ -183,7 +185,7 @@ namespace GameCore
 
             private void InstantiateDragAndDropObject()
             {
-                _dragAndDropObject = InstantiateService.InstantiateObjectWithInjections(_dragAndDropPrefab, _canvasObject.transform).GetComponent<DragObject>();
+                _dragAndDropObject = _instantiateService.InstantiateObjectWithInjections(_dragAndDropPrefab, _canvasObject.transform).GetComponent<DragObject>();
                 _dragAndDropObject.CanvasRectTransform = _canvasObject.GetComponent<RectTransform>();
                 DeactivateDragAndDropObject();
             }

@@ -1,4 +1,5 @@
 using GameCore.Inventory;
+using GameCore.Services;
 using UnityEngine;
 using Zenject;
 
@@ -18,6 +19,7 @@ namespace GameCore
             private Vector2Int _itemIndent => _Parameters.ItemIndent;
             private Vector2Int _itemDelta => _Parameters.ItemDelta;
 
+            [Inject] private readonly InstantiateService _instantiateService;
             [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
             [Inject] private readonly UiSelectionService _submitService;
 
@@ -37,7 +39,7 @@ namespace GameCore
 
             public override void Deinitialize()
             {
-                InstantiateService.DestroyObject(_canvasObject);
+                _instantiateService.DestroyObject(_canvasObject);
             }
 
             protected override void InstantiateViewElements()
@@ -50,7 +52,7 @@ namespace GameCore
 
             private void InstantiateCanvas()
             {
-                _canvasObject = InstantiateService.InstantiateObject(_canvasPrefab);
+                _canvasObject = _instantiateService.InstantiateObject(_canvasPrefab);
                 _canvasObject.name = _CANVAS_NAME;
                 var canvas = _canvasObject.GetComponent<Canvas>();
                 canvas.worldCamera = _uiCamera;
@@ -89,7 +91,7 @@ namespace GameCore
                 var buttons = new GameObject[_numberOfItemsToShow];
                 for (var i = 0; i < _numberOfItemsToShow; i++)
                 {
-                    var itemButton = InstantiateService.InstantiateObject(_itemCellPrefab, _canvasObject.transform);
+                    var itemButton = _instantiateService.InstantiateObject(_itemCellPrefab, _canvasObject.transform);
                     SetButtonAnchoredPosition(itemButton, i);
                     buttons[i] = itemButton;
                 }

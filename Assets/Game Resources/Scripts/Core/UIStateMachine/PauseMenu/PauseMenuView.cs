@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameCore.Services;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -14,6 +15,7 @@ namespace GameCore
             private GameObject _canvasObject;
             private GameObject _pauseMenuPrefab => _Parameters.PauseMenuPrefab;
 
+            [Inject] private readonly InstantiateService _instantiateService;
             [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
             [Inject] private readonly UiSelectionService _uiSelectionService;
 
@@ -36,7 +38,7 @@ namespace GameCore
 
             public override void Deinitialize()
             {
-                InstantiateService.DestroyObject(_canvasObject);
+                _instantiateService.DestroyObject(_canvasObject);
             }
 
             protected override void InstantiateViewElements()
@@ -48,7 +50,7 @@ namespace GameCore
 
             private void InstantiateCanvas()
             {
-                _canvasObject = InstantiateService.InstantiateObject(_canvasPrefab);
+                _canvasObject = _instantiateService.InstantiateObject(_canvasPrefab);
                 _canvasObject.name = _CANVAS_NAME;
                 var canvas = _canvasObject.GetComponent<Canvas>();
                 canvas.worldCamera = _uiCamera;
@@ -56,7 +58,7 @@ namespace GameCore
 
             private void InstantiatePauseMenu()
             {
-                var pauseMenuObject = InstantiateService.InstantiateObjectWithInjections(_pauseMenuPrefab, _canvasObject.transform);
+                var pauseMenuObject = _instantiateService.InstantiateObjectWithInjections(_pauseMenuPrefab, _canvasObject.transform);
                 _pauseMenu = pauseMenuObject.GetComponent<PauseMenu>();
             }
 

@@ -13,12 +13,15 @@ namespace GameCore
                                                           where I : P, IUIController<T>, IDeinitializable, IActivatable, new()
                                                           where P : ISpecificController
         {
+            [Inject] private readonly DiContainer _diContainer;
+
             private UIStateMachine _stateMachine;
             protected UIStateMachine _StateMachine { get { return _stateMachine; } }
 
             [SerializeField] private T _parameters;
 
             [SerializeField] private List<UIStateWrap> _substates;
+ 
 
             private IUIController<T> _uiController;
             protected P _Controller;
@@ -53,8 +56,8 @@ namespace GameCore
 
             private void InstantiateController()
             {
-                Debug.Log("Creating controller.");
-                var controller = DiContainerReference.Container.Instantiate<I>();
+                var controller = new I();
+                _diContainer.Inject(controller);
                 _Controller = controller;
                 _uiController = controller;
                 _controllerDeinitializator = controller;

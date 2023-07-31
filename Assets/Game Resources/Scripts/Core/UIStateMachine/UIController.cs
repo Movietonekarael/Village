@@ -15,6 +15,8 @@ namespace GameCore
                                                    where I : K, IUIView<T, P>, IDeinitializable, IActivatable, new()
                                                    where K : ISpecificView
         {
+            [Inject] private readonly DiContainer _diContainer;
+            
             protected K _View;
             private IUIView<T, P> _view;
             private IDeinitializable _viewDeinitializator;
@@ -44,7 +46,7 @@ namespace GameCore
             private void InstantiateView()
             {
                 var view = new I();
-                DiContainerReference.Container.Inject(view);
+                _diContainer.Inject(view);
                 _View = view;
                 _view = view;
                 _viewDeinitializator = view;

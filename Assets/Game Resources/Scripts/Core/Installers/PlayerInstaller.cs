@@ -14,7 +14,6 @@ namespace GameCore
 
             public override void InstallBindings()
             {
-                Debug.Log("Creating player.");
                 var instance = CreateInstance();
                 BindPlayer(instance);
                 BindInventory(instance);

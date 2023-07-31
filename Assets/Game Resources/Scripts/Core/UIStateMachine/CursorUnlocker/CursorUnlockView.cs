@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 using UnityEngine.EventSystems;
-
+using GameCore.Services;
 
 namespace GameCore
 {
@@ -15,6 +15,7 @@ namespace GameCore
             private GameObject _canvasObject;
             private GameObject _virtualPointerPrefab => _Parameters.VirtualPointerPrefab;
 
+            [Inject] private readonly InstantiateService _instantiateService;
             [Inject] private readonly InputHandler _inputHandler;
             [Inject] private readonly UiSelectionService _uiSelectionService;
             [Inject(Id = "UiCamera")] private readonly Camera _uiCamera;
@@ -32,7 +33,7 @@ namespace GameCore
 
             public override void Deinitialize() 
             {
-                InstantiateService.DestroyObject(_canvasObject);
+                _instantiateService.DestroyObject(_canvasObject);
             }
 
             protected override void InstantiateViewElements()
@@ -56,7 +57,7 @@ namespace GameCore
                 if (_canvasPrefab == null)
                     return;
 
-                _canvasObject = InstantiateService.InstantiateObject(_canvasPrefab);
+                _canvasObject = _instantiateService.InstantiateObject(_canvasPrefab);
                 _canvasObject.name = _CANVAS_NAME;
 
                 SetCanvasSettings(_canvasObject);
@@ -81,7 +82,7 @@ namespace GameCore
                 if (_virtualPointerPrefab == null)
                     return;
 
-                var virtualPointerObject = InstantiateService.InstantiateObject(_virtualPointerPrefab, _canvasObject.transform);
+                var virtualPointerObject = _instantiateService.InstantiateObject(_virtualPointerPrefab, _canvasObject.transform);
                 _inputHandler.PointerTransform = virtualPointerObject.GetComponent<RectTransform>();
             }
         }
