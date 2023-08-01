@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 5d7f1e3437fad2e439cb9fed82ea5340
   m_SerializeEntries:
   - m_GUID: 85e992cd716a1e84190a1831e79ad4c4
-    m_Address: Assets/Scenes/Menu.unity
+    m_Address: Menu
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -326,7 +326,17 @@ PrefabInstance:
     - target: {fileID: 1997589203587945352, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
       propertyPath: m_Text
-      value: Play Test
+      value: Connect host
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997589203587945352, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: m_FontData.m_VerticalOverflow
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997589203587945352, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: m_FontData.m_HorizontalOverflow
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
@@ -371,12 +381,12 @@ PrefabInstance:
     - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadTestLevel
+      value: ConnectHost
       objectReference: {fileID: 0}
     - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: BootManager, Assembly-CSharp
+      value: GameCore.Boot.MenuSceneLoader, Scenes
       objectReference: {fileID: 0}
     - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
@@ -491,12 +501,12 @@ PrefabInstance:
     - target: {fileID: 1997589203800543115, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
       propertyPath: m_Name
-      value: Play Test
+      value: Connect Host
       objectReference: {fileID: 0}
     - target: {fileID: 4115953188483258988, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
       propertyPath: _setActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4115953188483258988, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
@@ -1307,102 +1317,6 @@ MonoBehaviour:
   _playerInput: {fileID: 6241476896536675278, guid: f3c35d853f417014cb012d495741a1d0,
     type: 3}
   _parentTransform: {fileID: 905676186}
---- !u!1 &1822805378
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1822805381}
-  - component: {fileID: 1822805380}
-  - component: {fileID: 1822805379}
-  m_Layer: 0
-  m_Name: NetworkManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1822805379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1822805378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6960e84d07fb87f47956e7a81d71c4e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ProtocolType: 0
-  m_MaxPacketQueueSize: 128
-  m_MaxPayloadSize: 6144
-  m_HeartbeatTimeoutMS: 500
-  m_ConnectTimeoutMS: 1000
-  m_MaxConnectAttempts: 60
-  m_DisconnectTimeoutMS: 30000
-  ConnectionData:
-    Address: 127.0.0.1
-    Port: 7777
-    ServerListenAddress: 127.0.0.1
-  DebugSimulator:
-    PacketDelayMS: 0
-    PacketJitterMS: 0
-    PacketDropRate: 0
---- !u!114 &1822805380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1822805378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NetworkConfig:
-    ProtocolVersion: 0
-    NetworkTransport: {fileID: 1822805379}
-    PlayerPrefab: {fileID: 0}
-    Prefabs:
-      NetworkPrefabsLists: []
-    TickRate: 30
-    ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
-    ConnectionData: 
-    EnableTimeResync: 0
-    TimeResyncInterval: 30
-    EnsureNetworkVariableLengthSafety: 0
-    EnableSceneManagement: 1
-    ForceSamePrefabs: 1
-    RecycleNetworkIds: 1
-    NetworkIdRecycleDelay: 120
-    RpcHashSize: 0
-    LoadSceneTimeOut: 120
-    SpawnTimeout: 1
-    EnableNetworkLogs: 1
-    OldPrefabList: []
-  RunInBackground: 1
-  LogLevel: 1
---- !u!4 &1822805381
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1822805378}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 652.5747, y: 96.442764, z: -66.31384}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1848258342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1571,6 +1485,11 @@ PrefabInstance:
       propertyPath: _interactible
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4115953188483258988, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: _stateMachine
+      value: 
+      objectReference: {fileID: 1323486619}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1661,7 +1580,17 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1997589203587945352, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
+      propertyPath: m_Text
+      value: Host server
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997589203587945352, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
       propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997589203587945352, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: m_FontData.m_HorizontalOverflow
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
@@ -1673,6 +1602,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnimationTriggers.m_SelectedTrigger
       value: Highlighted
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 838309192}
+    - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Host
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameCore.Boot.MenuSceneLoader, Scenes
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997589203800543113, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1997589203800543114, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
@@ -1782,8 +1746,23 @@ PrefabInstance:
     - target: {fileID: 1997589203800543115, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
         type: 3}
       propertyPath: m_Name
-      value: Play
+      value: Host Server
       objectReference: {fileID: 0}
+    - target: {fileID: 4115953188483258988, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: _setActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4115953188483258988, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: _interactible
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4115953188483258988, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
+        type: 3}
+      propertyPath: _stateMachine
+      value: 
+      objectReference: {fileID: 1323486619}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1793,7 +1772,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1822805381}
   - {fileID: 905676186}
   - {fileID: 1404841676}
   - {fileID: 1323486620}

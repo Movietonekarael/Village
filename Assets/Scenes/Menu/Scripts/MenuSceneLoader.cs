@@ -1,6 +1,8 @@
+using Unity.Netcode;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using GameCore.Network;
 
 
 namespace GameCore
@@ -11,7 +13,19 @@ namespace GameCore
         {
             [SerializeField] private AssetReference _testScene;
 
-            public void LoadTestLevel()
+            public void Host()
+            {
+                NetworkConnectionService.ConnectionType = ConnectionType.Host;
+                LoadTestLevel();
+            }
+
+            public void ConnectHost()
+            {
+                NetworkConnectionService.ConnectionType = ConnectionType.Cliet;
+                LoadTestLevel();
+            }
+
+            private void LoadTestLevel()
             {
                 Addressables.LoadSceneAsync(_testScene, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
             }
