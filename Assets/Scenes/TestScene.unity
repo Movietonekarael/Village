@@ -1571,6 +1571,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &162662125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2134,6 +2135,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &185985081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3074,6 +3076,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &264469578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4405,6 +4408,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &380583334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8495,6 +8499,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870794722902017
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &453021001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9012,6 +9017,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &472690067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9633,6 +9639,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &543523329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10386,6 +10393,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980126
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &612921281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11814,6 +11822,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980126
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &761604268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12166,6 +12175,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &763455733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12837,6 +12847,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980128
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &841484965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13392,6 +13403,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980128
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &848696977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18176,6 +18188,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870384204349447
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &903770707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19049,6 +19062,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &947768945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19571,6 +19585,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870794722902018
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &965005962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19938,6 +19953,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870384204349480
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &991645189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21099,6 +21115,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1044794927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21974,6 +21991,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980126
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1090726723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23145,6 +23163,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870384204349482
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1145597864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27556,6 +27575,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1199220477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27946,6 +27966,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980128
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1219414181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28616,6 +28637,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980104
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1281637957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29167,6 +29189,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1282709025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30335,6 +30358,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980126
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1375037777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31771,6 +31795,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1555365543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34319,6 +34344,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1622664730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34649,6 +34675,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870384204349484
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1627017506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35163,6 +35190,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870794722902020
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1654880150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35553,6 +35581,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1680818299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35868,6 +35897,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980126
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1682978127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36220,6 +36250,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980128
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1684506241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36535,6 +36566,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1685709799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37559,6 +37591,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1746431162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37934,6 +37967,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980128
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1757422979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44280,6 +44314,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1931819820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45027,6 +45062,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870384204349445
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &1969842984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45592,6 +45628,7 @@ MonoBehaviour:
     RefIds:
     - rid: 5673870503287980107
       type: {class: Prism, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
+      data: 
 --- !u!114 &2000417989
 MonoBehaviour:
   m_ObjectHideFlags: 0
