@@ -6,6 +6,7 @@ namespace GameCore
     namespace GUI
     {
         [CreateAssetMenu(fileName = "View Data", menuName = "Game UI/View panels data/MainScreen", order = 1)]
+
         public sealed class MainScreenViewParameters : ScriptableObject, IUIParameters
         {
             public GameObject CanvasPrefab;

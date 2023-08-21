@@ -101,7 +101,7 @@ namespace Testing
                        EqualityComparer<Matrix4x4?>.Default.Equals(_fromWorldToLocal, other._fromWorldToLocal);
             }
 
-            public override int GetHashCode()
+            public override readonly int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(_position);

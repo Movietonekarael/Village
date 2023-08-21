@@ -7,7 +7,11 @@
         "JiggleBones",
         "Naelstrof.JigglePhysics",
         "Unity.Addressables",
-        "Unity.ResourceManager"
+        "Unity.ResourceManager",
+        "Unity.Netcode.Runtime",
+        "Unity.Netcode.Components",
+        "Core",
+        "Zenject"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Project Settings
+  m_Title: Inspector
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 137
+  controlID: 130
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 798
+    width: 790
     height: 939
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
@@ -163,7 +163,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 798
+    width: 790
     height: 433
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
@@ -192,7 +192,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 433
-    width: 798
+    width: 790
     height: 506
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
@@ -219,9 +219,9 @@ MonoBehaviour:
   - {fileID: 11}
   m_Position:
     serializedVersion: 2
-    x: 798
+    x: 790
     y: 0
-    width: 458
+    width: 610
     height: 939
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
@@ -244,7 +244,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 458
+    width: 610
     height: 432
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
@@ -270,7 +270,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 432
-    width: 458
+    width: 610
     height: 507
   m_MinSize: {x: 232, y: 271}
   m_MaxSize: {x: 10002, y: 10021}
@@ -290,24 +290,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectSettingsWindow
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1256
+    x: 1400
     y: 0
-    width: 664
+    width: 520
     height: 939
-  m_MinSize: {x: 311, y: 221}
+  m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 23}
+  m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 22}
   - {fileID: 23}
   - {fileID: 24}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 2
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -331,7 +331,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 506
-    width: 797
+    width: 789
     height: 485
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -349,11 +349,11 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 797, y: 448}
+  m_TargetSize: {x: 789, y: 444}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
-  m_EnterPlayModeBehavior: 1
+  m_EnterPlayModeBehavior: 0
   m_UseMipMap: 0
   m_VSyncEnabled: 0
   m_Gizmos: 0
@@ -364,10 +364,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -398.5
-    m_HBaseRangeMax: 398.5
-    m_VBaseRangeMin: -224
-    m_VBaseRangeMax: 224
+    m_HBaseRangeMin: -394.5
+    m_HBaseRangeMax: 394.5
+    m_VBaseRangeMin: -222
+    m_VBaseRangeMax: 222
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -385,23 +385,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 797
+      width: 789
       height: 464
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 398.5, y: 232}
+    m_Translation: {x: 394.5, y: 232}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -398.5
+      x: -394.5
       y: -232
-      width: 797
+      width: 789
       height: 464
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 797, y: 485}
+  m_LastWindowPixelSize: {x: 789, y: 485}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -430,7 +430,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 797
+    width: 789
     height: 412
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -498,7 +498,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 25}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-transform-toolbar
@@ -706,7 +706,7 @@ MonoBehaviour:
       floating: 1
       collapsed: 1
       displayed: 1
-      snapOffset: {x: -47, y: -43}
+      snapOffset: {x: -49, y: -44}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: AINavigationOverlay
@@ -920,9 +920,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.087009795, y: 0.91285306, z: -0.29020938, w: -0.27369153}
   m_Size:
-    m_Target: 9.799335
+    m_Target: 10.329058
     speed: 2
-    m_Value: 9.799335
+    m_Value: 10.329058
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1723,8 +1723,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 793
-    height: 413
+    width: 797
+    height: 412
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1736,11 +1736,11 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 6027
+    ID: 3253
     splitterInitialOffset: 250
     currentActiveSplitter: -1
     realSizes:
-    - 183
+    - 182
     - 160
     relativeSizes:
     - 0.5335277
@@ -1751,7 +1751,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 343
+    lastTotalSize: 342
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -1767,9 +1767,9 @@ MonoBehaviour:
       uniqueId: '[Village][suite]'
       name: Village
       fullName: Village
-      resultStatus: 1
-      duration: 0.4610418
-      messages: 
+      resultStatus: 2
+      duration: 0.2070047
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1779,13 +1779,13 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1003
-      uniqueId: '[PlayModeTests][F:/UnityProjects/Village/Library/ScriptAssemblies/PlayModeTests.dll][suite]'
+    - id: 1005
+      uniqueId: '[PlayModeTests.dll][suite]'
       name: PlayModeTests.dll
       fullName: F:/UnityProjects/Village/Library/ScriptAssemblies/PlayModeTests.dll
-      resultStatus: 1
-      duration: 0.4523842
-      messages: 
+      resultStatus: 2
+      duration: 0.1936625
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1795,13 +1795,13 @@ MonoBehaviour:
       categories: []
       parentId: 1000
       parentUniqueId: '[Village][suite]'
-    - id: 1001
-      uniqueId: PlayModeTests.dll/[PlayModeTests][JiggleBonesTesting][suite]
-      name: JiggleBonesTesting
-      fullName: JiggleBonesTesting
-      resultStatus: 1
-      duration: 0.4492603
-      messages: 
+    - id: 1006
+      uniqueId: PlayModeTests.dll/[PlayModeTests][Testing][suite]
+      name: Testing
+      fullName: Testing
+      resultStatus: 2
+      duration: 0.1910354
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1809,17 +1809,55 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1003
-      parentUniqueId: '[PlayModeTests][F:/UnityProjects/Village/Library/ScriptAssemblies/PlayModeTests.dll][suite]'
-    - id: 1002
-      uniqueId: PlayModeTests.dll/JiggleBonesTesting/[PlayModeTests][JiggleBonesTesting.JiggleBonesHaveRightValues]
-      name: JiggleBonesHaveRightValues
-      fullName: JiggleBonesTesting.JiggleBonesHaveRightValues
-      resultStatus: 1
-      duration: 0.4308375
-      messages: 
+      parentId: 1005
+      parentUniqueId: '[PlayModeTests.dll][suite]'
+    - id: 1001
+      uniqueId: PlayModeTests.dll/Testing/[PlayModeTests][Testing.JiggleBonesTesting][suite]
+      name: JiggleBonesTesting
+      fullName: Testing.JiggleBonesTesting
+      resultStatus: 2
+      duration: 0.1879769
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1006
+      parentUniqueId: PlayModeTests.dll/[PlayModeTests][Testing][suite]
+    - id: 1002
+      uniqueId: PlayModeTests.dll/Testing/JiggleBonesTesting/[PlayModeTests][Testing.JiggleBonesTesting.JiggleBonesHaveRightValues]
+      name: JiggleBonesHaveRightValues
+      fullName: Testing.JiggleBonesTesting.JiggleBonesHaveRightValues
+      resultStatus: 2
+      duration: 0.1732672
+      messages: "  Expected: Testing.JiggleBonesTesting+BoneTrace\r\n  But was: 
+        Testing.JiggleBonesTesting+BoneTrace\r\n"
+      output: 'Bone''s CurrentTargetAnimatedBoneFrame aren''t equal: (Position: (-0.06,
+        1.34, 0.22)), (Time: 0,47753409955294) | (Position: (-0.06, 1.34, 0.22)),
+        (Time: 0,47753409955294)
+
+        <color=red>Try run tests with burst disabled.</color>
+
+'
+      stacktrace: 'at Testing.JiggleBonesTesting.CompareRigs (JigglePhysics.JiggleRigBuilder+JiggleRig
+        rig1, JiggleBones.JiggleBone[] bones2) [0x0007d] in F:\UnityProjects\Village\Assets\Tests\PlayMode\JiggleBonesTesting.cs:138
+
+        at
+        Testing.JiggleBonesTesting.CompareRigs (JigglePhysics.JiggleRigBuilder builder1,
+        JiggleBones.JiggleBuilder builder2) [0x00004] in F:\UnityProjects\Village\Assets\Tests\PlayMode\JiggleBonesTesting.cs:111
+
+        at
+        Testing.JiggleBonesTesting+<JiggleBonesHaveRightValues>d__8.MoveNext () [0x0024f]
+        in F:\UnityProjects\Village\Assets\Tests\PlayMode\JiggleBonesTesting.cs:82
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a]
+        in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1827,14 +1865,41 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1001
-      parentUniqueId: PlayModeTests.dll/[PlayModeTests][JiggleBonesTesting][suite]
-    m_ResultText: JiggleBonesHaveRightValues (0,431s)
-    m_ResultStacktrace: 
+      parentUniqueId: PlayModeTests.dll/Testing/[PlayModeTests][Testing.JiggleBonesTesting][suite]
+    m_ResultText: "JiggleBonesHaveRightValues (0,173s)\n---\nExpected: Testing.JiggleBonesTesting+BoneTrace\r\n 
+      But was:  Testing.JiggleBonesTesting+BoneTrace\n---\nat Testing.JiggleBonesTesting.CompareRigs
+      (JigglePhysics.JiggleRigBuilder+JiggleRig rig1, JiggleBones.JiggleBone[] bones2)
+      [0x0007d] in F:\\UnityProjects\\Village\\Assets\\Tests\\PlayMode\\JiggleBonesTesting.cs:138\r\nat
+      Testing.JiggleBonesTesting.CompareRigs (JigglePhysics.JiggleRigBuilder builder1,
+      JiggleBones.JiggleBuilder builder2) [0x00004] in F:\\UnityProjects\\Village\\Assets\\Tests\\PlayMode\\JiggleBonesTesting.cs:111\r\nat
+      Testing.JiggleBonesTesting+<JiggleBonesHaveRightValues>d__8.MoveNext () [0x0024f]
+      in F:\\UnityProjects\\Village\\Assets\\Tests\\PlayMode\\JiggleBonesTesting.cs:82\r\nat
+      UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in
+      .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n---\nBone's
+      CurrentTargetAnimatedBoneFrame aren't equal: (Position: (-0.06, 1.34, 0.22)),
+      (Time: 0,47753409955294) | (Position: (-0.06, 1.34, 0.22)), (Time: 0,47753409955294)\r\n<color=red>Try
+      run tests with burst disabled.</color>"
+    m_ResultStacktrace: 'at Testing.JiggleBonesTesting.CompareRigs (JigglePhysics.JiggleRigBuilder+JiggleRig
+      rig1, JiggleBones.JiggleBone[] bones2) [0x0007d] in F:\UnityProjects\Village\Assets\Tests\PlayMode\JiggleBonesTesting.cs:138
+
+      at
+      Testing.JiggleBonesTesting.CompareRigs (JigglePhysics.JiggleRigBuilder builder1,
+      JiggleBones.JiggleBuilder builder2) [0x00004] in F:\UnityProjects\Village\Assets\Tests\PlayMode\JiggleBonesTesting.cs:111
+
+      at
+      Testing.JiggleBonesTesting+<JiggleBonesHaveRightValues>d__8.MoveNext () [0x0024f]
+      in F:\UnityProjects\Village\Assets\Tests\PlayMode\JiggleBonesTesting.cs:82
+
+      at
+      UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in
+      .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+
+'
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d904fbb5
-      m_LastClickedID: -1241840423
-      m_ExpandedIDs: 00faeac3be4124f96a83a836206e5f5affffff7f
+      m_SelectedIDs: fe69684f
+      m_LastClickedID: 1332242942
+      m_ExpandedIDs: ae332b91030ec3ab03a715c200faeac3a592e6c5be4124f96a83a836206e5f5affffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1971,9 +2036,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 798
+    x: 790
     y: 73
-    width: 456
+    width: 608
     height: 411
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1990,7 +2055,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 74f3ffff
+      m_ExpandedIDs: d2faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2006,7 +2071,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 7}
+        m_ClientGUIView: {fileID: 10}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -2035,9 +2100,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 798
+    x: 790
     y: 505
-    width: 456
+    width: 608
     height: 486
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -2058,9 +2123,9 @@ MonoBehaviour:
     m_SceneHandles: 
     m_ShowAllHits: 0
     m_SkipHidden: 0
-    m_SearchArea: 1
+    m_SearchArea: 0
     m_Folders:
-    - Assets/Game Resources/Textures/Application Icon
+    - Assets/Game Resources/Scripts/Core/UIStateMachine/MainMenu
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -2068,16 +2133,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Game Resources/Textures/Application Icon
+  - Assets/Game Resources/Scripts/Core/UIStateMachine/MainMenu
   m_LastFoldersGridSize: 16
   m_LastProjectPath: F:\UnityProjects\Village
   m_LockTracker:
     m_IsLocked: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: b8a50000
-    m_LastClickedID: 42424
-    m_ExpandedIDs: 0000000052a3000054a30000b6a5000000ca9a3b
+    scrollPos: {x: 0, y: 350}
+    m_SelectedIDs: 28970000
+    m_LastClickedID: 38696
+    m_ExpandedIDs: 000000009e940000a0940000a2940000a4940000a6940000a8940000aa940000ac940000ae940000b0940000b2940000b4940000b6940000b8940000ba940000bc940000be940000c0940000c2940000c49400002697000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2105,7 +2170,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000052a3000054a30000
+    m_ExpandedIDs: 000000009e940000a0940000a2940000a4940000a6940000a8940000aa940000ac940000ae940000b0940000b2940000b4940000b6940000b8940000ba940000bc940000be940000c0940000c2940000c4940000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2182,9 +2247,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 798
+    x: 790
     y: 505
-    width: 477
+    width: 608
     height: 486
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -2217,9 +2282,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1277
+    x: 1400
     y: 73
-    width: 642
+    width: 519
     height: 918
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -2237,7 +2302,7 @@ MonoBehaviour:
     m_CachedPref: -215
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -47636
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -2265,9 +2330,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1256
+    x: 1344
     y: 73
-    width: 663
+    width: 575
     height: 918
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -2286,8 +2351,8 @@ MonoBehaviour:
   m_SearchText: 
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: a01a5fa6
-    m_LastClickedID: -1503716704
+    m_SelectedIDs: 4dcf9b58
+    m_LastClickedID: 1486606157
     m_ExpandedIDs: a01a5fa653336be200000000c53aba5a
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -2326,9 +2391,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1334
+    x: 1400
     y: 73
-    width: 585
+    width: 519
     height: 918
   m_SerializedDataModeController:
     m_DataMode: 0
