@@ -6,7 +6,7 @@ namespace GameCore
 {
     namespace Installers
     {
-        public class PlayerInputInstaller : MonoInstaller
+        public sealed class PlayerInputInstaller : MonoInstaller
         {
             [SerializeField] private UnityEngine.InputSystem.PlayerInput _playerInput;
             [SerializeField] private Transform _parentTransform;

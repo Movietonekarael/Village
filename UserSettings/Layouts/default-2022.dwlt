@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 130
+  controlID: 1081
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -174,7 +174,7 @@ MonoBehaviour:
   - {fileID: 16}
   - {fileID: 17}
   m_Selected: 0
-  m_LastSelected: 3
+  m_LastSelected: 2
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 55
+  controlID: 77
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -272,14 +272,14 @@ MonoBehaviour:
     y: 432
     width: 610
     height: 507
-  m_MinSize: {x: 232, y: 271}
-  m_MaxSize: {x: 10002, y: 10021}
-  m_ActualView: {fileID: 20}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
+  m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 20}
   - {fileID: 21}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -353,7 +353,7 @@ MonoBehaviour:
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
-  m_EnterPlayModeBehavior: 0
+  m_EnterPlayModeBehavior: 1
   m_UseMipMap: 0
   m_VSyncEnabled: 0
   m_Gizmos: 0
@@ -868,9 +868,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -55.588608, y: -5.121193, z: 23.674713}
+    m_Target: {x: 350.97714, y: 175.5098, z: 135.10904}
     speed: 2
-    m_Value: {x: -55.588608, y: -5.121193, z: 23.674713}
+    m_Value: {x: 350.97714, y: 175.5098, z: 135.10904}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -916,13 +916,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.087010406, y: -0.9128595, z: 0.2902114, w: 0.27369347}
+    m_Target: {x: 0.10488731, y: 0.06558229, z: -0.0069318786, w: 0.9923027}
     speed: 2
-    m_Value: {x: -0.087009795, y: 0.91285306, z: -0.29020938, w: -0.27369153}
+    m_Value: {x: -0.1048873, y: -0.06558229, z: 0.006931878, w: -0.9923027}
   m_Size:
-    m_Target: 10.329058
+    m_Target: 153.00322
     speed: 2
-    m_Value: 10.329058
+    m_Value: 153.00322
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -969,8 +969,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 793
-    height: 430
+    width: 789
+    height: 412
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1600,8 +1600,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 793
-    height: 430
+    width: 789
+    height: 412
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1684,10 +1684,10 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: b0d54564a210ce449bf34ca0f1a8047e,
+  m_AnimatorController: {fileID: 9100000, guid: 077c996fb4905fd49b934f4237e1a8ba,
     type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: 2482610046771639288, guid: b0d54564a210ce449bf34ca0f1a8047e,
+  - m_Target: {fileID: 2231244681745170737, guid: 077c996fb4905fd49b934f4237e1a8ba,
       type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
@@ -1723,7 +1723,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 797
+    width: 789
     height: 412
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1736,7 +1736,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 3253
+    ID: 13441
     splitterInitialOffset: 250
     currentActiveSplitter: -1
     realSizes:
@@ -1869,15 +1869,15 @@ MonoBehaviour:
     m_ResultText: "JiggleBonesHaveRightValues (0,173s)\n---\nExpected: Testing.JiggleBonesTesting+BoneTrace\r\n 
       But was:  Testing.JiggleBonesTesting+BoneTrace\n---\nat Testing.JiggleBonesTesting.CompareRigs
       (JigglePhysics.JiggleRigBuilder+JiggleRig rig1, JiggleBones.JiggleBone[] bones2)
-      [0x0007d] in F:\\UnityProjects\\Village\\Assets\\Tests\\PlayMode\\JiggleBonesTesting.cs:138\r\nat
+      [0x0007d] in F:\\UnityProjects\\Village\\Assets\\Tests\\PlayMode\\JiggleBonesTesting.cs:138\nat
       Testing.JiggleBonesTesting.CompareRigs (JigglePhysics.JiggleRigBuilder builder1,
-      JiggleBones.JiggleBuilder builder2) [0x00004] in F:\\UnityProjects\\Village\\Assets\\Tests\\PlayMode\\JiggleBonesTesting.cs:111\r\nat
+      JiggleBones.JiggleBuilder builder2) [0x00004] in F:\\UnityProjects\\Village\\Assets\\Tests\\PlayMode\\JiggleBonesTesting.cs:111\nat
       Testing.JiggleBonesTesting+<JiggleBonesHaveRightValues>d__8.MoveNext () [0x0024f]
-      in F:\\UnityProjects\\Village\\Assets\\Tests\\PlayMode\\JiggleBonesTesting.cs:82\r\nat
+      in F:\\UnityProjects\\Village\\Assets\\Tests\\PlayMode\\JiggleBonesTesting.cs:82\nat
       UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in
       .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n---\nBone's
       CurrentTargetAnimatedBoneFrame aren't equal: (Position: (-0.06, 1.34, 0.22)),
-      (Time: 0,47753409955294) | (Position: (-0.06, 1.34, 0.22)), (Time: 0,47753409955294)\r\n<color=red>Try
+      (Time: 0,47753409955294) | (Position: (-0.06, 1.34, 0.22)), (Time: 0,47753409955294)\n<color=red>Try
       run tests with burst disabled.</color>"
     m_ResultStacktrace: 'at Testing.JiggleBonesTesting.CompareRigs (JigglePhysics.JiggleRigBuilder+JiggleRig
       rig1, JiggleBones.JiggleBone[] bones2) [0x0007d] in F:\UnityProjects\Village\Assets\Tests\PlayMode\JiggleBonesTesting.cs:138
@@ -1999,9 +1999,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 507
-    width: 830
-    height: 484
+    y: 506
+    width: 789
+    height: 485
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -2014,7 +2014,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 36622
+  m_LastSelectedObjectID: -492974
 --- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -2055,7 +2055,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: d2faffff
+      m_ExpandedIDs: 3ed3ffffe8e4ffff5ae6fffffeeaffffaaf0ffff3af1ffffdcf5ffff2cf6ffffc4faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2123,9 +2123,9 @@ MonoBehaviour:
     m_SceneHandles: 
     m_ShowAllHits: 0
     m_SkipHidden: 0
-    m_SearchArea: 0
+    m_SearchArea: 1
     m_Folders:
-    - Assets/Game Resources/Scripts/Core/UIStateMachine/MainMenu
+    - Assets/Scenes/Menu/Animations
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -2133,16 +2133,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Game Resources/Scripts/Core/UIStateMachine/MainMenu
+  - Assets/Scenes/Menu/Animations
   m_LastFoldersGridSize: 16
   m_LastProjectPath: F:\UnityProjects\Village
   m_LockTracker:
-    m_IsLocked: 1
+    m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 350}
-    m_SelectedIDs: 28970000
-    m_LastClickedID: 38696
-    m_ExpandedIDs: 000000009e940000a0940000a2940000a4940000a6940000a8940000aa940000ac940000ae940000b0940000b2940000b4940000b6940000b8940000ba940000bc940000be940000c0940000c2940000c49400002697000000ca9a3b
+    scrollPos: {x: 0, y: 846}
+    m_SelectedIDs: 00980000
+    m_LastClickedID: 38912
+    m_ExpandedIDs: 00000000ce970000d0970000d2970000d4970000d6970000d8970000da970000dc970000de970000e0970000e2970000e4970000e6970000e8970000ea970000ec970000ee970000f0970000f2970000f4970000fe97000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2170,7 +2170,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000009e940000a0940000a2940000a4940000a6940000a8940000aa940000ac940000ae940000b0940000b2940000b4940000b6940000b8940000ba940000bc940000be940000c0940000c2940000c4940000
+    m_ExpandedIDs: 00000000ce970000d0970000d2970000d4970000d6970000d8970000da970000dc970000de970000e0970000e2970000e4970000e6970000e8970000ea970000ec970000ee970000f0970000f2970000f4970000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2330,9 +2330,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1344
+    x: 1400
     y: 73
-    width: 575
+    width: 519
     height: 918
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -2345,7 +2345,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_PosLeft: {x: 0, y: 0}
-  m_PosRight: {x: 0, y: 0}
+  m_PosRight: {x: 0, y: 420}
   m_Scope: 1
   m_SplitterFlex: 0.10619469
   m_SearchText: 

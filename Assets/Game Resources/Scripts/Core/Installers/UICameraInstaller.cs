@@ -7,7 +7,7 @@ namespace GameCore
 {
     namespace Installers
     {
-        public class UICameraInstaller : MonoInstaller
+        public sealed class UICameraInstaller : MonoInstaller
         {
             [SerializeField] private Camera _uiCamera;
 

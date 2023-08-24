@@ -7,7 +7,7 @@ namespace GameCore
 {
     namespace Installers
     {
-        public class EventSystemInstaller : MonoInstaller
+        public sealed class EventSystemInstaller : MonoInstaller
         {
             [SerializeField] private EventSystem _eventSystem;
 

@@ -7,7 +7,7 @@ namespace GameCore
 {
     namespace Installers
     {
-        public class PlayerInstaller : MonoInstaller
+        public sealed class PlayerInstaller : MonoInstaller
         {
             [SerializeField] private GameObject _playerPrefab;
             [SerializeField] private PlayerSpawnPoint _spawnPoint;

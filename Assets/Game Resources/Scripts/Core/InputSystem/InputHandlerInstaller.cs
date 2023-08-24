@@ -7,7 +7,7 @@ namespace GameCore
 {
     namespace Installers
     {
-        public class InputHandlerInstaller : MonoInstaller
+        public sealed class InputHandlerInstaller : MonoInstaller
         {
             [SerializeField] private InputHandler _inputHandler;
             [SerializeField] private Transform _parentTransform;

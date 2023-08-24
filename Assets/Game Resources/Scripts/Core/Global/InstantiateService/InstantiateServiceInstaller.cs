@@ -6,7 +6,7 @@ namespace GameCore
 {
     namespace Installers
     {
-        public class InstantiateServiceInstaller : MonoInstaller
+        public sealed class InstantiateServiceInstaller : MonoInstaller
         {
             private const string _SERVICE_NAME = "Instantiate Service";
             [SerializeField] private Transform _parentTransform;

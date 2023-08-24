@@ -7,7 +7,7 @@ namespace GameCore
 
     namespace Installers
     {
-        public class NetworkConnectionServiceInstaller : MonoInstaller
+        public sealed class NetworkConnectionServiceInstaller : MonoInstaller
         {
             private const string _SERVICE_NAME = "NetworkConnectionService";
             [SerializeField] private Transform _parentTransform;

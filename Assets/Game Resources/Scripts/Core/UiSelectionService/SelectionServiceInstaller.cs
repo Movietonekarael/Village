@@ -6,7 +6,7 @@ namespace GameCore
 {
     namespace Installers
     {
-        public class SelectionServiceInstaller : MonoInstaller
+        public sealed class SelectionServiceInstaller : MonoInstaller
         {
             private const string _OBJECT_NAME = "SubmitService";
             [SerializeField] private Transform _parentTransform;
