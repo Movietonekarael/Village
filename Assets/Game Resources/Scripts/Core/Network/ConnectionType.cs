@@ -6,7 +6,8 @@
         {
             Host,
             Cliet,
-            Server
+            Server,
+            None
         }
     }
 }

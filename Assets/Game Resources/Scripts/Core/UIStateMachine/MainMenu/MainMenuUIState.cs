@@ -1,7 +1,7 @@
 using Unity.Collections;
 using System.Collections;
 using UnityEngine;
-using log4net.Util;
+using UnityEngine.AddressableAssets;
 
 namespace GameCore
 {
@@ -15,6 +15,8 @@ namespace GameCore
             private UnityEngine.Object _multiplayerMenuStateBase;
             private IUIState _multiplayerMenuState { get => _multiplayerMenuStateBase as IUIState; }
 
+            [SerializeField] private AssetReference _singlePlayerScene;
+
             [SerializeField] private bool _startupAnimationsAllowed = true;
             public bool StartupAnimationAllowed
             {
@@ -26,19 +28,21 @@ namespace GameCore
                 }
             }
 
+
             protected override void StartState(params bool[] args)
             {
-                _Controller.OnStartMultiplayer += StartMultiplayer;
+                _Controller.OnStartMultiplayer += StartMultiPlayer;
                 SetStartupAnimationBool();
                 _Controller.SetStartupAnimationAvailability(_startupAnimationsAllowed);
+                _Controller.SetSinglePlayerSceneReference(_singlePlayerScene);
             }
 
             protected override void EndState()
             {
-                _Controller.OnStartMultiplayer -= StartMultiplayer;
+                _Controller.OnStartMultiplayer -= StartMultiPlayer;
             }
 
-            private void StartMultiplayer()
+            private void StartMultiPlayer()
             {
                 SwitchState(_multiplayerMenuState);
             }

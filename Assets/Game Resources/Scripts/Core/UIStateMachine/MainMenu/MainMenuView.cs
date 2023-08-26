@@ -27,11 +27,15 @@ namespace GameCore
 
             private bool _startupAnimationsAllowed;
 
-            private MainMenu _mainMenu;
+            private IMainMenu _mainMenu;
+
+
+            protected override void InstantiateViewElementsOnAwake() { }
 
             public async override void Activate()
             {
                 await InstantiateViewElements();
+                SubscribeForMenuEvents();
                 StartMainMenu();
             }
 
@@ -66,7 +70,7 @@ namespace GameCore
                 _mainMenuObject = _instantiateService.InstantiateObjectWithInjections(_mainMenuHandle.Result as GameObject, _canvasObject.transform);
                 _mainMenuObject.name = (_mainMenuHandle.Result as GameObject).name;
                 _mainMenu = _mainMenuObject.GetComponent<MainMenu>();
-                _mainMenu.AllowAnimations = _startupAnimationsAllowed;
+                _mainMenu.SetAnimated(_startupAnimationsAllowed);
             }
 
             private void StartMainMenu()
@@ -74,8 +78,38 @@ namespace GameCore
                 _mainMenu.StartMainMenu();
             }
 
+            private void SubscribeForMenuEvents()
+            {
+                _mainMenu.OnSinglePlayerButtonPressed += StartSinglePlayer;
+                _mainMenu.OnMultiplayerButtonPressed += StartMultiplayer;
+                _mainMenu.OnQuitApplicationPressed += QuitApplication;
+            }
+
+            private void UnsubscribeForMenuEvents()
+            {
+                _mainMenu.OnSinglePlayerButtonPressed += StartSinglePlayer;
+                _mainMenu.OnMultiplayerButtonPressed += StartMultiplayer;
+                _mainMenu.OnQuitApplicationPressed += QuitApplication;
+            }
+
+            private void StartSinglePlayer()
+            {
+                _Controller.StartSinglePlayer();
+            }
+
+            private void StartMultiplayer()
+            {
+                _Controller.StartMultiPlayer();
+            }
+
+            private void QuitApplication()
+            {
+                _Controller.QuitApplication();
+            }
+
             public override void Deactivate()
             {
+                UnsubscribeForMenuEvents();
                 DestroyViewElements();
                 RealeseAllAssets();
             }
@@ -94,6 +128,7 @@ namespace GameCore
 
             public override void Deinitialize()
             {
+                UnsubscribeForMenuEvents();
                 DeinitializeViewElements();
             }
 
@@ -109,11 +144,6 @@ namespace GameCore
             public void SetStartupAnimationAvailability(bool allowed)
             {
                 _startupAnimationsAllowed = allowed;
-            }
-
-            protected override void InstantiateViewElementsOnAwake()
-            {
-
             }
         }
     }

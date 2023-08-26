@@ -28,6 +28,7 @@ namespace GameCore
             private IDeinitializable _controllerDeinitializator;
             private IActivatable _controllerActivator;
 
+
             private void Awake()
             {
                 _stateMachine = GetComponent<UIStateMachine>();
@@ -108,6 +109,10 @@ namespace GameCore
                     newState.EnterState();
 
                     _stateMachine.CurrentState = newState;
+                }
+                else
+                {
+                    Debug.LogWarning("No UI state attached for switching to new state. Doing nothing.");
                 }
             }
         }

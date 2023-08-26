@@ -1,5 +1,7 @@
 using GameCore.Animation;
+using PlasticPipe.PlasticProtocol.Messages;
 using System;
+using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 
@@ -7,64 +9,54 @@ namespace GameCore
 {
     namespace GUI
     {
-        public sealed class MainMenu : MonoBehaviour, IReleasable
+        public abstract class ButtonMenu<ButtonTypeT> : MonoBehaviour, IReleasable where ButtonTypeT : Enum, IConvertible
         {
-            [System.Serializable]
-            private sealed class MenuButtonWrapper
+            protected struct IndexTypeComperator
             {
-                public enum ButtonType : uint
-                {
-                    Singleplayer,
-                    Multiplayer,
-                    Quit
-                }
+                public ButtonTypeT Type;
+                public uint Index;
 
+                public IndexTypeComperator(ButtonTypeT type, uint index)
+                {
+                    Type = type;
+                    Index = index;
+                }
+            }
+
+            [System.Serializable]
+            protected sealed class MenuButtonWrapper
+            {
                 public GameObject GameObject;
-                public ButtonType Type;
+                public ButtonTypeT Type;
                 public bool IsInteractable = true;
             }
 
             [SerializeField] private int _defaultSelectedButtonIndex = 0;
-            private MenuButton _defaultSelectedButton;
+            private IMenuButton _defaultSelectedButton;
 
-            [SerializeField] private GameObject _header;
-            private LabelAnimator _headerAnimator;
-            private AnimationEventListener _headerAnimationEvent;
             [SerializeField] private MenuButtonWrapper[] _buttons;
-            private MenuButton[] _menuButtons;
-            
-
-            [HideInInspector] public bool AllowAnimations = false;
+            protected IMenuButton[] _MenuButtons;
             private ButtonAnimator[] _buttonAnimators;
-
-            private const string _ANIMATE_ALL_BUTTONS_KEY = "AnimateAllButtons";
-
-            public event Action OnSinglePlayerButtonPressed;
-            public event Action OnMultiplayerButtonPressed;
-            public event Action OnQuitApplicationPressed;
-            private uint _buttonIndexes;
 
 
             private void Awake()
             {
                 CacheAnimators();
-                CacheAnimationEventListeners();
                 CacheButtons();
                 CacheSelectedButton();
+                var _buttonIndexes = CreateComperator();
+                SetButtonIndexes(_buttonIndexes);
                 SubscribeForEvents();
-
                 ReleaseUselessReferences();
+                OnAwake();
             }
+
+            protected abstract void OnAwake();
 
             private void CacheAnimators()
             {
-                CacheHeaderAnimator();
                 CacheButtonAnimators();
-            }
-
-            private void CacheHeaderAnimator()
-            {
-                _headerAnimator = _header.GetComponent<LabelAnimator>();
+                OnCacheAnimators();
             }
 
             private void CacheButtonAnimators()
@@ -73,6 +65,169 @@ namespace GameCore
                 for (var i = 0; i < _buttons.Length; i++)
                     _buttonAnimators[i] = _buttons[i].GameObject.GetComponent<ButtonAnimator>();
             }
+
+            protected abstract void OnCacheAnimators();
+
+            private void CacheButtons()
+            {
+                _MenuButtons = new IMenuButton[_buttons.Length];
+
+                for (var i = 0; i < _MenuButtons.Length; i++)
+                    _MenuButtons[i] = _buttons[i].GameObject.GetComponent<IMenuButton>();
+            }
+
+            private IndexTypeComperator[] CreateComperator()
+            {
+                var indexComperator = new List<IndexTypeComperator>();
+                var createdTypesHashSet = new HashSet<ButtonTypeT>();
+
+                for (var i = 0u; i < _buttons.Length; i++)
+                {
+                    var buttonType = _buttons[i].Type;
+                    if (!createdTypesHashSet.Contains(buttonType))
+                    {
+                        createdTypesHashSet.Add(buttonType);
+                        var oneComperator = new IndexTypeComperator(buttonType, i);
+                        indexComperator.Add(oneComperator);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("There are more than one button for operating " +
+                                         $"with type {buttonType}. Skipping extra buttons.");
+                    }
+                }
+
+                CheckCreatedHashSet(createdTypesHashSet);
+
+                return indexComperator.ToArray();
+            }
+
+            private void CheckCreatedHashSet(HashSet<ButtonTypeT> createdTypesHashSet)
+            {
+                var enumValues = Enum.GetValues(typeof(ButtonTypeT)) as uint[];
+
+                for (var i = 0; i < enumValues.Length; i++)
+                {
+                    var buttonType = (ButtonTypeT)enumValues[i];
+                    if (!createdTypesHashSet.Contains(buttonType))
+                    {
+                        Debug.LogWarning($"There are no buttons to operate with {buttonType} event.");
+                    }
+                }
+            }
+
+            private void SetButtonIndexes(IndexTypeComperator[] indexComperator)
+            {
+                for (var i = 0; i < indexComperator.Length; i++)
+                {
+                    var oneComperator = indexComperator[i];
+                    //var g = Enum.GetUnderlyingType(oneComperator.Type);
+                    _MenuButtons[oneComperator.Index].SetIndex(oneComperator.Type);
+                }
+            }
+
+            private void CacheSelectedButton()
+            {
+                if (_defaultSelectedButtonIndex >= 0 && _defaultSelectedButtonIndex < _buttons.Length)
+                    _defaultSelectedButton = _MenuButtons[_defaultSelectedButtonIndex];
+            }
+
+            public void ReleaseUselessReferences()
+            {
+                _buttons = null;
+            }
+
+            protected abstract void OnReleaseUselessReferences();
+
+            private void SubscribeForEvents()
+            {
+                if (_defaultSelectedButton != null)
+                    _defaultSelectedButton.OnButtonActivated += SelectButton;
+            }
+
+            private void UnsubscribeForEvents()
+            {
+                if (_defaultSelectedButton != null)
+                    _defaultSelectedButton.OnButtonActivated -= SelectButton;
+            }
+
+            private void SelectButton()
+            {
+                _defaultSelectedButton.SetSelected();
+            }
+        }
+
+        public enum MultiplayerMenuButtonType : uint
+        {
+            HostServer,
+            ConnectToSeerver,
+            Back
+        }
+
+        public sealed class MultiplayerMenu : ButtonMenu<MultiplayerMenuButtonType>
+        {
+            protected override void OnAwake()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void OnCacheAnimators()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void OnReleaseUselessReferences()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public enum MainMenuButtonType : uint
+        {
+            Singleplayer,
+            Multiplayer,
+            Quit
+        }
+
+        public sealed class MainMenu : ButtonMenu<MainMenuButtonType>, IMainMenu
+        {
+
+
+
+
+            [SerializeField] private GameObject _header;
+            private LabelAnimator _headerAnimator;
+            private AnimationEventListener _headerAnimationEvent;
+            
+            
+            
+
+            [HideInInspector] private bool _allowAnimations = false;
+
+            private const string _ANIMATE_ALL_BUTTONS_KEY = "AnimateAllButtons";
+
+            public event Action OnSinglePlayerButtonPressed;
+            public event Action OnMultiplayerButtonPressed;
+            public event Action OnQuitApplicationPressed;
+
+
+            protected override void OnAwake()
+            {
+                CacheAnimationEventListeners();
+                SubscribeForEvents();
+            }
+
+            protected override void OnCacheAnimators()
+            {
+                CacheHeaderAnimator();
+            }
+
+            private void CacheHeaderAnimator()
+            {
+                _headerAnimator = _header.GetComponent<LabelAnimator>();
+            }
+
+
 
             private void CacheAnimationEventListeners()
             {
@@ -84,32 +239,18 @@ namespace GameCore
                 _headerAnimationEvent = _header.GetComponent<AnimationEventListener>();
             }
 
-            private void CacheButtons()
-            {
-                _menuButtons = new MenuButton[_buttons.Length];
 
-                for (var i = 0; i < _menuButtons.Length; i++)
-                    _menuButtons[i] = _buttons[i].GameObject.GetComponent<MenuButton>();
-            }
 
-            private void CacheSelectedButton()
-            {
-                if (_defaultSelectedButtonIndex >= 0 && _defaultSelectedButtonIndex < _buttons.Length)
-                    _defaultSelectedButton = _menuButtons[_defaultSelectedButtonIndex];
-            }
+
 
             private void SubscribeForEvents()
             {
                 _headerAnimationEvent.OnAnimationEventAction += AnimateAllButtons;
 
-                if (_defaultSelectedButton != null)
-                    _defaultSelectedButton.OnButtonActivated += SelectButton;
-
-                for (var i = 0u; i < _menuButtons.Length; i++)
+                for (var i = 0u; i < _MenuButtons.Length; i++)
                 {
-                    _menuButtons[i].Index = i;
-                    _menuButtons[i].SubscribeForClickEvent();
-                    _menuButtons[i].OnButtonPressed += ButtonPressed;
+                    _MenuButtons[i].SubscribeForClickEvent();
+                    _MenuButtons[i].OnButtonPressed += ButtonPressed;
                 }
             }
 
@@ -117,10 +258,7 @@ namespace GameCore
             {
                 _headerAnimationEvent.OnAnimationEventAction -= AnimateAllButtons;
 
-                if (_defaultSelectedButton != null)
-                    _defaultSelectedButton.OnButtonActivated -= SelectButton;
-
-                foreach (var menuButton in _menuButtons)
+                foreach (var menuButton in _MenuButtons)
                     menuButton.OnButtonPressed -= ButtonPressed;
             }
 
@@ -132,27 +270,28 @@ namespace GameCore
                 StartButtonsAnimation();
             }
 
-            private void SelectButton()
-            {
-                _defaultSelectedButton.SetSelected();
-            }
-
             private void ButtonPressed(uint index)
             {
-
+                var type = (MainMenuButtonType)index;
+                switch(type) 
+                {
+                    case MainMenuButtonType.Singleplayer:
+                        OnSinglePlayerButtonPressed?.Invoke();
+                        break;
+                    case MainMenuButtonType.Multiplayer:
+                        OnMultiplayerButtonPressed?.Invoke();
+                        break;
+                    case MainMenuButtonType.Quit:
+                        OnQuitApplicationPressed?.Invoke();
+                        break;
+                }
             }
 
-            private void EstablishButtonIndexes()
-            {
-                var len = _menuButtons.Length;
-                var indexes = new uint[len];
-                //Enum.getv
-            }
 
-            public void ReleaseUselessReferences()
+
+            protected override void OnReleaseUselessReferences()
             {
                 _header = null;
-                _buttons = null;
             }
 
             public void StartMainMenu()
@@ -161,14 +300,19 @@ namespace GameCore
                 StartButtonsAnimationIfAnimated();
             }
 
+            public void SetAnimated(bool isAnimated)
+            {
+                _allowAnimations = isAnimated;
+            }
+
             private void StartHeaderAnimation()
             {
-                _headerAnimator.SetAnimated(AllowAnimations);
+                _headerAnimator.SetAnimated(_allowAnimations);
             }
 
             private void StartButtonsAnimationIfAnimated()
             {
-                if (AllowAnimations)
+                if (_allowAnimations)
                     return;
 
                 StartButtonsAnimation();
@@ -178,7 +322,7 @@ namespace GameCore
             {
                 foreach (var animator in _buttonAnimators)
                 {
-                    animator.Animate(AllowAnimations);
+                    animator.Animate(_allowAnimations);
                 }
             }
 

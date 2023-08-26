@@ -196,6 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06aa7fb535f310408fc4bc27a8318d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Interactable: 1
 --- !u!114 &1205411326267193312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06aa7fb535f310408fc4bc27a8318d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Interactable: 1
 --- !u!114 &858622204342286990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1019,6 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06aa7fb535f310408fc4bc27a8318d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Interactable: 1
 --- !u!114 &2443886400588283908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1363,12 +1366,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15d5ea965b7576449146f1db2e747ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _header: {fileID: 1572148485317334694}
-  _buttons:
+  _Buttons:
   - GameObject: {fileID: 1119045714971643100}
+    Type: 0
     IsInteractable: 1
   - GameObject: {fileID: 2505645800656625294}
+    Type: 1
     IsInteractable: 1
   - GameObject: {fileID: 3923691679603461272}
+    Type: 2
     IsInteractable: 1
-  AllowAnimations: 0
+  _defaultSelectedButtonIndex: 0
+  _header: {fileID: 1572148485317334694}

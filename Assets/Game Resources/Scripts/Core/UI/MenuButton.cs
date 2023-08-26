@@ -7,9 +7,20 @@ namespace GameCore
 {
     namespace GUI
     {
+        public interface IMenuButton
+        {
+            public event Action OnButtonActivated;
+            public event Action<uint> OnButtonPressed;
+
+            public void SubscribeForClickEvent();
+            public void SetSelected();
+            public void SetActive();
+            public void SetIndex(uint index);
+        }
+
         [RequireComponent(typeof(UiSelecter))]
         [RequireComponent(typeof(Button))]
-        public class MenuButton : MonoBehaviour
+        public class MenuButton : MonoBehaviour, IMenuButton
         {
             [Inject] private readonly UiSelectionService _uiSelectionService;
 
@@ -18,7 +29,7 @@ namespace GameCore
 
             private Button _button;
 
-            [HideInInspector] public uint Index;
+            private uint _index;
             public bool Interactable = true; 
             private ISelectable _selecter;
 
@@ -41,9 +52,14 @@ namespace GameCore
             public void SubscribeForClickEvent()
             {
                 if (_button != null)
-                    _button.onClick.AddListener(() => { OnButtonPressed?.Invoke(Index); });
+                    _button.onClick.AddListener(ButtonPressed);
                 else
-                    GetComponent<Button>().onClick.AddListener(() => { OnButtonPressed?.Invoke(Index); });
+                    GetComponent<Button>().onClick.AddListener(ButtonPressed);
+            }
+
+            private void ButtonPressed()
+            {
+                OnButtonPressed?.Invoke(_index);
             }
 
             public void SetActive()
@@ -60,6 +76,11 @@ namespace GameCore
             public void SetSelected()
             {
                 _uiSelectionService.CurrentSelected = _selecter;
+            }
+
+            public void SetIndex(uint index)
+            {
+                _index = index;
             }
         }
     }

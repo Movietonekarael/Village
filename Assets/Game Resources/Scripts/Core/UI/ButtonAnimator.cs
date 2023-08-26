@@ -12,7 +12,7 @@ namespace GameCore
         public sealed class ButtonAnimator : CustomUIAnimator
         {
             private AnimationEventListener _eventListener;
-            private MenuButton _button;
+            private IMenuButton _button;
 
             private readonly int _isActiveID = Animator.StringToHash("Active");
             private readonly int _isActivateID = Animator.StringToHash("Activate");
@@ -59,7 +59,7 @@ namespace GameCore
 
             private void CacheMenuButton()
             {
-                _button = GetComponent<MenuButton>();
+                _button = GetComponent<IMenuButton>();
             }
 
             public void Animate(bool isAnimated)

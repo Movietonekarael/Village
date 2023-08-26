@@ -8,7 +8,7 @@ namespace GameCore
 
         public class NetworkConnectionService : MonoBehaviour
         {
-            public static ConnectionType ConnectionType = ConnectionType.Host;
+            public static ConnectionType ConnectionType = ConnectionType.None;
 
             private void Start()
             {
@@ -28,6 +28,11 @@ namespace GameCore
                         networkManager.StartClient();
                         break;
                 }
+            }
+
+            public static void ConnectToRelayServer()
+            {
+
             }
         }
     }
