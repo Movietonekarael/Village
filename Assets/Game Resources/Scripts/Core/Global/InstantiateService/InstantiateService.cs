@@ -10,14 +10,14 @@ namespace GameCore
             [Inject] private readonly DiContainer _diContainer;
 
 
-            public GameObject InstantiateObject(GameObject gameObject)
+            public T InstantiateObject<T>(T unityObject) where T : Object
             {
-                return Object.Instantiate(gameObject);
+                return Object.Instantiate(unityObject);
             }
 
-            public GameObject InstantiateObject(GameObject gameObject, Transform transform)
+            public T InstantiateObject<T>(T unityObject, Transform transform) where T : Object
             {
-                return Object.Instantiate(gameObject, transform);
+                return Object.Instantiate(unityObject, transform);
             }
 
             public GameObject InstantiateObjectWithInjections(GameObject gameObject)

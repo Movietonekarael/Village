@@ -22,7 +22,7 @@ namespace GameCore
                 throw new System.NotImplementedException();
             }
 
-            protected override void InstantiateViewElements()
+            protected override void InstantiateViewElementsOnAwake()
             {
                 throw new System.NotImplementedException();
             }

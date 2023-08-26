@@ -36,7 +36,7 @@ namespace GameCore
                 _instantiateService.DestroyObject(_canvasObject);
             }
 
-            protected override void InstantiateViewElements()
+            protected override void InstantiateViewElementsOnAwake()
             {
                 InstantiateCanvas();
                 InstantiateVirtualPointer();

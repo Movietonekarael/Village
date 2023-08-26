@@ -53,7 +53,7 @@ namespace GameCore
                 _instantiateService.DestroyObject(_canvasObject);
             }
 
-            protected override void InstantiateViewElements()
+            protected override void InstantiateViewElementsOnAwake()
             {
                 var buttons = CreateViewElements();
                 SetupInventoryButtons(buttons);

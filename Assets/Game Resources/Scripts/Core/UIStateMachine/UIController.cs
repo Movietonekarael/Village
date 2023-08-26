@@ -22,12 +22,36 @@ namespace GameCore
             private IDeinitializable _viewDeinitializator;
             private IActivatable _viewActivator;
 
+            /// <summary>
+            /// Subscribes controller object to events when initialized and do 
+            /// not unsubscribe until destroyed.
+            /// </summary>
             protected abstract void SubscribeForPermanentEvents();
+            /// <summary>
+            /// Unsubscribes controller object from events on destroy.
+            /// </summary>
             protected abstract void UnsubscribeForPermanentEvents();
+            /// <summary>
+            /// Subscribes controller object to events when state entered and do
+            /// not unsubscribe until state exit.
+            /// </summary>
             protected abstract void SubscribeForTemporaryEvents();
+            /// <summary>
+            /// Unsubscribes controller object from events on state exit.
+            /// </summary>
             protected abstract void UnsubscribeForTemporaryEvents();
+            /// <summary>
+            /// Uses for initializing view parameters at runtime.
+            /// </summary>
+            /// <param name="parameters">Parameters to modify. Often ScriptableObject.</param>
             protected abstract void InitializeParameters(T parameters);
+            /// <summary>
+            /// Executes on state enter.
+            /// </summary>
             protected abstract void OnActivate();
+            /// <summary>
+            /// Executes on state exit.
+            /// </summary>
             protected abstract void OnDeactivate();
 
             public void Init(T parameters)
@@ -62,15 +86,15 @@ namespace GameCore
             public void Activate()
             {
                 SubscribeForTemporaryEvents();
-                _viewActivator?.Activate();
                 OnActivate();
+                _viewActivator?.Activate();
             }
 
             public void Deactivate()
             {
                 UnsubscribeForTemporaryEvents();
-                _viewActivator?.Deactivate();
                 OnDeactivate();
+                _viewActivator?.Deactivate();
             }
         }
     }

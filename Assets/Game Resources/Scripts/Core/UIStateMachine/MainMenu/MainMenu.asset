@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3aeb8269fb88f44853a70ef2dcd56e, type: 3}
   m_Name: MainMenu
   m_EditorClassIdentifier: 
-  CanvasPrefab: {fileID: 0}
-  SingleCreator:
-    LastActionType: 0
-    CurrentActionType: 0
-  Creator:
-  - LastActionType: 0
-    CurrentActionType: 0
-  - LastActionType: 0
-    CurrentActionType: 0
-  - LastActionType: 0
-    CurrentActionType: 0
-  - LastActionType: 0
-    CurrentActionType: 0
+  CanvasReference:
+    m_AssetGUID: 7a9b8d12a04ab1047968b17f0b0fa846
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  MainMenuReference:
+    m_AssetGUID: c7aa7e9e438b96548917e6d7235c3c0e
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

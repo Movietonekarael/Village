@@ -8,6 +8,8 @@ namespace GameCore
     {
         public sealed class PlayerInputInstaller : MonoInstaller
         {
+            private const string _PLAYER_INPUT_NAME = "PlayerInput";
+
             [SerializeField] private UnityEngine.InputSystem.PlayerInput _playerInput;
             [SerializeField] private Transform _parentTransform;
 
@@ -19,7 +21,14 @@ namespace GameCore
 
             private UnityEngine.InputSystem.PlayerInput CreateInstance()
             {
-                return Container.InstantiatePrefabForComponent<UnityEngine.InputSystem.PlayerInput>(_playerInput, _parentTransform);
+                var playerInput = Container.InstantiatePrefabForComponent<UnityEngine.InputSystem.PlayerInput>(_playerInput, _parentTransform);
+                ChangeName(playerInput.gameObject);
+                return playerInput;
+            }
+
+            private void ChangeName(GameObject gameObject)
+            {
+                gameObject.name = _PLAYER_INPUT_NAME;
             }
 
             private void BindPlayerInput(UnityEngine.InputSystem.PlayerInput playerInputInstance)

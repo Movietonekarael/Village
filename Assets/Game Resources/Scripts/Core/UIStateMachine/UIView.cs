@@ -15,12 +15,12 @@ namespace GameCore
             public abstract void Activate();
             public abstract void Deactivate();
             public abstract void Deinitialize();
-            protected abstract void InstantiateViewElements();
+            protected abstract void InstantiateViewElementsOnAwake();
 
             public void Init(T parameters, P controller)
             {
                 InitializeParameters(parameters);
-                InstantiateViewElements();
+                InstantiateViewElementsOnAwake();
                 _Controller = controller;
             }
 

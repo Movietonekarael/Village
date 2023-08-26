@@ -121,8 +121,8 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1
-    functionName: SetNowActive
-    data: 
+    functionName: EventTriggered
+    data: SetButtonActive
     objectReferenceParameter: {fileID: 1997589203800543115, guid: d87dc0e586b5a4f4d93a2a48b7694ef4,
       type: 3}
     floatParameter: 0

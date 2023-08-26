@@ -9,6 +9,8 @@ namespace GameCore
     {
         public sealed class InputHandlerInstaller : MonoInstaller
         {
+            private const string _INPUT_HANDLER_NAME = "InputHandler";
+
             [SerializeField] private InputHandler _inputHandler;
             [SerializeField] private Transform _parentTransform;
 
@@ -33,7 +35,14 @@ namespace GameCore
 
             private InputHandler CreateInstance()
             {
-                return Container.InstantiatePrefabForComponent<InputHandler>(_inputHandler, _parentTransform);
+                var inputHandler = Container.InstantiatePrefabForComponent<InputHandler>(_inputHandler, _parentTransform);
+                ChangeName(inputHandler.gameObject);
+                return inputHandler;
+            }
+
+            private void ChangeName(GameObject gameObject)
+            {
+                gameObject.name = _INPUT_HANDLER_NAME;
             }
 
             private void BindInputHandler(InputHandler instance)

@@ -139,8 +139,8 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1
-    functionName: AppearAllButtons
-    data: 
+    functionName: EventTriggered
+    data: AnimateAllButtons
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

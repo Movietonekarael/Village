@@ -1,5 +1,7 @@
 using Unity.Collections;
 using System.Collections;
+using UnityEngine;
+using log4net.Util;
 
 namespace GameCore
 {
@@ -7,89 +9,51 @@ namespace GameCore
     {
         public sealed class MainMenuUIState : BaseUIState<MainMenuViewParameters, MainMenuController, IMainMenuController>
         {
-            protected override void EndState()
+            [Header("Multiplayer menu state")]
+            [SerializeField]
+            [RequireInterface(typeof(IUIState))]
+            private UnityEngine.Object _multiplayerMenuStateBase;
+            private IUIState _multiplayerMenuState { get => _multiplayerMenuStateBase as IUIState; }
+
+            [SerializeField] private bool _startupAnimationsAllowed = true;
+            public bool StartupAnimationAllowed
             {
-                throw new System.NotImplementedException();
+                get => _startupAnimationsAllowed;
+                set
+                {
+                    _startupAnimationsAllowed = value;
+                    StartupAnimationAllowedChanged();
+                }
             }
 
             protected override void StartState(params bool[] args)
             {
-                throw new System.NotImplementedException();
-            }
-        }
-
-        public interface IMainMenuController : ISpecificController
-        {
-
-        }
-
-        public interface IMainMenuView : ISpecificView
-        {
-
-        }
-
-        public sealed class MainMenuView : UIView<MainMenuViewParameters, IMainMenuController, IMainMenuView>, IMainMenuView
-        {
-            public override void Activate()
-            {
-                throw new System.NotImplementedException();
+                _Controller.OnStartMultiplayer += StartMultiplayer;
+                SetStartupAnimationBool();
+                _Controller.SetStartupAnimationAvailability(_startupAnimationsAllowed);
             }
 
-            public override void Deactivate()
+            protected override void EndState()
             {
-                throw new System.NotImplementedException();
+                _Controller.OnStartMultiplayer -= StartMultiplayer;
             }
 
-            public override void Deinitialize()
+            private void StartMultiplayer()
             {
-                throw new System.NotImplementedException();
+                SwitchState(_multiplayerMenuState);
             }
 
-            protected override void InstantiateViewElements()
+            private void SetStartupAnimationBool(params bool[] args)
             {
-                throw new System.NotImplementedException();
-            }
-        }
-
-        public sealed class MainMenuController : UIController<MainMenuViewParameters,
-                                                              IMainMenuController,
-                                                              MainMenuView,
-                                                              IMainMenuView>,
-                                                 IMainMenuController
-        {
-            protected override void InitializeParameters(MainMenuViewParameters parameters)
-            {
-                throw new System.NotImplementedException();
+                if (args.Length > 0)
+                {
+                    _startupAnimationsAllowed = args[0];
+                }
             }
 
-            protected override void OnActivate()
+            private void StartupAnimationAllowedChanged()
             {
-                throw new System.NotImplementedException();
-            }
-
-            protected override void OnDeactivate()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            protected override void SubscribeForPermanentEvents()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            protected override void SubscribeForTemporaryEvents()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            protected override void UnsubscribeForPermanentEvents()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            protected override void UnsubscribeForTemporaryEvents()
-            {
-                throw new System.NotImplementedException();
+                _Controller.SetStartupAnimationAvailability(_startupAnimationsAllowed);
             }
         }
     }

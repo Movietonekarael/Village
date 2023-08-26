@@ -9,6 +9,7 @@ namespace GameCore
     {
         public sealed class UICameraInstaller : MonoInstaller
         {
+            private const string _CAMERA_NAME = "UI Camera";
             [SerializeField] private Camera _uiCamera;
 
             public override void InstallBindings()
@@ -20,7 +21,14 @@ namespace GameCore
 
             private Camera CreateInstance()
             {
-                return Container.InstantiatePrefabForComponent<Camera>(_uiCamera);
+                var camera = Container.InstantiatePrefabForComponent<Camera>(_uiCamera);
+                ChangeName(camera.gameObject);
+                return camera;
+            }
+
+            private void ChangeName(GameObject gameObject)
+            {
+                gameObject.name = _CAMERA_NAME;
             }
 
             private void BindUiCamera(Camera uiCameraInstance)

@@ -1,6 +1,7 @@
 using GameCore.GUI;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 namespace GameCore
@@ -10,11 +11,11 @@ namespace GameCore
         public class ItemCell : MonoBehaviour, ISelectable
         {
             public Image ItemImage;
-            public Text ItemCountText;
+            public TextMeshProUGUI ItemCountText;
             [Header("Put if necessary")]
             [SerializeField] private ImageColor _imageColor;
 
-            private uint _number = 0;
+            private readonly uint _number = 0;
 
             public uint GetNumber()
             {
