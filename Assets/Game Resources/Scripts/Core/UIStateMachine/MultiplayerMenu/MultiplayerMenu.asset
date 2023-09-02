@@ -9,6 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 4bf73709262e6ef4a866eead31b17fa5, type: 3}
   m_Name: MultiplayerMenu
-  m_EditorClassIdentifier: Core:GameCore.GUI:MultiplayerMenuViewParameters
+  m_EditorClassIdentifier: 
+  CanvasReference:
+    m_AssetGUID: 7a9b8d12a04ab1047968b17f0b0fa846
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  MultiplayerMenuReference:
+    m_AssetGUID: b8acd2962b1d562478fba10ee8fd830c
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

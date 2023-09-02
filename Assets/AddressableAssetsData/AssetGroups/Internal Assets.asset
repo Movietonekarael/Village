@@ -10,15 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Menu Scene
+  m_Name: Internal Assets
   m_EditorClassIdentifier: 
-  m_GroupName: Menu Scene
+  m_GroupName: Internal Assets
   m_Data:
     m_SerializedData: []
-  m_GUID: 5d7f1e3437fad2e439cb9fed82ea5340
+  m_GUID: 3291c1afc0bc669c0983949f3497fb3d
   m_SerializeEntries:
-  - m_GUID: 85e992cd716a1e84190a1831e79ad4c4
-    m_Address: Menu
+  - m_GUID: a6ea07781fb463d469598a0719e1f38d
+    m_Address: Input Handler
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5dc7be7c02c02ab4a94c6fb4dd454985
+    m_Address: PlayerInputScheme
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -26,5 +31,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: cff20577fc9cc8946b498f76f3089f33, type: 2}
-    - {fileID: 11400000, guid: 20be4f65d1c1fde46bb84670725292b4, type: 2}
+    - {fileID: 11400000, guid: 1f5802d2f40be1cd3ba3b61162a10aaf, type: 2}
+    - {fileID: 11400000, guid: 6838315d94afd74f580414b5f35a19dd, type: 2}

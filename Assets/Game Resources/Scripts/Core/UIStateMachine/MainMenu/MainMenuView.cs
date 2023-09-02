@@ -67,8 +67,9 @@ namespace GameCore
             {
                 await _mainMenuHandle.Task;
 
-                _mainMenuObject = _instantiateService.InstantiateObjectWithInjections(_mainMenuHandle.Result as GameObject, _canvasObject.transform);
-                _mainMenuObject.name = (_mainMenuHandle.Result as GameObject).name;
+                var mainMenuPrefab = _mainMenuHandle.Result as GameObject;
+                _mainMenuObject = _instantiateService.InstantiateObjectWithInjections(mainMenuPrefab, _canvasObject.transform);
+                _mainMenuObject.name = mainMenuPrefab.name;
                 _mainMenu = _mainMenuObject.GetComponent<MainMenu>();
                 _mainMenu.SetAnimated(_startupAnimationsAllowed);
             }
@@ -87,9 +88,12 @@ namespace GameCore
 
             private void UnsubscribeForMenuEvents()
             {
-                _mainMenu.OnSinglePlayerButtonPressed += StartSinglePlayer;
-                _mainMenu.OnMultiplayerButtonPressed += StartMultiplayer;
-                _mainMenu.OnQuitApplicationPressed += QuitApplication;
+                if (_mainMenu == null)
+                    return;
+
+                _mainMenu.OnSinglePlayerButtonPressed -= StartSinglePlayer;
+                _mainMenu.OnMultiplayerButtonPressed -= StartMultiplayer;
+                _mainMenu.OnQuitApplicationPressed -= QuitApplication;
             }
 
             private void StartSinglePlayer()
@@ -111,7 +115,7 @@ namespace GameCore
             {
                 UnsubscribeForMenuEvents();
                 DestroyViewElements();
-                RealeseAllAssets();
+                ReleaseAllAssets();
             }
 
             private void DestroyViewElements()
@@ -120,7 +124,7 @@ namespace GameCore
                 _instantiateService.DestroyObject(_canvasObject);
             }
 
-            private void RealeseAllAssets()
+            private void ReleaseAllAssets()
             {
                 Addressables.Release(_mainMenuHandle);
                 Addressables.Release(_canvasHandle);
@@ -137,7 +141,7 @@ namespace GameCore
                 if (_mainMenuHandle.IsValid() || _canvasHandle.IsValid()) 
                 {
                     DestroyViewElements();
-                    RealeseAllAssets();
+                    ReleaseAllAssets();
                 }
             }
 

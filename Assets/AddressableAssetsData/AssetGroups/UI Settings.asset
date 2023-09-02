@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Test Scene
+  m_Name: UI Settings
   m_EditorClassIdentifier: 
-  m_GroupName: Test Scene
+  m_GroupName: UI Settings
   m_Data:
     m_SerializedData: []
-  m_GUID: 3a7036f40223918479faf6995c1cadac
+  m_GUID: cc201abdaf72f9a4f80e963653c4e5bd
   m_SerializeEntries:
-  - m_GUID: fa7c0bb9a271f08488b47fadd9148f92
-    m_Address: TestScene
+  - m_GUID: e3d4452a9483a2d46b7ed83cf95e3c49
+    m_Address: UIStateMachine
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -26,5 +26,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: b844172133b543e4fbad1c2cf0b48978, type: 2}
-    - {fileID: 11400000, guid: b7c27c97890619d42a5eabecb1eece66, type: 2}
+    - {fileID: 11400000, guid: c4d910fb53c00454c82e4872e4519c0a, type: 2}
+    - {fileID: 11400000, guid: 58616278ccd17244ea3efc0c494f015e, type: 2}
