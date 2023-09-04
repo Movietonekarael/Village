@@ -530,7 +530,7 @@ MonoBehaviour:
   _substates:
   - _valueBase: {fileID: 1323486621}
     Arguments: 
-  _mainMenuStateBase: {fileID: 0}
+  _mainMenuStateBase: {fileID: 1323486622}
 --- !u!1 &1328839773
 GameObject:
   m_ObjectHideFlags: 0

@@ -558,6 +558,7 @@ GameObject:
   - component: {fileID: 9079142084459148676}
   - component: {fileID: 2713417113433853948}
   - component: {fileID: 356597711616517685}
+  - component: {fileID: 2584236154580349861}
   m_Layer: 5
   m_Name: Code Enter Window
   m_TagString: Untagged
@@ -625,6 +626,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2584236154580349861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3124072838074641063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c016659449216914c867ad573295af29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 5769869175878235297}
 --- !u!1 &6273747525781009571
 GameObject:
   m_ObjectHideFlags: 0

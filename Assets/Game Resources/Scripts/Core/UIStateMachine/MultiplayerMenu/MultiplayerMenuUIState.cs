@@ -32,6 +32,8 @@ namespace GameCore
 
             private void LoadMainMenu()
             {
+                var mainMenuState = _mainMenuStateBase as MainMenuUIState;
+                mainMenuState.StartupAnimationAllowed = false;
                 SwitchState(_mainMenuState);
             }
         }

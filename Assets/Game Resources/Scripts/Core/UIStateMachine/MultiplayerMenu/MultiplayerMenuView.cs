@@ -28,10 +28,16 @@ namespace GameCore
             private AsyncOperationHandle _canvasHandle;
             private AsyncOperationHandle _multiplayerMenuHandle;
 
+            private IMultiplayerMenu _multiplayerMenu;
+
+
+            protected override void InstantiateViewElementsOnAwake() { }
 
             public async override void Activate()
             {
                 await InstantiateViewElements();
+                SubscribeForMenuEvents();
+                StartMultiplayerMenu();
             }
 
             private async Task InstantiateViewElements()
@@ -63,12 +69,54 @@ namespace GameCore
                 await _multiplayerMenuHandle.Task;
 
                 var multiplayerMenuPrefab = _multiplayerMenuHandle.Result as GameObject;
-                _multiplayerMenuObject = _instantiateService.InstantiateObject(multiplayerMenuPrefab, _canvasObject.transform);
+                _multiplayerMenuObject = _instantiateService.InstantiateObjectWithInjections(multiplayerMenuPrefab, _canvasObject.transform);
                 _canvasObject.name = multiplayerMenuPrefab.name;
+                _multiplayerMenu = _multiplayerMenuObject.GetComponent<IMultiplayerMenu>();
+            }
+
+            private void StartMultiplayerMenu()
+            {
+                _multiplayerMenu.StartMultiplayerMenu();
+            }
+
+            private void SubscribeForMenuEvents()
+            {
+                if (_multiplayerMenu == null)
+                    return;
+
+                _multiplayerMenu.OnHostButtonPressed += HostServer;
+                _multiplayerMenu.OnConnectButtonPressed += ConnectToServer;
+                _multiplayerMenu.OnBackButtonPressed += BackToMainMenu;
+            }
+
+            private void UnsubscribeForMenuEvents()
+            {
+                if (_multiplayerMenu == null)
+                    return;
+
+                _multiplayerMenu.OnHostButtonPressed -= HostServer;
+                _multiplayerMenu.OnConnectButtonPressed -= ConnectToServer;
+                _multiplayerMenu.OnBackButtonPressed -= BackToMainMenu;
+            }
+
+            private void HostServer()
+            {
+
+            }
+
+            private void ConnectToServer()
+            {
+
+            }
+
+            private void BackToMainMenu()
+            {
+                _Controller.BackToMainMenu();
             }
 
             public override void Deactivate()
             {
+                UnsubscribeForMenuEvents();
                 DestroyViewElements();
                 ReleaseAllAssets();
             }
@@ -87,16 +135,17 @@ namespace GameCore
 
             public override void Deinitialize()
             {
-                if (_multiplayerMenuHandle.IsValid() || _canvasHandle.IsValid()) 
+                UnsubscribeForMenuEvents();
+                DeinitializeViewElements();
+            }
+
+            private void DeinitializeViewElements()
+            {
+                if (_multiplayerMenuHandle.IsValid() || _canvasHandle.IsValid())
                 {
                     DestroyViewElements();
                     ReleaseAllAssets();
                 }
-            }
-
-            protected override void InstantiateViewElementsOnAwake()
-            {
-
             }
         }
     }

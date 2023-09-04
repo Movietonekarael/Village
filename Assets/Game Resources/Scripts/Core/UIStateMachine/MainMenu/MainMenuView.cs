@@ -70,7 +70,7 @@ namespace GameCore
                 var mainMenuPrefab = _mainMenuHandle.Result as GameObject;
                 _mainMenuObject = _instantiateService.InstantiateObjectWithInjections(mainMenuPrefab, _canvasObject.transform);
                 _mainMenuObject.name = mainMenuPrefab.name;
-                _mainMenu = _mainMenuObject.GetComponent<MainMenu>();
+                _mainMenu = _mainMenuObject.GetComponent<IMainMenu>();
                 _mainMenu.SetAnimated(_startupAnimationsAllowed);
             }
 
@@ -81,6 +81,9 @@ namespace GameCore
 
             private void SubscribeForMenuEvents()
             {
+                if (_mainMenu == null)
+                    return;
+
                 _mainMenu.OnSinglePlayerButtonPressed += StartSinglePlayer;
                 _mainMenu.OnMultiplayerButtonPressed += StartMultiplayer;
                 _mainMenu.OnQuitApplicationPressed += QuitApplication;
