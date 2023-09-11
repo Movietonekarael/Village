@@ -1,4 +1,11 @@
-﻿using System;
+﻿using GameCore.Network;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
+using UnityEngine.AddressableAssets;
+
 
 namespace GameCore
 {
@@ -12,44 +19,79 @@ namespace GameCore
         {
             public event Action OnBackToMainMenu;
 
+            private AssetReference _multiPlayerSceneReference;
+
+
+            protected override void InitializeParameters(MultiplayerMenuViewParameters parameters) { }
+            protected override void OnActivate() { }
+            protected override void OnDeactivate() { }
+            protected override void SubscribeForPermanentEvents() { }
+            protected override void SubscribeForTemporaryEvents() { }
+            protected override void UnsubscribeForPermanentEvents() { }
+            protected override void UnsubscribeForTemporaryEvents() { }
+
+
             public void BackToMainMenu()
             {
                 OnBackToMainMenu?.Invoke();
             }
 
-            protected override void InitializeParameters(MultiplayerMenuViewParameters parameters)
+            public async void StartHostServer()
             {
+                var startRelayServerResult = await TryStartRelayServer();
+                var ifAllocationSuccessful = startRelayServerResult.Item1;
 
+                if (ifAllocationSuccessful)
+                {
+                    NetworkConnectionService.StartHost(startRelayServerResult.Item2.Value);
+                    NetworkConnectionService.CreateInstance();
+                    Addressables.LoadSceneAsync(_multiPlayerSceneReference, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
+                }
             }
 
-            protected override void OnActivate()
+            private async Task<(bool, RelayHostData?)> TryStartRelayServer()
             {
-
+                try
+                {
+                    var hostData = await NetworkConnectionService.StartRelayServer();
+                    return (true, hostData);
+                }
+                catch
+                {
+                    _View.CreateMessageWindow("Connection error");
+                    return (false, null);
+                }
             }
 
-            protected override void OnDeactivate()
+            public async void ConnectToServer(string joinCode)
             {
+                var connectToRelayResult = await TryConnectToRelayServer(joinCode);
+                var ifAllocationIsSuccessful = connectToRelayResult.Item1;
 
+                if (ifAllocationIsSuccessful) 
+                {
+                    NetworkConnectionService.StartClient(connectToRelayResult.Item2.Value);
+                    //Addressables.LoadSceneAsync(_multiPlayerSceneReference, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
+                }
             }
 
-            protected override void SubscribeForPermanentEvents()
+            private async Task<(bool, RelayJoinData?)> TryConnectToRelayServer(string joinCode)
             {
-
+                try
+                {
+                    var joinData = await NetworkConnectionService.ConnectToRelayServer(joinCode);
+                    return (true, joinData);
+                }
+                catch
+                {
+                    _View.CreateMessageWindow("Connection error");
+                    return (false, null);
+                }
             }
 
-            protected override void SubscribeForTemporaryEvents()
+            public void SetMultiplayerPlayerSceneReference(AssetReference sceneReference)
             {
-
-            }
-
-            protected override void UnsubscribeForPermanentEvents()
-            {
-
-            }
-
-            protected override void UnsubscribeForTemporaryEvents()
-            {
-
+                _multiPlayerSceneReference = sceneReference;
             }
         }
     }

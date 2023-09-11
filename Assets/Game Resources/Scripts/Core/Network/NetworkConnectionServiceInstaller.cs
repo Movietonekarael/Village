@@ -1,4 +1,5 @@
 ﻿using GameCore.Network;
+using Unity.Netcode;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +11,7 @@ namespace GameCore
         public sealed class NetworkConnectionServiceInstaller : MonoInstaller
         {
             private const string _SERVICE_NAME = "NetworkConnectionService";
-            [SerializeField] private Transform _parentTransform;
+            [SerializeField] private GameObject _prefab;
 
             public override void InstallBindings()
             {
@@ -20,17 +21,16 @@ namespace GameCore
 
             private NetworkConnectionService CreateInstance()
             {
-                var instance = CreateGameObject().AddComponent<NetworkConnectionService>();
+                var instance = CreateGameObject().GetComponent<NetworkConnectionService>();
                 return instance;
             }
 
             private GameObject CreateGameObject()
             {
-                var gameObject = new GameObject
-                {
-                    name = _SERVICE_NAME
-                };
-                gameObject.transform.parent = _parentTransform;
+                var gameObject = Instantiate(_prefab);
+                var networkObject = gameObject.GetComponent<NetworkObject>();
+                networkObject.Spawn(false);
+
                 return gameObject;
             }
 

@@ -189,8 +189,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter code...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5b34c46f813c7a844aaf5460026d98b9, type: 2}
-  m_sharedMaterial: {fileID: 4985132028191265752, guid: 5b34c46f813c7a844aaf5460026d98b9,
+  m_fontAsset: {fileID: 11400000, guid: e959e22d58a68cd41bc4ad5d9c82a414, type: 2}
+  m_sharedMaterial: {fileID: -3804280877460468086, guid: e959e22d58a68cd41bc4ad5d9c82a414,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -344,8 +344,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Connection code:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5b34c46f813c7a844aaf5460026d98b9, type: 2}
-  m_sharedMaterial: {fileID: 4985132028191265752, guid: 5b34c46f813c7a844aaf5460026d98b9,
+  m_fontAsset: {fileID: 11400000, guid: e959e22d58a68cd41bc4ad5d9c82a414, type: 2}
+  m_sharedMaterial: {fileID: -3804280877460468086, guid: e959e22d58a68cd41bc4ad5d9c82a414,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -639,6 +639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5769869175878235297}
+  _okButton: {fileID: 170771673551193565}
 --- !u!1 &6273747525781009571
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,8 +707,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5b34c46f813c7a844aaf5460026d98b9, type: 2}
-  m_sharedMaterial: {fileID: 4985132028191265752, guid: 5b34c46f813c7a844aaf5460026d98b9,
+  m_fontAsset: {fileID: 11400000, guid: e959e22d58a68cd41bc4ad5d9c82a414, type: 2}
+  m_sharedMaterial: {fileID: -3804280877460468086, guid: e959e22d58a68cd41bc4ad5d9c82a414,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

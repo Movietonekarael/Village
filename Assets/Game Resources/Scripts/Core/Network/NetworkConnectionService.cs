@@ -1,72 +1,141 @@
 using System.Threading.Tasks;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay.Models;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+
 
 namespace GameCore
 {
     namespace Network
     {
-        public struct RelayHostData
-        {
-            public string JoinCode;
-            public string IPv4Address;
-            public ushort Port;
-            public System.Guid AllocationID;
-            public byte[] AllocationIDBytes;
-            public byte[] ConnectionData;
-            public byte[] Key;
-        }
-
-        public class NetworkConnectionService : MonoBehaviour
+        public class NetworkConnectionService : NetworkBehaviour
         {
             public static ConnectionType ConnectionType = ConnectionType.None;
+            private const string _PREFAB_NAME = "NetworkConnectionService";
 
-            private void Start()
-            {
-                StartNetworking();
-            }
+            private static NetworkConnectionService _instance = null;
+            public static NetworkConnectionService Instance => _instance;
 
-            private void StartNetworking()
+
+            public static async void CreateInstance()
             {
-                var networkManager = NetworkManager.Singleton;
-                
-                switch (ConnectionType)
+                if (_instance == null)
                 {
-                    case ConnectionType.Host:
-                        networkManager.StartHost();
-                        break;
-                    case ConnectionType.Cliet:
-                        networkManager.StartClient();
-                        break;
+                    var loadHandle = Addressables.LoadAssetAsync<GameObject>(_PREFAB_NAME);
+                    await loadHandle.Task;
+
+                    var prefabInstance = Instantiate(loadHandle.Result);
+                    var networkObject = prefabInstance.GetComponent<NetworkObject>();
+                    networkObject.Spawn(false);
+                    _instance = prefabInstance.GetComponent<NetworkConnectionService>();
+                }
+                else
+                {
+                    Debug.LogWarning("Instance already created. Quiting creation.");
+                    return;
                 }
             }
 
-            public static void ConnectToRelayServer()
+            private void Awake()
             {
-
+                DontDestroyOnLoad(gameObject);
             }
 
-            private async Task<RelayHostData> StartRelayServer()
+            public override void OnNetworkSpawn()
             {
-                Debug.Log("Starting authentication.");
+                SubscribeForClientConnection();
 
+                base.OnNetworkSpawn();
+            }
+
+            public override void OnNetworkDespawn()
+            {
+                UnsubscribeForClientConnection();
+
+                base.OnNetworkDespawn();
+            }
+
+            private void SubscribeForClientConnection()
+            {
+                NetworkManager.Singleton.OnClientConnectedCallback += SendSyncronization;
+            }
+
+            private void UnsubscribeForClientConnection()
+            {
+                NetworkManager.Singleton.OnClientConnectedCallback -= SendSyncronization;
+            }
+
+            private void SendSyncronization(ulong clientId)
+            {
+                if (!IsServer) return;
+
+                AddressablesSceneManager.Singleton.SynchronizeScenesClientRpc();
+            }
+
+            public static void StartHost(RelayHostData hostData)
+            {
+                NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
+                    hostData.IPv4Address,
+                    hostData.Port,
+                    hostData.AllocationIDBytes,
+                    hostData.Key,
+                    hostData.ConnectionData);
+                NetworkManager.Singleton.StartHost();
+            }
+
+            public static void StartClient(RelayJoinData joinData)
+            {
+                NetworkManager.Singleton.GetComponent<UnityTransport>().SetClientRelayData(
+                    joinData.IPv4Address,
+                    joinData.Port,
+                    joinData.AllocationIDBytes,
+                    joinData.Key,
+                    joinData.ConnectionData,
+                    joinData.HostConnectionData);
+                NetworkManager.Singleton.StartClient();
+            }
+
+            public static async Task<RelayJoinData> ConnectToRelayServer(string joinCode)
+            {
                 await UnityServices.InitializeAsync();
+
                 if (!AuthenticationService.Instance.IsSignedIn)
                 {
-                    //If not already logged, log the user in
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
                 }
 
-                Debug.Log("Starting relay server.");
+                JoinAllocation allocation = await Unity.Services.Relay.RelayService.Instance.JoinAllocationAsync(joinCode);
+
+                RelayJoinData data = new RelayJoinData
+                {
+                    IPv4Address = allocation.RelayServer.IpV4,
+                    Port = (ushort)allocation.RelayServer.Port,
+                    AllocationID = allocation.AllocationId,
+                    AllocationIDBytes = allocation.AllocationIdBytes,
+                    ConnectionData = allocation.ConnectionData,
+                    HostConnectionData = allocation.HostConnectionData,
+                    Key = allocation.Key,
+                };
+                return data;
+            }
+
+            public static async Task<RelayHostData> StartRelayServer()
+            {
+                await UnityServices.InitializeAsync();
+
+                if (!AuthenticationService.Instance.IsSignedIn)
+                {
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                }
 
                 Allocation allocation = await Unity.Services.Relay.RelayService.Instance.CreateAllocationAsync(5);
 
-                RelayHostData data = new RelayHostData
+                RelayHostData data = new()
                 {
-                    // WARNING allocation.RelayServer is deprecated
                     IPv4Address = allocation.RelayServer.IpV4,
                     Port = (ushort)allocation.RelayServer.Port,
 

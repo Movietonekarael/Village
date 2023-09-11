@@ -1,9 +1,12 @@
-﻿using GameCore.Services;
+﻿using GameCore.GUI.Menus;
+using GameCore.GUI.Windows;
+using GameCore.Services;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
+
 
 namespace GameCore
 {
@@ -30,13 +33,26 @@ namespace GameCore
 
             private IMultiplayerMenu _multiplayerMenu;
 
+            private ConnectionCodeWindow _connectionCodeWindow;
+            private MessageWindow _messageWindow;
 
-            protected override void InstantiateViewElementsOnAwake() { }
+
+            protected override void InstantiateViewElementsOnAwake() 
+            {
+                InstantiateWindows();
+            }
+
+            private void InstantiateWindows()
+            {
+                _connectionCodeWindow = _instantiateService.CreateNewWithInjections<ConnectionCodeWindow>();
+                _messageWindow = _instantiateService.CreateNewWithInjections<MessageWindow>();
+            }
 
             public async override void Activate()
             {
                 await InstantiateViewElements();
                 SubscribeForMenuEvents();
+                SubscribeForWindowsEvents();
                 StartMultiplayerMenu();
             }
 
@@ -99,14 +115,43 @@ namespace GameCore
                 _multiplayerMenu.OnBackButtonPressed -= BackToMainMenu;
             }
 
+            private void SubscribeForWindowsEvents()
+            {
+                _connectionCodeWindow.OnOkPressed += HandleConnectionCode;
+                _messageWindow.OnOkPressed += HandleMessageWindowClosed;
+            }
+
+            private void UnsubscribeForWindowsEvents()
+            {
+                _connectionCodeWindow.OnOkPressed -= HandleConnectionCode;
+                _messageWindow.OnOkPressed -= HandleMessageWindowClosed;
+            }
+
+            private void HandleConnectionCode(string code)
+            {
+                _Controller.ConnectToServer(code);
+            }
+
+            private void HandleMessageWindowClosed()
+            {
+                EnableAllButtons();
+            }
+
+            private void EnableAllButtons()
+            {
+                _multiplayerMenu.EnableAllButtons();
+            }
+
             private void HostServer()
             {
-
+                _multiplayerMenu.DisableAllButtons();
+                _Controller.StartHostServer();
             }
 
             private void ConnectToServer()
             {
-
+                _multiplayerMenu.DisableAllButtons();
+                _connectionCodeWindow.CreateWindow(_canvasObject.transform);
             }
 
             private void BackToMainMenu()
@@ -114,9 +159,15 @@ namespace GameCore
                 _Controller.BackToMainMenu();
             }
 
+            public void CreateMessageWindow(string message)
+            {
+                _messageWindow.CreateNewWindow(message, _canvasObject.transform);
+            }
+
             public override void Deactivate()
             {
                 UnsubscribeForMenuEvents();
+                UnsubscribeForWindowsEvents();
                 DestroyViewElements();
                 ReleaseAllAssets();
             }
@@ -136,6 +187,7 @@ namespace GameCore
             public override void Deinitialize()
             {
                 UnsubscribeForMenuEvents();
+                UnsubscribeForWindowsEvents();
                 DeinitializeViewElements();
             }
 

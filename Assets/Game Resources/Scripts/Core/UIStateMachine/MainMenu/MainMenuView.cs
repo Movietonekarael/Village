@@ -4,6 +4,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
 using GameCore.Services;
 using System.Threading.Tasks;
+using GameCore.GUI.Menus;
+
 
 namespace GameCore
 {

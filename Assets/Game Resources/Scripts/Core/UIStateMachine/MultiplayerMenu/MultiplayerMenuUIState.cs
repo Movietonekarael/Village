@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.Core;
-using Unity.Services.Relay.Models;
-using Unity.Services.Authentication;
+using UnityEngine.AddressableAssets;
 
 
 namespace GameCore
@@ -19,10 +18,13 @@ namespace GameCore
             private UnityEngine.Object _mainMenuStateBase;
             private IUIState _mainMenuState { get => _mainMenuStateBase as IUIState; }
 
+            [SerializeField] private AssetReference _multiplayerPlayerScene;
+
 
             protected override void StartState(params bool[] args)
             {
                 _Controller.OnBackToMainMenu += LoadMainMenu;
+                _Controller.SetMultiplayerPlayerSceneReference(_multiplayerPlayerScene);
             }
 
             protected override void EndState()

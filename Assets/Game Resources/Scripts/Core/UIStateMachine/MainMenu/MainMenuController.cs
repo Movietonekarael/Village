@@ -16,7 +16,7 @@ namespace GameCore
         {
             public event Action OnStartMultiplayer;
 
-            private AssetReference _singlePlayerScene;
+            private AssetReference _singlePlayerSceneReference;
 
 
             protected override void InitializeParameters(MainMenuViewParameters parameters) { }
@@ -29,13 +29,13 @@ namespace GameCore
 
             public void SetSinglePlayerSceneReference(AssetReference singlePlayerSceneReference)
             {
-                _singlePlayerScene = singlePlayerSceneReference;
+                _singlePlayerSceneReference = singlePlayerSceneReference;
             }
 
             public void StartSinglePlayer()
             {
                 NetworkConnectionService.ConnectionType = ConnectionType.None;
-                Addressables.LoadSceneAsync(_singlePlayerScene, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
+                Addressables.LoadSceneAsync(_singlePlayerSceneReference, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
             }
 
             public void StartMultiPlayer()

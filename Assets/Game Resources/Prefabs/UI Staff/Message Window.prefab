@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 7618108901244509674}
   - component: {fileID: 765522000520859186}
   - component: {fileID: 3634789178749715177}
+  - component: {fileID: 869624169054653579}
   m_Layer: 5
   m_Name: Message Window
   m_TagString: Untagged
@@ -212,6 +213,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &869624169054653579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4910357033037896311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a96357ca2d140e4eaf607d9c89aca21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _okButton: {fileID: 7715581470110788204}
+  _text: {fileID: 2570061293338366494}
 --- !u!1 &5216019946789108877
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,8 +415,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Connection code is not valid
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5b34c46f813c7a844aaf5460026d98b9, type: 2}
-  m_sharedMaterial: {fileID: 4985132028191265752, guid: 5b34c46f813c7a844aaf5460026d98b9,
+  m_fontAsset: {fileID: 11400000, guid: e959e22d58a68cd41bc4ad5d9c82a414, type: 2}
+  m_sharedMaterial: {fileID: -3804280877460468086, guid: e959e22d58a68cd41bc4ad5d9c82a414,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
