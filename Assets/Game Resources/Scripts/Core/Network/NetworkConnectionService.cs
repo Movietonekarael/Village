@@ -6,6 +6,7 @@ using Unity.Services.Core;
 using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using SceneManagement;
 
 
 namespace GameCore
@@ -17,21 +18,23 @@ namespace GameCore
             public static ConnectionType ConnectionType = ConnectionType.None;
             private const string _PREFAB_NAME = "NetworkConnectionService";
 
-            private static NetworkConnectionService _instance = null;
-            public static NetworkConnectionService Instance => _instance;
+            private static NetworkConnectionService _singleton = null;
+            public static NetworkConnectionService Singleton => _singleton;
 
 
-            public static async void CreateInstance()
+            public static async Task CreateInstance()
             {
-                if (_instance == null)
+                if (_singleton == null)
                 {
                     var loadHandle = Addressables.LoadAssetAsync<GameObject>(_PREFAB_NAME);
                     await loadHandle.Task;
 
-                    var prefabInstance = Instantiate(loadHandle.Result);
+                    var prefab = loadHandle.Result;
+                    var prefabInstance = Instantiate(prefab);
+                    prefabInstance.name = prefab.name;
                     var networkObject = prefabInstance.GetComponent<NetworkObject>();
                     networkObject.Spawn(false);
-                    _instance = prefabInstance.GetComponent<NetworkConnectionService>();
+                    _singleton = prefabInstance.GetComponent<NetworkConnectionService>();
                 }
                 else
                 {
@@ -61,22 +64,20 @@ namespace GameCore
 
             private void SubscribeForClientConnection()
             {
-                NetworkManager.Singleton.OnClientConnectedCallback += SendSyncronization;
+                AddressablesSceneManager.OnClientSceneManagerSpawned += SendSyncronization;
             }
 
             private void UnsubscribeForClientConnection()
             {
-                NetworkManager.Singleton.OnClientConnectedCallback -= SendSyncronization;
+                AddressablesSceneManager.OnClientSceneManagerSpawned -= SendSyncronization;
             }
 
             private void SendSyncronization(ulong clientId)
             {
-                if (!IsServer) return;
-
-                AddressablesSceneManager.Singleton.SynchronizeScenesClientRpc();
+                AddressablesSceneManager.Singleton.SynchronizeScenes(clientId);
             }
 
-            public static void StartHost(RelayHostData hostData)
+            public static async Task StartHost(RelayHostData hostData)
             {
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
                     hostData.IPv4Address,
@@ -85,6 +86,9 @@ namespace GameCore
                     hostData.Key,
                     hostData.ConnectionData);
                 NetworkManager.Singleton.StartHost();
+
+                await AddressablesSceneManager.CreateInstance();
+                await NetworkConnectionService.CreateInstance();
             }
 
             public static void StartClient(RelayJoinData joinData)
@@ -103,14 +107,11 @@ namespace GameCore
             {
                 await UnityServices.InitializeAsync();
 
-                if (!AuthenticationService.Instance.IsSignedIn)
-                {
-                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                }
+                await AuthenticateConnection();
 
                 JoinAllocation allocation = await Unity.Services.Relay.RelayService.Instance.JoinAllocationAsync(joinCode);
 
-                RelayJoinData data = new RelayJoinData
+                RelayJoinData data = new()
                 {
                     IPv4Address = allocation.RelayServer.IpV4,
                     Port = (ushort)allocation.RelayServer.Port,
@@ -127,10 +128,7 @@ namespace GameCore
             {
                 await UnityServices.InitializeAsync();
 
-                if (!AuthenticationService.Instance.IsSignedIn)
-                {
-                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                }
+                await AuthenticateConnection();
 
                 Allocation allocation = await Unity.Services.Relay.RelayService.Instance.CreateAllocationAsync(5);
 
@@ -149,6 +147,21 @@ namespace GameCore
                 Debug.Log($"Data: {data.JoinCode}.");
 
                 return data;
+            }
+
+            private static async Task AuthenticateConnection()
+            {
+#if UNITY_EDITOR
+                if (ParrelSync.ClonesManager.IsClone())
+                {
+                    string customArgument = ParrelSync.ClonesManager.GetArgument();
+                    AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
+                }
+#endif
+                if (!AuthenticationService.Instance.IsSignedIn)
+                {
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                }
             }
         }
     }

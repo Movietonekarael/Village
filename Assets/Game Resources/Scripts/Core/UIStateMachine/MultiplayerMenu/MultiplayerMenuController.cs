@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
+using SceneManagement;
 
 
 namespace GameCore
@@ -43,9 +45,8 @@ namespace GameCore
 
                 if (ifAllocationSuccessful)
                 {
-                    NetworkConnectionService.StartHost(startRelayServerResult.Item2.Value);
-                    NetworkConnectionService.CreateInstance();
-                    Addressables.LoadSceneAsync(_multiPlayerSceneReference, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
+                    await NetworkConnectionService.StartHost(startRelayServerResult.Item2.Value);
+                    await AddressablesSceneManager.Singleton.LoadSceneServerAsync(_multiPlayerSceneReference, LoadSceneMode.Single);
                 }
             }
 
@@ -71,7 +72,7 @@ namespace GameCore
                 if (ifAllocationIsSuccessful) 
                 {
                     NetworkConnectionService.StartClient(connectToRelayResult.Item2.Value);
-                    //Addressables.LoadSceneAsync(_multiPlayerSceneReference, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
+                    //await Addressables.LoadSceneAsync(_multiPlayerSceneReference, UnityEngine.SceneManagement.LoadSceneMode.Single, true).Task;
                 }
             }
 
