@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AddressableAssetGroup
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c,
+      type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_GroupName
+    value: Curcular Menu
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Data.m_SerializedData.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_GUID
+    value: 9783770697bd3854da451d76ed5e366f
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_SerializeEntries.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_SerializeEntries.Array.data[0].m_GUID
+    value: 4801c9e648774254faf1d64c38bac56a
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_SerializeEntries.Array.data[0].m_Address
+    value: CurcularMenu
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_SerializeEntries.Array.data[0].m_ReadOnly
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_SerializeEntries.Array.data[0].m_SerializedLabels.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_SerializeEntries.Array.data[0].FlaggedDuringContentUpdateRestriction
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_ReadOnly
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Settings
+    value: 
+    objectReference: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
+  - target: {fileID: 0}
+    propertyPath: m_SchemaSet.m_Schemas.Array.size
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_SchemaSet.m_Schemas.Array.data[0]
+    value: 
+    objectReference: {fileID: 11400000, guid: 550df21dbecdc3e488ac9931dd3c8f74, type: 2}
+  - target: {fileID: 0}
+    propertyPath: m_SchemaSet.m_Schemas.Array.data[1]
+    value: 
+    objectReference: {fileID: 11400000, guid: c464914bdbff68b47b46a6ff29a59852, type: 2}
+  m_ExcludedProperties: []

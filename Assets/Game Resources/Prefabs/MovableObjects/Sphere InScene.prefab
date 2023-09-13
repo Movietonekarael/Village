@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &657096300353226163
+--- !u!1001 &4149052241887086434
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,22 +11,22 @@ PrefabInstance:
     - target: {fileID: 1815283887433836393, guid: ac66bca1721854c499d5a0d3bf7cd6cd,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 951099334
+      value: 1308484503
       objectReference: {fileID: 0}
     - target: {fileID: 3022047959238747192, guid: ac66bca1721854c499d5a0d3bf7cd6cd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.9130344
+      value: -6.6627827
       objectReference: {fileID: 0}
     - target: {fileID: 3022047959238747192, guid: ac66bca1721854c499d5a0d3bf7cd6cd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3022047959238747192, guid: ac66bca1721854c499d5a0d3bf7cd6cd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.548765
+      value: -11.166769
       objectReference: {fileID: 0}
     - target: {fileID: 3022047959238747192, guid: ac66bca1721854c499d5a0d3bf7cd6cd,
         type: 3}
@@ -66,10 +66,39 @@ PrefabInstance:
     - target: {fileID: 8803661735109897196, guid: ac66bca1721854c499d5a0d3bf7cd6cd,
         type: 3}
       propertyPath: m_Name
-      value: Sphere_004 Variant
+      value: Sphere InScene
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4154078010788894467, guid: ac66bca1721854c499d5a0d3bf7cd6cd, type: 3}
+    - {fileID: 7454680092472493162, guid: ac66bca1721854c499d5a0d3bf7cd6cd, type: 3}
+    - {fileID: 1815283887433836393, guid: ac66bca1721854c499d5a0d3bf7cd6cd, type: 3}
+    - {fileID: 2139991424155757901, guid: ac66bca1721854c499d5a0d3bf7cd6cd, type: 3}
+    - {fileID: 4779211573417157819, guid: ac66bca1721854c499d5a0d3bf7cd6cd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8803661735109897196, guid: ac66bca1721854c499d5a0d3bf7cd6cd,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1985580922975714749}
   m_SourcePrefab: {fileID: 100100000, guid: ac66bca1721854c499d5a0d3bf7cd6cd, type: 3}
+--- !u!1 &4879798339406359694 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8803661735109897196, guid: ac66bca1721854c499d5a0d3bf7cd6cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 4149052241887086434}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1985580922975714749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4879798339406359694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9774739e9bf09bf4a938876133cd5ebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _networkPrefab: {fileID: 8803661735109897196, guid: ac66bca1721854c499d5a0d3bf7cd6cd,
+    type: 3}

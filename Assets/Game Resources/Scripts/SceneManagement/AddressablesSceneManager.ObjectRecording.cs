@@ -10,6 +10,7 @@ namespace SceneManagement
         private readonly Hashtable _scenesForRecordedGameObjects = new();
         private readonly List<HashSet<GameObject>> _networkGameObjects = new();
 
+
         public void AddNetworkObject(GameObject gameObject)
         {
             var scene = gameObject.scene;

@@ -1,9 +1,6 @@
 ﻿using GameCore.Network;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using SceneManagement;

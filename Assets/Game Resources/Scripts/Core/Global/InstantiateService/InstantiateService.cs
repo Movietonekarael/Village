@@ -9,6 +9,26 @@ namespace GameCore
         {
             [Inject] private readonly DiContainer _diContainer;
 
+            private static InstantiateService _singleton = null;
+            public static InstantiateService Singleton => _singleton;
+
+
+            private void Awake()
+            {
+                if (_singleton == null)
+                {
+                    _singleton = this;
+                }
+                else
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+
+            public void Inject(object injectionObject)
+            {
+                _diContainer.Inject(injectionObject);
+            }
 
             public T CreateNewWithInjections<T>() where T : class, new()
             {

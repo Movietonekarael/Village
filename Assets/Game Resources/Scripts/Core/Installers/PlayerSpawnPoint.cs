@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameCore
 {
-    public class PlayerSpawnPoint : MonoBehaviour
+    public sealed class PlayerSpawnPoint : MonoBehaviour
     {
         [SerializeField] private float _gizmosSphereRadius = 1.0f;
 

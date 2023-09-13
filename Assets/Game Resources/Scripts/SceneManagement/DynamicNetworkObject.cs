@@ -1,80 +1,47 @@
 using Unity.Netcode;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 
 namespace SceneManagement
 {
-    [RequireComponent(typeof(NetworkObject))]
-    public sealed class DynamicNetworkObject : NetworkBehaviour
+    public sealed partial class DynamicNetworkObject : MonoBehaviour
     {
-        private struct TransformWrapper
-        {
-            public Vector3 Position;
-            public Quaternion Rotation;
-            public Vector3 Scale;
-
-            public TransformWrapper(Transform transform)
-            {
-                Position = transform.position;
-                Rotation = transform.rotation;
-                Scale = transform.localScale;
-            }
-
-            public readonly void SetTransform(Transform transform)
-            {
-                transform.position = Position;
-                transform.rotation = Rotation;
-                transform.localScale = Scale;
-            }
-        }
-
-        //public AssetReferenceGameObject PrefabReference;
-        //[HideInInspector] public AsyncOperationHandle<GameObject>? LoadHandle;
+        [SerializeField] private GameObject _networkPrefab;
 
         private void Start()
         {
+            HandleNetworkSpawning();
+        }
+
+        private void HandleNetworkSpawning()
+        {
+            if (NetworkHasStarted())
+            {
+                SpawnNetworkObject();
+            }
+        }
+
+        private bool NetworkHasStarted()
+        {
+            return NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsClient;
+        }
+
+        private void SpawnNetworkObject()
+        {
             if (NetworkManager.Singleton.IsServer)
             {
-                GetComponent<NetworkObject>().Spawn(false);
-                AddressablesSceneManager.Singleton.AddNetworkObject(gameObject);
-                DontDestroyOnLoad(gameObject);
+                var newInstance = Instantiate(_networkPrefab, transform.position, transform.rotation, transform.parent);
+                SpawnNetworkForGameObject(newInstance);
             }
-            else if (!IsSpawned)
-            {
-                Destroy(gameObject);
-            }  
+            
+            Destroy(gameObject);
         }
-        /*
-        public async void RespawnPrefab()
+
+        private void SpawnNetworkForGameObject(GameObject gameObject)
         {
-            var loadHandle = Addressables.LoadAssetAsync<GameObject>(PrefabReference);
-            await loadHandle.Task;
-
-            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
-            {
-                var prefab = loadHandle.Result;
-                var parent = this.transform.parent;
-                var prefabInstance = Instantiate(prefab, parent);
-
-                var originalTransform = new TransformWrapper(this.transform);
-                originalTransform.SetTransform(prefabInstance.transform);
-                prefabInstance.GetComponent<DynamicNetworkObject>().LoadHandle = loadHandle;
-                prefabInstance.GetComponent<NetworkObject>().Spawn();
-            }
-            Destroy(this.gameObject);
-        }*/
-        /*
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-
-            if (LoadHandle != null)
-            {
-                Addressables.Release(LoadHandle.Value);
-            }
-        }*/
+            gameObject.GetComponent<NetworkObject>().Spawn(false);
+            AddressablesSceneManager.Singleton.AddNetworkObject(gameObject);
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }
