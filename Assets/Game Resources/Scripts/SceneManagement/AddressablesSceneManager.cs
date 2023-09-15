@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Unity.Netcode;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -18,6 +17,7 @@ namespace SceneManagement
         private readonly HashSet<AssetReference> _loadedScenes = new();
 
         public static event Action<ulong> OnClientSceneManagerSpawned;
+        public static event Action OnSceneLoadedAndActivated;
 
 
         private void Awake()
@@ -60,6 +60,7 @@ namespace SceneManagement
                 ActivateSceneAsync(loadHandle);
                 _loadedScenes.Add(sceneReference);
                 SendLoadSceneRpc(sceneReference);
+                OnSceneLoadedAndActivated?.Invoke();
             }
         }
 
@@ -72,6 +73,7 @@ namespace SceneManagement
             {
                 ActivateSceneAsync(loadHandle, false);
                 _loadedScenes.Add(sceneReference);
+                OnSceneLoadedAndActivated?.Invoke();
             }
         }
 

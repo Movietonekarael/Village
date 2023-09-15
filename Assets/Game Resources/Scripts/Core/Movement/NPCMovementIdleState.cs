@@ -44,7 +44,7 @@ namespace GameCore
 
                 private void HandleMoving()
                 {
-                    var characterActor = _StateMachine._CharacterActor;
+                    var characterActor = _StateMachine.CharacterActor;
 
                     var deceleration = characterActor.CurrentState switch
                     {

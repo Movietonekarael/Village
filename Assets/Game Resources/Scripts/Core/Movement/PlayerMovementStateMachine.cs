@@ -11,21 +11,51 @@ namespace GameCore
         public sealed class PlayerMovementStateMachine : NPCMovementStateMachine
         {
             [Inject]
-            private IMovement _movement
+            public IMovement Movement
             {
                 set
                 {
                     _Movement = value;
                 }
             }
-            [SerializeField] private Transform _cameraTarget;
 
+            [RequireInterface(typeof(ICameraAngle))]
+            public UnityEngine.Object CameraAngleBase;
+            private ICameraAngle _cameraAngle { get => CameraAngleBase as ICameraAngle; }
+            private float _cameraDirectionAngle;
+
+
+            protected override void Awake()
+            {
+                base.Awake();
+                SubscribeForCameraAngleChange();
+            }
+
+            public void SubscribeForCameraAngleChange()
+            {
+                if (_cameraAngle == null)
+                    return;
+
+                _cameraAngle.OnCameraAngleChanged += ChangeCameraDirectionAngle;
+            }
+
+            public void UnsubscribeForCameraAngleChange()
+            {
+                if (_cameraAngle == null)
+                    return;
+
+                _cameraAngle.OnCameraAngleChanged -= ChangeCameraDirectionAngle;
+            }
+
+            private void ChangeCameraDirectionAngle(float value)
+            {
+                _cameraDirectionAngle = value;
+            }
 
             protected override void LocalDirectionOfMovingChanged()
             {
                 var localMovingDirection = GetAngleOfLocalMovingDirection();
-                var cameraDirectionAngle = GetAngleOfGlobalcameraDirection();
-                var angleRotation = CalculateGlobalMovingDirectionAngle(localMovingDirection, cameraDirectionAngle);
+                var angleRotation = CalculateGlobalMovingDirectionAngle(localMovingDirection, _cameraDirectionAngle);
                 _GlobalDirectionOfMoving = CalculateGlobalMovingDirection(angleRotation);
                 _NeededRotation.eulerAngles = SetNeededRotationDependingOnGlobalMovingVector(angleRotation);
             }
@@ -33,14 +63,6 @@ namespace GameCore
             private float GetAngleOfLocalMovingDirection()
             {
                 return MathM.Vector.GetAngleOfVector2(_LocalDirectionOfMoving);
-            }
-
-            private float GetAngleOfGlobalcameraDirection()
-            {
-                var angle = _cameraTarget.rotation.eulerAngles.y;
-                if (angle > 180)
-                    angle -= 360;
-                return angle;
             }
 
             private float CalculateGlobalMovingDirectionAngle(float angle1, float angle2)
@@ -56,6 +78,11 @@ namespace GameCore
             private Vector3 SetNeededRotationDependingOnGlobalMovingVector(float angleRotation)
             {
                 return new Vector3(.0f, angleRotation, .0f);
+            }
+
+            private void OnDestroy()
+            {
+                UnsubscribeForCameraAngleChange();
             }
         }
     }

@@ -5,7 +5,7 @@ namespace GameCore
 {
     namespace GameControls
     {
-        public interface ICameraZoomer
+        public interface ICameraZoomerInput
         {
             public event Action<float> OnCameraZoomed;
         }

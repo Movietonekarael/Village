@@ -65,7 +65,18 @@ namespace GameCore
                 transform.localRotation = _quaternion;
             }
 
+            [HideInInspector] public bool AllowToUpdate = true;
+            //private bool _wasHandledThisFrame = false;
+
             private void Update()
+            {
+                //if (AllowToUpdate)
+                //{
+                    HandleRotation();
+                //}
+            }
+
+            public void HandleRotation()
             {
                 CompensateParentRotation();
                 Rotate();

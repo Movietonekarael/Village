@@ -2,18 +2,18 @@ using System;
 using UnityEngine;
 using GameCore.GameControls;
 using Lightbug.CharacterControllerPro.Core;
-
+using GameCore.Animation;
 
 namespace GameCore
 {
     namespace GameMovement
     {
-        public abstract partial class NPCMovementStateMachine : MonoBehaviour
+        public abstract partial class NPCMovementStateMachine : MonoBehaviour, ISerializedInterfaceBehaviour
         {
             protected IMovement _Movement;
 
             [Header("Character Actor: ")]
-            [SerializeField] protected CharacterActor _CharacterActor = null;
+            public CharacterActor CharacterActor = null;
 
             [Header("Stable Grounded parameters: ")]
             [SerializeField] private MotionParameters _stableGroundedParameters = new(50f, 40f);
@@ -49,7 +49,11 @@ namespace GameCore
             private NPCMovementJumpState _jumpState;
 
             [Header("Other: ")]
-            [SerializeField] private Animator _animatorController;
+            [SerializeField]
+            [RequireInterface(typeof(IEventedAnimator))]
+            private UnityEngine.Object _animatorControllerBase;
+
+            private IEventedAnimator _animatorController;
             private bool _isRunning = false;
             private bool _isJumping = false;
 
@@ -86,15 +90,22 @@ namespace GameCore
                 }
             }
 
-            private void Awake()
+
+            protected virtual void Awake()
             {
+                SetupSerializedInterfaces();
                 SetUpJumpListener();
                 SetRotationZero();
             }
 
+            public void SetupSerializedInterfaces()
+            {
+                _animatorController = _animatorControllerBase as IEventedAnimator;
+            }
+
             private void SetUpJumpListener()
             {
-                var animatorObject = _animatorController.gameObject;
+                var animatorObject = (_animatorController as Component).gameObject;
                 var listner = animatorObject.AddComponent<ListenJumpEvent>();
                 listner.NPC = this;
             }
@@ -109,25 +120,38 @@ namespace GameCore
 
             private void Start()
             {
-                if (_CharacterActor is not null)
+                SetupCharacterActor();
+                InitializeStates();
+                EnterCurrentState();
+            }
+
+            public void SetupCharacterActor()
+            {
+                if (CharacterActor != null)
                 {
-                    _CharacterActor.UseRootMotion = false;
-                    _CharacterActor.UpdateRootPosition = false;
-                    _CharacterActor.UpdateRootRotation = false;
+                    CharacterActor.UseRootMotion = false;
+                    CharacterActor.UpdateRootPosition = false;
+                    CharacterActor.UpdateRootRotation = false;
 
-                    _CharacterActor.Velocity = Vector3.zero;
+                    CharacterActor.Velocity = Vector3.zero;
                 }
+            }
 
-
+            private void InitializeStates()
+            {
                 _idleState = new(this);
                 _walkState = new(this);
                 _runState = new(this);
                 _groundedState = new(this);
                 _jumpState = new(this);
 
-
                 _currentState = _groundedState;
-                _currentState.EnterState();
+            }
+
+            public void EnterCurrentState()
+            {
+                if (CharacterActor != null)
+                    _currentState.EnterState();
             }
 
             private void Update()

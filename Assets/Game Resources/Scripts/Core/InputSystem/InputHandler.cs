@@ -11,8 +11,8 @@ namespace GameCore
     {
         public sealed partial class InputHandler : MonoBehaviour,
                                                    IInteractionPerformer,
-                                                   ICameraRotator,
-                                                   ICameraZoomer,
+                                                   ICameraRotatorInput,
+                                                   ICameraZoomerInput,
                                                    IMovement,
                                                    IInventoryPress,
                                                    IOpenCloseInventory,

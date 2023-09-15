@@ -7,9 +7,10 @@ namespace GameCore
     {
         public class InstantiateService : MonoBehaviour
         {
-            [Inject] private readonly DiContainer _diContainer;
+            [Inject] private DiContainer _diContainer;
+            public DiContainer DiContainer => _diContainer;
 
-            private static InstantiateService _singleton = null;
+            private static InstantiateService _singleton;
             public static InstantiateService Singleton => _singleton;
 
 
@@ -21,13 +22,9 @@ namespace GameCore
                 }
                 else
                 {
-                    Destroy(this.gameObject);
+                    Debug.LogWarning("Instance of Instantiate Service already created.");
+                    Destroy(this);
                 }
-            }
-
-            public void Inject(object injectionObject)
-            {
-                _diContainer.Inject(injectionObject);
             }
 
             public T CreateNewWithInjections<T>() where T : class, new()
@@ -42,9 +39,14 @@ namespace GameCore
                 return Object.Instantiate(unityObject);
             }
 
-            public T InstantiateObject<T>(T unityObject, Transform transform) where T : Object
+            public T InstantiateObject<T>(T unityObject, Transform parentTransform) where T : Object
             {
-                return Object.Instantiate(unityObject, transform);
+                return Object.Instantiate(unityObject, parentTransform);
+            }
+
+            public T InstantiateObject<T>(T unityObject, Vector3 position, Quaternion rotation, Transform parentTransform) where T : Object
+            {
+                return Object.Instantiate(unityObject, position, rotation, parentTransform);
             }
 
             public GameObject InstantiateObjectWithInjections(GameObject gameObject)
@@ -52,9 +54,14 @@ namespace GameCore
                 return _diContainer.InstantiatePrefab(gameObject);
             }
 
-            public GameObject InstantiateObjectWithInjections(GameObject gameObject, Transform transform)
+            public GameObject InstantiateObjectWithInjections(GameObject gameObject, Transform parentTransform)
             {
-                return _diContainer.InstantiatePrefab(gameObject, transform);
+                return _diContainer.InstantiatePrefab(gameObject, parentTransform);
+            }
+
+            public GameObject InstantiateObjectWithInjections(GameObject gameObject, Vector3 position, Quaternion rotation, Transform parentTransform)
+            {
+                return _diContainer.InstantiatePrefab(gameObject, position, rotation, parentTransform);
             }
 
             public void DestroyObject(MonoBehaviour monoBehaviour)

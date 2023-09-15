@@ -6,7 +6,7 @@ namespace GameCore
 {
     namespace GameControls
     {
-        public interface ICameraRotator
+        public interface ICameraRotatorInput
         {
             public event Action<Vector2, bool> OnCameraRotated;
         }

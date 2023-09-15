@@ -23,13 +23,13 @@ namespace GameCore
                     _Movement.OnMovement += Move;
                 }
 
-                public override void UpdateState() { }
-
-                public override void FixedUpdateState()
+                public override void UpdateState() 
                 {
-                    HandleMoving();
                     HandleRotation();
+                    HandleMoving();
                 }
+
+                public override void FixedUpdateState() { }
 
                 private void HandleMoving()
                 {
@@ -40,7 +40,7 @@ namespace GameCore
                                                       _StateMachine._GlobalDirectionOfMoving.y);
 
                     var targetVelocity = SetLimitedTargetVelocity(globalDirection);
-                    var characterActor = _StateMachine._CharacterActor;
+                    var characterActor = _StateMachine.CharacterActor;
                     var needToAccelerate = false;
 
                     SetMotionValues(characterActor);
@@ -91,7 +91,7 @@ namespace GameCore
 
                 private void HandleRotation()
                 {
-                    _StateMachine._CharacterActor.Rotation =
+                    _StateMachine.CharacterActor.Rotation =
                         Quaternion.Lerp(_StateMachine.transform.rotation,
                         _StateMachine._NeededRotation,
                         Time.deltaTime * _StateMachine._RotationSpeed);

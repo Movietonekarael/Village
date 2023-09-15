@@ -11,7 +11,7 @@ namespace GameCore
             private const string _PLAYER_INPUT_NAME = "PlayerInput";
 
             [SerializeField] private UnityEngine.InputSystem.PlayerInput _playerInput;
-            [SerializeField] private Transform _parentTransform;
+
 
             public override void InstallBindings()
             {
@@ -21,7 +21,7 @@ namespace GameCore
 
             private UnityEngine.InputSystem.PlayerInput CreateInstance()
             {
-                var playerInput = Container.InstantiatePrefabForComponent<UnityEngine.InputSystem.PlayerInput>(_playerInput, _parentTransform);
+                var playerInput = Container.InstantiatePrefabForComponent<UnityEngine.InputSystem.PlayerInput>(_playerInput);
                 ChangeName(playerInput.gameObject);
                 return playerInput;
             }

@@ -163,6 +163,19 @@ namespace GameCore
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
                 }
             }
+
+            public static ClientRpcParams GetClientParameters(ulong clientId)
+            {
+                ClientRpcParams clientRpcParams = new()
+                {
+                    Send = new ClientRpcSendParams
+                    {
+                        TargetClientIds = new ulong[] { clientId }
+                    }
+                };
+
+                return clientRpcParams;
+            }
         }
     }
 }

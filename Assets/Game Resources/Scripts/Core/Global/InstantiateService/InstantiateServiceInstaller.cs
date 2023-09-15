@@ -9,7 +9,7 @@ namespace GameCore
         public sealed class InstantiateServiceInstaller : MonoInstaller
         {
             private const string _SERVICE_NAME = "Instantiate Service";
-            [SerializeField] private Transform _parentTransform;
+
 
             public override void InstallBindings()
             {
@@ -27,7 +27,6 @@ namespace GameCore
             private GameObject CreateGameObject()
             {
                 var gameObject = new GameObject();
-                gameObject.transform.parent = _parentTransform;
                 gameObject.name = _SERVICE_NAME;
                 return gameObject;
             }

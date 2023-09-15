@@ -12,7 +12,6 @@ namespace GameCore
             private const string _INPUT_HANDLER_NAME = "InputHandler";
 
             [SerializeField] private InputHandler _inputHandler;
-            [SerializeField] private Transform _parentTransform;
 
             [SerializeField] private bool _cameraRotatorAllowed = true;
             [SerializeField] private bool _casmeraZoomAllowed = true;
@@ -25,8 +24,8 @@ namespace GameCore
             {
                 var inputHandlerInstance = CreateInstance();
                 BindInputHandler(inputHandlerInstance);
-                BindInterface<InputHandler, ICameraRotator>(inputHandlerInstance, _cameraRotatorAllowed);
-                BindInterface<InputHandler, ICameraZoomer>(inputHandlerInstance, _casmeraZoomAllowed);
+                BindInterface<InputHandler, ICameraRotatorInput>(inputHandlerInstance, _cameraRotatorAllowed);
+                BindInterface<InputHandler, ICameraZoomerInput>(inputHandlerInstance, _casmeraZoomAllowed);
                 BindInterface<InputHandler, IMovement>(inputHandlerInstance, _movementAllowed);
                 BindInterface<InputHandler, IInventoryPress>(inputHandlerInstance, _inventoryKeysPressAllowed);
                 BindInterface<InputHandler, IOpenCloseInventory>(inputHandlerInstance, _openCloseInventoryAllowed);
@@ -35,7 +34,7 @@ namespace GameCore
 
             private InputHandler CreateInstance()
             {
-                var inputHandler = Container.InstantiatePrefabForComponent<InputHandler>(_inputHandler, _parentTransform);
+                var inputHandler = Container.InstantiatePrefabForComponent<InputHandler>(_inputHandler);
                 ChangeName(inputHandler.gameObject);
                 return inputHandler;
             }

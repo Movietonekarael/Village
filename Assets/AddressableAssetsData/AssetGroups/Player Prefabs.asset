@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Player Prefabs
+  m_EditorClassIdentifier: 
+  m_GroupName: Player Prefabs
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 6c96fea478172d643963b2dbe83f83ac
+  m_SerializeEntries:
+  - m_GUID: a343e433c49ac854386bf70fa917c644
+    m_Address: Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7681cbbda071b54584461bb5e36dcf8
+    m_Address: NetworkPlayer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 552b1e5c0c9302f4bb2e4402f3f36a55
+    m_Address: Player Doll
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a7aa946e9378cb34793b9ebca5fe111b
+    m_Address: Client Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9180b3400337e2b4998612ecb57b7158
+    m_Address: Active Player Doll
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 666ecc138dddd6e499cd38f20ec80ca4
+    m_Address: PlayerCharacterActor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 48008fb6d18d6214cb0b8950a4fba55d, type: 2}
+    - {fileID: 11400000, guid: edb23568c287cdf49adf7aa249e0764e, type: 2}
