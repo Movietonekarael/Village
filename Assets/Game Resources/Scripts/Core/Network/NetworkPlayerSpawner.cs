@@ -194,6 +194,9 @@ namespace GameCore
                 }
                 animatorSynchronizer.InputEventedAnimator = events;
 
+                var networkPlayerAnimator = gameObject.GetComponent<NetworkPlayerAnimator>();
+                networkPlayerAnimator.CopyRuntimeAnimatorControllers(_activeDollPlayerInstance.GetComponentInChildren<Animator>());
+
                 OnDollSpawned?.Invoke(_activeDollPlayerInstance);
             }
 
@@ -205,6 +208,9 @@ namespace GameCore
 
                 var animatorSynchronizer = _dollPlayerInstance.GetComponentInChildren<AnimatorSynchronizer>();
                 animatorSynchronizer.InputEventedAnimator = gameObject.GetComponent<IEventedAnimatorEvents>();
+
+                var networkPlayerAnimator = gameObject.GetComponent<NetworkPlayerAnimator>();
+                networkPlayerAnimator.CopyRuntimeAnimatorControllers(_dollPlayerInstance.GetComponentInChildren<Animator>());
 
                 DontDestroyOnLoad(_dollPlayerInstance);
 

@@ -16,6 +16,8 @@ namespace GameCore
         public class NetworkConnectionService : NetworkBehaviour
         {
             public static ConnectionType ConnectionType = ConnectionType.None;
+            public static string ConnectionCode = string.Empty;
+
             private const string _PREFAB_NAME = "NetworkConnectionService";
 
             private static NetworkConnectionService _singleton = null;
@@ -144,6 +146,7 @@ namespace GameCore
                 };
 
                 data.JoinCode = await Unity.Services.Relay.RelayService.Instance.GetJoinCodeAsync(data.AllocationID);
+                ConnectionCode = data.JoinCode;
                 Debug.Log($"Data: {data.JoinCode}.");
 
                 return data;

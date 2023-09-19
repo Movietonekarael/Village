@@ -68,7 +68,6 @@ namespace GameCore
                 if (_inputEventedAnimator is null)
                     return;
 
-                Debug.Log("Subscribing");
                 _inputEventedAnimator.OnBoolParameterSetted += SetBool;
                 _inputEventedAnimator.OnFloatParameterSetted += SetFloat;
                 _inputEventedAnimator.OnFloatWithDampParameterSetted += SetFloat;
@@ -81,7 +80,6 @@ namespace GameCore
                 if (_inputEventedAnimator is null)
                     return;
 
-                Debug.Log("Unsubscribing");
                 _inputEventedAnimator.OnBoolParameterSetted -= SetBool;
                 _inputEventedAnimator.OnFloatParameterSetted -= SetFloat;
                 _inputEventedAnimator.OnFloatWithDampParameterSetted -= SetFloat;
@@ -91,7 +89,6 @@ namespace GameCore
 
             public void SetBool(int id, bool value)
             {
-                Debug.Log("Calling bool");
                 _outputEventedAnimator.SetBool(id, value);
             }
 

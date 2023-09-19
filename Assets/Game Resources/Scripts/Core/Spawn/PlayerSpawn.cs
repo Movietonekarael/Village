@@ -48,7 +48,7 @@ namespace GameCore
                 _instantiateService.DiContainer.Bind<GameObject>().WithId("Main Player").FromInstance(playerInstance).AsCached().NonLazy();
                 _instantiateService.DiContainer.Bind<PlayerInventory>().WithId("Main Player").FromInstance(playerInventory).AsCached().NonLazy();
 
-                var eventedAnimator = playerInstance.GetComponent<EventedAnimator>();
+                var eventedAnimator = playerInstance.GetComponentInChildren<EventedAnimator>();
                 _playerAnimatorEvents = eventedAnimator;
                 _instantiateService.DiContainer.Bind<EventedAnimator>().WithId("Main Player").FromInstance(eventedAnimator).AsCached().NonLazy();
                 _instantiateService.DiContainer.Bind<IEventedAnimator>().WithId("Main Player").FromInstance(eventedAnimator).AsCached().NonLazy();

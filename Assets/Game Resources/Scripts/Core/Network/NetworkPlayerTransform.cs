@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -72,6 +73,14 @@ namespace GameCore
 
             private CancellationTokenSource _changeDollTransformCancellationTokenSource = new();
 
+            [ClientRpc]
+            private void ChangeTransformClientRpc(NetworkTransformPR newValue)
+            {
+                if (IsServer) return;
+
+                TransformChanged(new NetworkTransformPR(), newValue);
+            }
+
             private void TransformChanged(NetworkTransformPR previousValue, NetworkTransformPR newValue)
             {
                 if (_dollTransform != null)
@@ -137,10 +146,16 @@ namespace GameCore
             {
                 if (_playerTransform != null)
                 {
+                    //Debug.Log("Suka");
                     var newTransform = new NetworkTransformPR(_playerTransform);
                     if (_networkTransform.Value != newTransform)
+                    {
+                        //Debug.Log("Suka2");
                         _networkTransform.Value = newTransform;
-                }
+                    }
+
+                    ChangeTransformClientRpc(newTransform);
+                }                
             }
 
             private void FixedUpdate()
@@ -150,11 +165,6 @@ namespace GameCore
                     var newTransform = new NetworkTransformPR(_playerTransform);
                     if (_networkTransform.Value != newTransform)
                         _networkTransform.Value = newTransform;
-                }
-
-                if (!IsServer)
-                {
-
                 }
             }
         }

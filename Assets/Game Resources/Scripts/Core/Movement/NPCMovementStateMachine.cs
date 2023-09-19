@@ -106,8 +106,9 @@ namespace GameCore
             private void SetUpJumpListener()
             {
                 var animatorObject = (_animatorController as Component).gameObject;
-                var listner = animatorObject.AddComponent<ListenJumpEvent>();
-                listner.NPC = this;
+                if (!animatorObject.TryGetComponent<ListenJumpEvent>(out var listener))
+                    listener = animatorObject.AddComponent<ListenJumpEvent>();
+                listener.NPC = this;
             }
 
             private void SetRotationZero()

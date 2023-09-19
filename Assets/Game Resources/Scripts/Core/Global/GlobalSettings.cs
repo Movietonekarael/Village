@@ -15,6 +15,7 @@ namespace GameCore
             Cursor.visible = _cursorVisible;
             Cursor.lockState = _cursorLockMode;
             Application.targetFrameRate = _targetFramerate > 0 ? _targetFramerate : -1;
+            QualitySettings.vSyncCount = _targetFramerate > 0 ? _targetFramerate : 0;
         }
     }
 }
