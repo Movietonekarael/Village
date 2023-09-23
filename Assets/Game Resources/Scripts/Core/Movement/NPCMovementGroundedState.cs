@@ -51,7 +51,7 @@ namespace GameCore
                 private void ChangeRunState()
                 {
                     _StateMachine._isRunning = !_StateMachine._isRunning;
-                    _StateMachine._animatorController.SetBool(_StateMachine._isRunningBoolHash, _StateMachine._isRunning);
+                    _StateMachine.AnimatorController.SetBool(_StateMachine._isRunningBoolHash, _StateMachine._isRunning);
                 }
             }
         }

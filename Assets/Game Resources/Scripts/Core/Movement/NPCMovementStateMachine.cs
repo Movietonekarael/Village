@@ -8,7 +8,7 @@ namespace GameCore
 {
     namespace GameMovement
     {
-        public abstract partial class NPCMovementStateMachine : MonoBehaviour, ISerializedInterfaceBehaviour
+        public abstract partial class NPCMovementStateMachine : MonoBehaviour
         {
             protected IMovement _Movement;
 
@@ -48,12 +48,8 @@ namespace GameCore
             private NPCMovementGroundedState _groundedState;
             private NPCMovementJumpState _jumpState;
 
-            [Header("Other: ")]
-            [SerializeField]
-            [RequireInterface(typeof(IEventedAnimator))]
-            private UnityEngine.Object _animatorControllerBase;
 
-            private IEventedAnimator _animatorController;
+            public Animator AnimatorController;
             private bool _isRunning = false;
             private bool _isJumping = false;
 
@@ -71,98 +67,86 @@ namespace GameCore
 
 
             protected Vector2 _GlobalDirectionOfMoving;
-            private Vector2 _privateLocalDirectionOfMoving;
+            private Vector2 _localDirectionOfMoving;
 
 
             protected Vector2 _LocalDirectionOfMoving
             {
                 get
                 {
-                    return _privateLocalDirectionOfMoving;
+                    return _localDirectionOfMoving;
                 }
                 set
                 {
-                    if (value != Vector2.zero)
-                    {
-                        _privateLocalDirectionOfMoving = value;
-                        LocalDirectionOfMovingChanged();
-                    }
+                    if (value == Vector2.zero) return;
+                    _localDirectionOfMoving = value;
+                    LocalDirectionOfMovingChanged();
                 }
             }
 
-
-            protected virtual void Awake()
+            public virtual void StartMovement()
             {
-                SetupSerializedInterfaces();
                 SetUpJumpListener();
                 SetRotationZero();
-            }
-
-            public void SetupSerializedInterfaces()
-            {
-                _animatorController = _animatorControllerBase as IEventedAnimator;
-            }
-
-            private void SetUpJumpListener()
-            {
-                var animatorObject = (_animatorController as Component).gameObject;
-                if (!animatorObject.TryGetComponent<ListenJumpEvent>(out var listener))
-                    listener = animatorObject.AddComponent<ListenJumpEvent>();
-                listener.NPC = this;
-            }
-
-            private void SetRotationZero()
-            {
-                _NeededRotation = new()
-                {
-                    eulerAngles = Vector3.forward
-                };
-            }
-
-            private void Start()
-            {
                 SetupCharacterActor();
                 InitializeStates();
                 EnterCurrentState();
-            }
 
-            public void SetupCharacterActor()
-            {
-                if (CharacterActor != null)
+
+                void SetUpJumpListener()
                 {
+                    var animatorObject = AnimatorController.gameObject;
+                    if (!animatorObject.TryGetComponent<ListenJumpEvent>(out var listener))
+                    {
+                        listener = animatorObject.AddComponent<ListenJumpEvent>();
+                    }
+                    listener.NPC = this;
+                }
+
+                void SetRotationZero()
+                {
+                    _NeededRotation = new()
+                    {
+                        eulerAngles = Vector3.forward
+                    };
+                }
+
+                void SetupCharacterActor()
+                {
+                    if (CharacterActor == null) return;
+
                     CharacterActor.UseRootMotion = false;
                     CharacterActor.UpdateRootPosition = false;
                     CharacterActor.UpdateRootRotation = false;
-
                     CharacterActor.Velocity = Vector3.zero;
                 }
-            }
 
-            private void InitializeStates()
-            {
-                _idleState = new(this);
-                _walkState = new(this);
-                _runState = new(this);
-                _groundedState = new(this);
-                _jumpState = new(this);
+                void InitializeStates()
+                {
+                    _idleState = new(this);
+                    _walkState = new(this);
+                    _runState = new(this);
+                    _groundedState = new(this);
+                    _jumpState = new(this);
 
-                _currentState = _groundedState;
-            }
+                    _currentState = _groundedState;
+                }
 
-            public void EnterCurrentState()
-            {
-                if (CharacterActor != null)
-                    _currentState.EnterState();
+                void EnterCurrentState()
+                {
+                    if (CharacterActor != null)
+                        _currentState.EnterState();
+                }
             }
 
             private void Update()
             {
-                _currentState.UpdateStates();
+                _currentState?.UpdateStates();
             }
 
             private void FixedUpdate()
             {
-                _currentState.FixedUpdateStates();
+                _currentState?.FixedUpdateStates();
             }
 
             public void StartJumpingEnd()

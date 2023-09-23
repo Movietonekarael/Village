@@ -64,6 +64,11 @@ namespace GameCore
                 return _diContainer.InstantiatePrefab(gameObject, position, rotation, parentTransform);
             }
 
+            public new void DestroyObject(Object unityObject)
+            {
+                Object.Destroy(unityObject);
+            }
+
             public void DestroyObject(MonoBehaviour monoBehaviour)
             {
                 DestroyObject(monoBehaviour.gameObject);

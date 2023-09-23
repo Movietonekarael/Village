@@ -1,10 +1,12 @@
+using System;
+
 namespace GameCore
 {
     namespace GameControls
     {
         public interface IInteractionPerformer
         {
-            public bool IfInteractionWasPerformed();
+            public event Action OnInteractionPerformed;
         }
     }
 }

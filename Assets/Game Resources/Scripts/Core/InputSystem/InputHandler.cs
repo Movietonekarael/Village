@@ -37,6 +37,8 @@ namespace GameCore
             public event Action OnDashed;
             public event Action OnJumped;
 
+            public event Action OnInteractionPerformed;
+
             public event Action OnOpenCloseInventory;
             public event Action<int> OnInventoryKeyPressed;
             public event Action<int> OnInventoryArrowPressed;
@@ -56,6 +58,7 @@ namespace GameCore
             private CameraRotationInputHandler _cameraRotationInputHandler;
             private CameraZoomInputHandler _cameraZoomInputHandler;
             private PlayerMovementInputHandler _playerMovementInputHandler;
+            private InteractionInputHandler _interactionInputHandler;
             private InventoryInputHandler _inventoryInputHandler;
             private UIInputHandler _uiInputHandler;
             private ApplicationInputHandler _applicationInputHandler;
@@ -135,6 +138,7 @@ namespace GameCore
                 _cameraRotationInputHandler = new(this);
                 _cameraZoomInputHandler = new(this);
                 _playerMovementInputHandler = new(this);
+                _interactionInputHandler = new(this);
                 _inventoryInputHandler = new(this);
                 _uiInputHandler = new(this);
                 _applicationInputHandler = new(this);
@@ -193,6 +197,7 @@ namespace GameCore
                 _cameraRotationInputHandler.DestroyAllReferences();
                 _cameraZoomInputHandler.DestroyAllReferences();
                 _playerMovementInputHandler.DestroyAllReferences();
+                _interactionInputHandler.DestroyAllReferences();
                 _inventoryInputHandler.DestroyAllReferences();
                 _uiInputHandler.DestroyAllReferences();
                 _applicationInputHandler.DestroyAllReferences();
@@ -201,11 +206,6 @@ namespace GameCore
             private void SaveCurrentControlSchemeThroughScenes()
             {
                 _savedControlScheme = _currentControlScheme;
-            }
-
-            public bool IfInteractionWasPerformed()
-            {
-                return _inputScheme.PlayerControl.Intaract.WasPerformedThisFrame();
             }
 
             private void OnControlsChanged(UnityEngine.InputSystem.PlayerInput input)

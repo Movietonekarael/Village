@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Test Scene InScene
+  m_EditorClassIdentifier: 
+  m_GroupName: Test Scene InScene
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 811f971bd849fab4a8ec941dfa1d8d03
+  m_SerializeEntries:
+  - m_GUID: c5ea8fbc982655e4aa72581b84547b8b
+    m_Address: Cube
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eaf5431cc889f544d9e84faa28070c90
+    m_Address: Cube InScene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ac66bca1721854c499d5a0d3bf7cd6cd
+    m_Address: Sphere
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2108c519426e8104ea241ea2059d4648
+    m_Address: Sphere InScene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c41bd11d863d9a7408958b553be91639, type: 2}
+    - {fileID: 11400000, guid: a5e3f041e37a2a7498f9c39ce6708cf3, type: 2}

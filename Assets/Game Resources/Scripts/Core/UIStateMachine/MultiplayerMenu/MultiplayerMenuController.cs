@@ -69,7 +69,6 @@ namespace GameCore
                 if (ifAllocationIsSuccessful) 
                 {
                     NetworkConnectionService.StartClient(connectToRelayResult.Item2.Value);
-                    //await Addressables.LoadSceneAsync(_multiPlayerSceneReference, UnityEngine.SceneManagement.LoadSceneMode.Single, true).Task;
                 }
             }
 

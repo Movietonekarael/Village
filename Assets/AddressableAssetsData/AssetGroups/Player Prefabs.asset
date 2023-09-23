@@ -17,33 +17,18 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 6c96fea478172d643963b2dbe83f83ac
   m_SerializeEntries:
-  - m_GUID: a343e433c49ac854386bf70fa917c644
-    m_Address: Player
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e7681cbbda071b54584461bb5e36dcf8
     m_Address: NetworkPlayer
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 552b1e5c0c9302f4bb2e4402f3f36a55
-    m_Address: Player Doll
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a7aa946e9378cb34793b9ebca5fe111b
-    m_Address: Client Player
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9180b3400337e2b4998612ecb57b7158
-    m_Address: Active Player Doll
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 666ecc138dddd6e499cd38f20ec80ca4
     m_Address: PlayerCharacterActor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9286e580aec8ea74ba620a76691b0be4
+    m_Address: PlayerDoll
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

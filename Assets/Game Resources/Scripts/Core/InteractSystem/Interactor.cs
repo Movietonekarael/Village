@@ -11,11 +11,13 @@ namespace GameCore
         public class Interactor : MonoBehaviour
         {
             [Header("IInteraction performer")]
-            [Inject] private readonly InputHandler _interactionPerformerBase;
-            private IInteractionPerformer _interactionPerformer => _interactionPerformerBase as IInteractionPerformer;
+            [SerializeField]
+            [RequireInterface(typeof(IInteractionPerformer))]
+            private UnityEngine.Object _interactionPerformerBase;
+            private IInteractionPerformer _interactionPerformer { get => _interactionPerformerBase as IInteractionPerformer; }
 
             [Header("Overlap sphere parameters")]
-            [SerializeField] private Transform _interactionPoint;
+            public Transform InteractionPoint;
             [SerializeField] private float _interactionPointRadius = .5f;
             [SerializeField] private LayerMask _interactableMask;
 
@@ -26,30 +28,42 @@ namespace GameCore
             public IInventory Inventory { get => _inventoryBase as IInventory; }
 
             [Header("Interaction sound effect")]
-            [SerializeField] private AudioSource _interactionAudio;
+            [HideInInspector] public AudioSource InteractionAudio;
 
             private const int MAX_COLLIDERS = 1;
 
+            private IInteractable _interactableObject = null;
+
+
+            private void Awake()
+            {
+                SubscribeForInteraction();
+            }
 
             private void Update()
             {
-                InteractWithInteractables();
+                if (InteractionPoint != null)
+                {
+                    InteractWithInteractables();
+                }
+                
+            }
+
+            private void OnDestroy()
+            {
+                UnsubscribeForInteraction();
             }
 
             private void InteractWithInteractables()
             {
                 var collider = GetCollider();
-
-                if (collider != null && CheckInteractible(collider, out IInteractable interactable))
-                {
-                    InteractIfInteractionPerformed(interactable);
-                }
+                GetInteractible(collider, out _interactableObject);
             }
 
             private Collider GetCollider()
             {
                 var hitColliders = new Collider[MAX_COLLIDERS];
-                Physics.OverlapSphereNonAlloc(_interactionPoint.position, _interactionPointRadius, hitColliders, _interactableMask);
+                Physics.OverlapSphereNonAlloc(InteractionPoint.position, _interactionPointRadius, hitColliders, _interactableMask);
 
                 if (hitColliders[0] != null)
                     return hitColliders[0];
@@ -57,9 +71,11 @@ namespace GameCore
                     return null;
             }
 
-            private bool CheckInteractible(Collider collider, out IInteractable interactable)
+            private bool GetInteractible(Collider collider, out IInteractable interactable)
             {
-                interactable = collider.GetComponent<IInteractable>();
+                interactable = null;
+                if (collider != null)
+                    interactable = collider.GetComponent<IInteractable>();
 
                 if (interactable != null)
                     return true;
@@ -67,19 +83,33 @@ namespace GameCore
                     return false;
             }
 
-            private void InteractIfInteractionPerformed(IInteractable interactable)
+            private void SubscribeForInteraction()
             {
-                if (_interactionPerformer.IfInteractionWasPerformed())
-                {
-                    interactable.Interact(this);
-                    _interactionAudio.Play();
-                }
+                _interactionPerformer.OnInteractionPerformed += PerformInteraction;
+            }
+
+            private void UnsubscribeForInteraction()
+            {
+                _interactionPerformer.OnInteractionPerformed -= PerformInteraction;
+            }
+
+            private void PerformInteraction()
+            {
+                if (_interactableObject == null) return;
+
+                _interactableObject.Interact(this);
+
+                if (InteractionAudio != null)
+                    InteractionAudio.Play();
             }
 
             private void OnDrawGizmos()
             {
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(_interactionPoint.position, _interactionPointRadius);
+                if (InteractionPoint != null ) 
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawWireSphere(InteractionPoint.position, _interactionPointRadius);
+                }
             }
         }
     }

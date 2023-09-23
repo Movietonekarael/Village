@@ -16,6 +16,7 @@ namespace GameCore
             [SerializeField] private bool _cameraRotatorAllowed = true;
             [SerializeField] private bool _casmeraZoomAllowed = true;
             [SerializeField] private bool _movementAllowed = true;
+            [SerializeField] private bool _interactionAllowed = true;
             [SerializeField] private bool _inventoryKeysPressAllowed = true;
             [SerializeField] private bool _openCloseInventoryAllowed = true;
             [SerializeField] private bool _pauseAllowed = true;
@@ -27,6 +28,7 @@ namespace GameCore
                 BindInterface<InputHandler, ICameraRotatorInput>(inputHandlerInstance, _cameraRotatorAllowed);
                 BindInterface<InputHandler, ICameraZoomerInput>(inputHandlerInstance, _casmeraZoomAllowed);
                 BindInterface<InputHandler, IMovement>(inputHandlerInstance, _movementAllowed);
+                BindInterface<InputHandler, IInteractionPerformer>(inputHandlerInstance, _interactionAllowed);
                 BindInterface<InputHandler, IInventoryPress>(inputHandlerInstance, _inventoryKeysPressAllowed);
                 BindInterface<InputHandler, IOpenCloseInventory>(inputHandlerInstance, _openCloseInventoryAllowed);
                 BindInterface<InputHandler, IEscapable>(inputHandlerInstance, _pauseAllowed);

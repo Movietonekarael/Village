@@ -74,6 +74,7 @@ PrefabInstance:
     - {fileID: 1815283887433836393, guid: ac66bca1721854c499d5a0d3bf7cd6cd, type: 3}
     - {fileID: 2139991424155757901, guid: ac66bca1721854c499d5a0d3bf7cd6cd, type: 3}
     - {fileID: 4779211573417157819, guid: ac66bca1721854c499d5a0d3bf7cd6cd, type: 3}
+    - {fileID: -3779687293463627449, guid: ac66bca1721854c499d5a0d3bf7cd6cd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -100,5 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9774739e9bf09bf4a938876133cd5ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _networkPrefab: {fileID: 8803661735109897196, guid: ac66bca1721854c499d5a0d3bf7cd6cd,
-    type: 3}
+  _networkAssetReference:
+    m_AssetGUID: ac66bca1721854c499d5a0d3bf7cd6cd
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

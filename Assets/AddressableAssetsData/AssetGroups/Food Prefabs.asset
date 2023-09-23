@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Food Prefabs
+  m_EditorClassIdentifier: 
+  m_GroupName: Food Prefabs
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 33eeadb7e7282cf4eb7d1181c197cf5e
+  m_SerializeEntries:
+  - m_GUID: 01b73c6adbc49e547a4050d07ce31bca
+    m_Address: Assets/Game Resources/Prefabs/Food/Cheese.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86404d6d44e2f834cbc72d8014f193cf
+    m_Address: Assets/Game Resources/Prefabs/Food/Chicken.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73f8069633790904f97586ad4fac56a9
+    m_Address: Assets/Game Resources/Prefabs/Food/Mushroom.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67791c4ce16c99442ac667f6e8c08792
+    m_Address: Assets/Game Resources/Prefabs/Food/Onion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14a510790c4486a4e9105dca33b4c366
+    m_Address: Assets/Game Resources/Prefabs/Food/Potato.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 631b072a88243ca4c99acaa4414cd28f
+    m_Address: Assets/Game Resources/Prefabs/Food/Tomato.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 354e3099c1fb8204b9c77e0cf73ae086
+    m_Address: Assets/Game Resources/Prefabs/Food/Cheese InScene.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1b7202e5acdffa4f898891dc932e10f
+    m_Address: Assets/Game Resources/Prefabs/Food/Tomato InScene.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c03bec50ff2e57a4ca4faab2f18aa861
+    m_Address: Assets/Game Resources/Prefabs/Food/Potato InScene.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3da3f6dad5713049b128456f1f3fc61
+    m_Address: Assets/Game Resources/Prefabs/Food/Onion InScene.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85238c9f7496f3443afdd738c05ec9df
+    m_Address: Assets/Game Resources/Prefabs/Food/Mushroom InScene.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ca2a36aa711f1043a334bc54a6dd664
+    m_Address: Assets/Game Resources/Prefabs/Food/Chicken InScene.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0f54cc7adae6d3f4faa7b6e7fb2e0e0c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7bf8152ebe3fa9140b41545756240d03, type: 2}
+    - {fileID: 11400000, guid: 566b618ec6149604c970af0a16d5f1ab, type: 2}

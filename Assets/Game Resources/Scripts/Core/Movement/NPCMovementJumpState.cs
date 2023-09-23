@@ -14,7 +14,7 @@ namespace GameCore
                     _StateMachine.OnJumpStartEnded += JumpStartEnded;
                     _StateMachine.OnJumpEnded += JumpEnded;
 
-                    _StateMachine._animatorController.SetBool(_StateMachine._isJumpingBoolHash, true);
+                    _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingBoolHash, true);
                     HandleJump();
                 }
 
@@ -34,8 +34,8 @@ namespace GameCore
                     _StateMachine.OnJumpStartEnded -= JumpStartEnded;
                     _StateMachine.OnJumpEnded -= JumpEnded;
 
-                    _StateMachine._animatorController.SetBool(_StateMachine._isJumpingBoolHash, false);
-                    _StateMachine._animatorController.SetBool(_StateMachine._isJumpingEndBoolHash, false);
+                    _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingBoolHash, false);
+                    _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingEndBoolHash, false);
                 }
 
                 //----------------------------------------------------------Local methods------------------------------------------------------//
@@ -56,7 +56,7 @@ namespace GameCore
                 {
                     if (_StateMachine._isJumping && _StateMachine.CharacterActor.IsFalling)
                     {
-                        _StateMachine._animatorController.SetBool(_StateMachine._isJumpingEndBoolHash, true);
+                        _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingEndBoolHash, true);
                     }
                 }
 
@@ -64,7 +64,7 @@ namespace GameCore
                 {
                     if (_StateMachine._isJumping && _StateMachine.CharacterActor.IsGrounded)
                     {
-                        _StateMachine._animatorController.SetTrigger(_StateMachine._interruptJumpTriggerHash);
+                        _StateMachine.AnimatorController.SetTrigger(_StateMachine._interruptJumpTriggerHash);
                         SwitchState(_StateMachine._groundedState);
                     }
                 }

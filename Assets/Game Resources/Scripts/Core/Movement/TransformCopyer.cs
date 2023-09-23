@@ -15,8 +15,7 @@ namespace GameCore
 
             private void CopyTransform()
             {
-                CopyToTransform.localPosition = transform.localPosition;
-                CopyToTransform.localRotation = transform.localRotation;
+                CopyToTransform.SetLocalPositionAndRotation(transform.localPosition, transform.localRotation);
             }
         }
     }

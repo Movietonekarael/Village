@@ -27,6 +27,12 @@ namespace GameCore
 
                     if (!_StateMachine._isRunning)
                         SetWalkState();
+
+
+                    void SetWalkState()
+                    {
+                        SwitchState(_StateMachine._walkState);
+                    }
                 }
 
                 public override void ExitState()
@@ -37,19 +43,13 @@ namespace GameCore
                     _Movement.OnDashed -= Dash;
                 }
 
-                //----------------------------------------------------------Local methods------------------------------------------------------//
-
-                private void SetWalkState()
-                {
-                    SwitchState(_StateMachine._walkState);
-                }
 
                 private void Dash()
                 {
                     if (!_dashed)
                     {
                         _dashed = true;
-                        _StateMachine._animatorController.SetTrigger(_StateMachine._dashTriggerHash);
+                        _StateMachine.AnimatorController.SetTrigger(_StateMachine._dashTriggerHash);
                     }
                 }
 

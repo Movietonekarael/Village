@@ -90,7 +90,7 @@ namespace GameCore
                 NetworkManager.Singleton.StartHost();
 
                 await AddressablesSceneManager.CreateInstance();
-                await NetworkConnectionService.CreateInstance();
+                await NetworkConnectionService.CreateInstance();   
             }
 
             public static void StartClient(RelayJoinData joinData)

@@ -7,7 +7,7 @@ namespace GameCore
     {
         public class ListenJumpEvent : MonoBehaviour
         {
-            [SerializeField] private NPCMovementStateMachine _npc;
+            private NPCMovementStateMachine _npc;
             public NPCMovementStateMachine NPC
             {
                 set

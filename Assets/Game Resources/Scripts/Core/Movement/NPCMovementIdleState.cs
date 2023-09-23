@@ -15,7 +15,7 @@ namespace GameCore
 
                 public override void EnterState()
                 {
-                    _StateMachine._animatorController.SetBool(_StateMachine._isWalkingBoolHash, false);
+                    _StateMachine.AnimatorController.SetBool(_StateMachine._isWalkingBoolHash, false);
 
                     _Movement.OnMovementStart += StartMovement;
                 }
