@@ -255,6 +255,7 @@ MonoBehaviour:
   _cameraRotatorAllowed: 1
   _casmeraZoomAllowed: 1
   _movementAllowed: 1
+  _interactionAllowed: 1
   _inventoryKeysPressAllowed: 1
   _openCloseInventoryAllowed: 1
   _pauseAllowed: 1

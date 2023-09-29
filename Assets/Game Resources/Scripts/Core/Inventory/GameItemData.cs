@@ -12,6 +12,7 @@ namespace GameCore
             public GameObject Prefab;
             public Sprite Image;
             public int MaxStackNumber = 1;
+            [HideInInspector] public uint ItemID;
         }
     }
 }

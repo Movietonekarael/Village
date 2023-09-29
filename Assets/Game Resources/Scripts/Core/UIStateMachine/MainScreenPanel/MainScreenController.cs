@@ -15,7 +15,7 @@ namespace GameCore
         {
             [Inject] private readonly IInventoryPress _inventoryPress;
             [Inject] private readonly IInventory _inventory;
-            [Inject] private readonly PlayerHoldItem _playerHoldItem;
+            [Inject] private readonly IPlayerHoldItem _playerHoldItem;
             private int _indexOfCurrentHoldItem = 0;
 
             protected override void SubscribeForPermanentEvents() 
@@ -81,7 +81,7 @@ namespace GameCore
             private void UpdateHoldingItem()
             {
                 var item = _inventory.GetGameItem(_indexOfCurrentHoldItem);
-                _playerHoldItem.Item = item;
+                _playerHoldItem.SetItem(item);
             }
         }
     }

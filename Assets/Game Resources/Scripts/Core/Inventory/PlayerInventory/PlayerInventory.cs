@@ -1,15 +1,16 @@
 using System;
-using UnityEngine; 
+using UnityEngine;
 
 
 namespace GameCore
 {
     namespace Inventory
     {
-        public sealed class PlayerInventory : MonoBehaviour, IInventory
+        public sealed class PlayerInventory : MonoBehaviour, IInventory, IMovableInventory, IDropableInventory
         {
             [Header("Inventory: ")]
             [SerializeField] private int _inventorySize = 32;
+            public int InventorySize => _inventorySize;
             private GameItem[] _gameItems;
 
             public Transform DropPoint;

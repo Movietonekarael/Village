@@ -16,6 +16,12 @@ namespace GameCore
             public int Number = 1;
 
 
+            public GameItem(GameItemData data, int number)
+            {
+                Data = data;
+                Number = number;
+            }
+
             public static (bool, GameItem, GameItem) Add(GameItem a, GameItem b)
             {
                 if (a == null && b != null)

@@ -7,6 +7,7 @@ namespace GameCore
     {
         public interface IInventory
         {
+            public int GetInventorySize();
             public bool Push(ref GameItem item);
             public bool Push(ref GameItem item, int position);
             public GameItem Pull(int position);

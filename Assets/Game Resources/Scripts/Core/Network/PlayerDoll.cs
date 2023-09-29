@@ -1,5 +1,7 @@
 ﻿using GameCore.GameControls;
+using GameCore.Inventory;
 using GameCore.Services;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -10,7 +12,7 @@ namespace GameCore
         public sealed class PlayerDoll : DefaultNetworkBehaviour
         {
             [HideInInspector] public Player Player;
-            [HideInInspector] public NetworkInputHandler NetworkInputHandler;
+            [HideInInspector] public NetworkInputHandler NetworkInputHandler = null;
             public Animator DollAnimator;
 
             [Header("Client side objects:")]
@@ -22,15 +24,17 @@ namespace GameCore
             [Header("Server side objects:")]
 
             [Header("Other:")]
+            [SerializeField] private PlayerHoldItem _holdItem;
             [SerializeField] private GameObject _dropPoint;
             public AudioSource GrabAudioSource;
 
 
             public Transform InteractionPoint;
 
-            protected override void OnClientNetworkSpawn()
+            protected override async void OnClientNetworkSpawn()
             {
                 DontDestroyOnLoad(this.gameObject);
+                PlayerHoldItemWrapper.PlayerHoldItem = _holdItem;
                 if (!IsOwner)
                 {
                     DestroyClientObjects();
@@ -39,7 +43,7 @@ namespace GameCore
                 
 
                 DestroyServerObjects();
-                SetupReferences();
+                await SetupReferences();
                 StartCameraRotator();
                 StartCameraZoomer();
                 SubscribeNetworkInputHandlerForCamera();
@@ -52,9 +56,16 @@ namespace GameCore
                     Destroy(_dropPoint);
                 }
 
-                void SetupReferences()
+                async Task SetupReferences()
                 {
-                    Player = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<Player>();
+                    NetworkObject playerObject = null;
+                    var localClient = NetworkManager.Singleton.LocalClient;
+                    while (playerObject == null)
+                    {
+                        playerObject = localClient.PlayerObject;
+                        await Task.Yield();
+                    }
+                    Player = playerObject.GetComponent<Player>();
                     Player.PlayerDoll = this;
                     NetworkInputHandler = Player.NetworkInputHandler;
                     Player.Interactor.InteractionPoint = InteractionPoint;

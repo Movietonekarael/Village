@@ -17,11 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 6c96fea478172d643963b2dbe83f83ac
   m_SerializeEntries:
-  - m_GUID: e7681cbbda071b54584461bb5e36dcf8
-    m_Address: NetworkPlayer
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 666ecc138dddd6e499cd38f20ec80ca4
     m_Address: PlayerCharacterActor
     m_ReadOnly: 0

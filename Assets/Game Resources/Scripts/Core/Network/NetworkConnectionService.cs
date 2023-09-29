@@ -7,7 +7,7 @@ using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using SceneManagement;
-
+using Unity.Burst;
 
 namespace GameCore
 {
@@ -167,6 +167,7 @@ namespace GameCore
                 }
             }
 
+            [BurstAuthorizedExternalMethod]
             public static ClientRpcParams GetClientParameters(ulong clientId)
             {
                 ClientRpcParams clientRpcParams = new()

@@ -56,11 +56,7 @@ namespace GameCore
 
             private void InitializeGameItem()
             {
-                Item ??= new()
-                {
-                    Data = _data,
-                    Number = _number
-                };
+                Item ??= new(_data, _number);
             }
         }
     }

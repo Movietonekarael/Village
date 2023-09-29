@@ -12,7 +12,10 @@ namespace GameCore
                                                                            IOpenedPlayerInventoryView>,
                                                               IOpenedPlayerInventoryController
         {
-            [Inject] private readonly PlayerInventory _inventory;
+            [Inject] private readonly IInventory _inventory;
+            [Inject] private readonly IMovableInventory _movableInventory;
+            [Inject] private readonly IDropableInventory _dropableInventory;
+
 
             protected override void InitializeParameters(OpenedPlayerInventoryViewParameters parameters)
             {
@@ -50,12 +53,12 @@ namespace GameCore
 
             public void ChangeItemsInInventory(int itemNumber1, int itemNumber2)
             {
-                _inventory.MoveItem(itemNumber1, itemNumber2);
+                _movableInventory.MoveItem(itemNumber1, itemNumber2);
             }
 
             public void DropInventoryItem(int itemNumber)
             {
-                _inventory.DropItem(itemNumber);
+                _dropableInventory.DropItem(itemNumber);
             }
         }
     }

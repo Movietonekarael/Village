@@ -67,6 +67,7 @@ namespace GameCore
             protected override void OnClientNetworkSpawn()
             {
                 InjectComponents();
+                DestroyNonClientComponents();
 
 
                 void InjectComponents()
@@ -79,10 +80,13 @@ namespace GameCore
                     InstantiateService.Singleton.DiContainer.Inject(NetworkInputHandler);
                 }
 
-                if (!IsServer)
+                void DestroyNonClientComponents()
                 {
+                    if (IsServer) return;
                     Destroy(GetComponent<PlayerInventory>());
                     Destroy(GetComponent<Interactor>());
+                    if (IsOwner) return;
+                    Destroy(GetComponent<NetworkPlayerInventory>());
                 }
             }
 
