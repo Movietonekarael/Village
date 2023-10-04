@@ -1,4 +1,6 @@
+using GameCore.Memory;
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
 
@@ -95,12 +97,15 @@ namespace GameCore
                 return _gameItems[position];
             }
 
-            public void DropItem(int position)
+            public async void DropItem(int position)
             {
                 var item = Pull(position);
                 for (var i = 0; i < item.Number; i++)
                 {
-                    Instantiate(item.Prefab, DropPoint.position, Quaternion.identity);
+                    var itemInstance = await AssetLoader.InstantiateAssetSelfCached(item.PrefabReference, 
+                                                                                    DropPoint.position, 
+                                                                                    Quaternion.identity);
+                    itemInstance.GetComponent<NetworkObject>().Spawn();
                 }
             }
 

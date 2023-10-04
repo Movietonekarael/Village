@@ -8,7 +8,7 @@ namespace GameCore
         {
             public Transform CopyToTransform;
 
-            private void Update()
+            private void LateUpdate()
             {
                 CopyTransform();
             }

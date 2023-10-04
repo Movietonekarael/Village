@@ -15,7 +15,10 @@ namespace GameCore
             private static readonly Dictionary<IAssetLoaderBehaviour, LinkedList<ILoadedAssetsInformation>> _loadBehaviours = new();
 
 
-            public static async Task<GameObject> InstantiateAssetSelfCached(AssetReferenceGameObject assetReference, Transform parent, Vector3 position, Quaternion rotation)
+            public static async Task<GameObject> InstantiateAssetSelfCached(AssetReferenceGameObject assetReference, 
+                                                                            Vector3 position, 
+                                                                            Quaternion rotation,
+                                                                            Transform parent = null)
             {
                 var handle = await WaitUntilAddressableAssetLoaded<GameObject>(assetReference);
                 var instance = InstantiateLoadedAsset(ref handle, parent, position, rotation);

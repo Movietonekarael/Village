@@ -6,7 +6,7 @@ using Unity.Services.Core;
 using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using SceneManagement;
+using GameCore.SceneManagement;
 using Unity.Burst;
 
 namespace GameCore
@@ -15,7 +15,6 @@ namespace GameCore
     {
         public class NetworkConnectionService : NetworkBehaviour
         {
-            public static ConnectionType ConnectionType = ConnectionType.None;
             public static string ConnectionCode = string.Empty;
 
             private const string _PREFAB_NAME = "NetworkConnectionService";
@@ -79,22 +78,32 @@ namespace GameCore
                 AddressablesSceneManager.Singleton.SynchronizeScenes(clientId);
             }
 
+            public static async Task StartHost()
+            {
+                NetworkManagerPrefabs.Singleton.CreateDefaultNetworkManager();
+                NetworkManager.Singleton.StartHost();
+                await AddressablesSceneManager.CreateInstance();
+                await NetworkConnectionService.CreateInstance();
+            }
+
             public static async Task StartHost(RelayHostData hostData)
             {
+                NetworkManagerPrefabs.Singleton.CreateRelayNetworkManager();
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
                     hostData.IPv4Address,
                     hostData.Port,
                     hostData.AllocationIDBytes,
                     hostData.Key,
                     hostData.ConnectionData);
-                NetworkManager.Singleton.StartHost();
 
+                NetworkManager.Singleton.StartHost();
                 await AddressablesSceneManager.CreateInstance();
-                await NetworkConnectionService.CreateInstance();   
+                await NetworkConnectionService.CreateInstance();
             }
 
             public static void StartClient(RelayJoinData joinData)
             {
+                NetworkManagerPrefabs.Singleton.CreateRelayNetworkManager();
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetClientRelayData(
                     joinData.IPv4Address,
                     joinData.Port,
@@ -103,6 +112,11 @@ namespace GameCore
                     joinData.ConnectionData,
                     joinData.HostConnectionData);
                 NetworkManager.Singleton.StartClient();
+            }
+
+            public static void ShutdownConnection()
+            {
+                NetworkManager.Singleton.Shutdown();
             }
 
             public static async Task<RelayJoinData> ConnectToRelayServer(string joinCode)
@@ -151,10 +165,10 @@ namespace GameCore
 
                 return data;
             }
-
+            
             private static async Task AuthenticateConnection()
             {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && PARREL_SYNC
                 if (ParrelSync.ClonesManager.IsClone())
                 {
                     string customArgument = ParrelSync.ClonesManager.GetArgument();

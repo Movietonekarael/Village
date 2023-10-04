@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Onion
   m_EditorClassIdentifier: 
   Name: Onion
-  Prefab: {fileID: 1500203809658142, guid: 67791c4ce16c99442ac667f6e8c08792, type: 3}
+  PrefabReference:
+    m_AssetGUID: 67791c4ce16c99442ac667f6e8c08792
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   Image: {fileID: 21300000, guid: 6a58ecf62bdf48c49805fae39db8a60b, type: 3}
   MaxStackNumber: 5
+  ItemID: 3

@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Chicken
   m_EditorClassIdentifier: 
   Name: Chicken
-  Prefab: {fileID: 1282152240242332, guid: 86404d6d44e2f834cbc72d8014f193cf, type: 3}
+  PrefabReference:
+    m_AssetGUID: 86404d6d44e2f834cbc72d8014f193cf
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   Image: {fileID: 21300000, guid: 6bdf25651e800694aa6ec06b80010e1f, type: 3}
   MaxStackNumber: 5
+  ItemID: 1

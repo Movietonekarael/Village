@@ -1,4 +1,8 @@
-﻿namespace GameCore
+﻿
+
+using UnityEngine;
+
+namespace GameCore
 {
     namespace Inventory
     {

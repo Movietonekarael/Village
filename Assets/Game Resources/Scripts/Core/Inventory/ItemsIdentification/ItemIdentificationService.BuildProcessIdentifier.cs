@@ -6,7 +6,7 @@ namespace GameCore
 {
     namespace Inventory
     {
-        public static partial class ItemIdentifierService
+        public partial class ItemIdentificationService
         {
             public class BuildProcessIdentifier : IPreprocessBuildWithReport
             {

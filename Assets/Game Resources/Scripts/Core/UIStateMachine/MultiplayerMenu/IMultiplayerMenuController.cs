@@ -13,7 +13,7 @@ namespace GameCore
             public void BackToMainMenu();
             public void StartHostServer();
             public void ConnectToServer(string joinCode);
-            public void SetMultiplayerPlayerSceneReference(AssetReference _sceneReference);
+            public void SetMultiPlayerSceneReference(AssetReference _sceneReference);
         }
     }
 }

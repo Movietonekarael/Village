@@ -21,10 +21,14 @@ namespace GameCore
             [SerializeField] private AssetReference _multiplayerPlayerScene;
 
 
+            protected override void OnControllerInitialization()
+            {
+                _Controller.SetMultiPlayerSceneReference(_multiplayerPlayerScene);
+            }
+
             protected override void StartState(params bool[] args)
             {
                 _Controller.OnBackToMainMenu += LoadMainMenu;
-                _Controller.SetMultiplayerPlayerSceneReference(_multiplayerPlayerScene);
             }
 
             protected override void EndState()

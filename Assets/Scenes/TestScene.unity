@@ -21991,6 +21991,11 @@ MonoBehaviour:
   - _valueBase: {fileID: 1105856872}
     Arguments: 
   _mainScreenStateBase: {fileID: 1105856867}
+  _mainMenuSceneReference:
+    m_AssetGUID: 85e992cd716a1e84190a1831e79ad4c4
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!114 &1105856872
 MonoBehaviour:
   m_ObjectHideFlags: 0

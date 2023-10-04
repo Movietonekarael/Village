@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Cheese
   m_EditorClassIdentifier: 
   Name: Cheese
-  Prefab: {fileID: 1010779219342674, guid: 01b73c6adbc49e547a4050d07ce31bca, type: 3}
+  PrefabReference:
+    m_AssetGUID: 01b73c6adbc49e547a4050d07ce31bca
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   Image: {fileID: 21300000, guid: 4d9e70d9674ff5143b3e0cea8343656c, type: 3}
   MaxStackNumber: 5
+  ItemID: 0

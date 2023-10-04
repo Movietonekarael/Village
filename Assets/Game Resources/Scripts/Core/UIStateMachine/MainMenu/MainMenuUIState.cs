@@ -28,13 +28,16 @@ namespace GameCore
                 }
             }
 
+            protected override void OnControllerInitialization()
+            {
+                _Controller.SetSinglePlayerSceneReference(_singlePlayerScene);
+            }
 
             protected override void StartState(params bool[] args)
             {
                 _Controller.OnStartMultiplayer += StartMultiPlayer;
                 SetStartupAnimationBool();
                 _Controller.SetStartupAnimationAvailability(_startupAnimationsAllowed);
-                _Controller.SetSinglePlayerSceneReference(_singlePlayerScene);
             }
 
             protected override void EndState()

@@ -1,3 +1,4 @@
+using GameCore.Network;
 using Unity.Netcode;
 using UnityEngine;
 using Zenject;
@@ -11,26 +12,27 @@ namespace GameCore
         {
             [SerializeField] private GameObject _prefab;
 
+
             public override void InstallBindings()
             {
                 var instance = CreateInstance();
                 BindInstance(instance);
             }
 
-            private NetworkManager CreateInstance()
+            private NetworkManagerPrefabs CreateInstance()
             {
                 var gameObjectInstance = CreateGameObjectInstance();
                 if (gameObjectInstance == null)
                     return null;
 
-                var componentExist = gameObjectInstance.TryGetComponent<NetworkManager>(out var instance);
+                var componentExist = gameObjectInstance.TryGetComponent<NetworkManagerPrefabs>(out var instance);
                 if (componentExist)
                 {
                     return instance;
                 }
                 else
                 {
-                    Debug.LogWarning($"Can not find NetworkManager component on instance of prefab attached to {this.name}");
+                    Debug.LogWarning($"Can not find NetworkManagerPrefabs component on instance of prefab attached to {this.name}");
                     return null;
                 }
             }
@@ -55,15 +57,19 @@ namespace GameCore
                 return instance;
             }
 
-            private void BindInstance(NetworkManager instance)
+            private void BindInstance(NetworkManagerPrefabs instance)
             {
                 if (instance == null)
                 {
-                    Debug.LogWarning($"NetworkManager instance is null.");
+                    Debug.LogWarning($"NetworkManagerPrefabs instance is null.");
                     return;
                 }
 
-                Container.Bind<NetworkManager>().FromInstance(instance).AsSingle().NonLazy();
+                Container.Bind<INetworkManagerPrefabs>()
+                         .To<NetworkManagerPrefabs>()
+                         .FromInstance(instance)
+                         .AsSingle()
+                         .NonLazy();
             }
         }
     }

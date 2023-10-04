@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.AddressableAssets;
 
 namespace GameCore
 {
@@ -9,7 +9,7 @@ namespace GameCore
         {
             public GameItemData Data;
             public string Name => Data.Name;
-            public GameObject Prefab => Data.Prefab;
+            public AssetReferenceGameObject PrefabReference => Data.PrefabReference;
             public Sprite Image => Data.Image;
             public int MaxStackNumber => Data.MaxStackNumber;
 

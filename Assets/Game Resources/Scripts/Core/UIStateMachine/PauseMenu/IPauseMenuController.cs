@@ -1,5 +1,5 @@
 ﻿using System;
-
+using UnityEngine.AddressableAssets;
 
 namespace GameCore
 {
@@ -8,6 +8,7 @@ namespace GameCore
         public interface IPauseMenuController : ISpecificController
         {
             public event Action OnContinueGame;
+            public void SetMainMenuSceneReference(AssetReference mainMenuSceneReference);
             public void ContinueGame();
             public void QuitGame();
         }

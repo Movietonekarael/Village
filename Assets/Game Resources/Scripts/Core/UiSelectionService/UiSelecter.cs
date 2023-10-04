@@ -13,7 +13,8 @@ namespace GameCore
 
             public void Select()
             {
-                _eventSystem.SetSelectedGameObject(this.gameObject);
+                if (this != null && this.gameObject != null)
+                    _eventSystem.SetSelectedGameObject(this.gameObject);
             }
 
             public void Deselect()

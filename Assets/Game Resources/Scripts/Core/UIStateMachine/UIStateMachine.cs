@@ -40,6 +40,11 @@ namespace GameCore
                     CurrentState.EnterState();
                 }
             }
+
+            private void OnDestroy()
+            {
+                CurrentState.ExitState();
+            }
         }
     }
 }

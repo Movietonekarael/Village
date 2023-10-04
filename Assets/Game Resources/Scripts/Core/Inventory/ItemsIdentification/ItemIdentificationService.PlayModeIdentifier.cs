@@ -6,7 +6,7 @@ namespace GameCore
 {
     namespace Inventory
     {
-        public static partial class ItemIdentifierService
+        public partial class ItemIdentificationService
         {
             [InitializeOnLoad]
             public static class PlayModeIdentifier
@@ -20,7 +20,6 @@ namespace GameCore
                 {
                     if (state == PlayModeStateChange.ExitingEditMode)
                     {
-                        Debug.Log("Entering playmode");
                         IdentifyAllItems();
                     }
                 }

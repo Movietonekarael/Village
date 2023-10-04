@@ -10,120 +10,129 @@ using System;
 using System.Linq;
 
 
-namespace SceneManagement
+namespace GameCore
 {
-    public sealed partial class AddressablesSceneManager : NetworkBehaviour
+    namespace SceneManagement
     {
-        private readonly HashSet<AssetReference> _loadedScenes = new();
 
-        public static event Action<ulong> OnClientSceneManagerSpawned;
-        public static event Action OnSceneLoadedAndActivated;
-
-
-        private void Awake()
+        public sealed partial class AddressablesSceneManager : NetworkBehaviour
         {
-            DontDestroyOnLoad(gameObject);
-        }
+            private readonly HashSet<AssetReference> _loadedScenes = new();
 
-        public override void OnNetworkSpawn()
-        {
-            if (!IsServer)
+            public static event Action<ulong> OnClientSceneManagerSpawned;
+            public static event Action OnSceneLoadedAndActivated;
+
+
+            private void Awake()
             {
-                SceneManagerSpawnedServerRpc(NetworkManager.Singleton.LocalClientId);
+                DontDestroyOnLoad(gameObject);
             }
 
-            base.OnNetworkSpawn();
-        }
-
-        [ServerRpc(RequireOwnership = false)]
-        private void SceneManagerSpawnedServerRpc(ulong clientId)
-        {
-            OnClientSceneManagerSpawned?.Invoke(clientId);
-        }
-
-        [ClientRpc]
-        private void LoadSceneClientRpc(FixedString128Bytes sceneGuid, LoadSceneMode loadSceneMode = LoadSceneMode.Single, ClientRpcParams clientRpcParams = default)
-        {
-            if (IsServer) return;
-
-            AssetReference sceneReference = new(sceneGuid.ToString());
-            LoadSceneClientAsync(sceneReference, loadSceneMode);
-        }
-
-        public async Task LoadSceneServerAsync(AssetReference sceneReference, LoadSceneMode loadSceneMode = LoadSceneMode.Single)
-        {
-            var loadHandle = Addressables.LoadSceneAsync(sceneReference, loadSceneMode, false);
-            await loadHandle.Task;
-
-            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
+            public override void OnNetworkSpawn()
             {
-                ActivateSceneAsync(loadHandle);
-                _loadedScenes.Add(sceneReference);
-                SendLoadSceneRpc(sceneReference);
-                OnSceneLoadedAndActivated?.Invoke();
-            }
-        }
-
-        private async void LoadSceneClientAsync(AssetReference sceneReference, LoadSceneMode loadSceneMode = LoadSceneMode.Single)
-        {
-            var loadHandle = Addressables.LoadSceneAsync(sceneReference, loadSceneMode, false);
-            await loadHandle.Task;
-
-            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
-            {
-                ActivateSceneAsync(loadHandle, false);
-                _loadedScenes.Add(sceneReference);
-                OnSceneLoadedAndActivated?.Invoke();
-            }
-        }
-
-        private void ActivateSceneAsync(AsyncOperationHandle<SceneInstance> sceneHandle)
-        {
-            var sceneInstance = sceneHandle.Result;
-            sceneInstance.ActivateAsync();
-        }
-
-        private void ActivateSceneAsync(AsyncOperationHandle<SceneInstance> sceneHandle, bool activate)
-        {
-            var sceneInstance = sceneHandle.Result;
-            sceneInstance.ActivateAsync();
-        }
-
-        private void SendLoadSceneRpc(AssetReference sceneReference)
-        {
-            if (IsServer)
-            {
-                var guid = GetGuid(sceneReference);
-                LoadSceneClientRpc(guid);
-            }
-        }
-
-        private FixedString128Bytes GetGuid(AssetReference sceneReference)
-        {
-            var guid = sceneReference.AssetGUID;
-            var fixedGuid = new FixedString128Bytes(guid.ToString());
-            return fixedGuid;
-        }
-
-        public void SynchronizeScenes(ulong clientId)
-        {
-            if (!IsServer) return;
-
-            ClientRpcParams clientRpcParams = new()
-            {
-                Send = new()
+                if (!IsServer)
                 {
-                    TargetClientIds = new[] { clientId }
+                    SceneManagerSpawnedServerRpc(NetworkManager.Singleton.LocalClientId);
                 }
-            };
 
-            var scenesReferences = _loadedScenes.ToArray();
-            for (var i = 0; i < scenesReferences.Length; i++) 
+                base.OnNetworkSpawn();
+            }
+
+            [ServerRpc(RequireOwnership = false)]
+            private void SceneManagerSpawnedServerRpc(ulong clientId)
             {
-                var guid = GetGuid(scenesReferences[i]);
-                LoadSceneClientRpc(guid, 
-                                   i == 0 ? LoadSceneMode.Single : LoadSceneMode.Additive,  
-                                   clientRpcParams);
+                OnClientSceneManagerSpawned?.Invoke(clientId);
+            }
+
+            [ClientRpc]
+            private void LoadSceneClientRpc(FixedString128Bytes sceneGuid, LoadSceneMode loadSceneMode = LoadSceneMode.Single, ClientRpcParams clientRpcParams = default)
+            {
+                if (IsServer) return;
+
+                AssetReference sceneReference = new(sceneGuid.ToString());
+                LoadSceneClientAsync(sceneReference, loadSceneMode);
+            }
+
+            public async Task LoadSceneServerAsync(AssetReference sceneReference, LoadSceneMode loadSceneMode = LoadSceneMode.Single)
+            {
+                var loadHandle = Addressables.LoadSceneAsync(sceneReference, loadSceneMode, false);
+                await loadHandle.Task;
+
+                if (loadHandle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    ActivateSceneAsync(loadHandle);
+                    _loadedScenes.Add(sceneReference);
+                    SendLoadSceneRpc(sceneReference);
+                    OnSceneLoadedAndActivated?.Invoke();
+                }
+            }
+
+            private async void LoadSceneClientAsync(AssetReference sceneReference, LoadSceneMode loadSceneMode = LoadSceneMode.Single)
+            {
+                var loadHandle = Addressables.LoadSceneAsync(sceneReference, loadSceneMode, false);
+                await loadHandle.Task;
+
+                if (loadHandle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    ActivateSceneAsync(loadHandle, false);
+                    _loadedScenes.Add(sceneReference);
+                    OnSceneLoadedAndActivated?.Invoke();
+                }
+            }
+
+            private void ActivateSceneAsync(AsyncOperationHandle<SceneInstance> sceneHandle)
+            {
+                var sceneInstance = sceneHandle.Result;
+                sceneInstance.ActivateAsync();
+            }
+
+            private void ActivateSceneAsync(AsyncOperationHandle<SceneInstance> sceneHandle, bool activate)
+            {
+                var sceneInstance = sceneHandle.Result;
+                sceneInstance.ActivateAsync();
+            }
+
+            private void SendLoadSceneRpc(AssetReference sceneReference)
+            {
+                if (IsServer)
+                {
+                    var guid = GetGuid(sceneReference);
+                    LoadSceneClientRpc(guid);
+                }
+            }
+
+            private FixedString128Bytes GetGuid(AssetReference sceneReference)
+            {
+                var guid = sceneReference.AssetGUID;
+                var fixedGuid = new FixedString128Bytes(guid.ToString());
+                return fixedGuid;
+            }
+
+            public void SynchronizeScenes(ulong clientId)
+            {
+                if (!IsServer) return;
+
+                ClientRpcParams clientRpcParams = new()
+                {
+                    Send = new()
+                    {
+                        TargetClientIds = new[] { clientId }
+                    }
+                };
+
+                var scenesReferences = _loadedScenes.ToArray();
+                for (var i = 0; i < scenesReferences.Length; i++)
+                {
+                    var guid = GetGuid(scenesReferences[i]);
+                    LoadSceneClientRpc(guid,
+                                       i == 0 ? LoadSceneMode.Single : LoadSceneMode.Additive,
+                                       clientRpcParams);
+                }
+            }
+
+            public void UnloadAll()
+            {
+                _loadedScenes.Clear();
             }
         }
     }

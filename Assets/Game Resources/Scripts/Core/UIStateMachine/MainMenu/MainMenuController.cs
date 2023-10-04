@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using GameCore.Network;
+using GameCore.SceneManagement;
+using UnityEngine.SceneManagement;
 
 namespace GameCore
 {
@@ -32,10 +34,10 @@ namespace GameCore
                 _singlePlayerSceneReference = singlePlayerSceneReference;
             }
 
-            public void StartSinglePlayer()
+            public async void StartSinglePlayer()
             {
-                NetworkConnectionService.ConnectionType = ConnectionType.None;
-                Addressables.LoadSceneAsync(_singlePlayerSceneReference, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
+                await NetworkConnectionService.StartHost();
+                await AddressablesSceneManager.Singleton.LoadSceneServerAsync(_singlePlayerSceneReference, LoadSceneMode.Single);
             }
 
             public void StartMultiPlayer()

@@ -3,28 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace SceneManagement
+namespace GameCore
 {
-    public sealed partial class AddressablesSceneManager
+    namespace SceneManagement
     {
-        private readonly Hashtable _scenesForRecordedGameObjects = new();
-        private readonly List<HashSet<GameObject>> _networkGameObjects = new();
-
-
-        public void AddNetworkObject(GameObject gameObject)
+        public sealed partial class AddressablesSceneManager
         {
-            var scene = gameObject.scene;
-            if (scene == null) return;
+            private readonly Hashtable _scenesForRecordedGameObjects = new();
+            private readonly List<HashSet<GameObject>> _networkGameObjects = new();
 
-            if (!_scenesForRecordedGameObjects.Contains(scene))
+
+            public void AddNetworkObject(GameObject gameObject)
             {
-                _networkGameObjects.Add(new HashSet<GameObject>());
-                var newSceneId = _networkGameObjects.Count - 1;
-                _scenesForRecordedGameObjects.Add(scene, newSceneId);
-            }
+                var scene = gameObject.scene;
+                if (scene == null) return;
 
-            var sceneId = (int)_scenesForRecordedGameObjects[scene];
-            _networkGameObjects[sceneId].Add(gameObject);
+                if (!_scenesForRecordedGameObjects.Contains(scene))
+                {
+                    _networkGameObjects.Add(new HashSet<GameObject>());
+                    var newSceneId = _networkGameObjects.Count - 1;
+                    _scenesForRecordedGameObjects.Add(scene, newSceneId);
+                }
+
+                var sceneId = (int)_scenesForRecordedGameObjects[scene];
+                _networkGameObjects[sceneId].Add(gameObject);
+            }
         }
     }
 }

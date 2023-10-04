@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.AddressableAssets;
 
 namespace GameCore
 {
@@ -9,7 +9,7 @@ namespace GameCore
         public class GameItemData : ScriptableObject
         {
             public string Name;
-            public GameObject Prefab;
+            public AssetReferenceGameObject PrefabReference;
             public Sprite Image;
             public int MaxStackNumber = 1;
             [HideInInspector] public uint ItemID;

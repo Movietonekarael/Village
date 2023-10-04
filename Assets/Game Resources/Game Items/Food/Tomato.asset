@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Tomato
   m_EditorClassIdentifier: 
   Name: Tomato
-  Prefab: {fileID: 1004846731592950, guid: 631b072a88243ca4c99acaa4414cd28f, type: 3}
+  PrefabReference:
+    m_AssetGUID: 631b072a88243ca4c99acaa4414cd28f
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   Image: {fileID: 21300000, guid: b34fd0c44da4e644dbaa10490c86302b, type: 3}
   MaxStackNumber: 5
+  ItemID: 5

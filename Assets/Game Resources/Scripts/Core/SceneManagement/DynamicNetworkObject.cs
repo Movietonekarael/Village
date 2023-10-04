@@ -4,45 +4,51 @@ using UnityEngine.AddressableAssets;
 using GameCore.Memory;
 
 
-namespace SceneManagement
+namespace GameCore
 {
-    public sealed class DynamicNetworkObject : MonoBehaviour
+    namespace SceneManagement
     {
-        [SerializeField] private AssetReferenceGameObject _networkAssetReference;
-
-        private void Start()
+        public sealed class DynamicNetworkObject : MonoBehaviour
         {
-            HandleNetworkSpawning();
-        }
+            [SerializeField] private AssetReferenceGameObject _networkAssetReference;
 
-        private void HandleNetworkSpawning()
-        {
-            if (NetworkHasStarted())
+            private void Start()
             {
-                SpawnNetworkObject();
+                HandleNetworkSpawning();
             }
-        }
 
-        private bool NetworkHasStarted()
-        {
-            return NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsClient;
-        }
-
-        private async void SpawnNetworkObject()
-        {
-            if (NetworkManager.Singleton.IsServer)
+            private void HandleNetworkSpawning()
             {
-                var newInstance = await AssetLoader.InstantiateAssetSelfCached(_networkAssetReference, transform, transform.position, transform.rotation);
-                SpawnNetworkForGameObject(newInstance);
+                if (NetworkHasStarted())
+                {
+                    SpawnNetworkObject();
+                }
             }
-            
-            Destroy(gameObject);
-        }
 
-        private void SpawnNetworkForGameObject(GameObject gameObject)
-        {
-            gameObject.GetComponent<NetworkObject>().Spawn(false);
-            AddressablesSceneManager.Singleton.AddNetworkObject(gameObject);
+            private bool NetworkHasStarted()
+            {
+                return NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsClient;
+            }
+
+            private async void SpawnNetworkObject()
+            {
+                if (NetworkManager.Singleton.IsServer)
+                {
+                    var newInstance = await AssetLoader.InstantiateAssetSelfCached(_networkAssetReference,
+                                                                                   transform.position,
+                                                                                   transform.rotation,
+                                                                                   transform);
+                    SpawnNetworkForGameObject(newInstance);
+                }
+
+                Destroy(gameObject);
+            }
+
+            private void SpawnNetworkForGameObject(GameObject gameObject)
+            {
+                gameObject.GetComponent<NetworkObject>().Spawn(false);
+                AddressablesSceneManager.Singleton.AddNetworkObject(gameObject);
+            }
         }
     }
 }

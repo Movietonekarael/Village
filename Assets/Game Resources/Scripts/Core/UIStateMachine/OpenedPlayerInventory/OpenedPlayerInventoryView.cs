@@ -44,7 +44,8 @@ namespace GameCore
             public override void Deactivate()
             {
                 DeactivateDragAndDropObject();
-                _canvasObject.SetActive(false);
+                if (_canvasObject != null)
+                    _canvasObject.SetActive(false);
             }
 
             public override void Deinitialize()

@@ -4,7 +4,7 @@
     {
         public interface IPauseMenuView : ISpecificView
         {
-
+            public void DeactivateButtons();
         }
     }
 }

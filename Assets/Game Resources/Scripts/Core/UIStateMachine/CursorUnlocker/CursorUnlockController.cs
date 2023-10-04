@@ -38,7 +38,7 @@ namespace GameCore
                 else
                     EnableVirtualPointer();
 
-                //_inputHandler.DisableFreezableInputActionMaps();
+                _inputHandler.DisableFreezableInputActionMaps();
 
                 if (_inputHandler.CurrentControlScheme == ControlScheme.Keyboard)
                     _View.DisableSelection();
@@ -51,7 +51,7 @@ namespace GameCore
                 else
                     DisableVirtualPointer();
 
-                //_inputHandler.EnableFreezableInputActionMaps();
+                _inputHandler.EnableFreezableInputActionMaps();
 
                 _View.EnableSelection();
             }

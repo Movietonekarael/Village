@@ -1,5 +1,6 @@
 using GameCore.GameControls;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Zenject;
 
 
@@ -17,6 +18,14 @@ namespace GameCore
             private UnityEngine.Object _mainScreenStateBase;
 
             private IUIState _mainScreenState { get => _mainScreenStateBase as IUIState; }
+
+            [SerializeField] private AssetReference _mainMenuSceneReference;
+
+
+            protected override void OnControllerInitialization()
+            {
+                _Controller.SetMainMenuSceneReference(_mainMenuSceneReference);
+            }
 
             protected override void StartState(params bool[] args)
             {

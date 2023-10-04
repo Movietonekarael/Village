@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
-using SceneManagement;
+using GameCore.SceneManagement;
 
 
 namespace GameCore
@@ -86,7 +86,7 @@ namespace GameCore
                 }
             }
 
-            public void SetMultiplayerPlayerSceneReference(AssetReference sceneReference)
+            public void SetMultiPlayerSceneReference(AssetReference sceneReference)
             {
                 _multiPlayerSceneReference = sceneReference;
             }

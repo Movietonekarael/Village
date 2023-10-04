@@ -31,9 +31,15 @@ namespace GameCore
                     _playerDollIsReady = true;
                     _playerDoll = value;
                     if (IsServer)
+                    {
                         StartPlayerMovement();
+                        SetDropPoint();
+                    } 
                     else
+                    {
                         DestroyPlayerMovement();
+                    }
+                        
                 }
             }
 
@@ -99,6 +105,12 @@ namespace GameCore
                 PlayerMovement.Movement = NetworkInputHandler;
                 PlayerMovement.ÑameraAngle = NetworkInputHandler;
                 PlayerMovement.StartMovement();
+            }
+
+            private void SetDropPoint()
+            {
+                var inventory = GetComponent<PlayerInventory>();
+                inventory.DropPoint = _playerDoll.DropPoint;
             }
 
             private void DestroyPlayerMovement()

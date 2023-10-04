@@ -42,12 +42,14 @@ namespace GameCore
 
             protected abstract void StartState(params bool[] args);
             protected abstract void EndState();
+            protected virtual void OnControllerInitialization() { }
 
             private void InitializeController()
             {
                 InitializeParametersIfNull();
                 InstantiateController();
                 _uiController.Init(_parameters);
+                OnControllerInitialization();
             }
 
             private void InitializeParametersIfNull()

@@ -66,14 +66,10 @@ namespace GameCore
             }
 
             [HideInInspector] public bool AllowToUpdate = true;
-            //private bool _wasHandledThisFrame = false;
 
-            private void Update()
+            private void LateUpdate()
             {
-                //if (AllowToUpdate)
-                //{
-                    HandleRotation();
-                //}
+                HandleRotation();
             }
 
             public void HandleRotation()

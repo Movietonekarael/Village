@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 7561679741507298993}
   - component: {fileID: 5456412705021741664}
   - component: {fileID: 2666452899433961484}
-  - component: {fileID: 8117774416638332331}
+  - component: {fileID: -2528108944374926488}
   - component: {fileID: -2453712217421916647}
   - component: {fileID: 2796552238316682646}
   - component: {fileID: -3234017911803300483}
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meshFilter: {fileID: 33088928708463296}
   _meshRenderer: {fileID: 23685429908964738}
---- !u!114 &8117774416638332331
+--- !u!114 &-2528108944374926488
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

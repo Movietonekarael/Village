@@ -41,15 +41,8 @@ namespace GameCore
                 _View.SetItemInformation(position, item);
             }
 
-            protected override void OnActivate()
-            {
-
-            }
-
-            protected override void OnDeactivate()
-            {
-
-            }
+            protected override void OnActivate() { }
+            protected override void OnDeactivate() { }
 
             public void ChangeItemsInInventory(int itemNumber1, int itemNumber2)
             {

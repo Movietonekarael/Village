@@ -33,7 +33,8 @@ namespace GameCore
             {
                 _pauseMenu.OnContinuePressed -= ContinuePressed;
                 _pauseMenu.OnQuitPressed -= QuitPressed;
-                _canvasObject.SetActive(false);
+                if (_canvasObject != null)
+                    _canvasObject.SetActive(false);
             }
 
             public override void Deinitialize()
@@ -46,6 +47,11 @@ namespace GameCore
                 InstantiateCanvas();
                 InstantiatePauseMenu();
                 Deactivate();
+            }
+
+            public void DeactivateButtons()
+            {
+                _pauseMenu.DeactivateButtons();
             }
 
             private void InstantiateCanvas()

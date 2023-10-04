@@ -1,6 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using UnityEditor;
+using UnityEngine.AddressableAssets;
+using GameCore.SceneManagement;
+using UnityEngine.SceneManagement;
+using GameCore.Network;
+using System.Threading.Tasks;
 
 
 namespace GameCore
@@ -11,6 +15,7 @@ namespace GameCore
                                                   IPauseMenuController
         {
             public event Action OnContinueGame;
+            private AssetReference _mainMenuSceneReference;
 
 
             protected override void InitializeParameters(PauseMenuViewParameters parameters) { }
@@ -30,17 +35,32 @@ namespace GameCore
                 Time.timeScale = 1;
             }
 
+            public void SetMainMenuSceneReference(AssetReference mainMenuSceneReference)
+            {
+                _mainMenuSceneReference = mainMenuSceneReference;
+            }
+
             public void ContinueGame()
             {
                 OnContinueGame?.Invoke();
             }
 
-            public void QuitGame()
+            public async void QuitGame()
             {
-                Application.Quit();
-#if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
-#endif
+                _View.DeactivateButtons();
+                await LoadAndActivateMainMenu();
+                NetworkConnectionService.ShutdownConnection();
+                NetworkManagerPrefabs.Singleton.DestroyNetworkManager();
+                AddressablesSceneManager.Singleton.UnloadAll();
+
+
+                async Task LoadAndActivateMainMenu()
+                {
+                    var sceneLoadHandle = Addressables.LoadSceneAsync(_mainMenuSceneReference, LoadSceneMode.Single, false);
+                    await sceneLoadHandle.Task;
+                    var sceneInstance = sceneLoadHandle.Result;
+                    sceneInstance.ActivateAsync();
+                }
             }
         }
     }

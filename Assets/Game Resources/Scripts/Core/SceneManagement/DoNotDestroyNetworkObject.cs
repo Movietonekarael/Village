@@ -1,14 +1,17 @@
 ﻿using GameCore.Network;
 
 
-namespace SceneManagement
+namespace GameCore
 {
-    public sealed class DoNotDestroyNetworkObject : DefaultNetworkBehaviour
+    namespace SceneManagement
     {
-        protected override void AllOnNetworkSpawn()
+        public sealed class DoNotDestroyNetworkObject : DefaultNetworkBehaviour
         {
-            transform.parent = null;
-            DontDestroyOnLoad(this.gameObject);
+            protected override void AllOnNetworkSpawn()
+            {
+                transform.parent = null;
+                DontDestroyOnLoad(this.gameObject);
+            }
         }
     }
 }

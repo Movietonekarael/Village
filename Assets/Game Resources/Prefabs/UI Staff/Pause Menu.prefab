@@ -480,8 +480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265f2b0befaf53e4ab1eadd8049f0e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ContinueButton: {fileID: 7773053305755861286}
-  QuitButton: {fileID: 1855446090098326673}
+  ContinueButtonObject: {fileID: 7773053305755861286}
+  QuitButtonObject: {fileID: 1855446090098326673}
   ContinueUiSelecter: {fileID: 0}
   QuitUiSelecter: {fileID: 0}
 --- !u!1 &4552661885659960328

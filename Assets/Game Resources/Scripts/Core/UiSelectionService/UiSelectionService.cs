@@ -42,7 +42,6 @@ namespace GameCore
                     EnableSelection();
                 else 
                     DisableSelection();
-
             }
 
             private void EnableSelection()

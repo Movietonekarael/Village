@@ -3,6 +3,7 @@ using GameCore.Services;
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using Zenject;
 
 namespace GameCore
 {
@@ -12,9 +13,16 @@ namespace GameCore
         {
             private PlayerInventory _playerInventory;
 
+            [Inject] private ItemIdentificationService _itemIdentifierService;
+
             public event Action<int> OnItemChanged;
             private GameItem[] _gameItems;
 
+
+            protected override void AllOnNetworkSpawn()
+            {
+                InstantiateService.Singleton.DiContainer.Inject(this);
+            }
 
             protected override void OnClientNetworkSpawn()
             {
@@ -42,7 +50,6 @@ namespace GameCore
             {
                 var item = _playerInventory.GetGameItem(position);
 
-                Debug.Log($"<color=#FFA500>Id before change: {item?.Data.ItemID}</color>");
                 var networkItem = new NetworkGameItem(item?.Data.ItemID ?? 0u, 
                                                       item?.Number ?? 0, 
                                                       item is not null);
@@ -56,8 +63,7 @@ namespace GameCore
                 GameItem gameItem;
                 if (networkGameItem.NotNull)
                 {
-                    Debug.Log($"<color=#FF0000>Id on change: {networkGameItem.Id}</color>");
-                    var gameItemData = ItemIdentifierService.GetItemData(networkGameItem.Id);
+                    var gameItemData = _itemIdentifierService.GetItemData(networkGameItem.Id);
                     gameItem = new GameItem(gameItemData, networkGameItem.Number);
                 }
                 else
@@ -112,7 +118,7 @@ namespace GameCore
             [ServerRpc]
             private void PushServerRpc(NetworkGameItem networkGameItem)
             {
-                var gameItemData = ItemIdentifierService.GetItemData(networkGameItem.Id);
+                var gameItemData = _itemIdentifierService.GetItemData(networkGameItem.Id);
                 var gameItem = new GameItem(gameItemData, networkGameItem.Number);
                 PushOnServer(ref gameItem);
             }
@@ -135,7 +141,7 @@ namespace GameCore
             [ServerRpc]
             private void PushServerRpc(NetworkGameItem networkGameItem, int position)
             {
-                var gameItemData = ItemIdentifierService.GetItemData(networkGameItem.Id);
+                var gameItemData = _itemIdentifierService.GetItemData(networkGameItem.Id);
                 var gameItem = new GameItem(gameItemData, networkGameItem.Number);
                 PushOnServer(ref gameItem, position);
             }

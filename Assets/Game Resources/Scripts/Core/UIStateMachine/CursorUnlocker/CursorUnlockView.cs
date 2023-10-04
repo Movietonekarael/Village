@@ -28,7 +28,8 @@ namespace GameCore
 
             public override void Deactivate() 
             {
-                _canvasObject.SetActive(false);
+                if (_canvasObject != null)
+                    _canvasObject.SetActive(false);
             }
 
             public override void Deinitialize() 

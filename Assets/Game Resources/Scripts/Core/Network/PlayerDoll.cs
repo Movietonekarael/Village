@@ -25,7 +25,7 @@ namespace GameCore
 
             [Header("Other:")]
             [SerializeField] private PlayerHoldItem _holdItem;
-            [SerializeField] private GameObject _dropPoint;
+            public Transform DropPoint;
             public AudioSource GrabAudioSource;
 
 
@@ -53,7 +53,7 @@ namespace GameCore
                 {
                     if (IsServer) return;
                         
-                    Destroy(_dropPoint);
+                    Destroy(DropPoint.gameObject);
                 }
 
                 async Task SetupReferences()
