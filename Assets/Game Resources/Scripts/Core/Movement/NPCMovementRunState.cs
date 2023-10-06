@@ -43,13 +43,21 @@ namespace GameCore
                     _Movement.OnDashed -= Dash;
                 }
 
-
                 private void Dash()
                 {
                     if (!_dashed)
                     {
                         _dashed = true;
-                        _StateMachine.AnimatorController.SetTrigger(_StateMachine._dashTriggerHash);
+                        SetDashTrigger();
+                    }
+
+
+                    void SetDashTrigger()
+                    {
+                        if (_StateMachine.AnimatorController)
+                        {
+                            _StateMachine.AnimatorController.SetTrigger(_StateMachine._dashTriggerHash);
+                        }
                     }
                 }
 

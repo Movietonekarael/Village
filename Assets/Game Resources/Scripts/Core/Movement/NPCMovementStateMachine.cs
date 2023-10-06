@@ -164,6 +164,11 @@ namespace GameCore
                 if (_LocalDirectionOfMoving != Vector2.zero)
                     _GlobalDirectionOfMoving = _LocalDirectionOfMoving;
             }
+
+            private void OnDestroy()
+            {
+                _currentState.ExitState();
+            }
         }
     }
 }

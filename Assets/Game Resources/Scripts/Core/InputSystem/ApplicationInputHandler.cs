@@ -8,28 +8,6 @@ namespace GameCore
     {
         partial class InputHandler
         {
-            private sealed class InteractionInputHandler : SubInputHandler
-            {
-                public InteractionInputHandler(InputHandler inputHandler) : base(inputHandler) { }
-
-                protected override void RegisterForInputEvents()
-                {
-                    CheckForInputHandler(this.GetType().Name);
-                    _InputHandler._inputScheme.PlayerControl.Intaract.performed += InteractionPressed;
-                }
-
-                protected override void UnregisterForInputEvents()
-                {
-                    CheckForInputHandler(this.GetType().Name);
-                    _InputHandler._inputScheme.PlayerControl.Intaract.performed -= InteractionPressed;
-                }
-
-                private void InteractionPressed(InputAction.CallbackContext context)
-                {
-                    _InputHandler.OnInteractionPerformed?.Invoke();
-                }
-            }
-
             private sealed class ApplicationInputHandler : SubInputHandler
             {
                 public ApplicationInputHandler(InputHandler inputHandler) : base(inputHandler) { }
@@ -38,6 +16,7 @@ namespace GameCore
                 {
                     CheckForInputHandler(this.GetType().Name);
                     _InputHandler._inputScheme.ApplicationControl.Escape.performed += EscapePressed;
+                    _InputHandler._inputScheme.ApplicationControl.Enter.performed += EnterPerformed;
 #if UNITY_EDITOR
                     _InputHandler._inputScheme.ApplicationControl.EditorGamemodeQuit.performed += QuitGameMode;
 #endif
@@ -47,6 +26,7 @@ namespace GameCore
                 {
                     CheckForInputHandler(this.GetType().Name);
                     _InputHandler._inputScheme.ApplicationControl.Escape.performed -= EscapePressed;
+                    _InputHandler._inputScheme.ApplicationControl.Enter.performed -= EnterPerformed;
 #if UNITY_EDITOR
                     _InputHandler._inputScheme.ApplicationControl.EditorGamemodeQuit.performed -= QuitGameMode;
 #endif
@@ -55,6 +35,11 @@ namespace GameCore
                 private void EscapePressed(InputAction.CallbackContext context)
                 {
                     _InputHandler.OnEscape?.Invoke();
+                }
+
+                private void EnterPerformed(InputAction.CallbackContext context)
+                {
+                    _InputHandler.OnEnter?.Invoke();
                 }
 
 #if UNITY_EDITOR

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using TMPro;
 using System;
-
+using Zenject;
+using GameCore.GameControls;
 
 namespace GameCore
 {
@@ -17,7 +18,6 @@ namespace GameCore
 
 
                 protected override void OnAwake() { }
-
 
                 protected override void ButtonPressed()
                 {

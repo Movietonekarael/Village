@@ -1,33 +1,40 @@
+using UnityEngine;
+
 namespace GameCore
 {
     namespace Network
     {
         public sealed partial class NetworkInputHandler : DefaultNetworkBehaviour
         {
+            [SerializeField] private bool _allowMovement = false;
+            [SerializeField] private bool _allowCameraRotation = false;
+            [SerializeField] private bool _allowInteraction = true;
+
+
             protected override void OnServerNetworkSpawn()
             {
-                SubscribeForMovingNetworkVariables();
-                SubscribeForCameraNetworkVariable();
+                if (_allowMovement) SubscribeForMovingNetworkVariables();
+                if (_allowCameraRotation) SubscribeForCameraNetworkVariable();
             }
 
             protected override void OnServerNetworkDespawn()
             {
-                UnsubscribeForMovingNetworkVariables();
-                UnsubscribeForCameraNetworkVariable();
+                if (_allowMovement) UnsubscribeForMovingNetworkVariables();
+                if (_allowCameraRotation) UnsubscribeForCameraNetworkVariable();
             }
 
             protected override void OnClientNetworkSpawn()
             {
                 if (!IsOwner) return;
-                SubscribeForMovementEvents();
-                SubscribeForInteractionEvent();
+                if (_allowMovement) SubscribeForMovementEvents();
+                if (_allowInteraction) SubscribeForInteractionEvent();
             }
 
             protected override void OnClientNetworkDespawn()
             {
                 if (!IsOwner) return;
-                UnsubscribeForMovementEvents();
-                UnsubscribeForInteractionEvent();
+                if (_allowMovement) UnsubscribeForMovementEvents();
+                if (_allowInteraction) UnsubscribeForInteractionEvent();
             }
         }
     }

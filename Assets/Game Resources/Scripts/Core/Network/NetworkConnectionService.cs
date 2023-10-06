@@ -6,6 +6,7 @@ using Unity.Services.Core;
 using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 using GameCore.SceneManagement;
 using Unity.Burst;
 
@@ -13,11 +14,13 @@ namespace GameCore
 {
     namespace Network
     {
-        public class NetworkConnectionService : NetworkBehaviour
+        public class NetworkConnectionService : DefaultNetworkBehaviour
         {
+            public static GameType GameType = GameType.None;
             public static string ConnectionCode = string.Empty;
 
             private const string _PREFAB_NAME = "NetworkConnectionService";
+            private const string _MAIN_MENU_ASSET_NAME = "Menu";
 
             private static NetworkConnectionService _singleton = null;
             public static NetworkConnectionService Singleton => _singleton;
@@ -49,18 +52,24 @@ namespace GameCore
                 DontDestroyOnLoad(gameObject);
             }
 
-            public override void OnNetworkSpawn()
+            protected override void OnServerNetworkSpawn()
             {
                 SubscribeForClientConnection();
-
-                base.OnNetworkSpawn();
             }
 
-            public override void OnNetworkDespawn()
+            protected override void OnServerNetworkDespawn()
             {
                 UnsubscribeForClientConnection();
+            }
 
-                base.OnNetworkDespawn();
+            protected override void OnClientNetworkSpawn()
+            {
+                SubscribeForServerShutdown();
+            }
+
+            private void SubscribeForServerShutdown()
+            {
+                NetworkManager.Singleton.OnClientDisconnectCallback += ShutdownConnectionAndLoadMainMenu;
             }
 
             private void SubscribeForClientConnection()
@@ -84,6 +93,7 @@ namespace GameCore
                 NetworkManager.Singleton.StartHost();
                 await AddressablesSceneManager.CreateInstance();
                 await NetworkConnectionService.CreateInstance();
+                GameType = GameType.SinglePlayer;
             }
 
             public static async Task StartHost(RelayHostData hostData)
@@ -99,6 +109,7 @@ namespace GameCore
                 NetworkManager.Singleton.StartHost();
                 await AddressablesSceneManager.CreateInstance();
                 await NetworkConnectionService.CreateInstance();
+                GameType = GameType.Multiplayer;
             }
 
             public static void StartClient(RelayJoinData joinData)
@@ -112,11 +123,27 @@ namespace GameCore
                     joinData.ConnectionData,
                     joinData.HostConnectionData);
                 NetworkManager.Singleton.StartClient();
+                GameType = GameType.Multiplayer;
             }
 
             public static void ShutdownConnection()
             {
                 NetworkManager.Singleton.Shutdown();
+                NetworkManagerPrefabs.Singleton.DestroyNetworkManager();
+                if (AddressablesSceneManager.Singleton != null) 
+                    AddressablesSceneManager.Singleton.UnloadAll();
+                GameType = GameType.None;
+            }
+
+            public static async void ShutdownConnectionAndLoadMainMenu(ulong clientId)
+            {
+                if (clientId == 0uL)
+                {
+                    Debug.Log($"Disconnected client id: {clientId}");
+                    var loadSceneHandle = Addressables.LoadSceneAsync(_MAIN_MENU_ASSET_NAME, LoadSceneMode.Single);
+                    await loadSceneHandle.Task;
+                    ShutdownConnection();
+                }
             }
 
             public static async Task<RelayJoinData> ConnectToRelayServer(string joinCode)
@@ -161,7 +188,7 @@ namespace GameCore
 
                 data.JoinCode = await Unity.Services.Relay.RelayService.Instance.GetJoinCodeAsync(data.AllocationID);
                 ConnectionCode = data.JoinCode;
-                Debug.Log($"Data: {data.JoinCode}.");
+                Debug.Log($"Code: {data.JoinCode}.");
 
                 return data;
             }

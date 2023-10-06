@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using GameCore.GameControls;
+using UnityEngine;
 using UnityEngine.UI;
-
+using Zenject;
 
 namespace GameCore
 {
@@ -11,6 +12,7 @@ namespace GameCore
             public abstract class OkButtonWindow : MonoBehaviour, IWindow
             {
                 [SerializeField] private Button _okButton;
+                [Inject] private readonly IEnterable _enter;
 
                 protected abstract void OnAwake();
                 protected abstract void ButtonPressed();
@@ -18,6 +20,7 @@ namespace GameCore
                 private void Awake()
                 {
                     ConnectToButtonEvent();
+                    _enter.OnEnter += ButtonPressed;
                     OnAwake();
                 }
 
@@ -36,6 +39,7 @@ namespace GameCore
 
                 public void Close()
                 {
+                    _enter.OnEnter -= ButtonPressed;
                     Destroy(this.gameObject);
                 }
             }

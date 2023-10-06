@@ -8,16 +8,17 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 using Unity.Collections;
 using System;
 using System.Linq;
-
+using GameCore.Network;
 
 namespace GameCore
 {
     namespace SceneManagement
     {
 
-        public sealed partial class AddressablesSceneManager : NetworkBehaviour
+        public sealed partial class AddressablesSceneManager : DefaultNetworkBehaviour
         {
-            private readonly HashSet<AssetReference> _loadedScenes = new();
+            public HashSet<string> LoadedScenesNames = new();
+            private HashSet<AssetReference> LoadedScenesReferences = new();
 
             public static event Action<ulong> OnClientSceneManagerSpawned;
             public static event Action OnSceneLoadedAndActivated;
@@ -28,14 +29,11 @@ namespace GameCore
                 DontDestroyOnLoad(gameObject);
             }
 
-            public override void OnNetworkSpawn()
+            protected override void OnClientNetworkSpawn()
             {
-                if (!IsServer)
-                {
-                    SceneManagerSpawnedServerRpc(NetworkManager.Singleton.LocalClientId);
-                }
-
-                base.OnNetworkSpawn();
+                SceneManagerSpawnedServerRpc(NetworkManager.Singleton.LocalClientId);
+                if (_singleton == null)
+                    _singleton = this;
             }
 
             [ServerRpc(RequireOwnership = false)]
@@ -61,7 +59,8 @@ namespace GameCore
                 if (loadHandle.Status == AsyncOperationStatus.Succeeded)
                 {
                     ActivateSceneAsync(loadHandle);
-                    _loadedScenes.Add(sceneReference);
+                    LoadedScenesNames.Add(loadHandle.Result.Scene.name);
+                    LoadedScenesReferences.Add(sceneReference);
                     SendLoadSceneRpc(sceneReference);
                     OnSceneLoadedAndActivated?.Invoke();
                 }
@@ -75,7 +74,8 @@ namespace GameCore
                 if (loadHandle.Status == AsyncOperationStatus.Succeeded)
                 {
                     ActivateSceneAsync(loadHandle, false);
-                    _loadedScenes.Add(sceneReference);
+                    LoadedScenesNames.Add(loadHandle.Result.Scene.name);
+                    LoadedScenesReferences.Add(sceneReference);
                     OnSceneLoadedAndActivated?.Invoke();
                 }
             }
@@ -120,7 +120,7 @@ namespace GameCore
                     }
                 };
 
-                var scenesReferences = _loadedScenes.ToArray();
+                var scenesReferences = LoadedScenesReferences.ToArray();
                 for (var i = 0; i < scenesReferences.Length; i++)
                 {
                     var guid = GetGuid(scenesReferences[i]);
@@ -132,7 +132,8 @@ namespace GameCore
 
             public void UnloadAll()
             {
-                _loadedScenes.Clear();
+                LoadedScenesNames.Clear();
+                LoadedScenesReferences.Clear();
             }
         }
     }

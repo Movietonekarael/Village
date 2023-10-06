@@ -1,9 +1,11 @@
+using GameCore.GameControls;
 using GameCore.GameMovement;
 using GameCore.Interactions;
 using GameCore.Inventory;
 using GameCore.Services;
 using Lightbug.CharacterControllerPro.Core;
 using UnityEngine;
+using Zenject;
 
 namespace GameCore
 {
@@ -11,6 +13,8 @@ namespace GameCore
     {
         public sealed class Player : DefaultNetworkBehaviour
         {
+            [Inject] private IMovement _movement;
+
             public NetworkInputHandler NetworkInputHandler;
             public PlayerMovementStateMachine PlayerMovement;
             public Interactor Interactor;
@@ -30,16 +34,19 @@ namespace GameCore
 
                     _playerDollIsReady = true;
                     _playerDoll = value;
-                    if (IsServer)
+                    if (IsClient && IsOwner)
                     {
                         StartPlayerMovement();
-                        SetDropPoint();
                     } 
                     else
                     {
                         DestroyPlayerMovement();
                     }
-                        
+                    
+                    if (IsServer)
+                    {
+                        SetDropPoint();
+                    }
                 }
             }
 
@@ -72,9 +79,15 @@ namespace GameCore
 
             protected override void OnClientNetworkSpawn()
             {
+                InjectItself();
                 InjectComponents();
                 DestroyNonClientComponents();
 
+
+                void InjectItself()
+                {
+                    InstantiateService.Singleton.DiContainer.Inject(this);
+                }
 
                 void InjectComponents()
                 {
@@ -102,8 +115,8 @@ namespace GameCore
 
                 PlayerMovement.CharacterActor = Actor;
                 PlayerMovement.AnimatorController = PlayerDoll.DollAnimator;
-                PlayerMovement.Movement = NetworkInputHandler;
-                PlayerMovement.ÑameraAngle = NetworkInputHandler;
+                PlayerMovement.Movement = _movement;
+                PlayerMovement.ÑameraAngle = PlayerDoll.CameraRotator;
                 PlayerMovement.StartMovement();
             }
 

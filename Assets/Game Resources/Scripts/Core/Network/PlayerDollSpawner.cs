@@ -1,6 +1,4 @@
-using GameCore.GameMovement;
 using GameCore.Memory;
-using Lightbug.CharacterControllerPro.Core;
 using System;
 using System.Threading.Tasks;
 using Unity.Netcode;
@@ -11,18 +9,17 @@ namespace GameCore
 {
     namespace Network
     {
-        public sealed class PlayerSpawner : DefaultNetworkBehaviour, AssetLoader.IAssetLoaderBehaviour
+        public sealed class PlayerDollSpawner : DefaultNetworkBehaviour, AssetLoader.IAssetLoaderBehaviour
         {
             [SerializeField] private Player _player;
             [SerializeField] private AssetReferenceGameObject _playerDoll;
-            [SerializeField] private AssetReferenceGameObject _characterActor;
 
             public event Action<AssetLoader.IAssetLoaderBehaviour> OnDestaction;
+
 
             protected async override void OnServerNetworkSpawn()
             {
                 await TrySpawnPlayerDoll();
-                await SpawnCharacterActor();
             }
 
             protected override void AllOnNetworkDespawn()
@@ -71,35 +68,6 @@ namespace GameCore
                 {
                     var networkObject = dollInstance.GetComponent<NetworkObject>();
                     networkObject.SpawnWithOwnership(GetComponent<NetworkObject>().OwnerClientId);
-                }
-            }
-
-            private async Task SpawnCharacterActor()
-            {
-                var characterActorInstance = await CreateCharacterActorInstance();
-                ReferenceCharacterACtorToPlayer(characterActorInstance);
-                ReferencePlayerDollToCharacterActorTransformCopyer(characterActorInstance);
-
-
-                async Task<GameObject> CreateCharacterActorInstance()
-                {
-                    var characterActorInstance = await AssetLoader.InstantiateAssetCached<GameObject>(this, _characterActor);
-                    DontDestroyOnLoad(characterActorInstance);
-                    characterActorInstance.transform.position = _player.PlayerDoll.transform.position;
-
-                    return characterActorInstance;
-                }
-
-                void ReferenceCharacterACtorToPlayer(GameObject characterActorInstance)
-                {
-                    var characterActorComponent = characterActorInstance.GetComponent<CharacterActor>();
-                    _player.Actor = characterActorComponent;
-                }
-
-                void ReferencePlayerDollToCharacterActorTransformCopyer(GameObject characterActorInstance)
-                {
-                    var transformCopyer = characterActorInstance.GetComponent<TransformCopyer>();
-                    transformCopyer.CopyToTransform = _player.PlayerDoll.transform;
                 }
             }
         }

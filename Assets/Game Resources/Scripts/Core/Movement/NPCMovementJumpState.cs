@@ -14,7 +14,8 @@ namespace GameCore
                     _StateMachine.OnJumpStartEnded += JumpStartEnded;
                     _StateMachine.OnJumpEnded += JumpEnded;
 
-                    _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingBoolHash, true);
+                    if (_StateMachine.AnimatorController)
+                        _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingBoolHash, true);
                     HandleJump();
                 }
 
@@ -34,8 +35,11 @@ namespace GameCore
                     _StateMachine.OnJumpStartEnded -= JumpStartEnded;
                     _StateMachine.OnJumpEnded -= JumpEnded;
 
-                    _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingBoolHash, false);
-                    _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingEndBoolHash, false);
+                    if (_StateMachine.AnimatorController)
+                    {
+                        _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingBoolHash, false);
+                        _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingEndBoolHash, false);
+                    }
                 }
 
                 //----------------------------------------------------------Local methods------------------------------------------------------//
@@ -56,7 +60,16 @@ namespace GameCore
                 {
                     if (_StateMachine._isJumping && _StateMachine.CharacterActor.IsFalling)
                     {
-                        _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingEndBoolHash, true);
+                        EndJumpAnimation();
+                    }
+
+
+                    void EndJumpAnimation()
+                    {
+                        if (_StateMachine.AnimatorController)
+                        {
+                            _StateMachine.AnimatorController.SetBool(_StateMachine._isJumpingEndBoolHash, true);
+                        }
                     }
                 }
 
@@ -64,8 +77,17 @@ namespace GameCore
                 {
                     if (_StateMachine._isJumping && _StateMachine.CharacterActor.IsGrounded)
                     {
-                        _StateMachine.AnimatorController.SetTrigger(_StateMachine._interruptJumpTriggerHash);
+                        InterruptJump();
                         SwitchState(_StateMachine._groundedState);
+                    }
+
+
+                    void InterruptJump()
+                    {
+                        if (_StateMachine.AnimatorController)
+                        {
+                            _StateMachine.AnimatorController.SetTrigger(_StateMachine._interruptJumpTriggerHash);
+                        }
                     }
                 }
 

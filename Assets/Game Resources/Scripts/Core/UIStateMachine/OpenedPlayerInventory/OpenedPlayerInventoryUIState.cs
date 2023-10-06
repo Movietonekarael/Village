@@ -12,6 +12,7 @@ namespace GameCore
                                                                        IOpenedPlayerInventoryController>
         {
             [Inject] private readonly IOpenCloseInventory _openCloseInventory;
+            [Inject] private readonly IEscapable _escape;
 
             [Header("Next state")]
             [SerializeField]
@@ -24,11 +25,13 @@ namespace GameCore
             protected override void StartState(params bool[] args)
             {
                 _openCloseInventory.OnOpenCloseInventory += ClosePlayerInventory;
+                _escape.OnEscape += ClosePlayerInventory;
             }
 
             protected override void EndState()
             {
                 _openCloseInventory.OnOpenCloseInventory -= ClosePlayerInventory;
+                _escape.OnEscape -= ClosePlayerInventory;
             }
 
             private void ClosePlayerInventory()

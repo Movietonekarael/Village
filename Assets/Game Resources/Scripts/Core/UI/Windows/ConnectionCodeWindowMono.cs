@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using TMPro;
 using System;
-
+using GameCore.GameControls;
+using Zenject;
 
 namespace GameCore
 {
@@ -15,9 +16,7 @@ namespace GameCore
 
                 [SerializeField] private TextMeshProUGUI _text;
 
-
                 protected override void OnAwake() { }
-
 
                 protected override void ButtonPressed()
                 {

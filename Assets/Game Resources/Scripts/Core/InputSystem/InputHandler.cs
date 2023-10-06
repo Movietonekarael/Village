@@ -16,7 +16,8 @@ namespace GameCore
                                                    IMovement,
                                                    IInventoryPress,
                                                    IOpenCloseInventory,
-                                                   IEscapable
+                                                   IEscapable,
+                                                   IEnterable
         {
             private const string _GAMEPAD_SCHEME = "Gamepad";
             private const string _KEYBOADR_SCHEME = "Keyboard";
@@ -44,6 +45,7 @@ namespace GameCore
             public event Action<int> OnInventoryArrowPressed;
 
             public event Action OnEscape;
+            public event Action OnEnter;
 
             public event Action OnLeftMouseButtonPressed;
             public event Action OnLeftMouseButtonReleased;

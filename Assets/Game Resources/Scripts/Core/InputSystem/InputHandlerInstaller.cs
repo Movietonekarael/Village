@@ -20,6 +20,7 @@ namespace GameCore
             [SerializeField] private bool _inventoryKeysPressAllowed = true;
             [SerializeField] private bool _openCloseInventoryAllowed = true;
             [SerializeField] private bool _pauseAllowed = true;
+            [SerializeField] private bool _enterAllowed = true;
 
             public override void InstallBindings()
             {
@@ -32,6 +33,7 @@ namespace GameCore
                 BindInterface<InputHandler, IInventoryPress>(inputHandlerInstance, _inventoryKeysPressAllowed);
                 BindInterface<InputHandler, IOpenCloseInventory>(inputHandlerInstance, _openCloseInventoryAllowed);
                 BindInterface<InputHandler, IEscapable>(inputHandlerInstance, _pauseAllowed);
+                BindInterface<InputHandler, IEnterable>(inputHandlerInstance, _enterAllowed);
             }
 
             private InputHandler CreateInstance()

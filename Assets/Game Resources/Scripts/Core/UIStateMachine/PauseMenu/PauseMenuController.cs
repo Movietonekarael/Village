@@ -27,12 +27,18 @@ namespace GameCore
 
             protected override void OnActivate()
             {
-                Time.timeScale = 0;
+                if (NetworkConnectionService.GameType == GameType.SinglePlayer)
+                {
+                    Time.timeScale = 0;
+                }
             }
 
             protected override void OnDeactivate()
             {
-                Time.timeScale = 1;
+                if (NetworkConnectionService.GameType == GameType.SinglePlayer)
+                {
+                    Time.timeScale = 1;
+                }
             }
 
             public void SetMainMenuSceneReference(AssetReference mainMenuSceneReference)
@@ -48,19 +54,9 @@ namespace GameCore
             public async void QuitGame()
             {
                 _View.DeactivateButtons();
-                await LoadAndActivateMainMenu();
+                var loadSceneHandle = Addressables.LoadSceneAsync(_mainMenuSceneReference, LoadSceneMode.Single);
+                await loadSceneHandle.Task;
                 NetworkConnectionService.ShutdownConnection();
-                NetworkManagerPrefabs.Singleton.DestroyNetworkManager();
-                AddressablesSceneManager.Singleton.UnloadAll();
-
-
-                async Task LoadAndActivateMainMenu()
-                {
-                    var sceneLoadHandle = Addressables.LoadSceneAsync(_mainMenuSceneReference, LoadSceneMode.Single, false);
-                    await sceneLoadHandle.Task;
-                    var sceneInstance = sceneLoadHandle.Result;
-                    sceneInstance.ActivateAsync();
-                }
             }
         }
     }

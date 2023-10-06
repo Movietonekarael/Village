@@ -1,4 +1,5 @@
-﻿using GameCore.Services;
+﻿using GameCore.GameControls;
+using GameCore.Services;
 using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -33,7 +34,7 @@ namespace GameCore
                     if (_handle.Status == AsyncOperationStatus.Succeeded)
                     {
                         var windowPrefab = _handle.Result;
-                        var windowObject = _instantiateService.InstantiateObject(windowPrefab, canvasTransform);
+                        var windowObject = _instantiateService.InstantiateObjectWithInjections(windowPrefab, canvasTransform);
                         _window = windowObject.GetComponent<IMessageWindowMono>();
                         _window.OnOkPressed += CloseMessageWindow;
                         _window.SetMessage(message);

@@ -381,6 +381,15 @@ namespace PlayerInput
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Enter"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3cd5b6b-52c3-4417-bb5c-8b5f8a273289"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -414,6 +423,28 @@ namespace PlayerInput
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""EditorGamemodeQuit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca021b0b-25e3-46a9-a9db-b6d079b709d3"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Enter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14ebda18-7519-4804-b03f-bfeab08aba49"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Enter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1066,6 +1097,7 @@ namespace PlayerInput
             m_ApplicationControl = asset.FindActionMap("ApplicationControl", throwIfNotFound: true);
             m_ApplicationControl_Escape = m_ApplicationControl.FindAction("Escape", throwIfNotFound: true);
             m_ApplicationControl_EditorGamemodeQuit = m_ApplicationControl.FindAction("EditorGamemodeQuit", throwIfNotFound: true);
+            m_ApplicationControl_Enter = m_ApplicationControl.FindAction("Enter", throwIfNotFound: true);
             // InventoryControl
             m_InventoryControl = asset.FindActionMap("InventoryControl", throwIfNotFound: true);
             m_InventoryControl_OpenCloseInventory = m_InventoryControl.FindAction("OpenCloseInventory", throwIfNotFound: true);
@@ -1317,12 +1349,14 @@ namespace PlayerInput
         private List<IApplicationControlActions> m_ApplicationControlActionsCallbackInterfaces = new List<IApplicationControlActions>();
         private readonly InputAction m_ApplicationControl_Escape;
         private readonly InputAction m_ApplicationControl_EditorGamemodeQuit;
+        private readonly InputAction m_ApplicationControl_Enter;
         public struct ApplicationControlActions
         {
             private @PlayerInputScheme m_Wrapper;
             public ApplicationControlActions(@PlayerInputScheme wrapper) { m_Wrapper = wrapper; }
             public InputAction @Escape => m_Wrapper.m_ApplicationControl_Escape;
             public InputAction @EditorGamemodeQuit => m_Wrapper.m_ApplicationControl_EditorGamemodeQuit;
+            public InputAction @Enter => m_Wrapper.m_ApplicationControl_Enter;
             public InputActionMap Get() { return m_Wrapper.m_ApplicationControl; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1338,6 +1372,9 @@ namespace PlayerInput
                 @EditorGamemodeQuit.started += instance.OnEditorGamemodeQuit;
                 @EditorGamemodeQuit.performed += instance.OnEditorGamemodeQuit;
                 @EditorGamemodeQuit.canceled += instance.OnEditorGamemodeQuit;
+                @Enter.started += instance.OnEnter;
+                @Enter.performed += instance.OnEnter;
+                @Enter.canceled += instance.OnEnter;
             }
 
             private void UnregisterCallbacks(IApplicationControlActions instance)
@@ -1348,6 +1385,9 @@ namespace PlayerInput
                 @EditorGamemodeQuit.started -= instance.OnEditorGamemodeQuit;
                 @EditorGamemodeQuit.performed -= instance.OnEditorGamemodeQuit;
                 @EditorGamemodeQuit.canceled -= instance.OnEditorGamemodeQuit;
+                @Enter.started -= instance.OnEnter;
+                @Enter.performed -= instance.OnEnter;
+                @Enter.canceled -= instance.OnEnter;
             }
 
             public void RemoveCallbacks(IApplicationControlActions instance)
@@ -1640,6 +1680,7 @@ namespace PlayerInput
         {
             void OnEscape(InputAction.CallbackContext context);
             void OnEditorGamemodeQuit(InputAction.CallbackContext context);
+            void OnEnter(InputAction.CallbackContext context);
         }
         public interface IInventoryControlActions
         {

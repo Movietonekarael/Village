@@ -42,15 +42,13 @@ namespace GameCore
                 public void UpdateStates()
                 {
                     UpdateState();
-                    if (_currentSubState != null)
-                        _currentSubState.UpdateStates();
+                    _currentSubState?.UpdateStates();
                 }
 
                 public void FixedUpdateStates()
                 {
                     FixedUpdateState();
-                    if (_currentSubState != null)
-                        _currentSubState.FixedUpdateStates();
+                    _currentSubState?.FixedUpdateStates();
                 }
 
                 protected void SwitchState(NPCMovementBaseState newState)
@@ -65,7 +63,9 @@ namespace GameCore
                         _stateMachine._currentState = newState;
                     }
                     else if (_currentSuperState != null)
+                    {
                         _currentSuperState.SetSubState(newState);
+                    } 
                 }
 
                 protected void SetSuperState(NPCMovementBaseState newSuperState)
