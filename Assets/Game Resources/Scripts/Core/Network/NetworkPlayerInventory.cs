@@ -13,7 +13,7 @@ namespace GameCore
         {
             private PlayerInventory _playerInventory;
 
-            [Inject] private ItemIdentificationService _itemIdentifierService;
+            [Inject] private ItemIdentificationService _itemIdentificationervice;
 
             public event Action<int> OnItemChanged;
             private GameItem[] _gameItems;
@@ -60,17 +60,7 @@ namespace GameCore
             [ClientRpc]
             private void ChangeItemClientRpc(NetworkGameItem networkGameItem, int position, ClientRpcParams clientRpcParams = default)
             {
-                GameItem gameItem;
-                if (networkGameItem.NotNull)
-                {
-                    var gameItemData = _itemIdentifierService.GetItemData(networkGameItem.Id);
-                    gameItem = new GameItem(gameItemData, networkGameItem.Number);
-                }
-                else
-                {
-                    gameItem = null;
-                }
-
+                var gameItem = networkGameItem.DeserializeGameItem(_itemIdentificationervice);
                 _gameItems[position] = gameItem;
                 OnItemChanged?.Invoke(position);
             }
@@ -118,7 +108,7 @@ namespace GameCore
             [ServerRpc]
             private void PushServerRpc(NetworkGameItem networkGameItem)
             {
-                var gameItemData = _itemIdentifierService.GetItemData(networkGameItem.Id);
+                var gameItemData = _itemIdentificationervice.GetItemData(networkGameItem.Id);
                 var gameItem = new GameItem(gameItemData, networkGameItem.Number);
                 PushOnServer(ref gameItem);
             }
@@ -141,7 +131,7 @@ namespace GameCore
             [ServerRpc]
             private void PushServerRpc(NetworkGameItem networkGameItem, int position)
             {
-                var gameItemData = _itemIdentifierService.GetItemData(networkGameItem.Id);
+                var gameItemData = _itemIdentificationervice.GetItemData(networkGameItem.Id);
                 var gameItem = new GameItem(gameItemData, networkGameItem.Number);
                 PushOnServer(ref gameItem, position);
             }

@@ -81,8 +81,8 @@ namespace GameCore
 
             private void UpdateHoldingItem()
             {
-                var item = _inventory.GetGameItem(_indexOfCurrentHoldItem);
-                _playerHoldItem.SetItem(item);
+                //var item = _inventory.GetGameItem(_indexOfCurrentHoldItem);
+                _playerHoldItem.SetItem(_indexOfCurrentHoldItem);
             }
         }
     }

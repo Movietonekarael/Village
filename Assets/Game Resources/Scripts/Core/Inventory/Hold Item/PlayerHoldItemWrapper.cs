@@ -14,6 +14,11 @@ namespace GameCore
             {
                 PlayerHoldItem?.SetItem(item);
             }
+
+            public void SetItem(int position)
+            {
+                PlayerHoldItem?.SetItem(position);
+            }
         }
     }
 }

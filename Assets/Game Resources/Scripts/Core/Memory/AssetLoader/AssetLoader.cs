@@ -28,10 +28,18 @@ namespace GameCore
                 return instance;
             }
 
-            public static async Task<T> InstantiateAssetCached<T>(IAssetLoaderBehaviour behaviour, AssetReference assetReference) where T : UnityEngine.Object
+            public static async Task<T> InstantiateAssetCached<T>(IAssetLoaderBehaviour behaviour, 
+                                                                  AssetReference assetReference) where T : UnityEngine.Object
+            {
+                return await InstantiateAssetCached<T>(behaviour, assetReference, Vector3.zero);
+            }
+
+            public static async Task<T> InstantiateAssetCached<T>(IAssetLoaderBehaviour behaviour,
+                                                                  AssetReference assetReference,
+                                                                  Vector3 spawnPoint) where T : UnityEngine.Object
             {
                 var handle = await WaitUntilAddressableAssetLoaded<T>(assetReference);
-                var instance = InstantiateLoadedAsset(ref handle, null, Vector3.zero, Quaternion.identity);
+                var instance = InstantiateLoadedAsset(ref handle, null, spawnPoint, Quaternion.identity);
                 AddLoadedAssetComponentIfInstanceIsGameObject(instance, behaviour);
                 CacheInstance(instance, behaviour, ref handle);
                 return instance;

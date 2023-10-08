@@ -47,9 +47,8 @@ namespace GameCore
 
                 async Task<GameObject> CreateDollInstance(Vector3 spawnPoint)
                 {
-                    var dollInstance = await AssetLoader.InstantiateAssetCached<GameObject>(this, _playerDoll);
+                    var dollInstance = await AssetLoader.InstantiateAssetCached<GameObject>(this, _playerDoll, spawnPoint);
                     DontDestroyOnLoad(dollInstance);
-                    dollInstance.transform.position = spawnPoint;
 
                     return dollInstance;
                 }

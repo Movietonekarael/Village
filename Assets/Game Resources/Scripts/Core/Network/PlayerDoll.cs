@@ -2,6 +2,7 @@
 using GameCore.GameMovement;
 using GameCore.Inventory;
 using GameCore.Memory;
+using GameCore.Network.Inventory;
 using GameCore.SceneManagement;
 using GameCore.Services;
 using Lightbug.CharacterControllerPro.Core;
@@ -33,7 +34,7 @@ namespace GameCore
             [Header("Server side objects:")]
 
             [Header("Other:")]
-            [SerializeField] private PlayerHoldItem _holdItem;
+            [SerializeField] private NetworkPlayerHoldItem _networkHoldItem;
             public Transform DropPoint;
             public AudioSource GrabAudioSource;
 
@@ -45,13 +46,14 @@ namespace GameCore
             protected override async void OnClientNetworkSpawn()
             {
                 DontDestroyOnLoad(this.gameObject);
-                PlayerHoldItemWrapper.PlayerHoldItem = _holdItem;
+                
                 if (!IsOwner)
                 {
                     DestroyClientObjects();
                     return;
                 }
 
+                PlayerHoldItemWrapper.PlayerHoldItem = _networkHoldItem;
                 DestroyCollider();
                 DestroyServerObjects();
                 await SetupReferences();
@@ -157,9 +159,10 @@ namespace GameCore
 
                 async Task<GameObject> CreateCharacterActorInstance()
                 {
-                    var characterActorInstance = await AssetLoader.InstantiateAssetCached<GameObject>(this, _characterActorAssetReference);
+                    var characterActorInstance = await InstantiateAssetCached<GameObject>(this, 
+                                                                                          _characterActorAssetReference, 
+                                                                                          Player.PlayerDoll.transform.position);
                     DontDestroyOnLoad(characterActorInstance);
-                    characterActorInstance.transform.position = Player.PlayerDoll.transform.position;
                     if (!IsServer)
                     {
                         var physicsLayer = 1 << LayerMask.NameToLayer("Physics");

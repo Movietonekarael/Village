@@ -58,6 +58,11 @@ namespace GameCore
                 }
             }
 
+            public void SetItem(int position)
+            {
+                throw new System.NotImplementedException();
+            }
+
             private void OnDestroy()
             {
                 if (PlayerHoldItemWrapper.PlayerHoldItem == this as IPlayerHoldItem)

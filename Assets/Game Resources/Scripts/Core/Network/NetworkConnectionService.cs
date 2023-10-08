@@ -64,11 +64,6 @@ namespace GameCore
 
             protected override void OnClientNetworkSpawn()
             {
-                SubscribeForServerShutdown();
-            }
-
-            private void SubscribeForServerShutdown()
-            {
                 NetworkManager.Singleton.OnClientDisconnectCallback += ShutdownConnectionAndLoadMainMenu;
             }
 
@@ -137,9 +132,8 @@ namespace GameCore
 
             public static async void ShutdownConnectionAndLoadMainMenu(ulong clientId)
             {
-                if (clientId == 0uL)
+                if (clientId == 0)
                 {
-                    Debug.Log($"Disconnected client id: {clientId}");
                     var loadSceneHandle = Addressables.LoadSceneAsync(_MAIN_MENU_ASSET_NAME, LoadSceneMode.Single);
                     await loadSceneHandle.Task;
                     ShutdownConnection();

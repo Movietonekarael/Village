@@ -18,6 +18,7 @@ namespace GameCore
             public NetworkInputHandler NetworkInputHandler;
             public PlayerMovementStateMachine PlayerMovement;
             public Interactor Interactor;
+            public PlayerInventory PlayerInventory;
 
             private PlayerDoll _playerDoll;
             private CharacterActor _characterActor;

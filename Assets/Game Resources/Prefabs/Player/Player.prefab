@@ -74,6 +74,7 @@ MonoBehaviour:
   NetworkInputHandler: {fileID: -8597355926626996984}
   PlayerMovement: {fileID: 1113105203171891592}
   Interactor: {fileID: 864682484819590509}
+  PlayerInventory: {fileID: 6383213328239194669}
 --- !u!114 &-7747803877581770393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,11 +93,6 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  _characterActor:
-    m_AssetGUID: 666ecc138dddd6e499cd38f20ec80ca4
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
 --- !u!114 &-8597355926626996984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,6 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe7e4121ecc4c040a7ec8e4a85e96f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _allowMovement: 0
+  _allowCameraRotation: 0
+  _allowInteraction: 1
 --- !u!114 &1113105203171891592
 MonoBehaviour:
   m_ObjectHideFlags: 0

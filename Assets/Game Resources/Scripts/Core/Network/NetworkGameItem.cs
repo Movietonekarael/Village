@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using GameCore.Inventory;
+using Unity.Netcode;
 
 namespace GameCore
 {
@@ -22,6 +23,22 @@ namespace GameCore
                 serializer.SerializeValue(ref Id);
                 serializer.SerializeValue(ref Number);
                 serializer.SerializeValue(ref NotNull);
+            }
+
+            public GameItem DeserializeGameItem(ItemIdentificationService identificationService)
+            {
+                GameItem gameItem;
+                if (NotNull)
+                {
+                    var gameItemData = identificationService.GetItemData(Id);
+                    gameItem = new GameItem(gameItemData, Number);
+                }
+                else
+                {
+                    gameItem = null;
+                }
+
+                return gameItem;
             }
         }
     }

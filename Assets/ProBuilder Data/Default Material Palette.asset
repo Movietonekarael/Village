@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   array:
   - {fileID: 2100000, guid: da91dd6b0426d3e47ad28c3975240c54, type: 2}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 40c276d1bb80a3f479efd136cdeb8749, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

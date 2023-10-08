@@ -24,7 +24,7 @@ namespace GameCore
                 return _inventorySize;
             }
 
-            private void Start()
+            private void Awake()
             {
                 _gameItems = new GameItem[_inventorySize];
             }
