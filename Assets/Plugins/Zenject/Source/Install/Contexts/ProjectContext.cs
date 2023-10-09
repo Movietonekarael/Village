@@ -83,7 +83,6 @@ namespace Zenject
             if (assetLoadHandle.Status == AsyncOperationStatus.Succeeded)
             {
                 var prefab = assetLoadHandle.Result;
-                Debug.Log("Project context prefab loaded.");
                 return prefab;
             }
             else

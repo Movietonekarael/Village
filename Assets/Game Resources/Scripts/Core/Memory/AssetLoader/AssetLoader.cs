@@ -22,7 +22,7 @@ namespace GameCore
             {
                 var handle = await WaitUntilAddressableAssetLoaded<GameObject>(assetReference);
                 var instance = InstantiateLoadedAsset(ref handle, parent, position, rotation);
-                var behaviour = instance.AddComponent<SellCachedBehaviour>() as IAssetLoaderBehaviour;
+                var behaviour = instance.AddComponent<SelfCachedBehaviour>() as IAssetLoaderBehaviour;
                 AddLoadedAssetComponentIfInstanceIsGameObject(instance, behaviour);
                 CacheInstance(instance, behaviour, ref handle);
                 return instance;

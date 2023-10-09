@@ -49,6 +49,8 @@ namespace GameCore
 
                 public void SetItem(int position)
                 {
+                    if (!IsSpawned) return;
+
                     SetItemServerRpc(position);
                     var item = _inventory.GetGameItem(position);
                     _holdItem.SetItem(item);

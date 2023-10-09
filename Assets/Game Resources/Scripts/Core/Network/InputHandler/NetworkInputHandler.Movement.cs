@@ -9,106 +9,109 @@ namespace GameCore
 {
     namespace Network
     {
-        public partial class NetworkInputHandler : IMovement
+        namespace Input
         {
-            [Inject] private readonly IMovement _movement;
-
-            public event Action OnMovementStart;
-            public event Action OnMovementFinish;
-            public event Action<Vector2> OnMovement;
-            public event Action OnRunningChanged;
-            public event Action OnDashed;
-            public event Action OnJumped;
-
-            private readonly NetworkVariable<bool> _isMoving = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-            private readonly NetworkVariable<Vector2> _movingDirection = new(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-
-
-            private void SubscribeForMovingNetworkVariables()
+            public partial class NetworkInputHandler : IMovement
             {
-                _isMoving.OnValueChanged += IsMovingChanged;
-                _movingDirection.OnValueChanged += MovementDirectionChanged;
+                [Inject] private readonly IMovement _movement;
 
-            }
+                public event Action OnMovementStart;
+                public event Action OnMovementFinish;
+                public event Action<Vector2> OnMovement;
+                public event Action OnRunningChanged;
+                public event Action OnDashed;
+                public event Action OnJumped;
 
-            private void UnsubscribeForMovingNetworkVariables()
-            {
-                _isMoving.OnValueChanged -= IsMovingChanged;
-                _movingDirection.OnValueChanged -= MovementDirectionChanged;
+                private readonly NetworkVariable<bool> _isMoving = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+                private readonly NetworkVariable<Vector2> _movingDirection = new(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-            }
 
-            private void IsMovingChanged(bool previousValue, bool newValue)
-            {
-                if (previousValue == false && newValue == true)
+                private void SubscribeForMovingNetworkVariables()
                 {
-                    OnMovementStart?.Invoke();
+                    _isMoving.OnValueChanged += IsMovingChanged;
+                    _movingDirection.OnValueChanged += MovementDirectionChanged;
+
                 }
-                else if (previousValue == true && newValue == false)
+
+                private void UnsubscribeForMovingNetworkVariables()
                 {
-                    OnMovementFinish?.Invoke();
+                    _isMoving.OnValueChanged -= IsMovingChanged;
+                    _movingDirection.OnValueChanged -= MovementDirectionChanged;
+
                 }
-            }
 
-            private void MovementDirectionChanged(Vector2 previousValue, Vector2 newValue)
-            {
-                OnMovement?.Invoke(newValue);
-            }
-
-            private void SubscribeForMovementEvents()
-            {
-                _movement.OnMovementStart += StartMoving;
-                _movement.OnMovementFinish += StopMoving;
-                _movement.OnMovement += HandleMoving;
-                _movement.OnRunningChanged += ChangeRunStateServerRpc;
-                _movement.OnDashed += HandleDashServerRpc;
-                _movement.OnJumped += HandleJumpServerRpc;
-            }
-
-            private void UnsubscribeForMovementEvents()
-            {
-                _movement.OnMovementStart -= StartMoving;
-                _movement.OnMovementFinish -= StopMoving;
-                _movement.OnMovement -= HandleMoving;
-                _movement.OnRunningChanged -= ChangeRunStateServerRpc;
-                _movement.OnDashed -= HandleDashServerRpc;
-                _movement.OnJumped -= HandleJumpServerRpc;
-            }
-
-            private void StartMoving()
-            {
-                _isMoving.Value = true;
-            }
-
-            private void StopMoving()
-            {
-                _isMoving.Value = false;
-            }
-
-            private void HandleMoving(Vector2 direction)
-            {
-                if (_isMoving.Value == true)
+                private void IsMovingChanged(bool previousValue, bool newValue)
                 {
-                    _movingDirection.Value = direction;
+                    if (previousValue == false && newValue == true)
+                    {
+                        OnMovementStart?.Invoke();
+                    }
+                    else if (previousValue == true && newValue == false)
+                    {
+                        OnMovementFinish?.Invoke();
+                    }
                 }
-            }
 
-            [ServerRpc(Delivery = RpcDelivery.Unreliable)]
-            private void ChangeRunStateServerRpc()
-            {
-                OnRunningChanged?.Invoke();
-            }
+                private void MovementDirectionChanged(Vector2 previousValue, Vector2 newValue)
+                {
+                    OnMovement?.Invoke(newValue);
+                }
 
-            [ServerRpc(Delivery = RpcDelivery.Unreliable)]
-            private void HandleDashServerRpc()
-            {
-                OnDashed?.Invoke();
-            }
+                private void SubscribeForMovementEvents()
+                {
+                    _movement.OnMovementStart += StartMoving;
+                    _movement.OnMovementFinish += StopMoving;
+                    _movement.OnMovement += HandleMoving;
+                    _movement.OnRunningChanged += ChangeRunStateServerRpc;
+                    _movement.OnDashed += HandleDashServerRpc;
+                    _movement.OnJumped += HandleJumpServerRpc;
+                }
 
-            [ServerRpc(Delivery = RpcDelivery.Unreliable)]
-            private void HandleJumpServerRpc()
-            {
-                OnJumped?.Invoke();
+                private void UnsubscribeForMovementEvents()
+                {
+                    _movement.OnMovementStart -= StartMoving;
+                    _movement.OnMovementFinish -= StopMoving;
+                    _movement.OnMovement -= HandleMoving;
+                    _movement.OnRunningChanged -= ChangeRunStateServerRpc;
+                    _movement.OnDashed -= HandleDashServerRpc;
+                    _movement.OnJumped -= HandleJumpServerRpc;
+                }
+
+                private void StartMoving()
+                {
+                    _isMoving.Value = true;
+                }
+
+                private void StopMoving()
+                {
+                    _isMoving.Value = false;
+                }
+
+                private void HandleMoving(Vector2 direction)
+                {
+                    if (_isMoving.Value == true)
+                    {
+                        _movingDirection.Value = direction;
+                    }
+                }
+
+                [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+                private void ChangeRunStateServerRpc()
+                {
+                    OnRunningChanged?.Invoke();
+                }
+
+                [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+                private void HandleDashServerRpc()
+                {
+                    OnDashed?.Invoke();
+                }
+
+                [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+                private void HandleJumpServerRpc()
+                {
+                    OnJumped?.Invoke();
+                }
             }
         }
     }

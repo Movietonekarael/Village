@@ -1,8 +1,8 @@
 ﻿using GameCore.GameControls;
 using GameCore.GameMovement;
 using GameCore.Inventory;
-using GameCore.Memory;
 using GameCore.Network.Inventory;
+using GameCore.Network.Input;
 using GameCore.SceneManagement;
 using GameCore.Services;
 using Lightbug.CharacterControllerPro.Core;

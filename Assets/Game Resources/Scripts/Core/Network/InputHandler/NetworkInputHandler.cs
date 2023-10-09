@@ -4,37 +4,40 @@ namespace GameCore
 {
     namespace Network
     {
-        public sealed partial class NetworkInputHandler : DefaultNetworkBehaviour
+        namespace Input
         {
-            [SerializeField] private bool _allowMovement = false;
-            [SerializeField] private bool _allowCameraRotation = false;
-            [SerializeField] private bool _allowInteraction = true;
-
-
-            protected override void OnServerNetworkSpawn()
+            public sealed partial class NetworkInputHandler : DefaultNetworkBehaviour
             {
-                if (_allowMovement) SubscribeForMovingNetworkVariables();
-                if (_allowCameraRotation) SubscribeForCameraNetworkVariable();
-            }
+                [SerializeField] private bool _allowMovement = false;
+                [SerializeField] private bool _allowCameraRotation = false;
+                [SerializeField] private bool _allowInteraction = true;
 
-            protected override void OnServerNetworkDespawn()
-            {
-                if (_allowMovement) UnsubscribeForMovingNetworkVariables();
-                if (_allowCameraRotation) UnsubscribeForCameraNetworkVariable();
-            }
 
-            protected override void OnClientNetworkSpawn()
-            {
-                if (!IsOwner) return;
-                if (_allowMovement) SubscribeForMovementEvents();
-                if (_allowInteraction) SubscribeForInteractionEvent();
-            }
+                protected override void OnServerNetworkSpawn()
+                {
+                    if (_allowMovement) SubscribeForMovingNetworkVariables();
+                    if (_allowCameraRotation) SubscribeForCameraNetworkVariable();
+                }
 
-            protected override void OnClientNetworkDespawn()
-            {
-                if (!IsOwner) return;
-                if (_allowMovement) UnsubscribeForMovementEvents();
-                if (_allowInteraction) UnsubscribeForInteractionEvent();
+                protected override void OnServerNetworkDespawn()
+                {
+                    if (_allowMovement) UnsubscribeForMovingNetworkVariables();
+                    if (_allowCameraRotation) UnsubscribeForCameraNetworkVariable();
+                }
+
+                protected override void OnClientNetworkSpawn()
+                {
+                    if (!IsOwner) return;
+                    if (_allowMovement) SubscribeForMovementEvents();
+                    if (_allowInteraction) SubscribeForInteractionEvent();
+                }
+
+                protected override void OnClientNetworkDespawn()
+                {
+                    if (!IsOwner) return;
+                    if (_allowMovement) UnsubscribeForMovementEvents();
+                    if (_allowInteraction) UnsubscribeForInteractionEvent();
+                }
             }
         }
     }

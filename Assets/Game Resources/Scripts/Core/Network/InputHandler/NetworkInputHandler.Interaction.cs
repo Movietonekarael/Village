@@ -7,26 +7,29 @@ namespace GameCore
 {
     namespace Network
     {
-        public partial class NetworkInputHandler : IInteractionPerformer
+        namespace Input
         {
-            [Inject] private readonly IInteractionPerformer _interactionPerformer;
-            public event Action OnInteractionPerformed;
-
-
-            private void SubscribeForInteractionEvent()
+            public partial class NetworkInputHandler : IInteractionPerformer
             {
-                _interactionPerformer.OnInteractionPerformed += PerformInteractionServerRpc;
-            }
+                [Inject] private readonly IInteractionPerformer _interactionPerformer;
+                public event Action OnInteractionPerformed;
 
-            private void UnsubscribeForInteractionEvent()
-            {
-                _interactionPerformer.OnInteractionPerformed -= PerformInteractionServerRpc;
-            }
 
-            [ServerRpc]
-            private void PerformInteractionServerRpc()
-            {
-                OnInteractionPerformed?.Invoke();
+                private void SubscribeForInteractionEvent()
+                {
+                    _interactionPerformer.OnInteractionPerformed += PerformInteractionServerRpc;
+                }
+
+                private void UnsubscribeForInteractionEvent()
+                {
+                    _interactionPerformer.OnInteractionPerformed -= PerformInteractionServerRpc;
+                }
+
+                [ServerRpc]
+                private void PerformInteractionServerRpc()
+                {
+                    OnInteractionPerformed?.Invoke();
+                }
             }
         }
     }

@@ -3,6 +3,8 @@ using GameCore.GameMovement;
 using GameCore.Interactions;
 using GameCore.Inventory;
 using GameCore.Services;
+using GameCore.Network.Input;
+using GameCore.Network.Inventory;
 using Lightbug.CharacterControllerPro.Core;
 using UnityEngine;
 using Zenject;
