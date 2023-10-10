@@ -1,7 +1,7 @@
 # Здравствуйте, меня зовут Александр.
 ## Это мой домашний проект игры на Unity
 
-![](https://i.ibb.co/ch4h8Gm/3.jpg)
+![](https://i.ibb.co/3YyRL39/3.jpg)
 
 Все скрипты проекта, написанные мной, хранятся здесь [Assets/Game Resouces/Scripts/](https://bitbucket.org/movietoneofficial/village/src/master/Assets/Game%20Resources/Scripts/)
 
@@ -42,7 +42,7 @@ ____
 Все объекты, имеющие инвентарь, реализуют интерфейс [IInventory](https://bitbucket.org/movietoneofficial/village/src/PublicShow/Assets/Game%20Resources/Scripts/Core/Inventory/IInventory.cs).
 Инвентарь игрока описывает класс [PlayerInventory](https://bitbucket.org/movietoneofficial/village/src/PublicShow/Assets/Game%20Resources/Scripts/Core/Inventory/PlayerInventory/PlayerInventory.cs).
 
-![](https://i.ibb.co/FwV5gtQ/2.jpg)
+![](https://i.ibb.co/cLGHBdx/2.jpg)
 
 ____
 
