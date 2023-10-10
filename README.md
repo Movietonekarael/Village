@@ -7,18 +7,18 @@
 
 
 В игре на данный момент реализованы следующие системы:
-* Система передвижения;
-* Система инвентаря;
-* Система взаимодействия;
-* Машина состояний для UI;
-* Всплывающие окна для сообщений и ввода;
-* Player authoritative мультиплеер до 5 человек.
++ Система передвижения;
++ Система инвентаря;
++ Система взаимодействия;
++ Машина состояний для UI;
++ Всплывающие окна для сообщений и ввода;
++ Player authoritative мультиплеер до 5 человек.
 
 Стэк дополнительных технологий, использованных в игре:
-* Zenject
-* Addressables;
-* Unity Network for GameObjects (NGO), Relay;
-* Unity Job System
++ Zenject
++ Addressables;
++ Unity Network for GameObjects (NGO), Relay;
++ Unity Job System
 
 ____
 Система перемещения основана на машине состояний. [Ссылка](https://bitbucket.org/movietoneofficial/village/src/PublicShow/Assets/Game%20Resources/Scripts/Core/Movement/) на папку в репозитории.
@@ -26,7 +26,7 @@ ____
 Состаяния подразделяются на супер-состояния и под-состояния.
 К супер-состояниям относятся классы описанные в [NPCMovementGroundedState.cs](https://bitbucket.org/movietoneofficial/village/src/PublicShow/Assets/Game%20Resources/Scripts/Core/Movement/NPCMovementGroundedState.cs) и [NPCMovementJumpState.cs](https://bitbucket.org/movietoneofficial/village/src/PublicShow/Assets/Game%20Resources/Scripts/Core/Movement/NPCMovementJumpState.cs)
 К под-состояниям: [NPCMovementIdleState.cs](https://bitbucket.org/movietoneofficial/village/src/PublicShow/Assets/Game%20Resources/Scripts/Core/Movement/NPCMovementIdleState.cs), [NPCMovementWalkState.cs](https://bitbucket.org/movietoneofficial/village/src/PublicShow/Assets/Game%20Resources/Scripts/Core/Movement/NPCMovementWalkState.cs), [NPCMovementRunState.cs](https://bitbucket.org/movietoneofficial/village/src/PublicShow/Assets/Game%20Resources/Scripts/Core/Movement/NPCMovementRunState.cs)
-![](https://i.ibb.co/7zvWP47/1.jpg)
+![](https://i.ibb.co/fSMpfvm/1.jpg)
 
 ____
 Для ввода используется Unity Input System. Ввод обрабатывается классом [InputHandler](https://bitbucket.org/movietoneofficial/village/src/PublicShow/Assets/Game%20Resources/Scripts/Core/InputSystem/InputHandler.cs). InputHandler создаётся из ProjectContext (Zenject) и в последующем инжектится во все необходимые объекты.
@@ -47,13 +47,13 @@ ____
 ____
 
 В папке [UI](https://bitbucket.org/movietoneofficial/village/src/PublicShow/Assets/Game%20Resources/Scripts/Core/UI/) находятся скрипты связанные с пользовательским интерфеском:
-* Машина состояний для интервейса;
-* Состояния, реализующие MVC паттерн;
-* Окна, для ввода кода подключения и вывода сообщений об ошибках;
++ Машина состояний для интервейса;
++ Состояния, реализующие MVC паттерн;
++ Окна, для ввода кода подключения и вывода сообщений об ошибках;
 
 Во время игры возможна мгновенная смена управления на геймпад со сменой подсказок в интерфейсе и появлением виктуального курсора для работы с инвентарём.
 
-![](https://i.ibb.co/fCzpJW4/5.jpg)
+![](https://i.ibb.co/Q63N0Vr/5.jpg)
 
 ____
 
