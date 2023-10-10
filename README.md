@@ -1,7 +1,7 @@
 # Здравствуйте, меня зовут Александр.
 ## Это мой домашний проект игры на Unity
 
-![Плохо](https://downloader.disk.yandex.ru/preview/773a83ffc7f4923e2e61a851bddd74e4e78ef35fdf89333405c31f8e568d6165/6525cca5/xUAYNEdGCPo2QMitta6ARew7tZ0iCm6cx-DiEUKvxxeKiN7O3uvkBLxILz3X0IkuvvVqpcOaqPIgfBEpVPh57A%3D%3D?uid=0&filename=3.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=2048x2048)
+![](https://i.ibb.co/Qkt566M/3.jpg)
 
 Все скрипты проекта, написанные мной, хранятся здесь [Assets/Game Resouces/Scripts/](https://bitbucket.org/movietoneofficial/village/src/master/Assets/Game%20Resources/Scripts/)
 
