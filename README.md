@@ -1,7 +1,25 @@
 # Здравствуйте, меня зовут Александр.
-## Это мой домашний домашний проект игры на Unity
+## Это мой домашний проект игры на Unity
 
-Все скрипты проекта, написанные мной, хранятся здесь [Assets/Resouces/Scripts/](https://bitbucket.org/movietoneofficial/village/src/master/Assets/Resouces/Scripts/)
+![Плохо](https://drive.google.com/file/d/1BaU9_yTZZuNh8uiRe4RJYbpqAPeYLt7i/preview)
+
+Все скрипты проекта, написанные мной, хранятся здесь [Assets/Game Resouces/Scripts/](https://bitbucket.org/movietoneofficial/village/src/master/Assets/Game%20Resources/Scripts/)
+
+
+В игре на данный момент реализованы следующие системы:
+* Система передвижения;
+* Система инвентаря;
+* Система взаимодействия;
+* Машина состояний для UI;
+* Всплывающие окна для сообщений и ввода;
+* Player authoritative мультиплеер до 5 человек.
+
+Стэк дополнительных технологий, использованных в игре:
+* Zenject
+* Addressables;
+* Unity Network for GameObjects (NGO)
+* Unity Job System
+
 
 ![](https://lh3.googleusercontent.com/drive-viewer/AJc5JmRCn9xPCt1B9z7unkc-yyaixBFpEgmVFupj1Fy9d2sa3VGINsxli2BvbBK0rgFL_Lpe94CM6pw=w1920-h969)
 ____
